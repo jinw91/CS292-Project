@@ -1,0 +1,350 @@
+@charset "utf-8";
+/* CSS Document */
+*
+{
+	margin: 0;
+	padding: 0;
+}
+body
+{
+	font-family: "Times New Roman", Times, serif;
+}
+body
+.searchfont {
+	font-family: Verdana, Geneva, sans-serif;
+}
+.inner_register
+{
+	width:962px;
+	margin:0 auto;
+	padding:0;
+	text-align:left;	
+}
+.topcolumn_register
+{
+	background-image:url(sampletopwithlogo_g.png);
+}
+img.topcolumn_register
+{
+	float: left;
+	margin-left: 0;
+	display: inline-block;
+}
+.innertable_register
+{
+	font-family: Tahoma, Geneva, sans-serif;
+}
+.inner
+{
+	width:960px;
+	margin:0 auto;
+	padding:0;
+	text-align:left;
+	
+}
+.outer_box
+{
+	height:230px;
+}
+.inner_box
+{
+	margin:0 2px 5px 2px;
+	border: solid 1px #4F7D7D;
+	height:200px;
+}
+.topleft
+{
+	background-image:url(proarc_home_center.png);
+}
+.top
+{
+	background-image:url(proarc_home_center2.png);
+}
+.tright
+{
+	background-image:url(proarc_home_right.png);
+}
+.topright
+{
+	background-image:url(proarc_home_right2.png);
+}
+
+/*#sitebk table { border: 1px solid #333; border-collapse: collapse;}
+#sitebk td, th {border: 1px solid #333; }*/
+#sitenav ul {display: inline;}
+#sitenav li {display: inline; padding-left: 15px; padding-right: 15px;}
+#sitenav li a:link, #sitenav a:visited {color: white; background-color:#090; text-decoration:none;}
+#sitenav li a:hover {color: white; background-color:#0F0; text-decoration:none;}
+
+#sidebar ul {background-color:#090; border: 2px solid black; border-top: 1; margin:0 0 0.5em 0; padding: 0.125em 0.25em;}
+#sidebar li {display: block; margin-left: 0px; padding-left: 0.125em;} 
+#sidebar li a:link, #sidebar a:visited {color: white; text-decoration:none;} 
+#sidebar li a:hover {color:white; text-decoration:underline; background-color:#0F0; text-shadow:inherit;}
+
+#sidebar_home ul 
+{
+	/*top: 420px;
+	position: absolute;
+	width:15.7%; */
+	width:90%; 
+	background-color:#090; 
+	border: 2px solid black; 
+	border-top: 1; 
+	margin-left: 10px;
+	margin-bottom: 15px;
+	padding-left: 5px;
+}
+#sidebar_home li {display: block; margin-left: 0px; padding-left: 0.125em; list-style-type:none; color: black;} 
+#sidebar_home li a:link, #sidebar_home a:visited {color: white; text-decoration:none;} 
+#sidebar_home li a:hover {color:white; text-decoration:underline; background-color:#0F0; text-shadow:inherit;}
+
+#siteforms ul{text-align:center;}
+#siteforms li {display:block; margin-bottom: 1em; margin-left: 165px;}
+#siteforms li label {text-align:right; margin-right: 795px; }
+
+#date select
+{
+	width: 100px;
+}
+
+/**
+Home
+**/
+#notifications
+{
+	margin-left: 4px;
+}
+#messages_short ul
+{
+	display: block;
+	margin-left: 0px;
+	padding-left: 0px;
+}
+#messages_short li {display: block; border-bottom: 1px solid #666; text-align:left; height:2.3em; margin-left: 0px; padding-left: 0px; list-style-type:none; } 
+#messages_short li a:link, #messages a:visited
+{
+	color:#333;
+	text-decoration:none;
+}
+#see_all a:link, #see_all a:visited
+{
+	text-decoration:none;
+	color:#666;
+	padding-right: 8px;
+}
+
+#jobbar ul {margin-left: 5px; margin-right: 5px; margin-top: 12px; padding: 0.125em 0.25em; background-repeat:no-repeat;}
+#jobbar li {display: block; margin-left: 0px; padding-left: 0.125em;} 
+#jobbar li a:link, #sidebar a:visited {color: black; text-decoration:none;} 
+#jobbar li a:hover {text-decoration:underline; text-shadow:inherit;}
+/**
+Profile
+**/
+#prof_title
+{
+	z-index:1;
+	font-family: "Times New Roman", Helvetica, serif;
+	font-weight:bolder;
+	font-size:16px;
+	color:#000;
+	background-color:#0C0;
+	margin: 0 0 2px 0;
+}
+#prof_name
+{
+	font-family: "Times New Roman", Helvetica, serif;
+	font-weight:bolder;
+	font-size: 24px;
+	color:#000;
+	background-color: #EBEBEB;
+	border: solid 1px #666;
+	margin: 0 0 0 0;
+}
+#prof_cat ul { display:inline;}
+#prof_cat li
+{
+	margin-left: 15px;
+	display: inline;
+}
+#prof_cat li a
+{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#prof_cat li a:link, #prof_cat li a:visited
+{
+	text-decoration: none;
+	color:black;
+}
+#prof_cat li a:hover, #prof_cat li a:active
+{
+	background-color:#E7FDDF;
+	border-left: 3px solid #128517;
+	border-right: 3px solid #128517;
+	border-top: 3px solid #128517;
+	color:#060;
+}
+
+#start
+{
+	margin-top:5px;
+	overflow:auto;
+}
+#start ul
+{
+	
+}
+#start li
+{
+	list-style-type:circle;
+	margin-left: 28px;
+}
+
+#footer
+{
+	width: 960px;
+	padding-top: 20px;
+	display: inline;
+	text-align:center;
+}
+#footer a:visited, #footer a:link, #footer a
+{
+	color:#666;
+	text-decoration:none;
+}
+#footer a:hover
+{
+	color:#060;
+}
+
+#edit_profile a
+{
+	float: right; 
+	text-decoration: none; 
+	color: black; 
+	border: 1px solid #666;
+	margin-right: 10px;
+}
+#edit_profile a:visited, a:link
+{
+	text-decoration: none; 
+	color: black; 
+}
+#edit_profile a:hover
+{
+	background-color:#CCC;
+	color:#090;
+}
+
+form div {margin-bottom: 1em; }
+div.submit input {margin-left: 265px; }
+label.field
+{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 250px;
+	text-align: right;
+}
+label.subscript
+{
+	display: inline-block;
+	margin-left: 265px;
+	float: left;
+	text-align: left;
+	font-size:10px;
+	color:#666;
+}/**
+input[type="text"], select, textarea
+{
+	width: 300px;
+}**/
+label.twoinputs
+{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 150px;
+	text-align: right;
+}
+#other input[type="text"], select
+{
+	width: 150px;
+}
+/**
+Inbox layout.
+**/
+#message form div {margin-top: 0.65em;}
+#message label.field
+{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 110px;
+	text-align: right;
+}
+#message input[type="text"], select, textarea
+{
+	width: 300px;
+}
+#message input[type="submit"] {margin-left: 125px;}
+#messages li {display: block; height:2.3em; margin-left: 0px; padding-left: 0.125em; border: 1px solid #333;} 
+#messages li a:link, #messages a:visited
+{
+	text-decoration:none;
+}
+
+/**
+Careers page
+**/
+#careers form div {margin-top: 1em;}
+#careers label.field
+{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 140px;
+	text-align:right;
+}
+#job_entries li
+{
+	display: block;
+	height:2.7em;
+	padding-left: 0;
+	border-right: 1px solid #333;
+	border-bottom: 1px solid #333;
+}
+#job_entries li a:visited, #job_entries li a:link
+{
+	color: black;
+	text-decoration: none;
+}
+#job_entries li a:hover
+{
+	
+}
+#job_entries li input
+{
+	float: right;
+}
+
+/**
+Edit layout.
+**/
+#edit_title
+{
+	text-align: left;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size:14px;
+	margin-left: 15px;
+	margin-right: 15px;
+	border-bottom: 1px solid #333;
+}
+#update_message
+{
+	text-align: left;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;
+	margin-left:105px;
+	color:#333;
+}

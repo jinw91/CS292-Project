@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+/**
+Home page.
+**/
+#header
+{
+	background-image:url(../images/top-header.jpg);
+	background-repeat:repeat-x;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+#sub_head
+{
+	width:767px;
+	margin: 0 auto;
+}
+#nav_menu
+{
+	text-align: right;
+}
+#nav_menu ul
+{
+	float:right;
+}
+#nav_menu li
+{
+	display: inline;
+}
+#login
+{
+	width: 150px;
+	list-style-type: none;
+	text-align: right;
+}

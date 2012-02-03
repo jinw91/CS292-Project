@@ -1,0 +1,13 @@
+#slides {margin: 0 auto; width: 940px; position:relative; height: auto;}
+.slides_container {width:940px;height:447px;}
+  .slides_container div {width:940px;height: auto; display:block;}
+  .slides_container div img{ max-width:100%; height: auto;}
+/* Control Nav */
+.pagination {position: absolute; bottom:27px; left:29px;z-index:99; overflow:hidden;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;}
+.pagination li {font-size:0px;line-height:0;margin-right:8px; display:block; float:left;}
+.pagination li a {height:14px;width:14px;background: url(../images/pagination.png) -22px 0 no-repeat;display:block;}
+.pagination li.current a,.pagination li a:hover {background:url(../images/pagination.png) 0 0 no-repeat;}
+
+@media only screen and (min-width: 768px) and (max-width: 980px) {#slides,.slides_container,.slides_container div {width: 748px !important;height:356px;}}
+@media only screen and (max-width: 767px) {#slides,.slides_container,.slides_container div{width: 280px;height:133px;}.pagination {bottom:7px !important; left:9px !important;}}
+@media only screen and (min-width: 480px) and (max-width: 767px) {#slides,.slides_container,.slides_container div{width: 420px;height:200px;}}
