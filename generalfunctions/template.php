@@ -31,6 +31,7 @@ function navBar($mes)
 					<li><a href='index-4.html'>&darr;</a><span class='arrow'></span></a><ul>
 							<li><a href='basicinfo.php'>Privacy Settings</a></li>
 							<li><a href='education.php'>Contact Us</a></li>
+							<li><a href='logout.php'>Log Out</a></li>
                             </ul>
 				</ul>
 			</div>";

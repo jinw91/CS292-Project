@@ -113,7 +113,9 @@ footer h1{ padding:42px 0 12px 0;}
 .padtop3{ padding-top:7px;}
 .padtop4{ padding-top:11px;}
 .padtop6{ padding-top:20px;}
-.padtop{ padding-top:22px;}
+.padtop{
+	padding-top:10px;
+}
 .padtop5{ padding-top:24px;}
 .padtop2{ padding-top:48px;}
 .padbot{ padding-bottom:16px;}
