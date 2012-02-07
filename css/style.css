@@ -17,6 +17,7 @@ h6{font-size:11px; text-transform:uppercase; color:#4e4e4e; padding-bottom:18px;
 /*----- txt,links,lines,titles -----*/
 .clear{clear:both;line-height:0;font-size:0;overflow:hidden;height:0;width:100%;}
 .wrapper{width:100%;overflow:hidden;position:relative;}
+.border_bottom{padding-bottom: 43px; border-bottom:1px dotted #b2b2b2;}
 .extra-wrap{overflow:hidden;display:block;}
 .fleft{float:left}
 .fright{float:right}
@@ -93,6 +94,9 @@ dl {width:100%;}
 	.button:hover {background:#ededed; color:#303030; text-decoration:none;}
 .button1{display:inline-block; color:#979797;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;}
 	.button1:hover,.link1:hover{ color:#000; text-decoration:none;}
+.link1{display:inline-block;color:#979797;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease; text-transform:uppercase; font:10px/16px Arial, Helvetica, sans-serif;}
+	.button_pro{margin-left: 5px; display:inline-block; color:#979797;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease;}
+	.button_pro:hover,.link1:hover{ color:#000; text-decoration:none;}
 .link1{display:inline-block;color:#979797;-webkit-transition:all 0.5s ease;-moz-transition:all 0.5s ease;-o-transition:all 0.5s ease;transition:all 0.5s ease; text-transform:uppercase; font:10px/16px Arial, Helvetica, sans-serif;}
 /******************** Footer ******************/
 footer{width:100%;position:relative;overflow:hidden; background:#f7f7f7; padding:60px 0 75px; font:13px/20px Arial, Helvetica, sans-serif; color:#a2a2a2;}
@@ -184,4 +188,68 @@ footer h1{ padding:42px 0 12px 0;}
 	.search {position:relative; width:420px;}
 	#form-1 input{  width:273px;}
 	.map iframe {width:420px; height:200px;}}
-/* Pour some CSS below ========================================================= */
+/* Site specifications */
+#prof_cat ul {}
+#prof_cat li
+{
+	display: inline;
+	font-size: 18px;
+	padding: 3px 5px 3px 5px;
+}
+#prof_cat li a:visited, #prof_cat li a:link
+{
+	color: black;
+	text-transform:uppercase;
+}
+#prof_cat li a:hover
+{
+	text-decoration: none;
+	border: 2px 2px 0 2px solid black;
+}
+#start
+{
+	margin-top: 10px;
+	margin-left: 5px;
+	font-size:14px;
+}
+#edit_profile a
+{
+	float: right; 
+	text-decoration: none; 
+	color: black; 
+	border: 1px solid #666;
+	margin-right: 10px;
+}
+#edit_profile a:visited, a:link
+{
+	text-decoration: none; 
+	color: black; 
+}
+#edit_profile a:hover
+{
+	background-color:#CCC;
+	color:#090;
+}
+
+/**
+Messages.
+**/
+#messages li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2;} 
+#messages li a:link, #messages a:visited {text-decoration:none; }
+
+/**
+Careers.
+**/
+#job_entries li
+{
+	display: block;
+	height:3.5em;
+	padding-left: 0;
+	border-bottom:1px dotted #b2b2b2;
+}
+#job_entries li a:visited, #job_entries li a:link
+{
+	color: black;
+	text-decoration: none;
+}
+#job_entries li input { float: right; }

@@ -148,7 +148,7 @@ else
 	{
 		$error = mysql_error();
 	}
-	$message = "<ul id='messages'>";
+	$message = "<ul id='careers'>";
 	$mes = mysql_fetch_assoc($result);
 	$message = $message."<li>".$mes['job_name']."<br />".$mes['company_name']."</li>";
 	$message = $message."<li>Location: ".$mes['city'].", ".$mes['state']."<br />Major(s): ".$mes['major'];
@@ -156,65 +156,116 @@ else
 	$message = $message."</ul>";
 }
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Careers</title>
-<link href="member.css" rel="stylesheet" type="text/css" />
+<title><?=$p_name?></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/superfish.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/script.js"></script>
+<script src="js/FF-cash.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/slides.min.jquery.js"></script>
+<script>
+$(function(){
+	$('#slides').slides({
+	effect: 'fade',
+	fadeSpeed:700,
+	preload: false,
+	play: 5000,
+	pause: 5000,
+	hoverPause: true,
+	crossfade: true,
+	bigTarget: true
+	});
+	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
+	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
+	$('.tooltips li a').find('strong').append('<span></span>').each(
+	 	function(){
+		var src=new Array()
+		src=$(this).find('>img').attr('src').split('.')
+		src=src[0]+'-hover.'+src[1]
+		$(this).find('>span').css({background:'url('+src+')'})
+	 });
+});
+</script>
 </head>
-
 <body>
-<?=$error?>
-<div class="inner" id="sitebk">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <th height="56" colspan="2" class="top" scope="col">
-      <div id="sitenav" align="right"><ul>
-        <li><a href="./home.php">Home</a></li> 
-        <li><a href="profile.php">Profile</a></li>
-        <li><a href="inbox.php">Inbox</a></li>
-        <li><a href="careers.php">Careers</a></li>
-        <!--<li><a href="#">&#9660;</a></li>--></ul>
-      </div></th>
-    <th width="15%" scope="col" class="tright">
-      <div id="sitenav" align="center">
-        <ul><li><a href="logout.php">Logout</a></li></ul></div>
-    </th>
-  </tr>
-  <tr>
-    <th width="25%" height="365" valign="top" align="center" scope="row" style="border-left: solid 1px #4F7D7D; border-right: solid 1px #4F7D7D;">
-    <form action="careers.php" method="post">
-    <label for="careers">Search Careers: </label>
-    <br />
-    <label for="company_name" style="float: left;">Company Name: </label>
-    <input name="company_name" size="25" /><br />
-    <label for="major" style="float: left;">Major: </label><br  />
-    <input name="major" size="25"  /><br />
-    
-    <input type="submit" name="search" value="Search"/>
-    </form>
-    </th>
-    <th width="60%" rowspan="2" valign="top" scope="row">
-    <?=$message?>
-    </th>
-    <th rowspan="2">&nbsp;</th>
-  </tr>
-  <tr>
-    <th height="23" valign="top" scope="row" style="border-left: solid 1px #4F7D7D; border-right: solid 1px #4F7D7D;">
-    <?=$_SESSION['career_options']?>
-    </th>
-  </tr>
-  <tr>
-  <th height="70" colspan="3" scope="row" style="border-top: 1px solid #4F7D7D;">
-  <?php
-	define('__ROOT__', dirname(__FILE__)); 
-	require_once(__ROOT__.'/generalfunctions/template.php');
-	echo printFooter();
-	?></th>
-    </tr>
-</table>
+<!-- header -->
+<header>
+	<div class="top-header">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="fright">
+					<ul class="top-menu">
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="fleft"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="header-line"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+			
+        <?
+		define('__ROOT__', dirname(__FILE__)); 
+		require_once(__ROOT__.'/generalfunctions/template.php');
+		echo navBar($_SESSION['num_mes']);
+		?>
+		</div>
+	</div>
+</header>
 </div>
+<div class="container_12">
+	<!--<div class="wrapper">
+		<div class="grid_12">
+			<div class="text1"><?=$p_name?></div>
+		</div>
+	</div>-->
+</div>
+<!-- content -->
+<section id="content">  
+	<div class="container_12">
+    <div class="wrapper border_bottom">
+        	<div class="grid_4">
+                <form action="careers.php" method="post">
+                <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+                <label for="careers">Search Careers: </label>
+                </div>
+                <div align="right">
+                <label for="company_name" style="float: left;">Company Name: </label>
+                <input name="company_name" size="25" /><br />
+                <label for="major" style="float: left;">Major: </label>
+                <input name="major" size="25"  /><br />
+                
+                <input type="submit" name="search" value="Search"/>
+                </div>
+                </form>
+            </div>
+            <div class="grid_6 suffix_2">
+                    <fieldset>
+                    <div style="padding-top: 10px; font-size:12px;">
+    				<?=$message?>
+                    </div>
+                    </fieldset>
+            </div>
+        </div>        
+	</div>
+</section>
+<!-- footer -->
+<?php
+	echo footer();
+?>
 </body>
 </html>

@@ -80,12 +80,12 @@ function work_own($id)
 	{
 		$eduhtml = $eduhtml.$liststart.$education['company_name'].$listend;
 		$eduhtml = $eduhtml.$degreestart.$education['title']." </em>";
-		$eduhtml = $eduhtml."<div id='edit_profile'><a href='work.php?w_id=".$education['w_id']."'>Edit</a></div></li>";
+		$eduhtml = $eduhtml."<span id='edit_profile'><a href='work.php?w_id=".$education['w_id']."'>Edit</a></span></li>";
 	}
 	//$eduhtml = $eduhtml."</ul>";
 	if ($eduhtml == "")
 	{
-		$eduhtml = "<li>Work experience not available. <div id='edit_profile'><a href='work.php'>Add</a></div></li>";
+		$eduhtml = "<li>Work experience not available. <span id='edit_profile'><a href='work.php'>Add</a></span></li>";
 	}
 	return($eduhtml);
 }

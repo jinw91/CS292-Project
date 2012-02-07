@@ -1,17 +1,5 @@
 <?php
 session_start();
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Inbox</title>
-<link href="member.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-<script type="text/javascript" src="mailbox.js"></script>
-<?php
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 $tbl_name="personnel_email";
@@ -117,44 +105,106 @@ else
 	}
 }
 ?>
-<div class="inner" id="sitebk">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <th height="56" colspan="2" class="top" scope="col">
-      <div id="sitenav" align="right"><ul>
-        <li><a href="./home.php">Home</a></li> 
-        <li><a href="profile.php">Profile</a></li>
-        <li><a href="inbox.php">Inbox</a></li>
-        <li><a href="careers.php">Careers</a></li></ul>
-      </div></th>
-    <th width="15%" scope="col" class="tright">
-      <div id="sitenav" align="center">
-        <ul><li><a href="logout.php">Logout</a></li></ul></div>
-    </th>
-  </tr>
-  <tr>
-    <th width="26%" height="387" scope="row" valign="top" align="left">
-    <div id="sidebar"><ul>
-	<li><a href="inbox.php">Inbox</a></li>
-    <li><a href="inbox.php?comp=1">Verified Inbox</a></li>
-    <li><a href="compose.php">New Message</a></li>
-    </ul></div>
-    </th>
-    <th width="59%" scope="row" valign="top" align="left">
-    <ul id="messages">
-    <?=$message?>
-    </ul>
-    </th>
-    <th>&nbsp;</th>
-  </tr>
-  <tr>
-  <th height="70" colspan="3" scope="row" style="border-top: 1px solid #4F7D7D;"><?php
-	define('__ROOT__', dirname(__FILE__)); 
-	require_once(__ROOT__.'/generalfunctions/template.php');
-	echo printFooter();
-	?></th>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title><?=$p_name?></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/superfish.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/script.js"></script>
+<script src="js/FF-cash.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/slides.min.jquery.js"></script>
+<script>
+$(function(){
+	$('#slides').slides({
+	effect: 'fade',
+	fadeSpeed:700,
+	preload: false,
+	play: 5000,
+	pause: 5000,
+	hoverPause: true,
+	crossfade: true,
+	bigTarget: true
+	});
+	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
+	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
+	$('.tooltips li a').find('strong').append('<span></span>').each(
+	 	function(){
+		var src=new Array()
+		src=$(this).find('>img').attr('src').split('.')
+		src=src[0]+'-hover.'+src[1]
+		$(this).find('>span').css({background:'url('+src+')'})
+	 });
+});
+</script>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-header">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="fright">
+					<ul class="top-menu">
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="fleft"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="header-line"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+			
+        <?
+		define('__ROOT__', dirname(__FILE__)); 
+		require_once(__ROOT__.'/generalfunctions/template.php');
+		echo navBar($_SESSION['num_mes']);
+		?>
+		</div>
+	</div>
+</header>
 </div>
+<div class="container_12">
+	<!--<div class="wrapper">
+		<div class="grid_12">
+			<div class="text1"><?=$p_name?></div>
+		</div>
+	</div>-->
+</div>
+<!-- content -->
+<section id="content">  
+	<div class="container_12">
+    <div class="wrapper border_bottom">
+        	<div class="grid_4">
+                <div align="center"><h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Compose Message</h2></div>
+            </div>
+            <div class="grid_6 suffix_2">
+                    <fieldset>
+                    <div style="padding-top: 10px; font-size:12px;">
+                    <ul id="messages">
+    				<?=$message?>
+    				</ul>
+                    </div>
+                    </fieldset>
+            </div>
+        </div>        
+	</div>
+</section>
+<!-- footer -->
+<?php
+	echo footer();
+?>
 </body>
 </html>
