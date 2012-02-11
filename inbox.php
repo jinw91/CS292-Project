@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['idnum']))
+{
+	header("Location: index.php");
+}
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 $tbl_name="personnel_email";

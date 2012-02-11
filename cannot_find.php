@@ -1,100 +1,173 @@
 <?php
 session_start();
-
-define('__ROOT__', dirname(__FILE__)); 
-require_once(__ROOT__.'/generalfunctions/database.php');
-$tbl_name="users";
-$connect = connectToDatabase();
-if (!$connect)
+ob_start();
+if (isset($_SESSION['idnum']))
 {
-	$error = "failed to connect";	
+	header("Location: home.php");
 }
 
-if ($_POST['submit'] == "Submit")
-{
-	$company_name = $_POST['company_name'];
-	$sector = $_POST['sector'];
-	$city = $_POST['city'];
-	$state = $_POST['state'];
-	$description = $_POST['description'];
-	$idnum = $_SESSION['idnum'];
-	if ($_SESSION['option_link'] == "edit")
+	define('__ROOT__', dirname(__FILE__)); 
+	require_once(__ROOT__.'/generalfunctions/database.php');
+	$tbl_name="users";
+	$connect = connectToDatabase();
+	if (!$connect)
 	{
-		$query = sprintf("INSERT INTO businesses (company_name, sector, description, city, state, creator) VALUES ('$company_name', '$sector', '$description', '$city', '$state', $idnum)");
+		$error = "failed to connect";	
+	}
+	if ($_POST['login'] == "Log In")
+	{
+		$_SESSION['email'] = $_POST['email'];
+		$password = $_POST['password'];
+		$idnum = validateLogin($_SESSION['email'], $password);
+		if ($idnum == -1 || $idnum == 57)
+		{
+			$error = "Invalid Username/Password. Please try again.";
+		}
+		else
+		{
+			$_SESSION['idnum'] = $idnum;
+			$query = sprintf("SELECT * FROM education_data WHERE idnum=%d",$_SESSION['idnum']);
+			$result = mysql_query($query);
+			if ($result && mysql_num_rows($result) > 0)
+			{
+				$_SESSION['education'] = mysql_fetch_assoc($result);
+			}
+			//setcookie("idnum", $idnum, time() + 60 * 60 * 24 * 60);
+			header("Location: home.php");
+		}
+	}
+	else if ($_POST['submit'] == "Submit")
+	{
+		$emailaddress = $_POST['email_address'];
+		$query = sprintf("SELECT * FROM users WHERE email='%s'", $emailaddress);
+		$result = mysql_query($query);
+		if (!$result || mysql_affected_rows() == 0)
+		{
+			$error = "Invalid Email Address. Please try again.";
+		}
+		else
+		{
+			$res = mysql_fetch_assoc($result);
+			if ($res['idnum'] != 57 && $res['idnum'] != 5)
+			{
+				$error = "Message sent. Please check your inbox.";
+			$message = "Your password is: ".$res['password']."<br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";
+			$msgheader = "From: Professional Archives <proarc@proarcs.com>\r\n";
+			$msgheader .= "MIME-Version: 1.0\n";
+			$msgheader .= "Content-type: text/html; charset=us-ascii\n";
+			mail($emailaddress, "Professional Archives Lost Password", $message, $msgheader);
+			}
+			else
+			{
+				$error = "Your account has been disabled due to impromper use.
+				<br />Please contact an administrator if you wish to unlock it.";
+			}
+		}
 	}
 	else
 	{
-		$query = sprintf("UPDATE INTO businesses (company_name, sector, description, city, state, creator) VALUES ('$company_name', '$sector', '$description', '$city', '$state', $idnum)");
+		$error = "Error message.";
 	}
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-}
-
-$query = sprintf("SELECT * FROM businesses WHERE creator=%d", $_SESSION['idnum']);
-$result = mysql_query($query);
-if (!$result)
-{
-	echo mysql_error();
-}
-elseif (mysql_num_rows($result) == 0)
-{
-	$_SESSION['company'] = mysql_fetch_assoc($result);
-	$option = "<li><a href='createbusiness.php'>New Business</a></li>";
-	$_SESSION['option_link'] = "new";
-}
-else
-{
-	$option = "<li><a href='createbusiness.php'>Edit Business</a></li>
-	<li><a href='business.php'>View Business</a></li>
-	<li><a href='createjob.php'>Add Job Entry</a></li>";
-	$_SESSION['option_link'] = "edit";
-}
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Careers</title>
-<link href="member.css" rel="stylesheet" type="text/css" />
+<title>Professional Archives</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/superfish.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/script.js"></script>
+<script src="js/FF-cash.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/slides.min.jquery.js"></script>
+<script>
+$(function(){
+	$('#slides').slides({
+	effect: 'fade',
+	fadeSpeed:700,
+	preload: false,
+	play: 5000,
+	pause: 5000,
+	hoverPause: true,
+	crossfade: true,
+	bigTarget: true
+	});
+	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
+	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
+	$('.tooltips li a').find('strong').append('<span></span>').each(
+	 	function(){
+		var src=new Array()
+		src=$(this).find('>img').attr('src').split('.')
+		src=src[0]+'-hover.'+src[1]
+		$(this).find('>span').css({background:'url('+src+')'})
+	 });
+});
+</script>
 </head>
-
 <body>
-
-<div class="inner" id="sitebk">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <th height="56" class="top" scope="col">
-      <div id="sitenav" align="right"><ul>
-        <li><a href="./home.php">Home</a></li> 
-        <li><a href="profile.php">Profile</a></li>
-        <li><a href="inbox.php">Inbox</a></li>
-        <li><a href="careers.php">Careers</a></li></ul>
-      </div></th>
-    <th width="15%" scope="col" class="tright">
-      <div id="sitenav" align="center">
-        <ul><li><a href="logout.php">Logout</a></li></ul></div>
-    </th>
-  </tr>
-  <tr>
-    <th height="395" align="center" valign="middle" style="border-left: solid 1px #4F7D7D; border-right: solid 1px #4F7D7D;" scope="row"><p>The page you requested cannot be found.</p>
-      <p>&nbsp;</p>
-      <p>Sincerely,<br />
-      Professional Archives Team</p></th>
-    <th>&nbsp;</th>
-  </tr>
-  <tr>
-    <th height="70" colspan="2" scope="row" style="border-top: 1px solid #4F7D7D;">
-      <?php
+<!-- header -->
+<header>
+	<div class="top-header">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="fright">
+					<ul class="top-menu">
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="fleft"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="header-line"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+			<div id="main-menu">
+            <form action="login.php" method="post">
+				<ul class="sf-menu fright responsive-menu">
+					<li>
+                    <label for="username">Email: </label><input type="text"
+width="100px" name="email">
+					</li>
+					<li>
+                    <label for="username">Password: </label><input type="password"
+width="100px" name="password">
+<div align="center" style="margin-top: 5px;">
+<label for="cookie">Remember Me </label><input type="checkbox" name="cookie" /></div>
+                    </li>
+                    <li>
+                    <input type="submit" name="login" value="Log In">
+                    </li>
+				</ul>
+                </form>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</header>
+<div align="center">
+	<p style="font-family: 'Lato', Arial, Helvetica; font-size-adjust: 150%">The page you requested is not found. <br>
+This issue has been sent to the Professional Archives Team.</p><br>
+    <p style="font-family: 'Lato', Arial, Helvetica;">Thanks, <br> The Professional Archives Team</p>
+</div>
+<!-- content -->
+<section id="content"></section>
+<!-- footer -->
+<?php
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once(__ROOT__.'/generalfunctions/template.php');
-	echo printFooter();
-	?></th>
-  </tr>
-</table>
-</div>
+	echo footer();
+?>
 </body>
 </html>

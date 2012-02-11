@@ -1,16 +1,11 @@
-<?php 
+<?php
 session_start();
 ob_start();
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Logging In</title>
-<link href="member.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<?php
+if (isset($_SESSION['idnum']))
+{
+	header("Location: home.php");
+}
+
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once(__ROOT__.'/generalfunctions/database.php');
 	$tbl_name="users";
@@ -38,7 +33,7 @@ ob_start();
 				$_SESSION['education'] = mysql_fetch_assoc($result);
 			}
 			//setcookie("idnum", $idnum, time() + 60 * 60 * 24 * 60);
-			header("Location: home.php");
+			header("Location: http://proarcs.com/home.php");
 		}
 	}
 	else if ($_POST['submit'] == "Submit")
@@ -55,6 +50,7 @@ ob_start();
 			$res = mysql_fetch_assoc($result);
 			if ($res['idnum'] != 57 && $res['idnum'] != 5)
 			{
+				$error = "Message sent. Please check your inbox.";
 			$message = "Your password is: ".$res['password']."<br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";
 			$msgheader = "From: Professional Archives <proarc@proarcs.com>\r\n";
 			$msgheader .= "MIME-Version: 1.0\n";
@@ -73,21 +69,95 @@ ob_start();
 		$error = "Error message.";
 	}
 ?>
-<div class="inner_register">
-<table border="0" width="100%">
-  <tr>
-	<th height="136" align="right" class="topcolumn_register">
-	  <form action="login.php" method="post" style="font-family:'Times New Roman', Times, serif"> 
-	      Email:
-	      <input name="email" width="144"/> <br>
-	      Password: <input type="password" name="password" width="144"/>
-	      <br>
-	      Remember Me <input type="checkbox" name="cookie"/>
-	      <input name="login" type="submit" value="Log In"/>
-      </form>
-   </th></tr>
-  <tr>
-    <th height="150" scope="row" valign="top"><h1 id="edit_title">Retrieve Your Password:</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Professional Archives</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/superfish.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/script.js"></script>
+<script src="js/FF-cash.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/slides.min.jquery.js"></script>
+<script>
+$(function(){
+	$('#slides').slides({
+	effect: 'fade',
+	fadeSpeed:700,
+	preload: false,
+	play: 5000,
+	pause: 5000,
+	hoverPause: true,
+	crossfade: true,
+	bigTarget: true
+	});
+	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
+	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
+	$('.tooltips li a').find('strong').append('<span></span>').each(
+	 	function(){
+		var src=new Array()
+		src=$(this).find('>img').attr('src').split('.')
+		src=src[0]+'-hover.'+src[1]
+		$(this).find('>span').css({background:'url('+src+')'})
+	 });
+});
+</script>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-header">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="fright">
+					<ul class="top-menu">
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="fleft"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="header-line"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+			<div id="main-menu">
+            <form action="login.php" method="post">
+				<ul class="sf-menu fright responsive-menu">
+					<li>
+                    <label for="username">Email: </label><input type="text"
+width="100px" name="email">
+					</li>
+					<li>
+                    <label for="username">Password: </label><input type="password"
+width="100px" name="password">
+<div align="center" style="margin-top: 5px;">
+<label for="cookie">Remember Me </label><input type="checkbox" name="cookie" /></div>
+                    </li>
+                    <li>
+                    <input type="submit" name="login" value="Log In">
+                    </li>
+				</ul>
+                </form>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</header>
+<div align="center">
+	<h1 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Retrieve Your Password:</h1>
     <form action="login.php" method="post">
     <div style="color: gray; margin-left: 15px;"><?=$error?></div>
       <p align="center">Please enter your email: <br />
@@ -95,19 +165,38 @@ ob_start();
       <p align="center">
       <input type="submit" name="submit" value="Submit" /></p>
     </form>
-    </th>
-  </tr>
-  <tr>
-  <th height="70" scope="row" style="border-top: 1px solid #4F7D7D;"><?php
+</div>
+<!-- content -->
+<section id="content">  
+	<div class="container_12">
+		<div class="wrapper">
+			<div class="grid_6 padbot2">
+				<h2>About Us</h2>
+				<div class="box-img"><a href="#"><img src="site-images/1page_img2.jpg" alt="" width="400"></a></div>
+				<p class="padtop padbot">Professional Archives is a website formed by Vanderbilt students to connect students with professionals and companies around the world.</p>
+				<a href="#" class="button1">Continue reading</a>
+			</div>
+			<div class="padbot2">
+				<h2 align="center">Register Now</h2>
+				<form action="register.php" method="post" onSubmit="return validate_fields()">
+    <div align="right">
+    <label for="first_name" style="float: left; text-align: right;">First Name: </label><input id="first_name" name="first_name" width="200px"/> <br>
+ 	<label for="last_name" style="float: left; text-align: right;">Last Name: </label><input id="last_name" name="last_name" width="200px"/> <br>
+    <label for="emailaddress" style="float: left; text-align: right;">Email: </label><input id="emailaddress" name="emailaddress" width="200px"/> <br>
+    <label for="user_password" style="float: left; text-align: right;">Password: </label> <input id="user_password" name="user_password" type="password" width="200px"/> <br><br>
+
+    <center><input type="submit" name="submit" id="submit" value="Register Now"/></center>
+    </div>
+    </form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- footer -->
+<?php
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once(__ROOT__.'/generalfunctions/template.php');
-	echo printFooter();
-	?></th>
-    </tr>
-</table>
-</div>
+	echo footer();
+?>
 </body>
 </html>
-<?php
-	ob_end_flush();
-?>

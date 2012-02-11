@@ -22,6 +22,19 @@ if (isset($_SESSION['idnum']))
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
 <script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28417433-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
 $(function(){
 	$('#slides').slides({
 	effect: 'fade',
@@ -109,7 +122,7 @@ width="100px" name="password">
 			</div>
 			<div class="padbot2">
 				<h2 align="center">Register Now</h2>
-				<form action="educationregister.php" method="post" onSubmit="return validate_fields()">
+				<form action="register.php" method="post" onSubmit="return validate_fields()">
     <div align="right">
     <label for="first_name" style="float: left; text-align: right;">First Name: </label><input id="first_name" name="first_name" width="200px"/> <br>
  	<label for="last_name" style="float: left; text-align: right;">Last Name: </label><input id="last_name" name="last_name" width="200px"/> <br>

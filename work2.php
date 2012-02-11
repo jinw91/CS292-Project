@@ -29,7 +29,7 @@ else if ($_POST['add'] = "Add Another Job")
 {
 	$option = "Add";
 }
-else if ($_POST['skip']=="Skip")
+else
 {
 	header("Location: home.php");
 }
@@ -52,7 +52,7 @@ if ($_POST['send'] == "Apply Changes" || $_POST['send'] == "Add")
 	
 	if ($_POST['send'] == "Apply Changes")
 	{
-		$query = sprintf("UPDATE work_data SET company_name='$company', title='$title', city='$city', state='$state', company_start=$company_start, company_end=$company_end, achievement='$achievement' WHERE w_id=$wid");
+		$query = sprintf("UPDATE work_data SET company=$company, title=$title, city=$city, state=$state, company_start=$company_start, company_end=$company_end, achievement=$achievement WHERE w_id=$wid");
 	}
 	else
 	{
@@ -191,8 +191,8 @@ $(function(){
 		<div class="wrapper">
 		  <div class="grid_10">
 			  <h1 id='edit_title'>Work Experience:</h1>
-              <form action='work.php' method='post'>
-              <?=$error?><?=$message?><br>
+              <form action='work2.php' method='post'>
+              <?=$message?><br>
               <form action='image.php' method='post'>
               <ul id='education'>
                 <li>

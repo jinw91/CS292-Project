@@ -93,6 +93,19 @@ define('__ROOT__', dirname(__FILE__));
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
 <script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28417433-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
 $(function(){
 	$('#slides').slides({
 	effect: 'fade',
@@ -161,7 +174,7 @@ $(function(){
 		<div class="wrapper">
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Notifications</h2>
-				<div class="box-img"><a href="site-images/image-blank.png" data-gal="prettyPhoto[gallery]" class="lightbox-image"><img src="<?=$_SESSION['users']['picture']?>" alt=""></a></div>
+				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt=""></a></div>
 				<p class="padtop padbot">Welcome back, <?=$_SESSION['users']['first_name']?>.</p>
       <br />
       <p><?=$message1?></p>

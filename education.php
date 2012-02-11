@@ -1,34 +1,14 @@
 <?php
 session_start();
-if (!isset($_SESSION['idnum']))
-{
-	header("Location: index.php");
-}
-if ($_POST['skip'] == "Cancel")
-{
-	header("Location: home.php");
-}
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Professional Archives</title>
-<link href="member.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-<script type="text/javascript" src="simple.js">
-</script>
-<?php
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
 {
-	echo "failed to connect";	
+	$error = "failed to connect";
 }
+
 $query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $_SESSION['idnum']);
 $result = mysql_query($query);
 if (mysql_num_rows($result) == 0)
@@ -54,17 +34,17 @@ if ($_POST['submit'] == "Submit")
 	$college_month_end = $_POST['college_month_end'];
 	$college_year_end = $_POST['college_year_end'];
 	$gpa = $_POST['gpa'];
-	$organization = $_POST['activities'];
+	$honors = $_POST['honors'];
 	$idnum = $_SESSION['idnum'];
 	$college_start = $college_year_start."-".$college_month_start."-01"; //arbitrary day.
 	$college_end = $college_year_end."-".$college_month_end."-01"; //arbitrary day.
 	if (!is_null($education))
 	{
-		$query = sprintf("UPDATE education_data SET college='$college', title='$title', major='$major', college_start='$college_start', college_end='$college_end', gpa='$gpa', organization='$organization' WHERE idnum=$idnum LIMIT 1");
+		$query = sprintf("UPDATE education_data SET college='$college', title='$title', major='$major', college_start='$college_start', college_end='$college_end', gpa='$gpa', honors='$honors' WHERE idnum=$idnum LIMIT 1");
 	}
 	else
 	{
-		$query = sprintf("INSERT INTO education_data (idnum, college, title, major, college_start, college_end, gpa, organization) VALUES ('$idnum', '$college', '$title', '$major', '$college_start', '$college_end', '$gpa', '$organization')");
+		$query = sprintf("INSERT INTO education_data (idnum, college, title, major, college_start, college_end, gpa, honors) VALUES ('$idnum', '$college', '$title', '$major', '$college_start', '$college_end', '$gpa', '$honors')");
 	}
 	$result = mysql_query($query);
 	if (!$result)
@@ -78,88 +58,137 @@ if ($_POST['submit'] == "Submit")
 	$message = "<p id='update_message'>Education updated.</p>";
 }
 ?>
-<div class="inner" id="sitebk">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <th height="56" colspan="2" scope="col" class="top">
-    <div id="sitenav" align="right"><ul>
-    <li><a href="./home.php">Home</a></li> 
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="inbox.php">Inbox</a></li>
-    <li><a href="careers.php">Careers</a></li></ul>
-    </div></th>
-    <th width="15%" scope="col" class="tright">
-    <div id="sitenav" align="center">
-    <ul><li><a href="logout.php">Logout</a></li></ul></div>
-    </th>
-  </tr>
-  <tr>
-    <th colspan="2" scope="row">
-    <form action="education.php" method="post">
-	<h1 id="edit_title">Education:</h1>
-    <?=$message?><br />
-    <div>
-        <label class="field" for="college">College Name: </label>
-        <select name="college" size=1>
-        	<option value="Vanderbilt University">Vanderbilt University</option>
-            <option value="other">Other</option> 
-        </select>
-    </div>
-    <div>
-        <label class="field" for="college">Title: </label>
-        <select name="title" size=1>
-        	<option value="Bachelor of Arts">Bachelor of Arts</option>
-            <option value="Bachelor of Science">Bachelor of Science</option>
-            <option value="Bachelor of Engineering">Bachelor of Engineering</option>
-            <option value="Bachelor of Nursing">Bachelor of Nursing</option>
-            <option value="Associate's Degree">Associate's Degree</option> 
-        </select>    
-    </div>
-    <div id="static_major">
-        <label class="field" for="major">Area(s) of Study: </label> <input type="text" name="major" value="<?=$education['major']?>"/><br />
-	<label class="subscript" for="major">Example: Computer Science, Math</label>
-    </div>
-    <div id="date">
-    	<label class="field" for="college_year_start">Time Attended: </label>
-        <script>
-		document.write("<select name=\"college_month_start\">");
-		months();
-		document.write("<select style=\"width: 60px;\" name=\"college_year_start\">");
-		years("<?=$year_start?>");
-		document.write("<label for=\"college_month_end\"> - </label>");
-		document.write("<select name=\"college_month_end\">");
-		months();
-		document.write("<select style=\"width: 60px;\" name=\"college_year_end\">");
-		years("<?=$year_end?>");
-		selectMonth("college_month_start", "<?=$month_start?>");
-		selectMonth("college_month_end", "<?=$month_end?>");
-		</script>
-    </div>
-    <div>    
-        <label class="field" for="gpa">Cumulative GPA: </label> <input name="gpa" size=8 value="<?=$education['gpa']?>"/>
-     </div>
-	<div>
-    <label class="field" for="activities">Activities during College: </label>
-    <textarea name="activities" rows="3"><?=$education['organization']?></textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Professional Archives</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/superfish.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/script.js"></script>
+<script src="js/FF-cash.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="simple.js"></script>
+<script>
+$(function(){
+	$('#slides').slides({
+	effect: 'fade',
+	fadeSpeed:700,
+	preload: false,
+	play: 5000,
+	pause: 5000,
+	hoverPause: true,
+	crossfade: true,
+	bigTarget: true
+	});
+	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
+	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
+	$('.tooltips li a').find('strong').append('<span></span>').each(
+	 	function(){
+		var src=new Array()
+		src=$(this).find('>img').attr('src').split('.')
+		src=src[0]+'-hover.'+src[1]
+		$(this).find('>span').css({background:'url('+src+')'})
+	 });
+});
+</script>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-header">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="fright">
+					<ul class="top-menu">
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="fleft"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
 	</div>
-    <div id="buttons" align="center"><input type="submit" name="submit" value="Submit" />
-<input type="submit" name="skip" value="Cancel" />
-</div>
-<!--<input type="submit" name="add" value="Add another college" /></div>-->
-</form></th>
-  <th scope="row">&nbsp;</th>
-  </tr>
-  <tr>
-    <th height="70" colspan="2" scope="row" style="border-top: 1px solid #4F7D7D;">
-    <?php
+	<div class="header-line"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+			<?
+			define('__ROOT__', dirname(__FILE__)); 
+			require_once(__ROOT__.'/generalfunctions/template.php');
+			echo navBar($_SESSION['num_mes']);
+			?>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</header>
+<!-- content -->
+<section id="content">  
+	<div class="container_12">
+		<div class="wrapper">
+		  <div class="grid_10">
+			  <h1 id='edit_title'>Education:</h1>
+              <form action='register.php' method='post'>
+              <?=$message?><br>
+              <ul id='education'>
+                <li><label class='field' for='college'>College Name: </label>
+                <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>
+                    <option value='Vanderbilt University'>Vanderbilt University</option> 
+                    <option value='other'>Other</option>		
+                </select></li>
+                <li id="school"></li>
+                <li><label class='field' for='college'>Title: </label>
+                <select name='title' size=1 style='width: 300px;'>
+                    <option value='Bachelor of Arts'>Bachelor of Arts</option>
+                    <option value='Bachelor of Science'>Bachelor of Science</option>
+                    <option value='Bachelor of Engineering'>Bachelor of Engineering</option>
+                    <option value='Bachelor of Nursing'>Bachelor of Nursing</option>
+                    <option value='Associate's Degree'>Associate's Degree</option> </select></li>
+                    
+                <li><label class='field' for='major'>Area(s) of Study: </label> <input type='text' name='major' value="<?=$education['major']?>"/></li>
+            <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
+                <li><label class='field' for='college_year_start'>Time Attended: </label>
+                <script>
+                document.write("<select name=\"college_month_start\">");
+				months();
+				document.write("<select style=\"width: 60px;\" name=\"college_year_start\">");
+				years("<?=$year_start?>");
+				document.write("<label for=\"college_month_end\"> - </label>");
+				document.write("<select name=\"college_month_end\">");
+				months();
+				document.write("<select style=\"width: 60px;\" name=\"college_year_end\">");
+				years("<?=$year_end?>");
+				selectMonth("college_month_start", "<?=$month_start?>");
+				selectMonth("college_month_end", "<?=$month_end?>");
+                </script>
+            </li>
+                <li><label class='field' for='gpa'>Cumulative GPA: </label> <input name='gpa' size=8 value="<?=$education['gpa']?>"/></li>
+            <li><label class='field' for='honors'>Honors: </label>
+            <textarea name='honors' rows='3'><?=$education['honors']?></textarea></li>
+            <label class='subscript' for='honors'>Example: Dean's List, National Merit Scholarship</label><br>
+            <li>
+            <span style='margin-left: 300px;'><input type='submit' name='submit' value='Submit' />
+            <input type='submit' name='skip' value='Skip' /></span></li>
+            </ul>
+        	</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- footer -->
+<?php
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once(__ROOT__.'/generalfunctions/template.php');
-	echo printFooter();
-	?>
-    </th>
-    <th scope="row">&nbsp;</th>
-  </tr>
-</table>
-</div>
+	echo footer();
+?>
 </body>
 </html>

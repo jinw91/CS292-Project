@@ -49,7 +49,7 @@ else if ($_POST['send'] == "Submit" || $_POST['add'] == "Add Another Job")
 	
 	if ($_POST['add'] == "Add Another Job")
 	{
-		header("Location: workregister.php");
+		header("Location: register.php");
 	}
 }
 

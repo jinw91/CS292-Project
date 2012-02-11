@@ -38,24 +38,6 @@ function years(year)
 	}
 	document.write("</select>");
 }
-var counter = 1;
-var limit = 3;
-function addmajor(divName)
-{
-	if (counter == limit)  
-	{
-		alert("Only 3 majors allowed per institution.");
-	}
-	else 
-	{
-		var newdiv = document.createElement('div');
-		newdiv.innerHTML = "<label class='field' for='major"+counter+"'>Major: </label> <input type='text' name='major"+counter+"'/>";
-		var before = document.getElementById(divName);
-		var parent = before.parentNode;
-		parent.insertBefore(newdiv, before);
-		counter++;
-	}
-}
 function addfield(divName)
 {
 	var newdiv = document.createElement('div');
@@ -70,13 +52,13 @@ function addothercollege()
 	var college = document.getElementById("college").value;
 	if (college == "other")
 	{
-		var oth = document.getElementById("other");
-		oth.type = "text";
-		oth.width = "100";
+		var oth = document.getElementById("school");
+		oth.innerHTML = "<label class='field' for='other'>Name: </label><input id='other' type='text' name='other' width='100'/>";
 	}
 	else
 	{
-		document.getElementById("other").type = "hidden";
+		var oth = document.getElementById("school");
+		oth.innerHTML = "";
 	}
 }
 function selectMonth(name, month)
@@ -102,4 +84,40 @@ function selectDefault(name, value)
 			return true;
 		}
 	}
+}
+
+/**
+Adding months and years.
+**/
+function college_form()
+{
+	document.write("<select name='college_month_start'>");
+	months();
+	document.write("<select style='width: 60px;' name='college_year_start'>");
+	years();
+	document.write("<label for='college_month_end'> - </label>");
+	document.write("<select name='college_month_end'>");
+	months();
+	document.write("<select style='width: 60px;' name='college_year_end'>");
+	years();
+}
+
+function work_form()
+{
+	document.write("<select name=\"work_month_start\">");
+	months();
+	document.write("<select name=\"work_year_start\">");
+	years();
+	document.write("<label for=\"work_month_end\"> - </label>");
+	document.write("<select name=\"work_month_end\">");
+	months();
+	document.write("<select name=\"work_year_end\">");
+	years();
+}
+
+function img_up()
+{
+	var tag = document.getElementById("image_mes");
+	tag.innerHTML = "Uploading picture, do not change the page.";
+	return true;
 }

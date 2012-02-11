@@ -33,7 +33,7 @@ if (!$result)
 {
 	$error = mysql_error();	
 }
-else if (mysql_num_rows($result) == 0)
+else if (mysql_num_rows($result) == 0 && $idnum != $_SESSION['idnum'])
 {
 	$query = sprintf("INSERT INTO viewed (from_id, to_id, viewed) VALUES (%d, %d, NOW())", $_SESSION['idnum'], $idnum);
 	$result = mysql_query($query);
@@ -56,6 +56,17 @@ $v_education = mysql_fetch_assoc($result);
 $query = sprintf("SELECT * FROM work_data WHERE idnum=%d", $idnum);
 $result = mysql_query($query);
 $v_work = mysql_fetch_assoc($result);
+/**
+Creates the message under education.
+**/
+if ($idnum == $_SESSION['idnum'])
+{
+	$v_education_message = ceducation_own($idnum);
+}
+else
+{
+	$v_education_message = ceducation($idnum);
+}
 /**
 Creates the message under experience.
 **/
@@ -213,46 +224,55 @@ $(function(){
 		<div class="wrapper">
 			<div class="grid_11 padbot2">
 				<script type="text/javascript">
-				function clear()
+                function clear()
+                {
+                    var tag = document.getElementById("start");
+                    tag.innerHTML = "";
+                }
+				function education()
 				{
-					var tag = document.getElementById("start");
-					tag.innerHTML = "";
+					var tag = document.getElementById("education");
+					tag.innerHTML += "<?=$v_education_message?>";
 				}
-				function experience()
-				{
-					clear();
-					var tag = document.getElementById("start");
-					tag.innerHTML += "<?=$v_work_message?>";
-					return true;
-				}
-				function skills()
-				{
-					clear();
-					var tag = document.getElementById("start");
-					tag.innerHTML += "<li>Skills not available.</li>";
-					return true;
-				}
-				function extra()
-				{
-					clear();
-					var tag = document.getElementById("start");
-					tag.innerHTML += "<?=$extracurriculars?>";
-					return true;
-				}
-				</script>
-                  <br>
-                  <ul id="prof_cat">
-                  <li>
-                  <a id="experience" href="javascript:experience();">Experience</a></li>
-                  <li><a id="skills" href="javascript:skills();">Skills</a></li>
-                  <li><a id="extra" href="javascript:extra();">Extracurriculars</a></li>
-                  <!--<li><a id="resume" href="resumes/<?=$resume?>" onclick="return true;">Resume</a></li>-->
-                  </ul>
-                  <fieldset>
-                  <br>
-                  <ul id="start"><script>experience();</script></ul>
-                  <br>
-				<a href="#" class="button_pro">See all</a>
+                function experience()
+                {
+                    clear();
+                    var tag = document.getElementById("work");
+                    tag.innerHTML += "<?=$v_work_message?>";
+                    return true;
+                }
+                function skills()
+                {
+                    clear();
+                    var tag = document.getElementById("start");
+                    tag.innerHTML += "<li>Skills not available.</li>";
+                    return true;
+                }
+                function extra()
+                {
+                    clear();
+                    var tag = document.getElementById("start");
+                    tag.innerHTML += "<?=$extracurriculars?>";
+                    return true;
+                }
+                </script>            
+				<br>
+				<ul id="prof_ccat">
+				<li>
+				EDUCATION</li>
+				</ul>
+				<fieldset>
+				<br>
+				<ul style="margin-left: 5px;"><?=$v_education_message?></ul>
+				<br>
+                </fieldset>
+                <ul id="prof_ccat">
+                <li>WORK EXPERIENCE</li>
+                </ul>
+                <fieldset>
+                <br>
+                <ul style="margin-left: 5px;"><?=$v_work_message?></ul>
+                <br>
                 </fieldset>
 			</div>
 		</div>
