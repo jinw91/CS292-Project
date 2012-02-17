@@ -3,8 +3,8 @@
 body{background:#ffffff;font:12px/20px Arial, Helvetica, sans-serif;color:#090909;position:relative;min-width:300px;}
 html,body{height:100%;}
 p{padding-bottom:20px}
-a{color:#e06565;outline:none;cursor:pointer;text-decoration:none;}
-a:hover{text-decoration: underline}
+/*a{color:#e06565;outline:none;cursor:pointer;text-decoration:none;}
+a:hover{text-decoration: underline}*/
 /*  Header styles */
 h1,h2,h3,h4,h5,h6{line-height:1.2em;color:#000;font-weight:normal; font-family:Arial, Helvetica, sans-serif;}
 h1{font-size:24px;}
@@ -232,24 +232,42 @@ footer h1{ padding:42px 0 12px 0;}
 	color:#090;
 }
 
+#edit_info a
+{
+	margin-left: 600px;
+	text-decoration: none; 
+	color: black; 
+	border: 1px solid #666;
+	margin-right: 10px;
+}
+#edit_info a:visited, a:link
+{
+	text-decoration: none; 
+	color: black; 
+}
+#edit_info a:hover
+{
+	background-color:#CCC;
+	color:#090;
+}
+
 /**
 Company Profile
 **/
-#prof_ccat li
+#cprof_cat
 {
 	display: inline;
 	font-size: 18px;
 	padding: 3px 5px 3px 5px;
 	text-transform: uppercase;
-	text-decoration: underline;
 }
-#prof_ccat li a:visited, #prof_cat li a:link
+#cprof_cat li a:visited, #cprof_cat li a:link
 {
 	color: black;
 	text-transform:uppercase;
 	text-decoration: underline;
 }
-#prof_ccat li a:hover
+#cprof_cat li a:hover
 {
 	text-decoration: underline;
 	border: 2px 2px 0 2px solid black;
@@ -318,4 +336,9 @@ label.subscript
 	text-align: left;
 	font-size:10px;
 	color:#666;
+}
+#skills a:visited, #skills a:link
+{
+	color: black;
+	text-decoration: none;
 }

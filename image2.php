@@ -66,7 +66,7 @@ $mes = mysql_fetch_assoc($result);
 $filename = $mes['picture'];
 if (!is_null($filename))
 {
-	$picture_html = sprintf("<img src='%s'></img><br />", $filename);
+	$picture_html = sprintf("<img src='%s' width='300px'></img><br />", $filename);
 }
 
 if (!isset($option))

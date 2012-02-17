@@ -54,6 +54,10 @@ if ($_POST['submit'] == "Submit")
 	$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $_SESSION['idnum']);
 	$result = mysql_query($query);
 	$education = mysql_fetch_assoc($result);
+	$month_start = substr($education['college_start'], 5, 2);
+	$year_start = substr($education['college_start'], 0, 4);
+	$month_end = substr($education['college_end'], 5, 2);
+	$year_end = substr($education['college_end'], 0, 4);
 	$_SESSION['education'] = $education;
 	$message = "<p id='update_message'>Education updated.</p>";
 }
@@ -137,12 +141,16 @@ $(function(){
 		<div class="wrapper">
 		  <div class="grid_10">
 			  <h1 id='edit_title'>Education:</h1>
-              <form action='register.php' method='post'>
+              <form action='education.php' method='post'>
               <?=$message?><br>
               <ul id='education'>
                 <li><label class='field' for='college'>College Name: </label>
                 <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>
-                    <option value='Vanderbilt University'>Vanderbilt University</option> 
+                    <option value='Vanderbilt University'>Vanderbilt University</option>
+                    <option value='Duke University'>Duke University</option>
+                    <option value='Lyon College'>Lyon College</option>
+                    <option value='University of South Carolina'>University of South Carolina</option>
+                    <option value='University of Virginia'>University of Virginia</option>
                     <option value='other'>Other</option>		
                 </select></li>
                 <li id="school"></li>
@@ -169,6 +177,8 @@ $(function(){
 				years("<?=$year_end?>");
 				selectMonth("college_month_start", "<?=$month_start?>");
 				selectMonth("college_month_end", "<?=$month_end?>");
+				selectDefault('title', "<?=$education['title']?>");
+				selectDefault('college', "<?=$education['college']?>");
                 </script>
             </li>
                 <li><label class='field' for='gpa'>Cumulative GPA: </label> <input name='gpa' size=8 value="<?=$education['gpa']?>"/></li>

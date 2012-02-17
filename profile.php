@@ -212,7 +212,7 @@ $(function(){
         </div>
 		<div class="wrapper">
 			<div class="grid_11 padbot2">
-				<script type="text/javascript">
+				<script>
 				function clear()
 				{
 					var tag = document.getElementById("start");
@@ -223,21 +223,18 @@ $(function(){
 					clear();
 					var tag = document.getElementById("start");
 					tag.innerHTML += "<?=$v_work_message?>";
-					return true;
 				}
 				function skills()
 				{
 					clear();
 					var tag = document.getElementById("start");
 					tag.innerHTML += "<li>Skills not available.</li>";
-					return true;
 				}
 				function extra()
 				{
 					clear();
 					var tag = document.getElementById("start");
 					tag.innerHTML += "<?=$extracurriculars?>";
-					return true;
 				}
 				</script>
                   <br>
@@ -250,7 +247,7 @@ $(function(){
                   </ul>
                   <fieldset>
                   <br>
-                  <ul id="start"><script>experience();</script></ul>
+                  <ul id="start"><?=$v_work_message?></ul>
                   <br>
 				<a href="#" class="button_pro">See all</a>
                 </fieldset>

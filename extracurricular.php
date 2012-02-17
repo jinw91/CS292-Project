@@ -9,96 +9,89 @@ if (!$connect)
 	$error = "failed to connect";
 }
 
-if (isset($_GET['w_id']))
+if (isset($_GET['l_id']))
 {
-	$wid = $_GET['w_id'];
-	$query = sprintf("SELECT * FROM work_data WHERE w_id = %d", $_GET['w_id']);
+	$lid = $_GET['l_id'];
+	$query = sprintf("SELECT * FROM leadership_data WHERE l_id = %d", $_GET['l_id']);
 	$result = mysql_query($query);
 	if (!$result)
 	{
 		$error = "error retrieving work experience.";
 	}
 	$experience = mysql_fetch_assoc($result);
-	$month_start = substr($experience['company_start'], 5, 2);
-	$year_start = substr($experience['company_start'], 0, 4);
-	$month_end = substr($experience['company_end'], 5, 2);
-	$year_end = substr($experience['company_end'], 0, 4);
+	$month_start = substr($experience['start'], 5, 2);
+	$year_start = substr($experience['start'], 0, 4);
+	$month_end = substr($experience['end'], 5, 2);
+	$year_end = substr($experience['end'], 0, 4);
 	$option = "Apply Changes";
 }
-else if ($_POST['add'] = "Add Another Job")
+else if ($_POST['add'] = "Add Another Activity")
 {
 	$option = "Add";
 }
-else
+else if ($_POST['skip']=="Skip")
 {
 	header("Location: home.php");
 }
 
 if ($_POST['send'] == "Apply Changes" || $_POST['send'] == "Add")
 {
-	$wid = $_POST['wid'];
-	$company = $_POST['company'];
+	$lid = $_POST['lid'];
+	$organization = $_POST['organization'];
 	$title = $_POST['title'];
-	$city = $_POST['city'];
-	$state = $_POST['state'];
-	$work_month_start = $_POST['work_month_start'];
-	$work_year_start = $_POST['work_year_start'];
-	$work_month_end = $_POST['work_month_end'];
-	$work_year_end = $_POST['work_year_end'];
+	$extra_month_start = $_POST['extra_month_start'];
+	$extra_year_start = $_POST['extra_year_start'];
+	$extra_month_end = $_POST['extra_month_end'];
+	$extra_year_end = $_POST['extra_year_end'];
 	$achievement = $_POST['achievement'];
 	$idnum = $_SESSION['idnum'];
-	$company_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
-	$company_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
+	$extra_start = $extra_year_start."-".$extra_month_start."-01"; //arbitrary day.
+	$extra_end = $extra_year_end."-".$extra_month_end."-01"; //arbitrary day.
 	
-	if ($_POST['send'] == "Apply Changes")
+	if ($_POST['send'] == "Apply Changes" && isset($_POST['present']))
 	{
-		$query = sprintf("UPDATE work_data SET company=$company, title=$title, city=$city, state=$state, company_start=$company_start, company_end=$company_end, achievement=$achievement WHERE w_id=$wid");
+		$query = sprintf("UPDATE leadership_data SET organization='$organization', title='$title', start='$extra_start', end='$extra_end', achievement='$achievement', present=1 WHERE l_id=$lid");
+	}
+	else if ($_POST['send'] == "Apply Changes")
+	{
+		$query = sprintf("UPDATE leadership_data SET organization='$organization', title='$title', start='$extra_start', end='$extra_end', achievement='$achievement', present=0 WHERE l_id=$lid");
+	}
+	else if (isset($_POST['present']))
+	{
+		$query = sprintf("INSERT INTO leadership_data (idnum, organization, title, start, end, present, achievement) VALUES ('$idnum', '$organization', '$title', '$extra_start', '$extra_end', 1, '$achievement')");
 	}
 	else
 	{
-		$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, achievement) VALUES ('$idnum', '$company', '$title', '$company_start', '$company_end', '$city', '$state', '$achievement')");
+		$query = sprintf("INSERT INTO leadership_data (idnum, organization, title, start, end, present, achievement) VALUES ('$idnum', '$organization', '$title', '$extra_start', '$extra_end', 0, '$achievement')");
 	}
 	$result = mysql_query($query);
 	if (!$result)
 	{
-		$error = mysql_error();
+		$error = $query." lid=".$lid." ".mysql_error();
 	}
-	if (isset($_POST['present']))
-	{
-		$query = sprintf("UPDATE work_data SET present=1 WHERE w_id=$wid");
-	}
-	else
-	{
-		$query = sprintf("UPDATE work_data SET present=0 WHERE w_id=$wid");
-	}
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-	$message = "<p id='update_message'>Work experience updated.</p>";
+	$message = "<p id='update_message'>Extracurricular updated.</p>";
 	
 	/**
 	Pull up information after updating.
 	**/
-	$query = sprintf("SELECT * FROM work_data WHERE w_id = %d", $wid);
+	$query = sprintf("SELECT * FROM leadership_data WHERE l_id = %d", $lid);
 	$result = mysql_query($query);
 	if (!$result)
 	{
 		$error = "error retrieving work experience.";
 	}
 	$experience = mysql_fetch_assoc($result);
-	$month_start = substr($experience['company_start'], 5, 2);
-	$year_start = substr($experience['company_start'], 0, 4);
-	$month_end = substr($experience['company_end'], 5, 2);
-	$year_end = substr($experience['company_end'], 0, 4);
+	$month_start = substr($experience['extra_start'], 5, 2);
+	$year_start = substr($experience['extra_start'], 0, 4);
+	$month_end = substr($experience['extra_end'], 5, 2);
+	$year_end = substr($experience['extra_end'], 0, 4);
 	$option = "Apply Changes";
 }
 else if ($_POST['send'] == "Delete")
 {
-	$wid = $_POST['wid'];
+	$lid = $_POST['lid'];
 	
-	$query = sprintf("DELETE FROM work_data WHERE w_id=$wid");
+	$query = sprintf("DELETE FROM leadership_data WHERE l_id=$lid");
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -117,7 +110,7 @@ if (isset($experience) && $experience['present'] > 0)
 <head>
 <title>Professional Archives</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<meta name="viewport" content="lidth=device-lidth; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/skeleton.css">
@@ -190,46 +183,45 @@ $(function(){
 	<div class="container_12">
 		<div class="wrapper">
 		  <div class="grid_10">
-			  <h1 id='edit_title'>Work Experience:</h1>
-              <form action='work2.php' method='post'>
-              <?=$message?><br>
+			  <h1 id='edit_title'>Extracurriculars:</h1>
+              <form action='extracurricular.php' method='post'>
+              <?=$error?><?=$message?><br>
               <form action='image.php' method='post'>
               <ul id='education'>
                 <li>
-                    <label class='field' for='company'>Company Name: </label>
-                    <input type='text' name='company' size=20 value="<?=$experience['company_name']?>"/>
+                    <label class='field' for='organization'>Organization: </label>
+                    <input type='text' name='organization' size=20 value="<?=$experience['organization']?>"/>
                 </li>
                 <li>
-                    <label class='field' for='title'>Title: </label> <input type='text' name='title' value="<?=$experience['title']?>"/>
+                    <label class='field' for='title'>Title (If Applicable): </label> <input type='text' name='title' value="<?=$experience['title']?>"/>
                 </li>
-                <li>
-                <label class="field" for="city">City: </label><input name="city" value="<?=$experience['city']?>" width="150px"/> State: <input name="state" value="<?=$experience['state']?>" style="width: 60px;" />
-                <li>
-                    <label class='field' for='work_year_start'>Time Period: </label>
+                <li>                    
+                	<label class='field' for='extra_year_start'>Time Period: </label>
                     <script>
-                    document.write("<select name=\"work_month_start\">");
+                    document.write("<select name=\"extra_month_start\">");
 					months();
-					document.write("<select name=\"work_year_start\">");
+					document.write("<select name=\"extra_year_start\">");
 					years(<?=$year_start?>);
-					document.write("<label for=\"work_month_end\"> - </label>");
-					document.write("<select name=\"work_month_end\">");
+					document.write("<label for=\"extra_month_end\"> - </label>");
+					document.write("<select name=\"extra_month_end\">");
 					months();
-					document.write("<select name=\"work_year_end\">");
+					document.write("<select name=\"extra_year_end\">");
 					years(<?=$year_end?>);
-					selectMonth("work_month_start", "<?=$month_start?>");
-					selectMonth("work_month_end", "<?=$month_end?>");
+					selectMonth("extra_month_start", "<?=$month_start?>");
+					selectMonth("extra_month_end", "<?=$month_end?>");
                     </script><br>
-					<label class='subscript' for='present'>Currently Employed: </label>
+					<label class='subscript' for='present'>Currently Involved: </label>
                     <input type="checkbox" name="present" value="1" <?=$c_employed?>>
                 </li>
                 <li>
                 <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea>
                 </li>
                 <li><span style='margin-left: 300px;'>
-                <input type="hidden" name="wid" value="<?=$wid?>">
+                <input type="hidden" name="lid" value="<?=$lid?>">
                 <input type='submit' name='send' value='<?=$option?>' />
                 <input type='submit' name='skip' value='Skip' />
-                <input type='submit' name='add' value='Add Another Job' />
+                <input type='submit' name='send' value='Delete' />
+                <input type='submit' name='add' value='Add Another Activity' />
                 </span></li>
                 </ul>
             </form>

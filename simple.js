@@ -121,3 +121,7 @@ function img_up()
 	tag.innerHTML = "Uploading picture, do not change the page.";
 	return true;
 }
+
+/**
+Generic Profile.
+**/

@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['idnum']))
+{
+	header("Location: index.php");
+}
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/profile_functions.php');
@@ -53,9 +57,6 @@ $p_name = $v_users['first_name']." ".$v_users['last_name'];
 $query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $idnum);
 $result = mysql_query($query);
 $v_education = mysql_fetch_assoc($result);
-$query = sprintf("SELECT * FROM work_data WHERE idnum=%d", $idnum);
-$result = mysql_query($query);
-$v_work = mysql_fetch_assoc($result);
 /**
 Creates the message under education.
 **/
@@ -81,23 +82,25 @@ else
 /**
 Creates the message under extracurriculars.
 **/
-if ($v_education['organization'] == "")
+if ($idnum == $_SESSION['idnum'])
 {
-	$extracurriculars = "<li>Extracurriculars not available.";
-	if ($idnum == $_SESSION['idnum'])
-	{
-		$extracurriculars .= "<div id='edit_profile'><a href='education.php#activities'>Add</a></div>";
-	}
-	$extracurriculars .= "</li>";
+	$v_extracurriculars = extra_own($idnum);
 }
 else
 {
-	$extracurriculars = "<li>".$v_education['organization']."</li>";
-	if ($idnum == $_SESSION['idnum'])
-	{
-		$extracurriculars .= "<div id='edit_profile'><a href='education.php#activities'>Edit</a></div>";
-	}
-	$extracurriculars .= "</li>";
+	$v_extracurriculars = extra($idnum);
+}
+
+/**
+Creates message under skills.
+**/
+if ($idnum == $_SESSION['idnum'])
+{
+	$v_skills = skills_own($idnum);
+}
+else
+{
+	$v_skills = skills($idnum);
 }
 
 if (isset($_GET['follow']) && $idnum != $_SESSION['idnum'])
@@ -257,23 +260,28 @@ $(function(){
                 }
                 </script>            
 				<br>
-				<ul id="prof_ccat">
-				<li>
-				EDUCATION</li>
-				</ul>
+                <span style="font-size: 14px;">
+				<h1 id="cprof_cat">EDUCATION</h1><hr style="margin-top:0; padding-top:0px;">
 				<fieldset>
-				<br>
-				<ul style="margin-left: 5px;"><?=$v_education_message?></ul>
+				<ul style="margin-left: 10px;"><?=$v_education_message?></ul>
 				<br>
                 </fieldset>
-                <ul id="prof_ccat">
-                <li>WORK EXPERIENCE</li>
-                </ul>
+                <h1 id="cprof_cat">WORK EXPERIENCE</h1><hr style="margin-top:0; padding-top:0px;">
                 <fieldset>
-                <br>
-                <ul style="margin-left: 5px;"><?=$v_work_message?></ul>
+                <ul style="margin-left: 10px;"><?=$v_work_message?></ul>
                 <br>
                 </fieldset>
+                <h1 id="cprof_cat">EXTRACURRICULAR</h1><hr style="margin-top:0; padding-top:0px;">
+                <fieldset>
+                <ul style="margin-left: 10px;"><?=$v_extracurriculars?></ul>
+                <br>
+                </fieldset>
+                <h1 id="cprof_cat">SKILLS/ACTIVITIES/INTERESTS</h1><hr style="margin-top:0; padding-top:0px;">
+                <fieldset>
+                <ul style="margin-left: 10px;"><?=$v_skills?></ul>
+                <br>
+                </fieldset>
+                </span>
 			</div>
 		</div>
         

@@ -174,7 +174,7 @@ $(function(){
 		<div class="wrapper">
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Notifications</h2>
-				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt=""></a></div>
+				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt="" width="300px"></a></div>
 				<p class="padtop padbot">Welcome back, <?=$_SESSION['users']['first_name']?>.</p>
       <br />
       <p><?=$message1?></p>

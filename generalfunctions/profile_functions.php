@@ -65,7 +65,18 @@ function work($id)
 			$end = date("F Y", strtotime($work['company_end']));
 		}
 		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
-		$html .= "<br />".$work['achievement']."</li><br />"; //achievement
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
+		$html .= "<br />";
+		if (trim($work['achievement']) != "")
+		{
+			
+			$bits = explode("\n", $work['achievement']);
+			foreach($bits as $bit)
+			{
+			  $html .= "<li>".$bit."</li>";
+			}
+		}
+		$html .= "</ul></li>";
 	}
 	//$eduhtml = $eduhtml."</ul>";
 	if ($html == "")
@@ -90,7 +101,7 @@ function work_own($id)
 	$html = "";
 	while ($work =  mysql_fetch_assoc($result))
 	{
-		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong>";
+		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong><span id='edit_info'><a href='work.php?w_id=".$work['w_id']."'>Edit</a></span>";
 		if ($work['city']=="" || $work['state']=="")
 		{
 			$html .= "<span style='float: right; position: relative; font-weight: bold;'></span>";
@@ -110,7 +121,19 @@ function work_own($id)
 			$end = date("F Y", strtotime($work['company_end']));
 		}
 		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
-		$html .= "<br />".$work['achievement']."<span id='edit_profile'><a href='work.php?w_id=".$work['w_id']."'>Edit</a></span></li><br />"; //achievement
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
+		$html .= "<br />";
+		if (trim($work['achievement']) != "")
+		{
+			
+			$bits = explode("\n", $work['achievement']);
+			foreach($bits as $bit)
+			{
+			  $html .= "<li>".$bit."</li>";
+			}
+		}
+		$html .= "</ul></li>";
+		//$html .= "</ul><span id='edit_profile'><a href='work.php?w_id=".$work['w_id']."'>Edit</a></span></li>"; //achievement
 	}
 	//$eduhtml = $eduhtml."</ul>";
 	if ($html == "")
@@ -121,40 +144,184 @@ function work_own($id)
 }
 
 /**
+Extracurricular Experience.
+**/
+function extra($id)
+{
+	$query = sprintf("SELECT * FROM leadership_data WHERE idnum=%d ORDER BY end DESC LIMIT 4", $id);
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$eduhtml = "<li><strong>Error retrieving extra.</strong></li>";
+		return($eduhtml);
+	}
+	$html = "";
+	while ($work =  mysql_fetch_assoc($result))
+	{
+		$html = $html."<li><strong style='position: absolute;'>".$work['organization']."</strong>";
+		if (trim($work['title']) != "")
+		{
+			$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
+		}
+		$start = date("F Y", strtotime($work['start']));
+		if ($work['present'] > 0)
+		{
+			$end = "Present";
+		}
+		else
+		{
+			$end = date("F Y", strtotime($work['end']));
+		}
+		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
+		$html .= "<br />";
+		if ($work['achievement'] != " ")
+		{
+			
+			$bits = explode("\n", $work['achievement']);
+			foreach($bits as $bit)
+			{
+			  $html .= "<li>".$bit."</li>";
+			}
+		}
+		$html .= "</ul></li>";
+	}
+	//$eduhtml = $eduhtml."</ul>";
+	if ($html == "")
+	{
+		$html = "<li>Extracurricular not available.</li>";
+	}
+	return($html);
+}
+
+/**
+Extracurricular Experience of own.
+**/
+function extra_own($id)
+{
+	$query = sprintf("SELECT * FROM leadership_data WHERE idnum=%d ORDER BY end DESC LIMIT 4", $id);
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$eduhtml = "<li><strong>Error retrieving work.</strong></li>";
+		return($eduhtml);
+	}
+	$html = "";
+	while ($work =  mysql_fetch_assoc($result))
+	{
+		$html = $html."<li><strong style='position: absolute;'>".$work['organization']."</strong><span id='edit_info'><a href='extracurricular.php?l_id=".$work['l_id']."'>Edit</a></span>";
+		if (trim($work['title']) != "")
+		{
+			$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
+		}
+		$start = date("F Y", strtotime($work['start']));
+		if ($work['present'] > 0)
+		{
+			$end = "Present";
+		}
+		else
+		{
+			$end = date("F Y", strtotime($work['end']));
+		}
+		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
+		$html .= "<br />";
+		if (trim($work['achievement']) != "")
+		{
+			
+			$bits = explode("\n", $work['achievement']);
+			foreach($bits as $bit)
+			{
+			  $html .= "<li>".$bit."</li>";
+			}
+		}
+		$html .= "</ul></li>"; //achievement
+	}
+	//$eduhtml = $eduhtml."</ul>";
+	if ($html == "")
+	{
+		$html = "<li>Extracurricular not available.<span id='edit_profile'><a href='extracurricular.php'>Add</a></span></li>";
+	}
+	return($html);
+}
+
+/**
 Skills
 **/
 function skills($id)
 {
-	$query = sprintf("SELECT * FROM skill_data WHERE idnum=%d", $id);
+	$query = sprintf("SELECT * FROM users WHERE idnum=%d", $id);
 	$result = mysql_query($query);
 	if (!$result)
 	{
-		$eduhtml = "<li><strong>Skills and Extracurriculars not available.</strong></li>";
-		return($eduhtml);
+		return(mysql_error());
 	}
-	$eduhtml = "";
-	$liststart = "<li><strong>";
-	$listend = "</strong>";
+	$html = "<span id='skills'>";
 	$degreestart = "<br /><em>";
-	while ($education =  mysql_fetch_assoc($result))
+	$user = mysql_fetch_assoc($result);
+	$skills = $user['skills'];
+	if (strpos($skills, ",") > 0)
 	{
-		$eduhtml = $eduhtml.$liststart.$education['company_name'].$listend;
-		$eduhtml = $eduhtml.$degreestart.$education['title']."</em></li>";
+		$ski = substr($skills, 0, strpos($skills, ","));
+		$skills = substr(strchr($skills, ","), 1);
+		$html = $html."<a>".$ski."</a>";
 	}
+	while (strpos($skills, ",") > 0)
+	{
+		$ski = substr($skills, 0, strpos($skills, ","));
+		$skills = substr(strchr($skills, ","), 1);
+		$html = $html.",<a>".$ski."</a>";
+	}
+	//final skill
+	if ($skills == $user['skills'])
+	{
+		$html .= "<a>".$skills."</a>";
+	}
+	else if (trim($skills) != "")
+	{
+		$html = $html.", and <a>".$skills."</a>";
+	}
+	$html .= "</span>";
 	//$eduhtml = $eduhtml."</ul>";
-	return($eduhtml);
+	return($html);
 }
 
-function extracurriculars($id)
+function skills_own($id)
 {
-	// self.
-	$extra = "";
-	$liststart = "<li>";
-	$listend = "</li>";
-	if ($id = $_SESSION['idnum']) 
+	$query = sprintf("SELECT * FROM users WHERE idnum=%d", $id);
+	$result = mysql_query($query);
+	if (!$result)
 	{
-		
+		return(mysql_error());
 	}
+	$html = "<span id='skills'>";
+	$degreestart = "<br /><em>";
+	$user = mysql_fetch_assoc($result);
+	$skills = $user['skills'];
+	if (strpos($skills, ",") > 0)
+	{
+		$ski = substr($skills, 0, strpos($skills, ","));
+		$skills = substr(strchr($skills, ","), 1);
+		$html = $html."<a>".$ski."</a>";
+	}
+	while (strpos($skills, ",") > 0)
+	{
+		$ski = substr($skills, 0, strpos($skills, ","));
+		$skills = substr(strchr($skills, ","), 1);
+		$html = $html.",<a>".$ski."</a>";
+	}
+	//final skill
+	if ($skills == $user['skills'])
+	{
+		$html .= "<a>".$skills."</a>";
+	}
+	else if (trim($skills) != "")
+	{
+		$html = $html.", and <a>".$skills."</a>";
+	}
+	$html .= "</span> <span id='edit_profile'><a href='basic_info.php?'>Edit</a></span>";
+	//$eduhtml = $eduhtml."</ul>";
+	return($html);
 }
 
 /**
@@ -190,9 +357,12 @@ function ceducation($id)
 		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
 		$eduhtml = $eduhtml."<span style='float: right; position: relative;'>".$year."</span><br/>"; //on right.
-		$eduhtml = $eduhtml."<ul><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
+		$eduhtml = $eduhtml."<ul style='list-style-type: disc; list-style-position: inside;'><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
 		$eduhtml = $eduhtml; // Add in major GPA later.
-		$eduhtml = $eduhtml."<li><strong>Honors: </strong>".$education['honors']."</li></ul></li>";
+		if (trim($education['honors']) != "")
+		{
+			$eduhtml = $eduhtml."<li><strong>Honors: </strong>".$education['honors']."</li></ul></li>";
+		}
 	}
 	//$eduhtml = $eduhtml."</ul>";
 	if ($eduhtml == "")
@@ -234,9 +404,12 @@ function ceducation_own($id)
 		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
 		$eduhtml = $eduhtml."<span style='float: right; position: relative;'>".$year."</span><br/>"; //on right.
-		$eduhtml = $eduhtml."<ul><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
+		$eduhtml = $eduhtml."<ul style='list-style-type: disc; list-style-position: inside;'><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
 		$eduhtml = $eduhtml; // Add in major GPA later.
-		$eduhtml = $eduhtml."<li><strong>Honors: </strong>".$education['honors']."</li></ul><span id='edit_profile'><a href='education.php?'>Edit</a></span></li>";
+		if (trim($education['honors']) != "")
+		{
+			$eduhtml = $eduhtml."<li><strong>Honors: </strong>".$education['honors']."</li></ul><span id='edit_profile'><a href='education.php?'>Edit</a></span></li>";
+		}
 	}
 	//$eduhtml = $eduhtml."</ul>";
 	if ($eduhtml == "")

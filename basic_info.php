@@ -9,69 +9,39 @@ if (!$connect)
 	$error = "failed to connect";
 }
 
-/**
-Change picture.
-**/
-if ($_POST['upload'] == "Upload")
+$query = sprintf("SELECT * FROM users WHERE idnum=%d", $_SESSION['idnum']);
+$result = mysql_query($query);
+$user_info = mysql_fetch_assoc($result);
+if ($_POST['submit'] == "Save")
 {
-	$path = pathinfo($_FILES['picture']['name']);
-	$ext = strtolower($path['extension']);
-	$filename = '/images/'.$_SESSION['idnum'].".".$ext;
-	$fname = __ROOT__.$filename;
-	if (!move_uploaded_file($_FILES['picture']['tmp_name'], $fname))
+	$city = $_POST['city'];
+	$state = $_POST['state'];
+	$field = $_POST['field'];
+	$pay = $_POST['income'];
+	$skills = $_POST['skills'];
+	if (isset($_POST['hourly']))
 	{
-		$error = "failed to move uploaded file.";
+		$hourly = 1;
 	}
-	$query = sprintf("UPDATE users SET picture='%s' WHERE idnum=%d LIMIT 1", $filename, $_SESSION['idnum']);
-	$result = mysql_query($query);
-	$option = "Home";
-}
-else if ($_POST['send'] == "Submit" || $_POST['add'] == "Add Another Job")
-{
-	$_SESSION['complete'] = 3;
-	$company = $_POST['company'];
-	$title = $_POST['title'];
-	$work_month_start = $_POST['work_month_start'];
-	$work_year_start = $_POST['work_year_start'];
-	$work_month_end = $_POST['work_month_end'];
-	$work_year_end = $_POST['work_year_end'];
-	$achievement = $_POST['achievement'];
-	$idnum = $_SESSION['idnum'];
-	$work_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
-	$work_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
-	//Need to finish.
-	$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, achievement) VALUES ('$idnum', '$company', '$title', '$work_start', '$work_end', '$achievement')");
-	$result = mysql_query($query);
+	else
+	{
+		$hourly = 0;
+	}
+	$query = sprintf("UPDATE users SET city='%s', state='%s', country='United States', field='%s', pay='$pay', hourly=$hourly, skills='$skills' WHERE idnum=%d LIMIT 1", $city, $state, $field, $_SESSION['idnum']);
+	$message = "<p id=\"update_message\">Basic information updated.</p>";
+	$result = mysql_query($query);	
 	if (!$result)
 	{
 		$error = mysql_error();	
 	}
-	
-	if ($_POST['add'] == "Add Another Job")
-	{
-		header("Location: register.php");
-	}
-}
-else if ($_POST['upload'] == "Home")
-{
-	header("Location: home.php");
-}
-$query = sprintf("SELECT picture FROM users WHERE idnum = %d", $_SESSION['idnum']);
-$result = mysql_query($query);
-if (!$result)
-{
-	$error = mysql_error();
-}
-$mes = mysql_fetch_assoc($result);
-$filename = $mes['picture'];
-if (!is_null($filename))
-{
-	$picture_html = sprintf("<img src='%s' width='300px'></img><br />", $filename);
 }
 
-if (!isset($option))
+$query = sprintf("SELECT * FROM users WHERE idnum=%d", $_SESSION['idnum']);
+$result = mysql_query($query);
+$user_info = mysql_fetch_assoc($result);
+if ($user_info['hourly'] == 1)
 {
-	$option = "Upload";
+	$hourly_mes = "checked='checked'";
 }
 ?>
 <!DOCTYPE html>
@@ -151,23 +121,26 @@ $(function(){
 <section id="content">  
 	<div class="container_12">
 		<div class="wrapper">
-			<div class="grid_10">
-				<form enctype="multipart/form-data" action="image.php" method="post">
-                <div align="center">
-                <?=$picture_html?>
-                </div>
-                <div>
-                    <label class="field" for="picture">Upload Picture: </label>
-                    <input type="file" name="picture" width="300px;"/>
-                </div>
-                <span id="image_mes" style="color:#999; text-align: center;">
-                
-                </span>
-                <div align="center">
-                <input type="submit" name="upload" value="<?=$option?>" onClick="return img_up();"/>
-                <input type="submit" name="skip" value="Skip" />
-                </div>
-                </form>
+		  <div class="grid_10">
+			  <h1 id='edit_title'>Basic Information:</h1>
+              <form action='basic_info.php' method='post'>
+              <?=$error?><?=$message?><br>
+              <ul id='education'>
+                <li><label class="field" for="city">City: </label><input name="city" value="<?=$user_info['city']?>" width="150px"/> State: <input name="state" value="<?=$user_info['state']?>" style="width: 60px;" /></li>
+                <li id="school"></li>                    
+                <li><label class="field" for="income">Expected Pay: </label> 
+    <input name="income" value="<?=$user_info['pay']?>"/><label for="hourly">  &nbsp;Hourly: </label>
+    <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
+                <li><label class='field' for='field'>Primary Field: </label> <input type='text' name='field' value="<?=$user_info['field']?>"/></li>
+            <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
+            <li><label class='field' for='skills'>Technical Skills: </label>
+            <textarea name='skills' rows='2'><?=$user_info['skills']?></textarea></li>
+            <label class='subscript' for='honors'>Example: Microsoft Excel, HTML</label><br>
+            <li>
+            <span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
+            <input type='submit' name='skip' value='Skip' /></span></li>
+            </ul>
+        	</form>
 			</div>
 		</div>
 	</div>

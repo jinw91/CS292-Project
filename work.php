@@ -50,26 +50,21 @@ if ($_POST['send'] == "Apply Changes" || $_POST['send'] == "Add")
 	$company_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
 	$company_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
 	
-	if ($_POST['send'] == "Apply Changes")
+	if ($_POST['send'] == "Apply Changes" && isset($_POST['present']))
 	{
-		$query = sprintf("UPDATE work_data SET company_name='$company', title='$title', city='$city', state='$state', company_start=$company_start, company_end=$company_end, achievement='$achievement' WHERE w_id=$wid");
+		$query = sprintf("UPDATE work_data SET company_name='$company', title='$title', city='$city', state='$state', company_start='$company_start', company_end='$company_end', present=1, achievement='$achievement' WHERE w_id=$wid");
+	}
+	else if ($_POST['send'] == "Apply Changes")
+	{
+		$query = sprintf("UPDATE work_data SET company_name='$company', title='$title', city='$city', state='$state', company_start='$company_start', company_end='$company_end', present=0, achievement='$achievement' WHERE w_id=$wid");
+	}
+	else if (isset($_POST['present']))
+	{
+		$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, present, achievement) VALUES ('$idnum', '$company', '$title', '$company_start', '$company_end', '$city', '$state', 1, '$achievement')");
 	}
 	else
 	{
-		$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, achievement) VALUES ('$idnum', '$company', '$title', '$company_start', '$company_end', '$city', '$state', '$achievement')");
-	}
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-	if (isset($_POST['present']))
-	{
-		$query = sprintf("UPDATE work_data SET present=1 WHERE w_id=$wid");
-	}
-	else
-	{
-		$query = sprintf("UPDATE work_data SET present=0 WHERE w_id=$wid");
+		$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, present, achievement) VALUES ('$idnum', '$company', '$title', '$company_start', '$company_end', '$city', '$state', 0, '$achievement')");
 	}
 	$result = mysql_query($query);
 	if (!$result)
@@ -229,6 +224,7 @@ $(function(){
                 <input type="hidden" name="wid" value="<?=$wid?>">
                 <input type='submit' name='send' value='<?=$option?>' />
                 <input type='submit' name='skip' value='Skip' />
+                <input type='submit' name='send' value='Delete' />
                 <input type='submit' name='add' value='Add Another Job' />
                 </span></li>
                 </ul>
