@@ -219,7 +219,6 @@ $(function(){
                 <li><span style='margin-left: 300px;'>
                 <input type="hidden" name="lid" value="<?=$lid?>">
                 <input type='submit' name='send' value='<?=$option?>' />
-                <input type='submit' name='skip' value='Skip' />
                 <input type='submit' name='send' value='Delete' />
                 <input type='submit' name='add' value='Add Another Activity' />
                 </span></li>

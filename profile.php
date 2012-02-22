@@ -9,91 +9,111 @@ if (!$connect)
 {
 	echo "failed to connect";	
 }
-if ($_GET['submit'] == "Search" || isset($_GET['idnum']))
+
+if (isset($_GET['b_id']))
 {
-	$idnum = $_GET['idnum'];
+	$query = sprintf("SELECT * FROM businesses WHERE b_id=%d", $_GET['b_id']);
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = mysql_error();
+	}
+	$company = mysql_fetch_assoc($result);
+	$p_name = $company['company_name'];
 }
+
+/**
+Profile page.
+**/
 else
 {
-	$idnum = $_SESSION['idnum'];
-}
-$query = sprintf("SELECT * FROM users WHERE idnum=%d", $idnum);
-$result = mysql_query($query);
-if (!$result)
-{
-	echo mysql_error();	
-}
-
-$v_users = mysql_fetch_assoc($result);
-
-//Checks if visited.
-$query = sprintf("SELECT * FROM viewed WHERE to_id=%d", $idnum);
-$result = mysql_query($query);
-if (!$result)
-{
-	$error = mysql_error();	
-}
-else if (mysql_num_rows($result) == 0)
-{
-	$query = sprintf("INSERT INTO viewed (from_id, to_id, viewed) VALUES (%d, %d, NOW())", $_SESSION['idnum'], $idnum);
+	if ($_GET['submit'] == "Search" || isset($_GET['idnum']))
+	{
+		$idnum = $_GET['idnum'];
+	}
+	else
+	{
+		$idnum = $_SESSION['idnum'];
+	}
+	$query = sprintf("SELECT * FROM users WHERE idnum=%d", $idnum);
 	$result = mysql_query($query);
-}
-else if (mysql_num_rows($result) > 0)
-{
-	$query = sprintf("UPDATE viewed SET viewed=NOW() WHERE to_id=$idnum");
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	
+	$v_users = mysql_fetch_assoc($result);
+	
+	//Checks if visited.
+	/*
+	$query = sprintf("SELECT * FROM viewed WHERE to_id=%d", $idnum);
 	$result = mysql_query($query);
-}
-
-if (is_null($v_users['picture']))
-{
-	$v_users['picture'] = "images/default.png";
-}
-$p_name = $v_users['first_name']." ".$v_users['last_name'];
-
-$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $idnum);
-$result = mysql_query($query);
-$v_education = mysql_fetch_assoc($result);
-$query = sprintf("SELECT * FROM work_data WHERE idnum=%d", $idnum);
-$result = mysql_query($query);
-$v_work = mysql_fetch_assoc($result);
-/**
-Creates the message under experience.
-**/
-if ($idnum == $_SESSION['idnum'])
-{
-	$v_work_message = work_own($idnum);
-}
-else
-{
-	$v_work_message = work($idnum);
-}
-/**
-Creates the message under extracurriculars.
-**/
-if ($v_education['organization'] == "")
-{
-	$extracurriculars = "<li>Extracurriculars not available.";
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	else if (mysql_num_rows($result) == 0)
+	{
+		$query = sprintf("INSERT INTO viewed (from_id, to_id, viewed) VALUES (%d, %d, NOW())", $_SESSION['idnum'], $idnum);
+		$result = mysql_query($query);
+	}
+	else if (mysql_num_rows($result) > 0)
+	{
+		$query = sprintf("UPDATE viewed SET viewed=NOW() WHERE to_id=$idnum");
+		$result = mysql_query($query);
+	}*/
+	
+	if (is_null($v_users['picture']))
+	{
+		$v_users['picture'] = "images/default.png";
+	}
+	$p_name = $v_users['first_name']." ".$v_users['last_name'];
+	
+	$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $idnum);
+	$result = mysql_query($query);
+	$v_education = mysql_fetch_assoc($result);
+	$query = sprintf("SELECT * FROM work_data WHERE idnum=%d", $idnum);
+	$result = mysql_query($query);
+	$v_work = mysql_fetch_assoc($result);
+	/**
+	Creates the message under experience.
+	**/
 	if ($idnum == $_SESSION['idnum'])
 	{
-		$extracurriculars .= "<div id='edit_profile'><a href='education.php#activities'>Add</a></div>";
+		$v_work_message = work_own($idnum);
 	}
-	$extracurriculars .= "</li>";
-}
-else
-{
-	$extracurriculars = "<li>".$v_education['organization']."</li>";
-	if ($idnum == $_SESSION['idnum'])
+	else
 	{
-		$extracurriculars .= "<div id='edit_profile'><a href='education.php#activities'>Edit</a></div>";
+		$v_work_message = work($idnum);
 	}
-	$extracurriculars .= "</li>";
-}
-
-if (isset($_GET['follow']) && $idnum != $_SESSION['idnum'])
-{
-		$query = sprintf("INSERT INTO subscribed (from_id, to_id, subscribed) VALUES ('%d', '%d', NOW())", $_SESSION['idnum'], $idnum);
-		$result = mysql_query($query); 
-		$message = "<script type='text/javascript'>alert('You are now following $p_name');</script>";
+	/**
+	Creates the message under extracurriculars.
+	**/
+	if ($v_education['organization'] == "")
+	{
+		$extracurriculars = "<li>Extracurriculars not available.";
+		if ($idnum == $_SESSION['idnum'])
+		{
+			$extracurriculars .= "<div id='edit_profile'><a href='education.php#activities'>Add</a></div>";
+		}
+		$extracurriculars .= "</li>";
+	}
+	else
+	{
+		$extracurriculars = "<li>".$v_education['organization']."</li>";
+		if ($idnum == $_SESSION['idnum'])
+		{
+			$extracurriculars .= "<div id='edit_profile'><a href='education.php#activities'>Edit</a></div>";
+		}
+		$extracurriculars .= "</li>";
+	}
+	
+	if (isset($_GET['follow']) && $idnum != $_SESSION['idnum'])
+	{
+			$query = sprintf("INSERT INTO subscribed (from_id, to_id, subscribed) VALUES ('%d', '%d', NOW())", $_SESSION['idnum'], $idnum);
+			$result = mysql_query($query); 
+			$message = "<script type='text/javascript'>alert('You are now following $p_name');</script>";
+	}
 }
 ?>
 <!DOCTYPE html>

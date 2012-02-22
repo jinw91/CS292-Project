@@ -122,6 +122,85 @@ function img_up()
 	return true;
 }
 
+function validate_education()
+{
+	
+	var major = document.getElementById('major');
+	var message = "";
+	if (major.value == "")
+	{
+		message+="Please fill in your area(s) of study.";
+		window.alert(message);
+		return false;
+	}
+	return true;
+}
+
+function validate_work()
+{
+	
+	var name = document.getElementById('name');
+	var title = document.getElementById('title');
+	var state = document.getElementById('state');
+	var city = document.getElementById('city');
+	var skip = document.getElementById('skip');
+	if (skip.value =="Skip")
+	{
+		return true;
+	}
+	var message = "";
+	if (name.value == "")
+	{
+		message+="Please fill in your company name.";
+		window.alert(message);
+		return false;
+	}
+	if (title.value == "")
+	{
+		message+="Please fill in your title.";
+		window.alert(message);
+		return false;
+	}
+	if (city.value == "")
+	{
+		message+="Please fill in the city of where you worked.";
+		window.alert(message);
+		return false;
+	}
+	if (state.value == "")
+	{
+		message+="Please fill in the state of where you worked.";
+		window.alert(message);
+		return false;
+	}
+	return true;
+}
+
+function validate_extra()
+{
+	
+	var name = document.getElementById('name');
+	var title = document.getElementById('title');
+	var skip = document.getElementById('skip');
+	if (skip.value == "Skip")
+	{
+		return true;
+	}
+	var message = "";
+	if (name.value == "")
+	{
+		message+="Please fill in your organization name.";
+		window.alert(message);
+		return false;
+	}
+	if (title.value == "")
+	{
+		message+="Please fill in your title.";
+		window.alert(message);
+		return false;
+	}
+	return true;
+}
 /**
 Generic Profile.
 **/

@@ -125,7 +125,7 @@ else if (!isset($_GET['jid']) && mysql_num_rows($result) > 0)
 		$message = "<ul id='job_entries'>";
 		while ($job =  mysql_fetch_assoc($result))
 		{
-			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='createjob.php?jid=".$job['jid']."'>Edit</a> <a href='search/searcharchives.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
+			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='createjob.php?jid=".$job['jid']."'>Edit</a> <a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
 			$message = $message."</li>";
 		}
 		$message = $message."</ul>";
@@ -159,7 +159,7 @@ else
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><?=$p_name?></title>
+<title>Professional Archives</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">

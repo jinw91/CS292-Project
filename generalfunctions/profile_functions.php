@@ -73,7 +73,10 @@ function work($id)
 			$bits = explode("\n", $work['achievement']);
 			foreach($bits as $bit)
 			{
-			  $html .= "<li>".$bit."</li>";
+				if (trim($bit) != "")
+				{
+			  		$html .= "<li>".$bit."</li>";
+				}
 			}
 		}
 		$html .= "</ul></li>";
@@ -129,7 +132,10 @@ function work_own($id)
 			$bits = explode("\n", $work['achievement']);
 			foreach($bits as $bit)
 			{
-			  $html .= "<li>".$bit."</li>";
+				if (trim($bit) != "")
+				{
+			  		$html .= "<li>".$bit."</li>";
+				}
 			}
 		}
 		$html .= "</ul></li>";
@@ -159,10 +165,6 @@ function extra($id)
 	while ($work =  mysql_fetch_assoc($result))
 	{
 		$html = $html."<li><strong style='position: absolute;'>".$work['organization']."</strong>";
-		if (trim($work['title']) != "")
-		{
-			$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
-		}
 		$start = date("F Y", strtotime($work['start']));
 		if ($work['present'] > 0)
 		{
@@ -172,16 +174,28 @@ function extra($id)
 		{
 			$end = date("F Y", strtotime($work['end']));
 		}
-		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		
+		if (trim($work['title']) != "")
+		{
+			$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
+			$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'><br />";
+		}
+		else
+		{
+			$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span><br />";
 		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
-		$html .= "<br />";
-		if ($work['achievement'] != " ")
+		}
+		if (trim($work['achievement']) != "")
 		{
 			
 			$bits = explode("\n", $work['achievement']);
 			foreach($bits as $bit)
 			{
-			  $html .= "<li>".$bit."</li>";
+				if (trim($bit) != "")
+				{
+			  		$html .= "<li>".$bit."</li>";
+				}
 			}
 		}
 		$html .= "</ul></li>";
@@ -210,10 +224,6 @@ function extra_own($id)
 	while ($work =  mysql_fetch_assoc($result))
 	{
 		$html = $html."<li><strong style='position: absolute;'>".$work['organization']."</strong><span id='edit_info'><a href='extracurricular.php?l_id=".$work['l_id']."'>Edit</a></span>";
-		if (trim($work['title']) != "")
-		{
-			$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
-		}
 		$start = date("F Y", strtotime($work['start']));
 		if ($work['present'] > 0)
 		{
@@ -223,16 +233,28 @@ function extra_own($id)
 		{
 			$end = date("F Y", strtotime($work['end']));
 		}
-		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		
+		if (trim($work['title']) != "")
+		{
+			$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
+			$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'><br />";
+		}
+		else
+		{
+			$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span><br />";
 		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
-		$html .= "<br />";
+		}
 		if (trim($work['achievement']) != "")
 		{
 			
 			$bits = explode("\n", $work['achievement']);
 			foreach($bits as $bit)
 			{
-			  $html .= "<li>".$bit."</li>";
+			  	if (trim($bit) != "")
+				{
+			  		$html .= "<li>".$bit."</li>";
+				}
 			}
 		}
 		$html .= "</ul></li>"; //achievement
@@ -352,7 +374,7 @@ function ceducation($id)
 		}
 		else
 		{
-			$year = $temp;
+			$year = "";
 		}
 		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
@@ -399,7 +421,7 @@ function ceducation_own($id)
 		}
 		else
 		{
-			$year = $temp;
+			$year = "";
 		}
 		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";

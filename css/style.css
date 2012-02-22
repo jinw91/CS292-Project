@@ -239,6 +239,7 @@ footer h1{ padding:42px 0 12px 0;}
 	color: black; 
 	border: 1px solid #666;
 	margin-right: 10px;
+	position: relative;
 }
 #edit_info a:visited, a:link
 {
@@ -341,4 +342,44 @@ label.subscript
 {
 	color: black;
 	text-decoration: none;
+}
+
+#search li
+{
+	list-style-type: none;
+	margin-left: 0px;
+}
+#search label
+{
+	text-align: left;
+	width: 100px;
+}
+#search li input, #search li select
+{
+	width: 180px;
+	line-height: 1em;
+}
+#search input[type=submit]
+{
+	margin-left: 230px;
+}
+#work
+{
+	width: 100px;
+}
+
+/**
+Inbox
+**/
+label.inbox
+{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 150px;
+	text-align: right;
+}
+#compose li input[type=text]
+{
+	width: 180px;
 }

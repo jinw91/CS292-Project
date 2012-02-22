@@ -9,6 +9,35 @@ if (!$connect)
 	$error = "failed to connect";
 }
 
+$work_code = "<img src='site_im/two-thirds.png'>
+			  <p><h2>Here's how it will appear:</h2></p>
+              <img src='site_im/sample_work.png'>
+              <h2>Please fill out your work experience: </h2>
+              <form action='register.php' method='post' onSubmit='return validate_work();'>
+              <ul id='education'>
+                <li>
+                    <label class='field' for='company'>Company Name: </label>
+                    <input type='text' name='company' id='name' size=20/>
+                </li>
+                <li>
+                    <label class='field' for='title'>Title: </label> <input type='text' name='title' id='title'/>
+                </li>
+                <li><label class='field' for='city'>City: </label><input name='city' id='city' width='150px'/> State: <input name='state' id='state' style='width: 60px;' /></li>
+                <li>
+                    <label class='field' for='work_year_start'>Time Period: </label>
+                    <script>
+                    work_form();
+                    </script>
+                </li>
+                <li>
+                <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'></textarea>
+                </li>
+                <li><span style='margin-left: 300px;'>
+                <input type='submit' name='send' value='Submit' />
+                <input type='submit' name='send' id='skip' value='Skip' />
+                <input type='submit' name='add' value='Add Another Job' />
+                </span></li></ul>
+            </form>";
 if ($_POST['submit'] == "Register Now")
 {
 	$_SESSION['complete'] = 1;
@@ -35,11 +64,14 @@ if ($_POST['submit'] == "Register Now")
 	{
 		//header("Location: index.php");
 	}
-	$form_info = sprintf("<h2>Please fill out your education information to complete your profile.</h2>
-              <form action='register.php' method='post'>
+	$form_info = sprintf("<img src='site_im/one-thirds.png'>
+			  <p><h2>Here's how it will appear:</h2></p>
+              <img src='site_im/sample_education.png'>
+              <h2>Please fill out your education: </h2>
+              <form action='register.php' method='post' onSubmit='return validate_education();'>
               <ul id='education'>
                 <li><label class='field' for='college'>College Name: </label>
-                <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege()'>
+                <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>
                     <option value='Vanderbilt University'>Vanderbilt University</option>
 					<option value='Duke University'>Duke University</option>
                     <option value='University of Notre Dame'>University of Notre Dame</option>
@@ -47,7 +79,7 @@ if ($_POST['submit'] == "Register Now")
                     <option value='University of Virginia'>University of Virginia</option>
                     <option value='other'>Other</option>		
                 </select></li>
-                <li><input id='other' type='hidden' name='other' width='100'/></li>
+                <li id='school'></li>
                 <li><label class='field' for='college'>Title: </label>
                 <select name='title' size=1 style='width: 300px;'>
                     <option value='Bachelor of Arts'>Bachelor of Arts</option>
@@ -56,20 +88,19 @@ if ($_POST['submit'] == "Register Now")
                     <option value='Bachelor of Nursing'>Bachelor of Nursing</option>
                     <option value='Associate's Degree'>Associate's Degree</option> </select></li>
                     
-                <li><label class='field' for='major'>Area(s) of Study: </label> <input type='text' name='major'/></li>
+                <li><label class='field' for='major'>Area(s) of Study: </label> <input type='text' name='major' id='major'/></li>
             <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
                 <li><label class='field' for='college_year_start'>Time Attended: </label>
                 <script type='text/javascript'>
                 college_form();
                 </script>
             </li>
-                <li><label class='field' for='gpa'>Cumulative GPA<sup>1</sup>: </label> <input name='gpa' size=8/></li>
-            <li><label class='field' for='honors'>Activities during College: </label>
+                <li><label class='field' for='gpa'>Cumulative GPA: </label> <input name='gpa' size=8/></li>
+            <li><label class='field' for='honors'>Honors: </label>
             <textarea name='honors' rows='3'></textarea></li>
 			<label class='subscript' for='honors'>Example: Dean's List, National Merit Scholarship</label><br>
             <li>
-            <span style='margin-left: 300px;'><input type='submit' name='education' value='Submit' />
-            <input type='submit' name='skip' value='Skip' /></span></li>
+            <span style='margin-left: 300px;'><input type='submit' name='education' value='Submit'/></span></li>
             </ul>
         </form>");
 }
@@ -103,31 +134,193 @@ else if ($_POST['education']=="Submit")
 	{
 		echo mysql_error();	
 	}
-	$form_info = "<h2>For the best use of your profile, please fill out your general work experience.</h2>
-              <form action='image.php' method='post'>
+	$form_info = $work_code;
+}
+/**
+If resubmitting the work experience.
+**/
+else if ($_POST['add']=="Add Another Job")
+{
+	$_SESSION['complete'] = 2;
+	$company = $_POST['company'];
+	$title = $_POST['title'];
+	$city = $_POST['city'];
+	$state = $_POST['state'];
+	$work_month_start = $_POST['work_month_start'];
+	$work_year_start = $_POST['work_year_start'];
+	$work_month_end = $_POST['work_month_end'];
+	$work_year_end = $_POST['work_year_end'];
+	$achievement = $_POST['achievement'];
+	$idnum = $_SESSION['idnum'];
+	$work_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
+	$work_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
+	$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, achievement) VALUES ('$idnum', '$company', '$title', '$work_start', '$work_end', '$city', '$state', '$achievement')");
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	$form_info = $work_code;
+}
+/**
+If no work experience.
+**/
+else if ($_POST['send']=="Skip")
+{
+	$_SESSION['complete'] = 2;
+	$form_info = "<img src='site_im/two-thirds.png'>
+			  <p><h2>Since you have no work experience, please fill out your extracurriculars.<br>Here's how it will appear:</h2></p>
+              <img src='site_im/sample_extra.png'>
+              <h2>Please fill out your extracurricular activities and leadership: </h2>
+              <form action='register.php' method='post' onSubmit='return validate_extra();'>
               <ul id='education'>
                 <li>
-                    <label class='field' for='company'>Company Name: </label>
-                    <input type='text' name='company' size=20/>
+                    <label class='field' for='name'>Organization Name: </label>
+                    <input type='text' name='name' id='name' size=20/>
                 </li>
                 <li>
-                    <label class='field' for='title'>Title: </label> <input type='text' name='title'/>
+                    <label class='field' for='title'>Title: </label> <input type='text' name='title' id='title'/>
                 </li>
                 <li>
                     <label class='field' for='work_year_start'>Time Period: </label>
                     <script>
                     work_form();
-                    </script>
-                </li>
+                    </script><br>
+                <label class='subscript' for='present'>Currently Involved: </label>
+                    <input type='checkbox' name='present' value='1'>
+                    </li>
                 <li>
                 <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'></textarea>
                 </li>
                 <li><span style='margin-left: 300px;'>
-                <input type='submit' name='send' value='Submit' />
-                <input type='submit' name='skip' value='Skip' />
-                <input type='submit' name='add' value='Add Another Job' />
-                </span></li>
+                <input type='submit' name='extra' value='Submit' />
+                <input type='submit' name='extra' id='skip' value='Skip' />
+                <input type='submit' name='add' value='Add Another Activity' />
+                </span></li></ul>
             </form>";
+}
+else if ($_POST['send'] == "Submit")
+{
+	$_SESSION['complete'] = 3;
+	$company = $_POST['company'];
+	$title = $_POST['title'];
+	$city = $_POST['city'];
+	$state = $_POST['state'];
+	$work_month_start = $_POST['work_month_start'];
+	$work_year_start = $_POST['work_year_start'];
+	$work_month_end = $_POST['work_month_end'];
+	$work_year_end = $_POST['work_year_end'];
+	$achievement = $_POST['achievement'];
+	$idnum = $_SESSION['idnum'];
+	$work_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
+	$work_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
+	$query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, achievement) VALUES ('$idnum', '$company', '$title', '$work_start', '$work_end', '$achievement')");
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	header("Location: image.php");
+}
+
+/**
+Adding extracurricular
+**/
+else if ($_POST['add']=="Add Another Activity")
+{
+	$_SESSION['complete'] = 3;
+	$name = $_POST['name'];
+	$title = $_POST['title'];
+	$work_month_start = $_POST['work_month_start'];
+	$work_year_start = $_POST['work_year_start'];
+	$work_month_end = $_POST['work_month_end'];
+	$work_year_end = $_POST['work_year_end'];
+	$achievement = $_POST['achievement'];
+	$idnum = $_SESSION['idnum'];
+	$extra_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
+	$extra_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
+	if (isset($_POST['present']))
+	{
+		$query = sprintf("INSERT INTO leadership_data (idnum, organization, title, start, end, present, achievement) VALUES ('$idnum', '$organization', '$title', '$extra_start', '$extra_end', 1, '$achievement')");
+	}
+	else
+	{
+		$query = sprintf("INSERT INTO leadership_data (idnum, organization, title, start, end, present, achievement) VALUES ('$idnum', '$organization', '$title', '$extra_start', '$extra_end', 0, '$achievement')");
+	}
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	$form_info = "<img src='site_im/two-thirds.png'>
+			  <p><h2>Here's how it will appear:</h2></p>
+              <img src='site_im/sample_extra.png'>
+              <h2>Please fill out your extracurricular activities and leadership: </h2>
+              <form action='register.php' method='post' onSubmit='return validate_extra();'>
+              <ul id='education'>
+                <li>
+                    <label class='field' for='name'>Organization Name: </label>
+                    <input type='text' name='name' id='name' size=20/>
+                </li>
+                <li>
+                    <label class='field' for='title'>Title: </label> <input type='text' name='title' id='title'/>
+                </li>
+                <li>
+                    <label class='field' for='work_year_start'>Time Period: </label>
+                    <script>
+                    work_form();
+                    </script><br>
+                <label class='subscript' for='present'>Currently Involved: </label>
+                    <input type='checkbox' name='present' value='1'>
+                    </li>
+                <li>
+                <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'></textarea>
+                </li>
+                <li><span style='margin-left: 300px;'>
+                <input type='submit' name='extra' value='Submit' />
+                <input type='submit' name='extra' id='skip' value='Skip' />
+                <input type='submit' name='add' value='Add Another Activity' />
+                </span></li></ul>
+            </form>";
+}
+
+/**
+Finished adding
+**/
+else if ($_POST['extra'] == "Submit")
+{
+	$_SESSION['complete'] = 3;
+	$name = $_POST['name'];
+	$title = $_POST['title'];
+	$work_month_start = $_POST['work_month_start'];
+	$work_year_start = $_POST['work_year_start'];
+	$work_month_end = $_POST['work_month_end'];
+	$work_year_end = $_POST['work_year_end'];
+	$achievement = $_POST['achievement'];
+	$idnum = $_SESSION['idnum'];
+	$extra_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
+	$extra_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
+	if (isset($_POST['present']))
+	{
+		$query = sprintf("INSERT INTO leadership_data (idnum, organization, title, start, end, present, achievement) VALUES ('$idnum', '$organization', '$title', '$extra_start', '$extra_end', 1, '$achievement')");
+	}
+	else
+	{
+		$query = sprintf("INSERT INTO leadership_data (idnum, organization, title, start, end, present, achievement) VALUES ('$idnum', '$organization', '$title', '$extra_start', '$extra_end', 0, '$achievement')");
+	}
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	header("Location: image.php");
+}
+/**
+Skipped
+**/
+else if ($_POST['extra'] == "Skip")
+{
+	header("Location: image.php");
 }
 ?>
 <!DOCTYPE html>

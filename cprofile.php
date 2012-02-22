@@ -31,6 +31,7 @@ if (!$result)
 $v_users = mysql_fetch_assoc($result);
 
 //Checks if visited.
+/*
 $query = sprintf("SELECT * FROM viewed WHERE to_id=%d", $idnum);
 $result = mysql_query($query);
 if (!$result)
@@ -46,7 +47,7 @@ else if (mysql_num_rows($result) > 0)
 {
 	$query = sprintf("UPDATE viewed SET viewed=NOW() WHERE to_id=$idnum");
 	$result = mysql_query($query);
-}
+}*/
 
 if (is_null($v_users['picture']))
 {

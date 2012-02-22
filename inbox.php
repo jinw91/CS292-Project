@@ -73,6 +73,26 @@ if (isset($_GET['mid']))
 		$message = $query."\n".mysql_error();
 	}
 }
+
+else if (isset($_GET['write']))
+{
+	$message = "<form action='register.php' method='post' onSubmit='return validate_work();'>
+              <ul id='compose'>
+                <li>
+                    <label class='inbox' for='name'>To: </label>
+                    <input type='text' name='name' id='name' size=20/>
+                </li>
+                <li>
+                    <label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject'/>
+                </li>
+                <li>
+                <label class='inbox' for='message'>Message: </label><textarea name='message' rows='3'></textarea>
+                </li>
+                <li><span style='margin-left: 250px;'>
+                <input type='submit' name='send' value='Send' />
+                </span></li></ul>
+            </form>";
+}
 //Sets the inbox to show all emails.
 else
 {
@@ -88,7 +108,7 @@ else
 	}
 	else
 	{
-		$message = "";
+		$message = "<ul id='messages'>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
 			if (is_null($mes['picture']))
@@ -106,13 +126,14 @@ else
 			}
 			$message = $message."</a></li>";
 		}
+		$message .= "</ul>";
 	}
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><?=$p_name?></title>
+<title>Inbox</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
@@ -197,9 +218,8 @@ $(function(){
             <div class="grid_6 suffix_2">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
-                    <ul id="messages">
     				<?=$message?>
-    				</ul>
+                    
                     </div>
                     </fieldset>
             </div>

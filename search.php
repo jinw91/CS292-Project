@@ -10,37 +10,65 @@ if (!$connect)
 }
 if ($_POST['search'] == "Search")
 {
-	$name = $_POST['name'];
+	$archives = $_POST['name'];
 	$major = $_POST['major'];
 	$gpa = $_POST['gpa'];
 	$work_start = $_POST['work_start'];
-	$work_end = $_POST['work_end'];
 	$skills = $_POST['skills'];
+	
+	/**
+	Searching by name
+	**/
 	$spaceplace = strpos($archives, " ");
-	if ($spaceplace > 0)
+	if ($spaceplace > 0) // two words
 	{
 		$first_name = substr($archives, 0, strpos($archives, " "));
 		$last_name = substr(strchr($archives, " "), 1);
-		$query = sprintf("SELECT * FROM users WHERE first_name='%s' AND last_name='%s'", $first_name, $last_name);
+		$query = sprintf("SELECT * FROM users u JOIN education_data ed ON u.idnum=ed.idnum WHERE first_name='%s' AND last_name='%s'", $first_name, $last_name);
 	}
-	else if ($archives == "")
+	else if ($archives == "") // subscribed friends.
 	{
-		$query = sprintf("SELECT * FROM users u JOIN subscribed s ON u.idnum=s.to_id WHERE from_id=%d ORDER BY last_name ASC", $_SESSION['idnum']);
+		$query = sprintf("SELECT * FROM users u, education_data ed WHERE u.idnum=ed.idnum");
 	}
-	else if ($archives == "all")
-	{
-		$query = sprintf("SELECT * FROM users");
-	}
-	else
+	else //either first or last name entered.
 	{
 		$query = sprintf("SELECT * FROM users u WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%'");
 	}
 	
+	$add = "";
+	/**
+	Searching by Major
+	**/
+	if (isset($major))
+	{
+		for ($i = 0; $i < count($major); $i++)
+		{
+			$add .= " AND major LIKE '%%$major[$i]%%'";
+		}
+	}
 	
+	/**
+	Search by GPA
+	**/
+	if ($gpa != "")
+	{
+		$add .= " AND gpa >= '$gpa'";
+	}
+	
+	/**
+	Search by Work Experience
+	**/
+	if ($work_start != "")
+	{
+		
+	}
+	
+	$query .= $add;
+	$error = $query." major=".$major;
 	$result = mysql_query($query);
 	if (!$result)
 	{
-		$error = mysql_error();
+		$error = $query." ".mysql_error();
 	}
 	
 	$message = "";
@@ -49,7 +77,8 @@ if ($_POST['search'] == "Search")
 	{
 		while ($mes =  mysql_fetch_assoc($result))
 		{
-				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='../cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+				$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
 				$message = $message."<br>".$mes['field']."</li>"; //adds name.
 		}
 	}
@@ -95,6 +124,7 @@ $(function(){
 </script>
 </head>
 <body>
+<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -142,24 +172,34 @@ $(function(){
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
                 <label for="careers">Search Candidates: </label>
                 </div>
-                <div align="right">
-                <label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" /><br />
-                <label for="major" style="float: left;">Major: </label>
-                <input name="major" size="25"  /><br />
-                <label for="gpa" style="float: left;">Minimum GPA: </label>
-                <input name="gpa" size="25"  /><br />
-                <label for="work_start" style="float: left;">Work Experience: </label>
-                <input name="work_start" size="10"  />-<input name="work_end" size="10"><br />
-                <label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25"><br>
+                <ul id="search">
+                <li><label for="name" style="float: left;">Name: </label>
+                <input name="name" size="25" /></li>
+                <li><label for="major[]" style="float: left;">Major: </label>
+                <select name="major[]" multiple="multiple" size="1">
+                <option>Biomedical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Computer Science</option>
+                <option>Computer Engineering</option>
+                <option>Economics</option>
+                <option>Human Organizational Development</option>
+                <option>Mechanical Engineering</option>
+                </select></li>
+                <li><label for="gpa" style="float: left;">Minimum GPA: </label>
+                <input name="gpa" size="25"  /></li>
+                <li><label for="work_start" style="float: left;">Work Experience: </label>
+                <input name="work_start" size="10" style="width: 150px;"/> Years</li>
+                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25"></li>
                 <input type="submit" name="search" value="Search"/>
-                </div>
+                </ul>
                 </form>
             </div>
             <div class="grid_6 suffix_2">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
+                    <ul id="messages">
     				<?=$message?>
+                    </ul>
                     </div>
                     </fieldset>
             </div>

@@ -17,7 +17,7 @@ define('__ROOT__', dirname(__FILE__));
 	$result = mysql_query($query);
 	if (!$result) { echo mysql_error();} 
 	$_SESSION['users'] = mysql_fetch_assoc($result);
-	if (is_null($_SESSION['users']['picture']))
+	if (is_null($_SESSION['users']['picture']) || trim($_SESSION['users']['picture']) == "")
 	{
 		$_SESSION['users']['picture'] = "images/default.png";
 	}

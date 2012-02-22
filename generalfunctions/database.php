@@ -44,6 +44,24 @@ function validateLogin($username, $password)
 }
 
 /**
+Encrypt
+**/
+function encrypt($password)
+{
+	$normal = array("a", "b", "c",  "vegetables", "fiber");
+	$yummy  = array("pizza", "beer", "ice cream");
+}
+
+/**
+Decrypt
+**/
+function decrypt($password)
+{
+	$normal = array("a", "b", "c");
+	$yummy  = array("al", "bi", "ci");
+}
+
+/**
 Checks if the emailaddress is already in the database.
 **/
 function emailAvailable($emailaddress)
