@@ -202,11 +202,6 @@ $(function(){
 </header>
 </div>
 <div class="container_12">
-	<!--<div class="wrapper">
-		<div class="grid_12">
-			<div class="text1"><?=$p_name?></div>
-		</div>
-	</div>-->
 </div>
 <!-- content -->
 <section id="content">  
@@ -215,13 +210,24 @@ $(function(){
         	<div class="grid_4">
                 <div align="center"><h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Compose Message</h2></div>
             </div>
-            <div class="grid_6 suffix_2">
-                    <fieldset>
-                    <div style="padding-top: 10px; font-size:12px;">
-    				<?=$message?>
-                    
-                    </div>
-                    </fieldset>
+            <div class="grid_7">
+            <fieldset>
+            <div style="padding-top: 10px; font-size:12px;">
+                <form action='inbox.php' method='post'>
+                  <ul id='education'>
+                    <li id='compose'></li>
+                    <li><label class='inbox' for='to_id'>To: </label>
+                    <input type='text' name='to' /></li>
+                    <li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject'/></li>
+                    <li><label class='inbox' for='body'>Body: </label>
+                    <textarea name='body' rows='5'></textarea></li>
+                    <li>
+                    <span style='margin-left: 300px;'><input type='submit' name='education' value='Submit'/></span></li>
+                    </ul>
+                </form>
+    		<!--<?=$message?>-->
+            </div>
+            </fieldset>
             </div>
         </div>        
 	</div>

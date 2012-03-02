@@ -118,7 +118,7 @@ width="100px" name="password">
 				<h2>About Us</h2>
 				<div class="box-img"><a href="#"><img src="site-images/1page_img2.jpg" alt="" width="400"></a></div>
 				<p class="padtop padbot">Professional Archives is a website formed by Vanderbilt students to connect students with professionals and companies around the world.</p>
-				<a href="#" class="button1">Continue reading</a>
+				<!--<a href="#" class="button1">Continue reading</a>-->
 			</div>
 			<div class="padbot2">
 				<h2 align="center">Register Now</h2>

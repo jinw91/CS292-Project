@@ -32,6 +32,12 @@ if (isset($_SESSION['idnum']))
 			{
 				$_SESSION['education'] = mysql_fetch_assoc($result);
 			}
+			$query = sprintf("SELECT * FROM businesses WHERE creator=%d", $_SESSION['idnum']);
+			$result = mysql_query($query);
+			if ($result && mysql_num_rows($result) > 0)
+			{
+				$_SESSION['company'] = mysql_fetch_assoc($result);
+			}
 			//setcookie("idnum", $idnum, time() + 60 * 60 * 24 * 60);
 			header("Location: http://proarcs.com/home.php");
 		}

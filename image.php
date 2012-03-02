@@ -52,7 +52,7 @@ else if ($_POST['send'] == "Submit" || $_POST['add'] == "Add Another Job")
 		header("Location: register.php");
 	}
 }
-else if ($_POST['upload'] == "Home")
+else if ($_POST['upload'] == "Home" || $_POST['skip'] == "Skip")
 {
 	header("Location: home.php");
 }

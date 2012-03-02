@@ -158,7 +158,7 @@ width="100px" name="password">
 </header>
 <div align="center">
 	<p style="font-family: 'Lato', Arial, Helvetica; font-size-adjust: 150%">The page you requested is not found. <br>
-This issue has been sent to the Professional Archives Team.</p><br>
+Due to the unexpected high volume of traffic to the site, parts of the site have to be overhauled. <br> We are aware of the problem and are currently working on getting the site operational again as soon as possible. <br> We apologize for the inconvenience.</p><br>
     <p style="font-family: 'Lato', Arial, Helvetica;">Thanks, <br> The Professional Archives Team</p>
 </div>
 <!-- content -->

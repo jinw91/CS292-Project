@@ -14,12 +14,11 @@ function navBar($mes)
 	$message = "<div id='main-menu'>
 				<ul class='sf-menu fright responsive-menu'>
 					<li class='current'><a href='home.php'>home</a></li>
-					<li><a href='profile.php'>profile<span class='arrow'></span></a><ul>
-							<li><a href='cprofile.php'>View Professional Profile</a></li>
+					<li><a href='cprofile.php'>profile<span class='arrow'></span></a><ul>
 							<li><a href='basic_info.php'>Edit Basic Information</a></li>
-							<li><a href='education.php'>Edit Education</a></li>
-							<li><a href='work.php'>Edit Work</a></li>
-							<li><a href='extracurricular.php'>Edit Extracurriculars</a></li>
+							<li><a href='education.php'>Add Education</a></li>
+							<li><a href='work.php'>Add Work Experience</a></li>
+							<li><a href='extracurricular.php'>Add Extracurriculars</a></li>
 						</ul>
 					</li>
 					<li><a href='inbox.php'>inbox";

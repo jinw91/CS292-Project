@@ -71,7 +71,7 @@ if ($_POST['search'] == "Search")
 		$error = $query." ".mysql_error();
 	}
 	
-	$message = "";
+	$message = "<form action='search.php' method='POST'>";
 	if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
@@ -81,13 +81,14 @@ if ($_POST['search'] == "Search")
 				$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
 				$message = $message."<br>".$mes['field']."</li>"; //adds name.
 		}
+		$message = $message."<input type='submit' name='submit' value='Offer Job'/></form>";
 	}
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><?=$p_name?></title>
+<title>Search Candidates</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">

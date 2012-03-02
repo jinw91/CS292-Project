@@ -280,6 +280,9 @@ Messages.
 #messages li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2;} 
 #messages li a:link, #messages a:visited {text-decoration:none; }
 
+#messages_short li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2;} 
+#messages_short li a:link, #messages_short a:visited {text-decoration:none; }
+
 /**
 Careers.
 **/
@@ -296,6 +299,16 @@ Careers.
 	text-decoration: none;
 }
 #job_entries li input { float: right; }
+
+#career_options li a:visited, #career_options li a:link
+{
+	color: black;
+	font-size: 12px;
+}
+#career_options li a:hover
+{
+	font-weight: bolder;
+}
 
 /**
 Form Edit.

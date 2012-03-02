@@ -14,6 +14,58 @@ if (!$connect)
 	$error = "failed to connect";	
 }
 
+//Coming from job add.
+if ($_POST['add_job'] == "Submit")
+{
+	$job_name = $_POST['job_name'];
+	$major = $_POST['major'];
+	$pay = $_POST['pay'];
+	$internship = 0;
+	if (isset($_POST['internship']))
+	{
+		$internship = 1;
+	}
+	$city = $_POST['city'];
+	$state = $_POST['state'];
+	$description = $_POST['description'];
+	$company_name = $_SESSION['company']['company_name'];
+	
+	$query = sprintf("INSERT INTO careers (company_name, job_name, major, job_description, pay, city, state, country, internship) VALUES ('$company_name', '$job_name', '$major', '$description', $pay, '$city', '$state', 'United States', $internship)");
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = $query.mysql_error();
+	}
+}
+//Editing job.
+else if (isset($_GET['jid']))
+{
+	
+}
+//Coming from company add/edit.
+else if ($_POST['submit'] == "Submit")
+{
+	$company_name = $_POST['company_name'];
+	$sector = $_POST['sector'];
+	$city = $_POST['city'];
+	$state = $_POST['state'];
+	$description = $_POST['description'];
+	$idnum = $_SESSION['idnum'];
+	if ($_SESSION['option_link'] == "new")
+	{
+		$query = sprintf("INSERT INTO businesses (company_name, sector, description, city, state, creator) VALUES ('$company_name', '$sector', '$description', '$city', '$state', $idnum)");
+	}
+	else
+	{
+		$query = sprintf("UPDATE INTO businesses (company_name, sector, description, city, state, creator) VALUES ('$company_name', '$sector', '$description', '$city', '$state', $idnum)");
+	}
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = mysql_error();
+	}
+}
+
 //Apply to a job.
 else if (isset($_GET['jid']) && isset($_GET['apply']))
 {
@@ -21,16 +73,14 @@ else if (isset($_GET['jid']) && isset($_GET['apply']))
 }
 
 //Find businesses started by the user.
-/**
 $query = sprintf("SELECT * FROM businesses WHERE creator=%d", $_SESSION['idnum']);
 $result = mysql_query($query);
 if (!$result)
 {
 	echo mysql_error();
 }
-**/
 // User does not own business.
-elseif ((!isset($_GET['jid']) && !isset($_SESSION['company'])) || isset($_GET['usermode']))
+elseif ((!isset($_GET['jid']) && mysql_num_rows($result) == 0 && isset($_SESSION['education'])) || isset($_GET['usermode']))
 {
 	if ($_POST['search'] == "Search")
 	{
@@ -83,14 +133,14 @@ else if (!isset($_GET['jid']) && mysql_num_rows($result) > 0)
 	}
 	else if (mysql_num_rows($result) == 0)
 	{
-		$message = "<ul id='messages'><li>No jobs are found. Please <a href='career.php'>add a job</a></li></ul>";
+		$message = "<ul id='messages'><li>No jobs are found. Please <a href='createjob.php'>add a job</a></li></ul>";
 	}
 	else
 	{
 		$message = "<ul id='job_entries'>";
 		while ($job =  mysql_fetch_assoc($result))
 		{
-			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a> <a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
+			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='createjob.php?jid=".$job['jid']."'>Edit</a> <a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
 			$message = $message."</li>";
 		}
 		$message = $message."</ul>";
@@ -98,9 +148,9 @@ else if (!isset($_GET['jid']) && mysql_num_rows($result) > 0)
 	$_SESSION['career_options'] = "<div id='sidebar' align='left'>
     <ul id='career_options'>
 	<li><a href='careers.php?usermode=on'>Search Careers</a></li>
-	<li><a href='business.php'>Edit Business</a></li>
+	<li><a href='createbusiness.php'>Edit Business</a></li>
 	<li><a href='profile.php?b_id=".$_SESSION['company']['b_id']."'>View Business</a></li>
-	<li><a href='career.php'>Add Job Entry</a></li></ul></div>";
+	<li><a href='createjob.php'>Add Job Entry</a></li></ul></div>";
 	$_SESSION['option_link'] = "edit";
 }
 
@@ -217,7 +267,25 @@ $(function(){
                     <fieldset>
                     <?=$update?>
                     <div style="padding-top: 10px; font-size:12px;">
-    				<?=$message?>
+                    <h1 id='edit_title'>Business Information:</h1>
+              <form action='basic_info.php' method='post'>
+              <?=$error?><?=$message?><br>
+              <ul id='education'>
+                <li><label class="field" for="city">City: </label><input name="city" value="<?=$user_info['city']?>" width="150px"/> State: <input name="state" value="<?=$user_info['state']?>" style="width: 60px;" /></li>
+                <li id="school"></li>                    
+                <li><label class="field" for="income">Expected Pay: </label> 
+    <input name="income" value="<?=$user_info['pay']?>"/><label for="hourly">  &nbsp;Hourly: </label>
+    <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
+                <li><label class='field' for='field'>Primary Field: </label> <input type='text' name='field' value="<?=$user_info['field']?>"/></li>
+            <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
+            <li><label class='field' for='skills'>Technical Skills: </label>
+            <textarea name='skills' rows='2'><?=$user_info['skills']?></textarea></li>
+            <label class='subscript' for='honors'>Example: Microsoft Excel, HTML</label><br>
+            <li>
+            <span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
+            <input type='submit' name='skip' value='Skip' /></span></li>
+            </ul>
+        	</form>
                     </div>
                     </fieldset>
             </div>

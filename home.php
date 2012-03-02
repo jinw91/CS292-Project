@@ -52,7 +52,7 @@ define('__ROOT__', dirname(__FILE__));
 		}
 		$message = $message."</ul>";
 	}
-	
+	/** Later add.
 	$query = sprintf("SELECT * FROM subscribed s JOIN users u ON s.from_id=u.idnum WHERE to_id='%d' ORDER BY subscribed DESC;", $_SESSION['idnum']);
 	$result = mysql_query($query);
 	if (!$result)
@@ -73,9 +73,9 @@ define('__ROOT__', dirname(__FILE__));
 	while ($sub = mysql_fetch_assoc($result))
 	{
 		$viewers = $viewers.$sub['first_name']." ".$sub['last_name']." viewed your profile on ".$sub['viewed'].".<br />";
-	}
+	}**/
 	
-	$job_mes = "Please fill out your work experience for jobs to appear.";
+	$job_mes = "<ul style='list-style-type: none;'><li>Please fill out your work experience for jobs to appear.</li></ul>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,7 +174,7 @@ $(function(){
 		<div class="wrapper">
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Notifications</h2>
-				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt="" width="300px"></a></div>
+				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt="" width="200px"></a></div>
 				<p class="padtop padbot">Welcome back, <?=$_SESSION['users']['first_name']?>.</p>
       <br />
       <p><?=$message1?></p>

@@ -379,7 +379,10 @@ function ceducation($id)
 		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
 		$eduhtml = $eduhtml."<span style='float: right; position: relative;'>".$year."</span><br/>"; //on right.
-		$eduhtml = $eduhtml."<ul style='list-style-type: disc; list-style-position: inside;'><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
+		if ($education['gpa'] >= 3.0)
+		{
+			$eduhtml = $eduhtml."<ul style='list-style-type: disc; list-style-position: inside;'><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
+		}
 		$eduhtml = $eduhtml; // Add in major GPA later.
 		if (trim($education['honors']) != "")
 		{

@@ -103,13 +103,15 @@ else
 {
 	$v_skills = skills($idnum);
 }
-
+/**
+Subscribing.
 if (isset($_GET['follow']) && $idnum != $_SESSION['idnum'])
 {
 		$query = sprintf("INSERT INTO subscribed (from_id, to_id, subscribed) VALUES ('%d', '%d', NOW())", $_SESSION['idnum'], $idnum);
 		$result = mysql_query($query); 
 		$message = "<script type='text/javascript'>alert('You are now following $p_name');</script>";
-}
+}**/
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -226,40 +228,7 @@ $(function(){
             </div>
         </div>
 		<div class="wrapper">
-			<div class="grid_11 padbot2">
-				<script type="text/javascript">
-                function clear()
-                {
-                    var tag = document.getElementById("start");
-                    tag.innerHTML = "";
-                }
-				function education()
-				{
-					var tag = document.getElementById("education");
-					tag.innerHTML += "<?=$v_education_message?>";
-				}
-                function experience()
-                {
-                    clear();
-                    var tag = document.getElementById("work");
-                    tag.innerHTML += "<?=$v_work_message?>";
-                    return true;
-                }
-                function skills()
-                {
-                    clear();
-                    var tag = document.getElementById("start");
-                    tag.innerHTML += "<li>Skills not available.</li>";
-                    return true;
-                }
-                function extra()
-                {
-                    clear();
-                    var tag = document.getElementById("start");
-                    tag.innerHTML += "<?=$extracurriculars?>";
-                    return true;
-                }
-                </script>            
+			<div class="grid_11 padbot2">          
 				<br>
                 <span style="font-size: 14px;">
 				<h1 id="cprof_cat">EDUCATION</h1><hr style="margin-top:0; padding-top:0px;">
