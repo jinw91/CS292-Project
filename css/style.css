@@ -300,6 +300,20 @@ Careers.
 }
 #job_entries li input { float: right; }
 
+#user_entries li
+{
+	display: block;
+	height:3.2em;
+	padding-left: 0;
+	border-bottom:1px dotted #b2b2b2;
+}
+#user_entries li a:visited, #job_entries li a:link
+{
+	color: black;
+	text-decoration: none;
+}
+#user_entries li input { float: right; }
+
 #career_options li a:visited, #career_options li a:link
 {
 	color: black;
