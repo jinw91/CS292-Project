@@ -106,6 +106,12 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 					$new_interested = $new_interested."<li><img style='float:left; margin-right:2px' src='".$users['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$users['idnum']."'>".$users['first_name']." ".$users['last_name']."</a>"; //adds name.
 					$new_interested = $new_interested."<br />".$users['field']." at ".$users['college'];
 					$new_interested .= "</li>";
+					$query = sprintf("SET is_read=1 WHERE jid='%d' AND idnum='%d'", $job['jid'], $users['idnum']);
+					$result = mysql_query($query);
+					if (!$result)
+					{
+						$error = $query." ".mysql_error();
+					}
 				}
 				$new_interested .= "</ul>";
 			}
