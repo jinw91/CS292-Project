@@ -83,6 +83,7 @@ if ($_POST['search'] == "Search")
 		}
 		$message = $message."<input type='submit' name='submit' value='Offer Job'/></form>";
 	}
+	mysql_close();
 }
 ?>
 <!DOCTYPE html>

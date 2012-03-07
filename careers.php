@@ -50,7 +50,7 @@ elseif ((!isset($_GET['jid']) && !isset($_SESSION['company'])) || isset($_GET['u
 	$result = mysql_query($query);
 	if (!$result)
 	{
-		$error = $query."".mysql_error();
+		$error = $query." ".mysql_error();
 	}
 	else if (mysql_num_rows($result) == 0)
 	{
