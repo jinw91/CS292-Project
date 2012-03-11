@@ -6,7 +6,7 @@ $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
 {
-	echo "failed to connect";	
+	echo "failed to connect";
 }
 if ($_POST['search'] == "Search")
 {

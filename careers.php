@@ -87,15 +87,17 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
-			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a> <a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
-			$query = sprintf("SELECT * FROM u_interested i, users u, education_data ed WHERE i.idnum=u.idnum AND u.idnum=ed.idnum AND jid='%d' AND is_read=0", $job['jid']);
+			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a>";
+			$query = sprintf("SELECT * FROM c_applied_%d i, users u, education_data ed WHERE i.idnum=u.idnum AND u.idnum=ed.idnum AND jid='%d' AND is_read=0", $_SESSION['company']['b_id'], $job['jid']);
 			$res2 = mysql_query($query);
 			if (!$res2)
 			{
 				$error = $query." ".mysql_error();
 			}
-			//else
+			// More than 0 applicants
+			if (mysql_num_rows($res2) > 0)
 			{
+				$message .= "<a href='groups.php?jid=".$job['jid']."'>View Candidates</a>";
 				$new_interested = "<ul id='user_entries'>";
 				while ($users = mysql_fetch_assoc($res2))
 				{
@@ -106,15 +108,18 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 					$new_interested = $new_interested."<li><img style='float:left; margin-right:2px' src='".$users['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$users['idnum']."'>".$users['first_name']." ".$users['last_name']."</a>"; //adds name.
 					$new_interested = $new_interested."<br />".$users['field']." at ".$users['college'];
 					$new_interested .= "</li>";
-					$query = sprintf("SET is_read=1 WHERE jid='%d' AND idnum='%d'", $job['jid'], $users['idnum']);
+					/**
+					$query = sprintf("UPDATE c_applied SET is_read=1 WHERE jid='%d' AND idnum='%d'", $job['jid'], $users['idnum']);
 					$result = mysql_query($query);
 					if (!$result)
 					{
 						$error = $query." ".mysql_error();
 					}
+					**/
 				}
 				$new_interested .= "</ul>";
 			}
+			$message .= "<a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
 			$message = $message."</li>".$new_interested;
 		}
 		$message = $message."</ul>";

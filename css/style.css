@@ -381,6 +381,12 @@ label.subscript
 	text-align: left;
 	width: 100px;
 }
+label.check
+{
+	text-align: left;
+	width: 200px;
+}
+
 #search li input, #search li select
 {
 	width: 180px;
