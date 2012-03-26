@@ -77,14 +77,14 @@ if ($_POST['search'] == "Search")
 	{
 		while ($mes =  mysql_fetch_assoc($result))
 		{
-				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
 				$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
 				$message = $message."<br>".$mes['field']."</li>"; //adds name.
 		}
-		$message = $message."<input type='submit' name='submit' value='Offer Job'/></form>";
+		$message = $message."<div align='right'><input type='submit' name='submit' value='Send Interested In Message'/></div></form>";
 	}
-	mysql_close();
 }
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">

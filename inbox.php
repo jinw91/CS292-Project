@@ -129,6 +129,8 @@ else
 		$message .= "</ul>";
 	}
 }
+
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">

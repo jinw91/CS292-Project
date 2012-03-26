@@ -16,7 +16,7 @@ function navBar($mes)
 					<li class='current'><a href='home.php'>home</a></li>
 					<li><a href='cprofile.php'>profile<span class='arrow'></span></a><ul>
 							<li><a href='basic_info.php'>Edit Basic Information</a></li>
-							<li><a href='education.php'>Add Education</a></li>
+							<li><a href='education.php'>Edit Education</a></li>
 							<li><a href='work.php'>Add Work Experience</a></li>
 							<li><a href='extracurricular.php'>Add Extracurriculars</a></li>
 						</ul>

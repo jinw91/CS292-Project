@@ -13,28 +13,30 @@ $work_code = "<img src='site_im/two-thirds.png'>
 			  <p><h2>Here's how it will appear:</h2></p>
               <img src='site_im/sample_work.png'>
               <h2>Please fill out your work experience: </h2>
-              <form action='register.php' method='post' onSubmit='return validate_work();'>
+              <form action='image.php' method='post'>
               <ul id='education'>
                 <li>
                     <label class='field' for='company'>Company Name: </label>
-                    <input type='text' name='company' id='name' size=20/>
+                    <input type='text' name='company' size=20/>
                 </li>
                 <li>
-                    <label class='field' for='title'>Title: </label> <input type='text' name='title' id='title'/>
+                    <label class='field' for='title'>Title: </label> <input type='text' name='title'/>
                 </li>
-                <li><label class='field' for='city'>City: </label><input name='city' id='city' width='150px'/> State: <input name='state' id='state' style='width: 60px;' /></li>
+                <li><label class='field' for='city'>City: </label><input name='city' width='150px'/> State: <input name='state' style='width: 60px;' /></li>
                 <li>
                     <label class='field' for='work_year_start'>Time Period: </label>
                     <script>
                     work_form();
                     </script>
+        		<br/><label class='subscript' for='present'>Currently Employed: </label>
+                    <input type='checkbox' name='present' value='1'>
                 </li>
                 <li>
                 <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'></textarea>
                 </li>
                 <li><span style='margin-left: 300px;'>
                 <input type='submit' name='send' value='Submit' />
-                <input type='submit' name='send' id='skip' value='Skip' />
+                <input type='submit' name='skip' value='Skip' />
                 <input type='submit' name='add' value='Add Another Job' />
                 </span></li></ul>
             </form>";
@@ -72,11 +74,14 @@ if ($_POST['submit'] == "Register Now")
               <ul id='education'>
                 <li><label class='field' for='college'>College Name: </label>
                 <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>
-                    <option value='Vanderbilt University'>Vanderbilt University</option>
+                   	<option value='Vanderbilt University'>Vanderbilt University</option>
 					<option value='Duke University'>Duke University</option>
+                    <option value='Northwestern University'>Northwestern University</option>
+                 	<option value='University of Chicago'>University of Chicago</option>
                     <option value='University of Notre Dame'>University of Notre Dame</option>
                     <option value='University of North Carolina'>University of North Carolina</option>
                     <option value='University of Virginia'>University of Virginia</option>
+                    <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
                     <option value='other'>Other</option>		
                 </select></li>
                 <li id='school'></li>

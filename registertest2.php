@@ -190,6 +190,8 @@ $(function(){
                     <script>
                     work_form();
                     </script>
+        		<br/><label class='subscript' for='present'>Currently Employed: </label>
+                    <input type='checkbox' name='present' value='1'>
                 </li>
                 <li>
                 <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'></textarea>

@@ -21,8 +21,15 @@ if ($_POST['submit']=="Change Priority")
 	
 	for ($i = 0; $i < count($select); $i++)
 	{
-		$query = sprintf("UPDATE c_applied_%d SET priority='$priority' WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $select[$i]);
+		$tmp = $select[$i];
+		$idn = substr($tmp, 0, strpos($tmp, "."));
+		$from_job = substr(strchr($tmp, "."), 1);
+		$query = sprintf("UPDATE c_applied_%d SET priority='$priority' WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $idn);
 		$result = mysql_query($query);
+		//if (!$result)
+			{
+				$error = $query." ".mysql_error();
+			}
 	}
 }
 else if (isset($_POST['submit']))
@@ -30,68 +37,40 @@ else if (isset($_POST['submit']))
 	$select = $_POST['select'];
 	$from_job = $_POST['from_jid'];
 	$job = $_POST['jid'];
-	if ($_POST['submit']=="Move to Job")
+	if ($_POST['submit']=="Move to Job" || $_POST['submit']=="Delete")
 	{
 		for ($i = 0; $i < count($select); $i++)
 		{
-			$query = sprintf("DELETE FROM c_applied_%d WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $select[$i]);
+			$tmp = $select[$i];
+			$idn = substr($tmp, 0, strpos($tmp, "."));
+			$from_job = substr(strchr($tmp, "."), 1);
+			$query = sprintf("DELETE FROM c_applied_%d WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $idn);
 			$result = mysql_query($query);
+			//if (!$result)
+			{
+				$error = $query." ".mysql_error();
+			}
 		}
 	}
 	if ($_POST['submit']!="Delete")
 	{
 		for ($i = 0; $i < count($select); $i++)
 		{
-			$query = sprintf("INSERT INTO c_applied_%d (idnum, jid) VALUES ('%d', '$job')", $_SESSION['company']['b_id'], $select[$i]);
+			$tmp = $select[$i];
+			$idn = substr($tmp, 0, strpos($tmp, "."));
+			$from_job = substr(strchr($tmp, "."), 1);
+			$query = sprintf("INSERT INTO c_applied_%d (idnum, jid) VALUES ('%d', '$job')", $_SESSION['company']['b_id'], $idn);
 			$result = mysql_query($query);
+			//if (!$result)
+			{
+				$error = $query." ".mysql_error();
+			}
 		}
 	}
 }
-
-
-//Base query
-$query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed WHERE c.idnum=u.idnum AND u.idnum=ed.idnum", $_SESSION['company']['b_id']);
-if ($_POST['applicants']=="Submit")
-{
-	$name = $_POST['name'];
-	$major = $_POST['major'];
-	$job = $_POST['jobs'];
-	$jobs = "";
-	$priorities = "";
-	
-	if (isset($job))
-	{
-		for ($i = 0; $i<count($job); $i++)
-		{
-			$query .= " AND jid=".$job[$i];
-		}
-	}
-	
-}
-$query .= " GROUP BY jid";
-
-$result = mysql_query($query);
-if (!$result)
-{
-	$error = $query." ".mysql_error();
-}
-else if (mysql_num_rows($result) > 0)
-{
-	$lastjid = "";
-	$message = "<ul id='messages'><form action='search.php' method='POST'>";
-	while ($mes = mysql_fetch_assoc($result))
-	{
-		if ($mes['jid'] != $lastjid)
-		{
-			$message .= "</fieldset><fieldset title='".$mes['job_name']."'>";
-		}
-		$lastjid = $mes['jid'];
-		$message .= $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
-		$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
-		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
-	}
-	$message .= "<div align='right'> <input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div></form></ul>"; //add option to pick job.
-}
+$jobs = "";
+$priorities = "";
+$job_dropdown = "";
 
 $query = sprintf("SELECT * FROM careers WHERE b_id='%d'", $_SESSION['company']['b_id']);
 $result = mysql_query($query);
@@ -108,10 +87,55 @@ else if (mysql_num_rows($result) > 0)
 	while ($job = mysql_fetch_assoc($result))
 	{
 		$jobs = $jobs."<li><label for='name' style='float: left;'>".$job['job_name']." </label><input name='jobs[]' type='checkbox'/></li>";
+		$job_dropdown .= "<option value='".$job['jid']."'>".$job['job_name']."</option>";
 	}
 }
 
 $priority = "<li><label for='name' style='float: left;'>High: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Medium: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Low: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>None: </label><input name='priorities[]' type='checkbox'/></li>";
+
+//Base query
+$query = sprintf("SELECT DISTINCT * FROM c_applied_%d c, users u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
+if ($_POST['applicants']=="Submit")
+{
+	$name = $_POST['name'];
+	$major = $_POST['major'];
+	$job = $_POST['jobs'];
+	
+	if (isset($job))
+	{
+		for ($i = 0; $i<count($job); $i++)
+		{
+			$query .= " AND jid=".$job[$i];
+		}
+	}
+	
+}
+$query .= " ORDER BY c.jid";
+
+$result = mysql_query($query);
+if (!$result)
+{
+	$error = $query." ".mysql_error();
+}
+else if (mysql_num_rows($result) > 0)
+{
+	$lastjid = "";
+	$message = "<ul id='messages'><form action='groups.php' method='POST'><fieldset>";
+	while ($mes = mysql_fetch_assoc($result))
+	{
+		if ($mes['jid'] != $lastjid && $lastjid != "")
+		{
+			$message .= "<hr /></fieldset><fieldset><legend>".$mes['job_name']."</legend>";
+		}
+		$lastjid = $mes['jid'];
+		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
+		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
+	}
+	$message .= "<div align='right'><select name='jid'>";
+	$message .= $job_dropdown;
+	$message .= "</select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule On-Site Interview'/></div></form></ul>"; //add option to pick job.
+}
 
 mysql_close();
 ?>
@@ -227,15 +251,14 @@ $(function(){
                 </div>
             <?=$side_groups?>
             </div>
-            <div class="grid_6 suffix_2">
-                    <fieldset>
+            <div class="grid_8">
                     <?=$error?>
                     <div style="padding-top: 10px; font-size:12px;">
     				<?=$message?>
                     </div>
                     </fieldset>
             </div>
-        </div>        
+        </div>
 	</div>
 </section>
 <!-- footer -->

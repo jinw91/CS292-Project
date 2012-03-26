@@ -86,6 +86,14 @@ function selectDefault(name, value)
 	}
 }
 
+function hideEnd(name1, name2)
+{
+	var l_tag = document.getElementsByName(name1).item(0);
+	l_tag.parentNode.removeChild(l_tag);
+	l_tag = document.getElementsByName(name2).item(0);
+	l_tag.parentNode.removeChild(l_tag);
+}
+
 /**
 Adding months and years.
 **/
