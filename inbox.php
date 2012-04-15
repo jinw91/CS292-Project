@@ -20,6 +20,8 @@ if ($_POST['send'] == "Send")
 	$subject = $_POST['subject'];
 	$message = $_POST['message'];
 	
+	$error="Reached send";
+	
 	if (is_numeric($to_name))
 	{
 		$to_idnum = $to_name;
@@ -76,27 +78,45 @@ if (isset($_GET['mid']))
 
 else if (isset($_GET['write']))
 {
-	$message = "<form action='register.php' method='post' onSubmit='return validate_work();'>
-              <ul id='compose'>
-                <li>
-                    <label class='inbox' for='name'>To: </label>
-                    <input type='text' name='name' id='name' size=20/>
-                </li>
-                <li>
-                    <label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject'/>
-                </li>
-                <li>
-                <label class='inbox' for='message'>Message: </label><textarea name='message' rows='3'></textarea>
-                </li>
-                <li><span style='margin-left: 250px;'>
-                <input type='submit' name='send' value='Send' />
-                </span></li></ul>
-            </form>";
+	if (isset($_GET['default']))
+	{
+		$tmp = $_SESSION['contacts'];
+		$mes_to = "";
+		for ($i=0; $i<count($tmp); $i++)
+		{
+			$mes_to .= "".$tmp[$i].",";
+		}
+		$mes_sub = $_SESSION['subject'];
+		$mes_body = $_SESSION['body'];
+		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/>
+                	</li>";
+	}
+	$message = "<form action='inbox.php' method='post'>
+                  <ul id='education'>
+                    <li id='compose'></li>
+                    <li><label class='inbox' for='to_name'>To: </label>
+                    <input type='text' name='to_name' value='".$mes_to."'/></li>
+                    <li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."'/></li>
+                    <li><label class='inbox' for='body'>Body: </label>
+                    <textarea name='body' rows='10'>".$mes_body."</textarea></li>
+                    ".$time."
+                    <li>
+                    <span style='margin-left: 165px;'><input type='submit' name='send' value='Send'/></span></li>
+                    </ul>
+                </form>";
 }
 //Sets the inbox to show all emails.
 else
 {
-	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' ORDER BY time_sent DESC;", $_SESSION['idnum']);
+	if (isset($_GET['limit']))
+	{
+		$limit = $_GET['limit'];
+	}
+	else
+	{
+		$limit = 0;
+	}
+	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -104,7 +124,12 @@ else
 	}
 	else if (mysql_num_rows($result) == 0)
 	{
-		$message = "<li><div align='center'>No new messages</div></li>";
+		$message = "<ul id='messages'><li><div align='center'>No messages</div></li>";
+		if (isset($_GET['limit']))
+		{
+			$message .= "<span style='float: left; position: absolute;'><a href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
+		}
+		$message .= "</ul>";
 	}
 	else
 	{
@@ -126,6 +151,13 @@ else
 			}
 			$message = $message."</a></li>";
 		}
+		$message .= "<div class='paginator'>";
+		if ($limit != 0)
+		{
+			$message .= "<span style='float: left; position: absolute;'><a href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
+		}
+		
+		$message .= "<span style='float: right; position: relative;'><a href='inbox.php?limit=".($limit+10)."'>Next</a></span></div>";
 		$message .= "</ul>";
 	}
 }
@@ -172,6 +204,7 @@ $(function(){
 </script>
 </head>
 <body>
+<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -191,7 +224,7 @@ $(function(){
 	</div>
 	<div class="header-line"></div>
 	<div class="container_12">
-		<div class="grid_12">
+	  <div class="grid_12">
 			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 			
         <?
@@ -210,24 +243,13 @@ $(function(){
 	<div class="container_12">
     <div class="wrapper border_bottom">
         	<div class="grid_4">
-                <div align="center"><h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Compose Message</h2></div>
+                <div align="center"><h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php?write=true">Compose Message</a></h2></div>
             </div>
             <div class="grid_7">
             <fieldset>
             <div style="padding-top: 10px; font-size:12px;">
-                <form action='inbox.php' method='post'>
-                  <ul id='education'>
-                    <li id='compose'></li>
-                    <li><label class='inbox' for='to_id'>To: </label>
-                    <input type='text' name='to' /></li>
-                    <li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject'/></li>
-                    <li><label class='inbox' for='body'>Body: </label>
-                    <textarea name='body' rows='5'></textarea></li>
-                    <li>
-                    <span style='margin-left: 300px;'><input type='submit' name='education' value='Submit'/></span></li>
-                    </ul>
-                </form>
-    		<!--<?=$message?>-->
+                
+    		<?=$message?>
             </div>
             </fieldset>
             </div>

@@ -6,7 +6,15 @@ if (!isset($_SESSION['idnum']))
 }
 
 define('__ROOT__', dirname(__FILE__)); 
-	require_once(__ROOT__.'/generalfunctions/database.php');
+require_once(__ROOT__.'/generalfunctions/database.php');
+require_once(__ROOT__.'/generalfunctions/home.php');
+if (isset($_SESSION['company']) || isset($_GET['proarcs']))
+{
+	$job_mes = "No events scheduled. Please send some invitations for Interviews.";
+	$name = name(true);
+}
+else
+{
 	$tbl_name="users";
 	$connect = connectToDatabase();
 	if (!$connect)
@@ -23,6 +31,7 @@ define('__ROOT__', dirname(__FILE__));
 	}
 	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' AND is_read=0 ORDER BY time_sent DESC LIMIT 10", $_SESSION['idnum']);
 	$result = mysql_query($query);
+	mysql_close();
 	if (!$result)
 	{
 		echo mysql_error();
@@ -52,6 +61,7 @@ define('__ROOT__', dirname(__FILE__));
 		}
 		$message = $message."</ul>";
 	}
+	$name = name(false);
 	/** Later add.
 	$query = sprintf("SELECT * FROM subscribed s JOIN users u ON s.from_id=u.idnum WHERE to_id='%d' ORDER BY subscribed DESC;", $_SESSION['idnum']);
 	$result = mysql_query($query);
@@ -76,6 +86,7 @@ define('__ROOT__', dirname(__FILE__));
 	}**/
 	
 	$job_mes = "<ul style='list-style-type: none;'><li>Please fill out your work experience for jobs to appear.</li></ul>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,46 +116,13 @@ define('__ROOT__', dirname(__FILE__));
   })();
 
 </script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
 </head>
 <body>
 <!-- header -->
 <header>
 	<div class="top-header">
 		<div class="container_12">
-			<div class="grid_12">
-				<div class="fright">
-					<ul class="top-menu">
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<div class="fleft"></div>
-				<div class="clear"></div>
-			</div>
-			<div class="clear"></div>
+			<div class="grid_12"></div>
 		</div>
 	</div>
 	<div class="header-line"></div>
@@ -164,7 +142,7 @@ $(function(){
 <div class="container_12">
 	<div class="wrapper">
 		<div class="grid_12">
-			<div class="text1"><? echo $_SESSION['users']['first_name']." ".$_SESSION['users']['last_name']?></div>
+			<div class="text1"><?=$name?></div>
 		</div>
 	</div>
 </div>
@@ -175,21 +153,19 @@ $(function(){
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Notifications</h2>
 				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt="" width="200px"></a></div>
-				<p class="padtop padbot">Welcome back, <?=$_SESSION['users']['first_name']?>.</p>
-      <br />
       <p><?=$message1?></p>
       <p><?=$viewers?></p>
 				<a href="#" class="button1">See all</a>
 			</div>
 			<div class="grid_4 padbot2">
+				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Scheduled Events</h2>
+				<p class="padtop padbot"><?=$job_mes?></p>
+				<a href="careers.php" class="button1">See all</a>
+			</div>
+			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Inbox</h2>
 				<p class="padtop padbot"><?=$message?></p>
 				<a href="inbox.php" class="button1">See all</a>
-			</div>
-			<div class="grid_4 padbot2">
-				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Jobs</h2>
-				<p class="padtop padbot"><?=$job_mes?></p>
-				<a href="careers.php" class="button1">See all</a>
 			</div>
 		</div>
 	</div>

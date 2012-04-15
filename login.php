@@ -36,6 +36,7 @@ if (isset($_SESSION['idnum']))
 			$result = mysql_query($query);
 			if ($result && mysql_num_rows($result) > 0)
 			{
+				$_SESSION['business_mode'] = true;
 				$_SESSION['company'] = mysql_fetch_assoc($result);
 			}
 			//setcookie("idnum", $idnum, time() + 60 * 60 * 24 * 60);

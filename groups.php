@@ -11,7 +11,7 @@ if (!$connect)
 }
 
 /**
-Add to Job button
+Change Priority
 **/
 if ($_POST['submit']=="Change Priority")
 {
@@ -32,6 +32,46 @@ if ($_POST['submit']=="Change Priority")
 			}
 	}
 }
+/**
+Phone Interview/Job Interview
+**/
+else if (isset($_POST['offer']))
+{
+	$select = $_POST['select'];
+	for ($i = 0; $i < count($select); $i++)
+	{
+		$tmp = $select[$i];
+		$tmp = substr($tmp, 0, strpos($tmp, "."));
+		if (!isset($contacts) || !array_search($tmp, $contacts))
+		{
+			$contacts[] = $tmp;
+		}
+	}
+	$_SESSION['contacts'] = $contacts;
+	if ($_POST['offer'] == "Schedule Phone Interview")
+	{
+		$_SESSION['subject'] = "Phone Interview: ".$_SESSION['company']['company_name'];
+		$_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.";
+		$_SESSION['time_edit'] = true;
+	}
+	else if ($_POST['offer'] == "Schedule Job Interview")
+	{
+		$_SESSION['subject'] = "Job Interview: ".$_SESSION['company']['company_name'];
+		$_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule an in-person interview with you. The following times are available, please let us know what works best for you.";
+		$_SESSION['time_edit'] = true;
+	}
+	else if ($_POST['offer'] == "Offer Job")
+	{
+		$_SESSION['subject'] = "Job Offer: ".$_SESSION['company']['company_name'];
+		$_SESSION['body'] = "Congratulations! We are pleased to have you to be part of ".$_SESSION['company']['company_name'].". Your compensation is as follows: You will begin work on the following day. Please let us know by then whether you will accept the job or not.";
+		$_SESSION['time_edit'] = true;
+	}
+	
+	header("Location: inbox.php?write=true&default=true");
+}
+/**
+Add to job, move to job, delete.
+**/
 else if (isset($_POST['submit']))
 {
 	$select = $_POST['select'];
@@ -120,12 +160,18 @@ if (!$result)
 else if (mysql_num_rows($result) > 0)
 {
 	$lastjid = "";
-	$message = "<ul id='messages'><form action='groups.php' method='POST'><fieldset>";
+	$message = "<ul id='messages'><form action='groups.php' method='POST'>";
+	$first_test = false;
 	while ($mes = mysql_fetch_assoc($result))
 	{
-		if ($mes['jid'] != $lastjid && $lastjid != "")
+		if ($mes['jid'] != $lastjid && $lastjid != "" && $first_test)
 		{
 			$message .= "<hr /></fieldset><fieldset><legend>".$mes['job_name']."</legend>";
+		}
+		else if (!$first_test)
+		{
+			$message .= "<hr /><fieldset><legend>".$mes['job_name']."</legend>";
+			$first_test = true;
 		}
 		$lastjid = $mes['jid'];
 		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
@@ -134,7 +180,7 @@ else if (mysql_num_rows($result) > 0)
 	}
 	$message .= "<div align='right'><select name='jid'>";
 	$message .= $job_dropdown;
-	$message .= "</select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule On-Site Interview'/></div></form></ul>"; //add option to pick job.
+	$message .= "</select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form></ul>"; //add option to pick job.
 }
 
 mysql_close();

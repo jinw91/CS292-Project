@@ -79,7 +79,7 @@ $(function(){
 	<div class="header-line"></div>
 	<div class="container_12">
 		<div class="grid_12">
-			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo.png" alt=""></a></h1>
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 			<div id="main-menu">
             <form action="login.php" method="post">
 				<ul class="sf-menu fright responsive-menu">
@@ -107,7 +107,9 @@ width="100px" name="password">
 </header>
 <div id="slides">
 	<div>
-		<div class="text1">Professional Archives</div>
+		<div align="center">
+        <a href="index.php"><img src="site_im/p_a_logo.png" alt=""></a>
+        </div>
 	</div>
 </div>
 <!-- content -->

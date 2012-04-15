@@ -12,6 +12,7 @@ if ($_POST['search'] == "Search")
 {
 	$archives = $_POST['name'];
 	$major = $_POST['major'];
+	$college = $_POST['college'];
 	$gpa = $_POST['gpa'];
 	$work_start = $_POST['work_start'];
 	$skills = $_POST['skills'];
@@ -44,6 +45,17 @@ if ($_POST['search'] == "Search")
 		for ($i = 0; $i < count($major); $i++)
 		{
 			$add .= " AND major LIKE '%%$major[$i]%%'";
+		}
+	}
+	
+	/**
+	Searching by School
+	**/
+	if (isset($college))
+	{
+		for ($i = 0; $i < count($college); $i++)
+		{
+			$add .= " AND college LIKE '$college[$i]%%'";
 		}
 	}
 	
@@ -126,7 +138,6 @@ $(function(){
 </script>
 </head>
 <body>
-<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -187,6 +198,18 @@ $(function(){
                 <option>Human Organizational Development</option>
                 <option>Mechanical Engineering</option>
                 </select></li>
+                <li><label for="college[]" style="float: left;">School: </label>
+                <select name="college[]" multiple="multiple" size="1">
+                <option value='Vanderbilt University'>Vanderbilt University</option>
+                <option value='Duke University'>Duke University</option>
+                <option value='Northwestern University'>Northwestern University</option>
+                <option value='University of Chicago'>University of Chicago</option>
+                <option value='University of Notre Dame'>University of Notre Dame</option>
+                <option value='University of North Carolina'>University of North Carolina</option>
+                <option value='University of Virginia'>University of Virginia</option>
+                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                </select>
+                </li>
                 <li><label for="gpa" style="float: left;">Minimum GPA: </label>
                 <input name="gpa" size="25"  /></li>
                 <li><label for="work_start" style="float: left;">Work Experience: </label>

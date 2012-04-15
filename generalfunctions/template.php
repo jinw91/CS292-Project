@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
 Creates the page for html.
 **/
@@ -19,6 +20,7 @@ function navBar($mes)
 							<li><a href='education.php'>Edit Education</a></li>
 							<li><a href='work.php'>Add Work Experience</a></li>
 							<li><a href='extracurricular.php'>Add Extracurriculars</a></li>
+							<li><a href='image.php'>Edit Profile Picture</a></li>
 						</ul>
 					</li>
 					<li><a href='inbox.php'>inbox";
@@ -45,6 +47,28 @@ Creates the footer for php.
 **/
 function footer()
 {
+	if ($_SESSION['business_mode'])
+	{
+		return("<footer>
+	<div class='container_12'>
+		<div class='wrapper z1'>
+		</div>
+		<div class='z2'><div class='grid_center'><div class='copyright'>Professional Archives &copy; 2012 <a href='home.php'>Privacy Policy</a> <a href='home.php?usermode=true'>User Mode</a><br>
+        </div></div><div class='clear'></div></div>
+	</div>
+</footer>");
+	}
+	else if (!$_SESSION['business_mode'])
+	{
+		return("<footer>
+	<div class='container_12'>
+		<div class='wrapper z1'>
+		</div>
+		<div class='z2'><div class='grid_center'><div class='copyright'>Professional Archives &copy; 2012 <a href='home.php'>Privacy Policy</a> <a href='home.php?usermode=true'>Company Mode</a><br>
+        </div></div><div class='clear'></div></div>
+	</div>
+</footer>");
+	}
 	return("<footer>
 	<div class='container_12'>
 		<div class='wrapper z1'>
