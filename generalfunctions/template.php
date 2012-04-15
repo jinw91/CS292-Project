@@ -64,7 +64,11 @@ function footer()
 	<div class='container_12'>
 		<div class='wrapper z1'>
 		</div>
+<<<<<<< HEAD
 		<div class='z2'><div class='grid_center'><div class='copyright'>Professional Archives &copy; 2012 <a href='home.php'>Privacy Policy</a> <a href='home.php?usermode=false'>Company Mode</a><br>
+=======
+		<div class='z2'><div class='grid_center'><div class='copyright'>Professional Archives &copy; 2012 <a href='home.php'>Privacy Policy</a> <a href='home.php?usermode=true'>Company Mode</a><br>
+>>>>>>> master
         </div></div><div class='clear'></div></div>
 	</div>
 </footer>");

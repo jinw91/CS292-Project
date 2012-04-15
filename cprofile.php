@@ -13,6 +13,10 @@ if (!$connect)
 {
 	echo "failed to connect";	
 }
+if (isset($_SESSION['company']))
+{
+	header("Location: profile.php");
+}
 if ($_GET['submit'] == "Search" || isset($_GET['idnum']))
 {
 	$idnum = $_GET['idnum'];
@@ -51,7 +55,13 @@ else if (mysql_num_rows($result) > 0)
 
 if (is_null($v_users['picture']))
 {
-	$v_users['picture'] = "images/default.png";
+	$picture = "<div class='box-img'>";
+	$grid = "grid_11 suffix_2";
+}
+else
+{
+	$picture = "<div class='grid_4'><div class='box-img'><a href='".$v_users['picture']."' data-gal='prettyPhoto[gallery]' class='lightbox-image'><img src='".$v_users['picture']."' alt=''></a></div>";
+	$grid = "grid_6 suffix_2";
 }
 $p_name = $v_users['first_name']." ".$v_users['last_name'];
 
@@ -65,9 +75,13 @@ if ($idnum == $_SESSION['idnum'])
 {
 	$v_education_message = ceducation_own($idnum);
 }
-else
+else if (isset($_SESSION['company']))
 {
 	$v_education_message = ceducation($idnum);
+}
+else
+{
+	$v_education_message = education($idnum);
 }
 /**
 Creates the message under experience.
@@ -157,17 +171,7 @@ $(function(){
 <header>
 	<div class="top-header">
 		<div class="container_12">
-			<div class="grid_12">
-				<div class="fright">
-					<ul class="top-menu">
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<div class="fleft"></div>
-				<div class="clear"></div>
-			</div>
-			<div class="clear"></div>
+			<div class="grid_12"></div>
 		</div>
 	</div>
 	<div class="header-line"></div>
@@ -195,10 +199,10 @@ $(function(){
 <section id="content">  
 	<div class="container_12">
     <div class="wrapper border_bottom">
-        	<div class="grid_4">
-                <div class="box-img"><a href="<?=$v_users['picture']?>" data-gal="prettyPhoto[gallery]" class="lightbox-image"><img src="<?=$v_users['picture']?>" alt=""></a></div>
+        	<?=$picture?>
+            
             </div>
-            <div class="grid_6 suffix_2">
+            <div class="<?=$grid?>">
                     <fieldset>
                     <div style="font-family: 'Lato', Arial, Helvetica; text-align: center; padding-top: 30px; font-size:18px;">
                     <?=$v_education['college']?><br />
@@ -254,7 +258,6 @@ $(function(){
                 </span>
 			</div>
 		</div>
-        
 	</div>
 </section>
 <!-- footer -->

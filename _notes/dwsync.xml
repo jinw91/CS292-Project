@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="login.php" server="ftp.proarcs.com//" local="129789467467184191" remote="129789503400000000" />
+<<<<<<< HEAD
 <file name="home.php" server="ftp.proarcs.com//" local="129789951213137216" remote="129789987000000000" />
+=======
+<file name="home.php" server="ftp.proarcs.com//" local="129789227389520372" remote="129789262800000000" />
+>>>>>>> master
 <file name="profile.php" server="ftp.proarcs.com//" local="129789454031305702" remote="129789489600000000" />
 <file name="basicinfo.php" server="ftp.proarcs.com//" local="129723511867175039" remote="129723547800000000" />
 <file name="member.css" server="ftp.proarcs.com//" local="129725562208587948" remote="129725598600000000" />
@@ -29,5 +33,10 @@
 <file name="registertest2.php" server="ftp.proarcs.com//" local="129741095904606604" remote="129741131400000000" />
 <file name="business.php" server="ftp.proarcs.com//" local="129746887880383608" remote="129746923800000000" />
 <file name="career.php" server="ftp.proarcs.com//" local="129747596891106509" remote="129747632400000000" />
+<<<<<<< HEAD
 <file name="groups.php" server="ftp.proarcs.com//" local="129789946640155657" remote="129789982200000000" />
+=======
+<file name="groups.php" server="ftp.proarcs.com//" local="129781324478678796" remote="129781360200000000" />
+<file name="privacy.php" server="ftp.proarcs.com//" local="129786689885203840" remote="129786725400000000" />
+>>>>>>> master
 </dwsync>

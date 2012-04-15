@@ -1,10 +1,6 @@
 <?php
 session_start();
 ob_start();
-if (isset($_SESSION['idnum']))
-{
-	header("Location: home.php");
-}
 
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once(__ROOT__.'/generalfunctions/database.php');
@@ -157,8 +153,7 @@ width="100px" name="password">
 	</div>
 </header>
 <div align="center">
-	<p style="font-family: 'Lato', Arial, Helvetica; font-size-adjust: 150%">The page you requested is not found. <br>
-Due to the unexpected high volume of traffic to the site, parts of the site have to be overhauled. <br> We are aware of the problem and are currently working on getting the site operational again as soon as possible. <br> We apologize for the inconvenience.</p><br>
+	<p style="font-family: 'Lato', Arial, Helvetica; font-size-adjust: 150%">The page you requested is not found. <br> We have received a report of the issue and will promptly work on it. <br> We apologize for the inconvenience.</p><br>
     <p style="font-family: 'Lato', Arial, Helvetica;">Thanks, <br> The Professional Archives Team</p>
 </div>
 <!-- content -->

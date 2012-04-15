@@ -7,16 +7,19 @@ if (!isset($_SESSION['idnum']))
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/profile_functions.php');
-$tbl_name="users";
-$connect = connectToDatabase();
-if (!$connect)
-{
-	echo "failed to connect";	
-}
+require_once(__ROOT__.'/generalfunctions/business_profile.php');
 
-if (isset($_GET['b_id']))
+if (isset($_GET['b_id']) || isset($_SESSION['company']))
 {
-	$query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_GET['b_id']);
+	connectToDatabase();
+	if (isset($_GET['b_id']))
+	{
+		$query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_GET['b_id']);
+	}
+	else
+	{
+		$query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_SESSION['company']['b_id']);
+	}
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -24,25 +27,15 @@ if (isset($_GET['b_id']))
 	}
 	$v_users = mysql_fetch_assoc($result);
 	$p_name = $v_users['company_name'];
+	$v_bid = $v_users['b_id'];
 	$about = "<li>".$v_users['description']."</li>";
 	
-	$postings = "<ul id='job_entries'>";
-	$query = sprintf("SELECT * FROM careers WHERE b_id=%d", $_GET['b_id']);
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-	while ($job = mysql_fetch_assoc($result))
-	{
-		$postings = $postings."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a><div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'>Apply</a></div>"; //adds name and options.
-		$postings .= "</li>";
-	}
-	$postings .= "</ul>";
+	$postings = postings($v_bid);
 	
 	$options = "<li><a id='about' href='javascript:about();'>About</a></li>
-                  <li><a id='looking' href='javascript:look();'>Looking For</a></li>
-                  <li><a id='postings' href='javascript:postings()'>Job Postings</a></li>";
+                  <li><a id='postings' href='javascript:postings();'>Job Postings</a></li>
+				  <li><a id='looking' href='javascript:look();'>Looking For</a></li>";
+	mysql_close();
 }
 
 /**
@@ -58,6 +51,7 @@ else
 	{
 		$idnum = $_SESSION['idnum'];
 	}
+	connectToDatabase();
 	$query = sprintf("SELECT * FROM users WHERE idnum=%d", $idnum);
 	$result = mysql_query($query);
 	if (!$result)
@@ -132,12 +126,14 @@ else
 		$extracurriculars = extra($idnum);
 	}
 	
+	/**
 	if (isset($_GET['follow']) && $idnum != $_SESSION['idnum'])
 	{
 			$query = sprintf("INSERT INTO subscribed (from_id, to_id, subscribed) VALUES ('%d', '%d', NOW())", $_SESSION['idnum'], $idnum);
 			$result = mysql_query($query); 
 			$message = "<script type='text/javascript'>alert('You are now following $p_name');</script>";
-	}
+	}**/
+	mysql_close();
 	
 	$options = "<li><a id='experience' href='javascript:experience();'>Experience</a></li>
                   <li><a id='skills' href='javascript:skills();'>Skills</a></li>
@@ -234,19 +230,9 @@ $(function(){
                     <fieldset>
                     <div style="font-family: 'Lato', Arial, Helvetica; text-align: center; padding-top: 30px; font-size:18px;">
                     <?php 
-					if (isset($_GET['b_id']))
+					if (isset($v_bid))
 					{
-						$date = strtotime($v_users['founded']);
-						$temp = substr($v_users['founded'], 0, 4);
-						$tmpmonth = intval(substr($v_users['founded'], 5, 2));
-						if ($temp != '0000' && $tmpmonth != '00')
-						{
-							echo "Founded in ".date("Y", $date)."<br />";
-						}
-						if (trim($v_users['city']) != "" && trim($v_users['state'] != ""))
-						{
-							echo "Headquarters in ".$v_users['city'].", ".$v_users['state'];
-						}
+						brief_c();
 					}
 					else
 					{
@@ -328,7 +314,7 @@ $(function(){
                   <fieldset>
                   <br>
                   <ul id="start"><?
-				  if (isset($_GET['b_id']))
+				  if (isset($v_bid))
 				  {
 					  echo $about;
 				  }

@@ -12,6 +12,7 @@ if ($_POST['search'] == "Search")
 {
 	$archives = $_POST['name'];
 	$major = $_POST['major'];
+	$college = $_POST['college'];
 	$gpa = $_POST['gpa'];
 	$work_start = $_POST['work_start'];
 	$skills = $_POST['skills'];
@@ -48,6 +49,17 @@ if ($_POST['search'] == "Search")
 	}
 	
 	/**
+	Searching by School
+	**/
+	if (isset($college))
+	{
+		for ($i = 0; $i < count($college); $i++)
+		{
+			$add .= " AND college LIKE '$college[$i]%%'";
+		}
+	}
+	
+	/**
 	Search by GPA
 	**/
 	if ($gpa != "")
@@ -77,14 +89,14 @@ if ($_POST['search'] == "Search")
 	{
 		while ($mes =  mysql_fetch_assoc($result))
 		{
-				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
 				$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
 				$message = $message."<br>".$mes['field']."</li>"; //adds name.
 		}
-		$message = $message."<input type='submit' name='submit' value='Offer Job'/></form>";
+		$message = $message."<div align='right'><input type='submit' name='submit' value='Send Interested In Message'/></div></form>";
 	}
-	mysql_close();
 }
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,7 +138,6 @@ $(function(){
 </script>
 </head>
 <body>
-<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -187,6 +198,18 @@ $(function(){
                 <option>Human Organizational Development</option>
                 <option>Mechanical Engineering</option>
                 </select></li>
+                <li><label for="college[]" style="float: left;">School: </label>
+                <select name="college[]" multiple="multiple" size="1">
+                <option value='Vanderbilt University'>Vanderbilt University</option>
+                <option value='Duke University'>Duke University</option>
+                <option value='Northwestern University'>Northwestern University</option>
+                <option value='University of Chicago'>University of Chicago</option>
+                <option value='University of Notre Dame'>University of Notre Dame</option>
+                <option value='University of North Carolina'>University of North Carolina</option>
+                <option value='University of Virginia'>University of Virginia</option>
+                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                </select>
+                </li>
                 <li><label for="gpa" style="float: left;">Minimum GPA: </label>
                 <input name="gpa" size="25"  /></li>
                 <li><label for="work_start" style="float: left;">Work Experience: </label>
