@@ -5,6 +5,11 @@ if (!isset($_SESSION['idnum']))
 	header("Location: index.php");
 }
 
+if (isset($_GET['usermode']))
+{
+	$_SESSION['business_mode'] = $_GET['usermode'];
+}
+
 define('__ROOT__', dirname(__FILE__)); 
 	require_once(__ROOT__.'/generalfunctions/database.php');
 	$tbl_name="users";

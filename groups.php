@@ -51,7 +51,11 @@ else if (isset($_POST['submit']))
 
 //Base query
 $query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed WHERE c.idnum=u.idnum AND u.idnum=ed.idnum", $_SESSION['company']['b_id']);
-if ($_POST['applicants']=="Submit")
+if (isset($_GET['jid']))
+{
+	$query .= " AND jid=".$_GET['jid'];
+}
+else if ($_POST['applicants']=="Submit")
 {
 	$name = $_POST['name'];
 	$major = $_POST['major'];
@@ -68,7 +72,7 @@ if ($_POST['applicants']=="Submit")
 	}
 	
 }
-$query .= " GROUP BY jid";
+$query .= " ORDER BY jid";
 
 $result = mysql_query($query);
 if (!$result)
@@ -86,7 +90,7 @@ else if (mysql_num_rows($result) > 0)
 			$message .= "</fieldset><fieldset title='".$mes['job_name']."'>";
 		}
 		$lastjid = $mes['jid'];
-		$message .= $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
 		$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
@@ -214,7 +218,7 @@ $(function(){
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
             <label for="group">Job(s): </label>
             </div>
-            <?=$jobs?>
+            <?=$jobs?><br>
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
             <label for="group">Priorities: </label>
             </div>
