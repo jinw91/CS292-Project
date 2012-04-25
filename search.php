@@ -189,7 +189,7 @@ $(function(){
                 <li><label for="name" style="float: left;">Name: </label>
                 <input name="name" size="25" /></li>
                 <li><label for="major[]" style="float: left;">Major: </label>
-                <select name="major[]" multiple="multiple" size="1">
+                <select name="major[]" size="1">
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>

@@ -134,12 +134,17 @@ else if (mysql_num_rows($result) > 0)
 $priority = "<li><label for='name' style='float: left;'>High: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Medium: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Low: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>None: </label><input name='priorities[]' type='checkbox'/></li>";
 
 //Base query
+<<<<<<< HEAD
 $query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed WHERE c.idnum=u.idnum AND u.idnum=ed.idnum", $_SESSION['company']['b_id']);
 if (isset($_GET['jid']))
 {
 	$query .= " AND jid=".$_GET['jid'];
 }
 else if ($_POST['applicants']=="Submit")
+=======
+$query = sprintf("SELECT DISTINCT * FROM c_applied_%d c, users u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
+if ($_POST['applicants']=="Submit")
+>>>>>>> master
 {
 	$name = $_POST['name'];
 	$major = $_POST['major'];
@@ -154,7 +159,11 @@ else if ($_POST['applicants']=="Submit")
 	}
 	
 }
+<<<<<<< HEAD
 $query .= " ORDER BY jid";
+=======
+$query .= " ORDER BY c.jid";
+>>>>>>> master
 
 $result = mysql_query($query);
 if (!$result)
@@ -178,12 +187,12 @@ else if (mysql_num_rows($result) > 0)
 			$first_test = true;
 		}
 		$lastjid = $mes['jid'];
-		if (is_null($mes['picture']))
-		{
-			$mes['picture'] = "images/default.png";
-		}
 		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+<<<<<<< HEAD
+		$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
+=======
 		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
+>>>>>>> master
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
 	$message .= "<div align='right'><select name='jid'>";
@@ -208,6 +217,29 @@ mysql_close();
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script>
+$(function(){
+	$('#slides').slides({
+	effect: 'fade',
+	fadeSpeed:700,
+	preload: false,
+	play: 5000,
+	pause: 5000,
+	hoverPause: true,
+	crossfade: true,
+	bigTarget: true
+	});
+	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
+	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
+	$('.tooltips li a').find('strong').append('<span></span>').each(
+	 	function(){
+		var src=new Array()
+		src=$(this).find('>img').attr('src').split('.')
+		src=src[0]+'-hover.'+src[1]
+		$(this).find('>span').css({background:'url('+src+')'})
+	 });
+});
+</script>
 </head>
 <body>
 <!-- header -->

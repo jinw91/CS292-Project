@@ -55,7 +55,7 @@ if (isset($_SESSION['idnum']))
 		else
 		{
 			$res = mysql_fetch_assoc($result);
-			if ($res['idnum'] != 57 && $res['idnum'] != 5)
+			if ($res['idnum'] != 5)
 			{
 				$error = "Message sent. Please check your inbox.";
 			$message = "Your password is: ".$res['password']."<br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";

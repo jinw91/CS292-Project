@@ -8,12 +8,18 @@ if (!isset($_SESSION['idnum']))
 if (isset($_GET['usermode']))
 {
 	$_SESSION['business_mode'] = $_GET['usermode'];
+	if ($_SESSION['business_mode']) $error = "Business mode set to true";
+	else if (!$_SESSION['business_mode']) $error = "Business mode set to false";
+	else
+	{
+		$error = "invalid output";
+	}
 }
 
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/home.php');
-if (isset($_SESSION['company']) || isset($_GET['proarcs']))
+if (isset($_SESSION['business_mode']) && $_SESSION['business_mode'])
 {
 	$job_mes = "No events scheduled. Please send some invitations for Interviews.";
 	$name = name(true);
@@ -123,6 +129,7 @@ else
 </script>
 </head>
 <body>
+<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">

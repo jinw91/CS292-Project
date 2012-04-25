@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="login.php" server="ftp.proarcs.com//" local="129791702604537171" remote="129791738400000000" />
-<file name="home.php" server="ftp.proarcs.com//" local="129791706879841704" remote="129791742600000000" />
+<file name="login.php" server="ftp.proarcs.com//" local="129789467467184191" remote="129789503400000000" />
+<file name="home.php" server="ftp.proarcs.com//" local="129789951213137216" remote="129789987000000000" />
 <file name="profile.php" server="ftp.proarcs.com//" local="129789454031305702" remote="129789489600000000" />
+<file name="basicinfo.php" server="ftp.proarcs.com//" local="129723511867175039" remote="129723547800000000" />
 <file name="member.css" server="ftp.proarcs.com//" local="129725562208587948" remote="129725598600000000" />
 <file name="logout.php" server="ftp.proarcs.com//" local="129717403634334953" remote="129717439200000000" />
 <file name="education.php" server="ftp.proarcs.com//" local="129771822103391555" remote="129771858000000000" />
@@ -20,7 +21,7 @@
 <file name="createjob.php" server="ftp.proarcs.com//" local="129722988186985305" remote="129723024000000000" />
 <file name="front_page_logo.png" server="ftp.proarcs.com//" local="129715770898195757" remote="129715809000000000" />
 <file name="register.php" server="ftp.proarcs.com//" local="129771821434753311" remote="129771857400000000" />
-<file name="cprofile.php" server="ftp.proarcs.com//" local="129789996747881655" remote="129790032600000000" />
+<file name="cprofile.php" server="ftp.proarcs.com//" local="129789286941890117" remote="129789411600000000" />
 <file name="extracurricular.php" server="ftp.proarcs.com//" local="129741024352706255" remote="129741060000000000" />
 <file name="basic_info.php" server="ftp.proarcs.com//" local="129735092079035356" remote="129735127800000000" />
 <file name="search.php" server="ftp.proarcs.com//" local="129781318321736639" remote="129781353600000000" />
@@ -28,7 +29,5 @@
 <file name="registertest2.php" server="ftp.proarcs.com//" local="129741095904606604" remote="129741131400000000" />
 <file name="business.php" server="ftp.proarcs.com//" local="129746887880383608" remote="129746923800000000" />
 <file name="career.php" server="ftp.proarcs.com//" local="129747596891106509" remote="129747632400000000" />
-<file name="groups.php" server="ftp.proarcs.com//" local="129794234661667151" remote="129794270400000000" />
-<file name="privacy.php" server="ftp.proarcs.com//" local="129786689885203840" remote="129786725400000000" />
-<file name="test.php" server="ftp.proarcs.com//" local="129796374196755009" remote="129796410000000000" />
+<file name="groups.php" server="ftp.proarcs.com//" local="129789946640155657" remote="129789982200000000" />
 </dwsync>
