@@ -324,6 +324,19 @@ Careers.
 	font-weight: bolder;
 }
 
+#search_careers {
+	text-align:center;
+	font-size: 16px;
+	font-family: "Lato", Arial, Helvetica;
+	font-weight:bold; 
+	text-transform:uppercase;
+}
+
+.company_name {
+	float:left;
+	size: 25;
+}
+
 /**
 Form Edit.
 **/
