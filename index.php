@@ -10,6 +10,8 @@ if (isset($_SESSION['idnum']))
 <head>
 <title>Professional Archives</title>
 <meta charset="utf-8">
+<meta name="description" content="Professional Archives is a website formed by Vanderbilt students to connect students with professionals and companies around the world.">
+<meta name="keywords" content="proarcs,professional archives, profarchs, proarchs, profarcs, profarch, proarch, Professional Archives, professionals, companies">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/styles.css">

@@ -11,17 +11,22 @@ define('__ROOT__', dirname(__FILE__));
 require_once(__ROOT__.'/generalfunctions/database.php');
 $connect = connectToDatabase();
 
-$query = "SELECT * FROM users";
+$query = "SELECT u.idnum, u.first_name, u.last_name, SUM(DATEDIFF(company_end, company_start))/365
+FROM users u, work_data w
+WHERE u.idnum=w.idnum
+GROUP BY idnum";
 $res = mysql_query($query);
 
 while($row = mysql_fetch_assoc($res))
 {
+	/**
 	$old_password = $row['password'];
 	$password = hash("salsa20", $old_password);
 	
 	$print = $password . "\t". $old_password;
 	echo $print;
 	//$query = sprintf("UPDATE users SET password='%s'", $password);
+	**/
 }
 
 ?>
