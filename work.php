@@ -188,25 +188,23 @@ $(function(){
 			  <h1 id='edit_title'>Work Experience:</h1>
               <form action='work.php' method='post'>
               <?=$error?><?=$message?><br>
-              <form action='image.php' method='post'>
               <ul id='education'>
                 <li>
-                    <label class='field' for='company'>Company Name: </label>
-                    <input type='text' name='company' size=20 value="<?=$experience['company_name']?>"/>
+                    <label class='field'>Company Name: <input type='text' name='company' size=20 value="<?=$experience['company_name']?>" /></label>
                 </li>
                 <li>
-                    <label class='field' for='title'>Title: </label> <input type='text' name='title' value="<?=$experience['title']?>"/>
+                    <label class='field'>Title: <input type='text' name='title' value="<?=$experience['title']?>" /></label>
                 </li>
                 <li>
-                <label class="field" for="city">City: </label><input name="city" value="<?=$experience['city']?>" width="150px"/> State: <input name="state" value="<?=$experience['state']?>" style="width: 60px;" />
+                <label class="field">City: <input name="city" value="<?=$experience['city']?>" size=150 /></label> State: <input name="state" value="<?=$experience['state']?>" size=60 />
                 <li>
-                    <label class='field' for='work_year_start'>Time Period: </label>
+                    <label class='field'>Time Period: </label>
                     <script>
                     document.write("<select name=\"work_month_start\">");
 					months();
 					document.write("<select name=\"work_year_start\">");
 					years(<?=$year_start?>);
-					document.write("<label for=\"work_month_end\"> - </label>");
+					document.write("<label> - </label>");
 					document.write("<select name=\"work_month_end\">");
 					months();
 					document.write("<select name=\"work_year_end\">");
@@ -214,11 +212,10 @@ $(function(){
 					selectMonth("work_month_start", "<?=$month_start?>");
 					selectMonth("work_month_end", "<?=$month_end?>");
                     </script><br>
-					<label class='subscript' for='present'>Currently Employed: </label>
-                    <input type="checkbox" name="present" value="1" <?=$c_employed?>>
+					<label class='subscript'>Currently Employed: <input type="checkbox" name="present" value="1" <?=$c_employed?>></label>
                 </li>
                 <li>
-                <label class='field' for='achievement'>Achievement(s): </label><textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea>
+                <label class='field'>Achievement(s): <textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea></label>
                 </li>
                 <li><span style='margin-left: 300px;'>
                 <input type="hidden" name="wid" value="<?=$wid?>">
