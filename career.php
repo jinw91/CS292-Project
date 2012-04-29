@@ -147,34 +147,28 @@ $(function(){
             <?=$error?><?=$message?><br>
             <ul id="education">
             <li>
-            <label class="field" for="job_name">Job Name: </label>
-            <input name="job_name" type="text" value="<?=$job['job_name']?>"/>
+            <label class="field">Job Name: <input name="job_name" type="text" value="<?=$job['job_name']?>" /></label>
             </li>
             <li>
-            <label class="field" for="major">Major(s): </label>
-            <input name="major" type="text" value="<?=$job['major']?>"/>
+            <label class="field">Major(s): <input name="major" type="text" value="<?=$job['major']?>" /></label>
             </li>
             <li>
-            <label class="field" for="pay">Pay: </label>
-            <input name="pay" value="<?=$job['pay']?>"/>
+            <label class="field">Pay: <input name="pay" value="<?=$job['pay']?>" /></label>
             <select name="rate">
-            <option selected="select">Annual/Total</option>
+            <option selected="selected">Annual/Total</option>
             <option>Hourly</option>
             <option>Weekly</option>
             </select> 
-            <label for="internship">Internship: </label>
-            <input name="internship" type="checkbox" value="1"/>
+            <label>Internship: <input name="internship" type="checkbox" value="1" /></label>
             </li>
             <li>
-            <label class="field" for="city">City: </label><input name="city" value="<?=$job['city']?>" size=20/> State: <input name="state" size=3 value="<?=$job['state']?>" />
+            <label class="field">City: <input name="city" value="<?=$job['city']?>" size=20 /></label> State: <input name="state" size=3 value="<?=$job['state']?>" />
             </li>
             <li>
-            <label class="field" for="description">Description: </label>
-            <textarea name="description" rows="5"><?=$job['job_description']?></textarea>
+            <label class="field">Description: <textarea name="description" rows="5"><?=$job['job_description']?></textarea></label>
             </li>
             <li>
-            <label class="field" for="qualifications">Qualification(s): </label>
-            <textarea name="qualifications" rows="5"><?=$job['qualifications']?></textarea>
+            <label class="field">Qualification(s): <textarea name="qualifications" rows="5"><?=$job['qualifications']?></textarea></label>
             </li>
             <li><span style="margin-left: 300px;">
             <input type="submit" name="add_job" value="Submit"/>

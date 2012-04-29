@@ -126,16 +126,14 @@ $(function(){
               <form action='basic_info.php' method='post'>
               <?=$error?><?=$message?><br>
               <ul id='education'>
-                <li><label class="field" for="city">City: </label><input name="city" value="<?=$user_info['city']?>" width="150px"/> State: <input name="state" value="<?=$user_info['state']?>" style="width: 60px;" /></li>
+                <li><label class="field">City: </label><input name="city" value="<?=$user_info['city']?>" size=150 /> State: <input name="state" value="<?=$user_info['state']?>" size=60 /></li>
                 <li id="school"></li>                    
-                <li><label class="field" for="income">Expected Pay: </label> 
-    <input name="income" value="<?=$user_info['pay']?>"/><label for="hourly">  &nbsp;Hourly: </label>
+                <li><label class="field">Expected Pay: <input name="income" value="<?=$user_info['pay']?>" /></label> <label>  &nbsp;Hourly: </label>
     <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
-                <li><label class='field' for='field'>Primary Field: </label> <input type='text' name='field' value="<?=$user_info['field']?>"/></li>
-            <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
-            <li><label class='field' for='skills'>Technical Skills: </label>
-            <textarea name='skills' rows='2'><?=$user_info['skills']?></textarea></li>
-            <label class='subscript' for='honors'>Example: Microsoft Excel, HTML</label><br>
+                <li><label class='field'>Primary Field: <input type='text' name='field' value="<?=$user_info['field']?>" /></label>
+<label class='subscript'>Example: Computer Science, Math</label><br></li>
+            <li><label class='field'>Technical Skills: <textarea name='skills' rows='2'><?=$user_info['skills']?></textarea></label>
+            <label class='subscript'>Example: Microsoft Excel, HTML</label><br></li>
             <li>
             <span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             <input type='submit' name='skip' value='Skip' /></span></li>

@@ -164,19 +164,19 @@ $(function(){
                     <option value='Bachelor of Science'>Bachelor of Science</option>
                     <option value='Bachelor of Engineering'>Bachelor of Engineering</option>
                     <option value='Bachelor of Nursing'>Bachelor of Nursing</option>
-                    <option value='Associate's Degree'>Associate's Degree</option> </select></li>
+                    <option value="Associate's Degree">Associate's Degree</option> </select></li>
                     
-                <li><label class='field' for='major'>Major(s): </label> <input type='text' name='major' value="<?=$education['major']?>"/></li>
-            <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
-            <li><label class='field' for='minor'>Minor(s): </label> <input type='text' name='minor' value="<?=$education['minor']?>"/></li>
-            <label class='subscript' for='major'>Example: Corporate Strategies, Engineering Management</label><br>
-                <li><label class='field' for='college_year_start'>Time Attended: </label>
+                <li><label class='field'>Major(s): <input type='text' name='major' value="<?=$education['major']?>" /></label>
+            <label class='subscript'>Example: Computer Science, Math</label><br></li>
+            <li><label class='field'>Minor(s): <input type='text' name='minor' value="<?=$education['minor']?>" /></label>
+            <label class='subscript'>Example: Corporate Strategies, Engineering Management</label><br></li>
+                <li><label class='field'>Time Attended: </label>
                 <script>
                 document.write("<select name=\"college_month_start\">");
 				months();
 				document.write("<select style=\"width: 60px;\" name=\"college_year_start\">");
 				years("<?=$year_start?>");
-				document.write("<label for=\"college_month_end\"> - </label>");
+				document.write("<label> - </label>");
 				document.write("<select name=\"college_month_end\">");
 				months();
 				document.write("<select style=\"width: 60px;\" name=\"college_year_end\">");
@@ -187,10 +187,9 @@ $(function(){
 				selectDefault('college', "<?=$education['college']?>");
                 </script>
             </li>
-                <li><label class='field' for='gpa'>Cumulative GPA: </label> <input name='gpa' size=8 value="<?=$education['gpa']?>"/></li>
-            <li><label class='field' for='honors'>Honors: </label>
-            <textarea name='honors' rows='3'><?=$education['honors']?></textarea></li>
-            <label class='subscript' for='honors'>Example: Dean's List, National Merit Scholarship</label><br>
+                <li><label class='field'>Cumulative GPA: <input name='gpa' size=8 value="<?=$education['gpa']?>" /></label></li>
+            <li><label class='field'>Honors: <textarea name='honors' rows='3'><?=$education['honors']?></textarea></label>
+            <label class='subscript'>Example: Dean's List, National Merit Scholarship</label><br></li>
             <li>
             <span style='margin-left: 300px;'><input type='submit' name='submit' value='Submit' />
             <input type='submit' name='skip' value='Skip' /></span></li>

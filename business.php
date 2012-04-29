@@ -157,12 +157,12 @@ $(function(){
               <?=$error?><?=$message?><br>
               <ul id='education'>
               <?=$picture?>
-              <li><label class="field" for="company_name">Company Name: </label><input type="text" name="company_name" value="<?=$company_name?>"/></li>
-              <li><label class="field" for="sector">Sector: </label><input name="sector" type="text" value="<?=$sector?>"/></li>
-    		  <li><label class="field" for="city">City: </label><input name="city" size=20 value="<?=$city?>"/> State: <input name="state" size=3 value="<?=$state?>"/></li>
-			  <li><label class="field" for="description">Description: </label><textarea name="description" rows="10"><?=$description?></textarea></li>
+              <li><label class="field">Company Name: <input type="text" name="company_name" value="<?=$company_name?>" /></label></li>
+              <li><label class="field">Sector: <input name="sector" type="text" value="<?=$sector?>" /></label></li>
+    		  <li><label class="field">City: <input name="city" size=20 value="<?=$city?>" /></label> State: <input name="state" size=3 value="<?=$state?>" /></li>
+			  <li><label class="field">Description: <textarea name="description" rows="10"><?=$description?></textarea></label></li>
               <fieldset>
-              <li><label class="field" for="description">Company Image: </label><input type="file" name="picture"></li>
+              <li><label class="field">Company Image: <input type="file" name="picture"></label></li>
               </fieldset>
     		  <li>
             <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save"/></span></li>
