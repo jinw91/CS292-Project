@@ -164,7 +164,7 @@ $(function(){
                     <option value='Bachelor of Science'>Bachelor of Science</option>
                     <option value='Bachelor of Engineering'>Bachelor of Engineering</option>
                     <option value='Bachelor of Nursing'>Bachelor of Nursing</option>
-                    <option value='Associate's Degree'>Associate's Degree</option> </select></li>
+                    <option value="Associate's Degree">Associate's Degree</option> </select></li>
                     
                 <li><label class='field'>Major(s): <input type='text' name='major' value="<?=$education['major']?>" /></label>
             <label class='subscript'>Example: Computer Science, Math</label><br></li>
