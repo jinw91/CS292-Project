@@ -34,9 +34,9 @@ function navBar($mes)
 	{
 		$message .= "<li><a href='groups.php'>candidates</a></li>";
 	}
-	$message .= "<li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
+	$message .= "<li><a href='#'>&darr;<span class='arrow'></span></a><ul>
 						<li><a href='#'>Privacy Settings</a></li>
-						<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
+						<li><a href='mailto:contact@proarcs.com'>Contact Us</a></li>
 						<li><a href='logout.php'>Log Out</a></li>
 						</ul>
 			</ul>
