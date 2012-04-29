@@ -131,14 +131,14 @@ $(function(){
             <form action="login.php" method="post">
 				<ul class="sf-menu fright responsive-menu">
 					<li>
-                    <label for="username">Email: </label><input type="text"
-width="100px" name="email">
+<label>Email: <input type="text"
+size=100 name="email" /></label>
 					</li>
 					<li>
-                    <label for="username">Password: </label><input type="password"
-width="100px" name="password">
-<div align="center" style="margin-top: 5px;">
-<label for="cookie">Remember Me </label><input type="checkbox" name="cookie" /></div>
+<label>Password: <input type="password"
+size=100 name="password" /></label>
+<div id="remember_me">
+<label>Remember Me <input type="checkbox" name="cookie" /></label></div>
                     </li>
                     <li>
                     <input type="submit" name="login" value="Log In">
@@ -152,7 +152,7 @@ width="100px" name="password">
 		<div class="clear"></div>
 	</div>
 </header>
-<div align="center">
+<div id="not_found">
 	<p style="font-family: 'Lato', Arial, Helvetica; font-size-adjust: 150%">The page you requested is not found. <br> We have received a report of the issue and will promptly work on it. <br> We apologize for the inconvenience.</p><br>
     <p style="font-family: 'Lato', Arial, Helvetica;">Thanks, <br> The Professional Archives Team</p>
 </div>
