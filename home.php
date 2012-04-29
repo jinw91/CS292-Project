@@ -7,7 +7,7 @@ if (!isset($_SESSION['idnum']))
 
 if (isset($_GET['usermode']))
 {
-	$_SESSION['business_mode'] = $_GET['usermode'];
+	$_SESSION['business_mode'] = !$_SESSION['business_mode'];
 	if ($_SESSION['business_mode']) $error = "Business mode set to true";
 	else if (!$_SESSION['business_mode']) $error = "Business mode set to false";
 	else
@@ -19,10 +19,11 @@ if (isset($_GET['usermode']))
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/home.php');
-if (isset($_SESSION['business_mode']) && $_SESSION['business_mode'])
+if ( $_SESSION['business_mode'])
 {
 	$job_mes = "No events scheduled. Please send some invitations for Interviews.";
 	$name = name(true);
+	$_SESSION['users']['picture'] = "";
 }
 else
 {

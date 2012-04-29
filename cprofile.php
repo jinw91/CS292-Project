@@ -13,10 +13,6 @@ if (!$connect)
 {
 	echo "failed to connect";	
 }
-if (isset($_SESSION['company']) && !isset($_GET['idnum']))
-{
-	header("Location: profile.php");
-}
 if ($_GET['submit'] == "Search" || isset($_GET['idnum']))
 {
 	$idnum = $_GET['idnum'];

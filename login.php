@@ -39,6 +39,10 @@ if (isset($_SESSION['idnum']))
 				$_SESSION['business_mode'] = true;
 				$_SESSION['company'] = mysql_fetch_assoc($result);
 			}
+			else
+			{
+				$_SESSION['business_mode'] = false;	
+			}
 			//setcookie("idnum", $idnum, time() + 60 * 60 * 24 * 60);
 			header("Location: http://proarcs.com/home.php");
 		}
