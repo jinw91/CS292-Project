@@ -34,3 +34,12 @@ Home page.
 	list-style-type: none;
 	text-align: right;
 }
+#not_found, #remember_me
+{
+    margin-left:auto;
+    margin-right:auto; 
+}
+#remember_me
+{
+    margin-top:5px;
+}
