@@ -64,22 +64,6 @@ function navBar($mes)
 			</div>";
 	}
 	
-<<<<<<< HEAD
-=======
-	$message .= "</a></li><li><a href='careers.php'>jobs</a></li>";
-	if ($_SESSION['business_mode'])
-	{
-		$message .= "<li><a href='groups.php'>candidates</a></li>";
-	}
-	$message .= "<li><a href='#'>&darr;<span class='arrow'></span></a><ul>
-						<li><a href='#'>Privacy Settings</a></li>
-						<li><a href='mailto:contact@proarcs.com'>Contact Us</a></li>
-						<li><a href='logout.php'>Log Out</a></li>
-						</ul>
-			</ul>
-		</div>";
-	
->>>>>>> aa7d7b0e730b32d3c3a10671dbc27334c195bc01
 	return($message);
 }
 
