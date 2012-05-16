@@ -233,21 +233,6 @@ $(function(){
 <section id="content">  
 	<div class="container_12">
     <div class="wrapper border_bottom">
-        	<div class="grid_4">
-                <form action="careers.php" method="post">
-                <div id = "search_careers">
-                <label for="careers">Search Careers: </label>
-                </div>
-                <div align="right">
-                <label class="company_name" for="company_name">Company Name: </label>
-                <input name="company_name"/><br />
-                <label class="major" for="major">Major: </label>
-                <input name="major"/><br />
-                <?=$_SESSION['career_options']?><br />                
-                <input type="submit" name="search" value="Search"/>
-                </div>
-                </form>
-            </div>
             <div class="grid_6 suffix_2">
                     <fieldset>
                     <?=$error?>

@@ -134,7 +134,7 @@ else if (mysql_num_rows($result) > 0)
 $priority = "<li><label for='name' style='float: left;'>High: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Medium: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Low: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>None: </label><input name='priorities[]' type='checkbox'/></li>";
 
 //Base query
-$query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed WHERE c.idnum=u.idnum AND u.idnum=ed.idnum", $_SESSION['company']['b_id']);
+$query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
 if (isset($_GET['jid']))
 {
 	$query .= " AND jid=".$_GET['jid'];
@@ -149,12 +149,12 @@ else if ($_POST['applicants']=="Submit")
 	{
 		for ($i = 0; $i<count($job); $i++)
 		{
-			$query .= " AND jid=".$job[$i];
+			$query .= " AND c.jid=".$job[$i];
 		}
 	}
 	
 }
-$query .= " ORDER BY jid";
+$query .= " ORDER BY c.jid";
 
 $result = mysql_query($query);
 if (!$result)
