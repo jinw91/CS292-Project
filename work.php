@@ -200,19 +200,19 @@ $(function(){
                 <li>
                     <label class='field'>Time Period: </label>
                     <script>
-                    document.write("<select name=\"work_month_start\">");
-					months();
-					document.write("<select name=\"work_year_start\">");
-					years(<?=$year_start?>);
-					document.write("<label> - </label>");
-					document.write("<select name=\"work_month_end\">");
-					months();
-					document.write("<select name=\"work_year_end\">");
-					years(<?=$year_end?>);
-					selectMonth("work_month_start", "<?=$month_start?>");
-					selectMonth("work_month_end", "<?=$month_end?>");
+			document.write("<select name=\"work_month_start\">");
+			months();
+			document.write("<select name=\"work_year_start\">");
+			years(<?=$year_start?>);
+			document.write("<label id=\"work_dash_id\"> - </label>");
+			document.write("<select id=\"work_month_end_id\" name=\"work_month_end\">");
+			months();
+			document.write("<select id=\"work_year_end_id\" name=\"work_year_end\">");
+			years(<?=$year_end?>);
+			selectMonth("work_month_start", "<?=$month_start?>");
+			selectMonth("work_month_end", "<?=$month_end?>");
                     </script><br>
-					<label class='subscript'>Currently Employed: <input type="checkbox" name="present" value="1" <?=$c_employed?>></label>
+			<label class='subscript'>Currently Employed: <input onclick="hideWorkEndTime(this)" type="checkbox" name="present" value="1" <?=$c_employed?>></label>
                 </li>
                 <li>
                 <label class='field'>Achievement(s): <textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea></label>
