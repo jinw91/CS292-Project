@@ -34,8 +34,13 @@ function postings($bid)
 	}
 	while ($job = mysql_fetch_assoc($result))
 	{
-		$postings = $postings."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a><div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'>Apply</a></div>"; //adds name and options.
-		$postings .= "</li>";
+		if (isset($_SESSION['company'])) {
+			$postings = $postings."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a><div id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></div>"; //adds name and options.
+			$postings .= "</li>";
+		} else {
+			$postings = $postings."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a><div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'>Apply</a></div>"; //adds name and options.
+			$postings .= "</li>";
+		}
 	}
 	$postings .= "</ul>";
 	return($postings);

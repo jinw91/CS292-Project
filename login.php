@@ -44,7 +44,7 @@ if (isset($_SESSION['idnum']))
 				$_SESSION['business_mode'] = false;	
 			}
 			//setcookie("idnum", $idnum, time() + 60 * 60 * 24 * 60);
-			header("Location: http://proarcs.com/home.php");
+			header("Location: home.php");
 		}
 	}
 	else if ($_POST['submit'] == "Submit")
