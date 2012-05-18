@@ -307,6 +307,13 @@ Careers.
 	padding-left: 5px;
 }
 
+.job_title_font
+{
+	font-family: Lato, Geneva, sans-serif;
+	font-size: 19px;
+	font-weight: normal;
+	text-transform:uppercase;
+}
 .job_entry_font
 {
 	font-family: Lato, Geneva, sans-serif;

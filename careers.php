@@ -87,7 +87,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
-			$message = $message."<li><span class='job_entry_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span>
+			$message = $message."<li><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span>
 			<ul>
 			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
 				<ul><li><b>Major: </b>".$job['major']."</li>
@@ -96,7 +96,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
 			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
-				<ul><li><a href='groups.php'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+				<ul><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
 			</ul>";
 			/**
 			$query = sprintf("SELECT * FROM c_applied_%d i, users u, education_data ed WHERE i.idnum=u.idnum AND u.idnum=ed.idnum AND jid='%d' AND is_read=0", $_SESSION['company']['b_id'], $job['jid']);
