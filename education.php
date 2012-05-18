@@ -164,11 +164,11 @@ $(function(){
                     <option value='Bachelor of Science'>Bachelor of Science</option>
                     <option value='Bachelor of Engineering'>Bachelor of Engineering</option>
                     <option value='Bachelor of Nursing'>Bachelor of Nursing</option>
-                    <option value="Associate's Degree">Associate's Degree</option> </select></li>
-                    
-                <li><label class='field'>Major(s): <input type='text' name='major' value="<?=$education['major']?>" /></label>
-            <label class='subscript'>Example: Computer Science, Math</label><br></li>
-            <li><label class='field'>Minor(s): <input type='text' name='minor' value="<?=$education['minor']?>" /></label>
+                    <option value="Associate's Degree">Associate's Degree</option> 
+                </select></li>
+                <li><label class='field'>Major(s): </label><input type='text' name='major' value="<?=$education['major']?>" />
+            <label class='subscript'>Example: Computer Science, Math</label></li><br>
+            <li><label class='field'>Minor(s): </label><input type='text' name='minor' value="<?=$education['minor']?>" />
             <label class='subscript'>Example: Corporate Strategies, Engineering Management</label><br></li>
                 <li><label class='field'>Time Attended: </label>
                 <script>
@@ -187,8 +187,8 @@ $(function(){
 				selectDefault('college', "<?=$education['college']?>");
                 </script>
             </li>
-                <li><label class='field'>Cumulative GPA: <input name='gpa' size=8 value="<?=$education['gpa']?>" /></label></li>
-            <li><label class='field'>Honors: <textarea name='honors' rows='3'><?=$education['honors']?></textarea></label>
+                <li><label class='field'>Cumulative GPA: </label><input name='gpa' size=8 value="<?=$education['gpa']?>" /></li>
+            <li><label class='field'>Honors: </label><textarea name='honors' rows='3'><?=$education['honors']?></textarea>
             <label class='subscript'>Example: Dean's List, National Merit Scholarship</label><br></li>
             <li>
             <span style='margin-left: 300px;'><input type='submit' name='submit' value='Submit' />

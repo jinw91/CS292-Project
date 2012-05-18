@@ -79,16 +79,26 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 	}
 	else if (mysql_num_rows($result) == 0)
 	{
-		$message = "<ul id='messages'><li>No jobs are found. Please <a href='career.php'>add a job</a></li></ul>";
+		$message = "<ul id='messages_noborder'><li>Your company has yet to post any job opportunities.<br> <div id='edit_profile'><a href='career.php'>Add Job</a></div></li></ul>";
 	}
 	else
 	{
-		$message = "<ul id='job_entries'>";
+		$message = "<ul id='company_job_entries'>";
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
-			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a>";
-			
+			$message = $message."<li><span class='job_entry_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span>
+			<ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
+				<ul><li><b>Major: </b>".$job['major']."</li>
+				<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>
+				<li><b>Description: </b>".$job['job_description']."</li>
+				<li><b>Qualifications: </b>".$job['qualifications']."</li>
+				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
+				<ul><li><a href='groups.php'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+			</ul>";
+			/**
 			$query = sprintf("SELECT * FROM c_applied_%d i, users u, education_data ed WHERE i.idnum=u.idnum AND u.idnum=ed.idnum AND jid='%d' AND is_read=0", $_SESSION['company']['b_id'], $job['jid']);
 			$res2 = mysql_query($query);
 			if (!$res2)
@@ -99,32 +109,9 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 			if (mysql_num_rows($res2) > 0)
 			{
 				$message .= "<a href='groups.php?jid=".$job['jid']."'>View Candidates</a>";
-				/**
-				$new_interested = "<ul id='user_entries'>";
-				while ($users = mysql_fetch_assoc($res2))
-				{
-					if (is_null($users['picture']))
-					{
-						$users['picture'] = "images/default.png";
-					}
-					$new_interested = $new_interested."<li><img style='float:left; margin-right:2px' src='".$users['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$users['idnum']."'>".$users['first_name']." ".$users['last_name']."</a>"; //adds name.
-					$new_interested = $new_interested."<br />".$users['field']." at ".$users['college'];
-					$new_interested .= "</li>";
-					
-					Another comment
-					$query = sprintf("UPDATE c_applied SET is_read=1 WHERE jid='%d' AND idnum='%d'", $job['jid'], $users['idnum']);
-					$result = mysql_query($query);
-					if (!$result)
-					{
-						$error = $query." ".mysql_error();
-					}
-					Another end comment
-				}
-				$new_interested .= "</ul>";
-				**/
 			}
-			$message .= "<a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
-			$message = $message."</li>".$new_interested;
+			$message .= "<a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.**/
+			$message = $message."<hr></li>".$new_interested;
 		}
 		$message = $message."</ul>";
 	}
@@ -233,7 +220,7 @@ $(function(){
 <section id="content">  
 	<div class="container_12">
     <div class="wrapper border_bottom">
-            <div class="grid_6 suffix_2">
+            <div class="grid_11 suffix_2">
                     <fieldset>
                     <?=$error?>
                     <div class="message">

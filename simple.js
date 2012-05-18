@@ -209,6 +209,21 @@ function validate_extra()
 	}
 	return true;
 }
+
+function hideWorkEndTime(box) {
+	var vis = (box.checked) ? "hidden" : "visible";
+	document.getElementById("work_dash_id").style.visibility = vis;
+	document.getElementById("work_month_end_id").style.visibility = vis;
+	document.getElementById("work_year_end_id").style.visibility = vis;
+}
+
+
+function hideExtraEndTime(box) {
+	var vis = (box.checked) ? "hidden" : "visible";
+	document.getElementById("extra_dash_id").style.visibility = vis;
+	document.getElementById("extra_month_end_id").style.visibility = vis;
+	document.getElementById("extra_year_end_id").style.visibility = vis;
+}
 /**
 Generic Profile.
 **/

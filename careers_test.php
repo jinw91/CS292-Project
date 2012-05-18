@@ -14,162 +14,7 @@ if (!$connect)
 	$error = "failed to connect";	
 }
 
-//Coming from job add.
-if ($_POST['add_job'] == "Submit")
-{
-	$job_name = $_POST['job_name'];
-	$major = $_POST['major'];
-	$pay = $_POST['pay'];
-	$internship = 0;
-	if (isset($_POST['internship']))
-	{
-		$internship = 1;
-	}
-	$city = $_POST['city'];
-	$state = $_POST['state'];
-	$description = $_POST['description'];
-	$company_name = $_SESSION['company']['company_name'];
-	
-	$query = sprintf("INSERT INTO careers (company_name, job_name, major, job_description, pay, city, state, country, internship) VALUES ('$company_name', '$job_name', '$major', '$description', $pay, '$city', '$state', 'United States', $internship)");
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = $query.mysql_error();
-	}
-}
-//Editing job.
-else if (isset($_GET['jid']))
-{
-	
-}
-//Coming from company add/edit.
-else if ($_POST['submit'] == "Submit")
-{
-	$company_name = $_POST['company_name'];
-	$sector = $_POST['sector'];
-	$city = $_POST['city'];
-	$state = $_POST['state'];
-	$description = $_POST['description'];
-	$idnum = $_SESSION['idnum'];
-	if ($_SESSION['option_link'] == "new")
-	{
-		$query = sprintf("INSERT INTO businesses (company_name, sector, description, city, state, creator) VALUES ('$company_name', '$sector', '$description', '$city', '$state', $idnum)");
-	}
-	else
-	{
-		$query = sprintf("UPDATE INTO businesses (company_name, sector, description, city, state, creator) VALUES ('$company_name', '$sector', '$description', '$city', '$state', $idnum)");
-	}
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-}
 
-//Apply to a job.
-else if (isset($_GET['jid']) && isset($_GET['apply']))
-{
-	applyJob();
-}
-
-//Find businesses started by the user.
-$query = sprintf("SELECT * FROM businesses WHERE creator=%d", $_SESSION['idnum']);
-$result = mysql_query($query);
-if (!$result)
-{
-	echo mysql_error();
-}
-// User does not own business.
-elseif ((!isset($_GET['jid']) && mysql_num_rows($result) == 0 && isset($_SESSION['education'])) || isset($_GET['usermode']))
-{
-	if ($_POST['search'] == "Search")
-	{
-		$majors = $_POST['major'];
-	}
-	else
-	{
-		$majors = $_SESSION['education']['major'];
-	}
-	$query = "SELECT * FROM careers WHERE ";
-	while (strchr($majors, ", ") > 0)
-	{
-		$query = $query."major LIKE '%%".substr($majors, 0, strpos($majors, ", "))."%%' OR ";
-		$majors = substr(strchr($majors, ", "), 2);
-	}
-	$query = $query."major LIKE '%%".$majors."%%' ORDER BY pay DESC";
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = $query."".mysql_error();
-	}
-	else if (mysql_num_rows($result) == 0)
-	{
-		$message = "<ul id='job_entries'><li>No jobs were found matching your major and pay.</li></ul>";
-	}
-	else
-	{
-		$message = "<ul id='job_entries'>";
-		while ($job = mysql_fetch_assoc($result))
-		{
-			$message = $message."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a>
-			<div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'>Apply</a></div>"; //adds name and options.
-			$message = $message."</li>";
-		}
-		$message = $message."</ul>";
-	}
-}
-// User owns business.
-else if (!isset($_GET['jid']) && mysql_num_rows($result) > 0)
-{
-	if (!isset($_SESSION['company']))
-	{
-		$_SESSION['company'] = mysql_fetch_assoc($result);
-	}
-	$query = sprintf("SELECT * FROM careers WHERE company_name='%s'", $_SESSION['company']['company_name']);
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-	else if (mysql_num_rows($result) == 0)
-	{
-		$message = "<ul id='messages'><li>No jobs are found. Please <a href='createjob.php'>add a job</a></li></ul>";
-	}
-	else
-	{
-		$message = "<ul id='job_entries'>";
-		while ($job =  mysql_fetch_assoc($result))
-		{
-			$message = $message."<li>".$job['job_name']." in ".$job['city'].", ".$job['state']."<div id='edit_profile'><a href='createjob.php?jid=".$job['jid']."'>Edit</a> <a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.
-			$message = $message."</li>";
-		}
-		$message = $message."</ul>";
-	}
-	$_SESSION['career_options'] = "<div id='sidebar' align='left'>
-    <ul id='career_options'>
-	<li><a href='careers.php?usermode=on'>Search Careers</a></li>
-	<li><a href='createbusiness.php'>Edit Business</a></li>
-	<li><a href='profile.php?b_id=".$_SESSION['company']['b_id']."'>View Business</a></li>
-	<li><a href='createjob.php'>Add Job Entry</a></li></ul></div>";
-	$_SESSION['option_link'] = "edit";
-}
-
-//Redirect from job description.
-else
-{
-	$query = sprintf("SELECT * FROM careers WHERE jid=%d LIMIT 1", $_GET['jid']);
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-	$message = "<ul id='careers'>";
-	$mes = mysql_fetch_assoc($result);
-	$message = $message."<li>".$mes['job_name']."<br />".$mes['company_name']."</li>";
-	$message = $message."<li>Location: ".$mes['city'].", ".$mes['state']."<br />Major(s): ".$mes['major'];
-	$message = $message."<li>".$mes['job_description']."</li>";
-	$message = $message."</ul>";
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -187,6 +32,7 @@ else
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
 <script>
+$(document).ready();
 $(function(){
 	$('#slides').slides({
 	effect: 'fade',
@@ -208,6 +54,13 @@ $(function(){
 		$(this).find('>span').css({background:'url('+src+')'})
 	 });
 });
+
+function clicked(tag)
+{
+	alert("reached here");
+	 tag.src('site_im/minussign.jpg');
+ 	 $(tag).parent().next().slideToggle();
+}
 </script>
 </head>
 <body>
@@ -248,45 +101,40 @@ $(function(){
 <section id="content">  
 	<div class="container_12">
     <div class="wrapper border_bottom">
-        	<div class="grid_4">
-                <form action="careers.php" method="post">
-                <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-                <label for="careers">Search Careers: </label>
-                </div>
-                <div align="right">
-                <label for="company_name" style="float: left;">Company Name: </label>
-                <input name="company_name" size="25" /><br />
-                <label for="major" style="float: left;">Major: </label>
-                <input name="major" size="25"  /><br />
-                <?=$_SESSION['career_options']?><br />                
-                <input type="submit" name="search" value="Search"/>
-                </div>
-                </form>
-            </div>
-            <div class="grid_6 suffix_2">
+            <div class="grid_11 suffix_2">
                     <fieldset>
-                    <?=$update?>
-                    <div style="padding-top: 10px; font-size:12px;">
-                    <h1 id='edit_title'>Business Information:</h1>
-              <form action='basic_info.php' method='post'>
-              <?=$error?><?=$message?><br>
-              <ul id='education'>
-                <li><label class="field" for="city">City: </label><input name="city" value="<?=$user_info['city']?>" width="150px"/> State: <input name="state" value="<?=$user_info['state']?>" style="width: 60px;" /></li>
-                <li id="school"></li>                    
-                <li><label class="field" for="income">Expected Pay: </label> 
-    <input name="income" value="<?=$user_info['pay']?>"/><label for="hourly">  &nbsp;Hourly: </label>
-    <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
-                <li><label class='field' for='field'>Primary Field: </label> <input type='text' name='field' value="<?=$user_info['field']?>"/></li>
-            <label class='subscript' for='major'>Example: Computer Science, Math</label><br>
-            <li><label class='field' for='skills'>Technical Skills: </label>
-            <textarea name='skills' rows='2'><?=$user_info['skills']?></textarea></li>
-            <label class='subscript' for='honors'>Example: Microsoft Excel, HTML</label><br>
-            <li>
-            <span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
-            <input type='submit' name='skip' value='Skip' /></span></li>
-            </ul>
-        	</form>
-                    </div>
+                                        <div class="message">
+    				<ul id='company_job_entries'><li><span class='job_entry_font'>&nbsp;Internet Engineer in Nashville, TN</span>
+			<ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='clicked(this);'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=1'>Edit</a></span></li>
+				<ul><li><b>Major: </b>Computer Science, Computer Engineering</li>
+				<li><b>Location: </b>Nashville, TN</li>
+				<li><b>Description: </b></li>
+				<li><b>Qualifications: </b></li>
+				<li><b>Pay: </b>60000 </li></ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='clicked(this);'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=1'>Start New Search</a></span></li>
+				<ul><li><a href='groups.php'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+			</ul><hr></li><li><span class='job_entry_font'>&nbsp;Marketing  in Nashville, TN</span>
+			<ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=2'>Edit</a></span></li>
+				<ul><li><b>Major: </b>Economics, HOD</li>
+				<li><b>Location: </b>Nashville, TN</li>
+				<li><b>Description: </b></li>
+				<li><b>Qualifications: </b></li>
+				<li><b>Pay: </b>40000 </li></ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=2'>Start New Search</a></span></li>
+				<ul><li><a href='groups.php'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+			</ul><hr></li><li><span class='job_entry_font'>&nbsp;Web Design Intern in Nashville, TN</span>
+			<ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=3'>Edit</a></span></li>
+				<ul><li><b>Major: </b>Computer Science, Computer Engineering</li>
+				<li><b>Location: </b>Nashville, TN</li>
+				<li><b>Description: </b>Web Design Intern</li>
+				<li><b>Qualifications: </b></li>
+				<li><b>Pay: </b>0 Hourly</li>ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=3'>Start New Search</a></span></li>
+				<ul><li><a href='groups.php'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+			</ul></ul>
                     </fieldset>
             </div>
         </div>        
