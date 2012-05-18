@@ -4,9 +4,9 @@ Connects to the database using jinw91.. needs to change after user.
 **/
 function connectToDatabase()
 {
-	$host="proarcscom.ipagemysql.com";
-	$username="general";
-	$password="publicclass";
+	$host="localhost";
+	$username="root";
+	$password="Whysoserious64";
 	$db_name="pa_members";
 	
 	$connect=mysql_connect("$host", "$username", "$password");

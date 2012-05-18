@@ -156,13 +156,13 @@ $(function(){
               <form id="careers" enctype="multipart/form-data" action="business.php" method="post">
               <?=$error?><?=$message?><br>
               <ul id='education'>
-              <?=$picture?>
-              <li><label class="field">Company Name: <input type="text" name="company_name" value="<?=$company_name?>" /></label></li>
-              <li><label class="field">Sector: <input name="sector" type="text" value="<?=$sector?>" /></label></li>
-    		  <li><label class="field">City: <input name="city" size=20 value="<?=$city?>" /></label> State: <input name="state" size=3 value="<?=$state?>" /></li>
-			  <li><label class="field">Description: <textarea name="description" rows="10"><?=$description?></textarea></label></li>
+              <li><?=$picture?></li>
+              <li><label class="field">Company Name: </label><input type="text" name="company_name" value="<?=$company_name?>" /></li>
+              <li><label class="field">Sector: </label><input name="sector" type="text" value="<?=$sector?>" /></li>
+    		  <li><label class="field">City: </label><input name="city" size=20 value="<?=$city?>" /> State: <input name="state" size=3 value="<?=$state?>" /></li>
+			  <li><label class="field">Description: </label><textarea name="description" rows="10"><?=$description?></textarea></li>
               <fieldset>
-              <li><label class="field">Company Image: <input type="file" name="picture"></label></li>
+              <li><label class="field">Company Image: </label><input type="file" name="picture"></li>
               </fieldset>
     		  <li>
             <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save"/></span></li>
