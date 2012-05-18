@@ -188,10 +188,10 @@ $(function(){
               <?=$error?><?=$message?><br>
               <ul id='education'>
                 <li>
-                    <label class='field'>Organization: <input type='text' name='organization' size=20 value="<?=$experience['organization']?>" /></label>
+                    <label class='field'>Organization: </label><input type='text' name='organization' size=20 value="<?=$experience['organization']?>" />
                 </li>
                 <li>
-                    <label class='field'>Title (If Applicable): <input type='text' name='title' value="<?=$experience['title']?>" /></label>
+                    <label class='field'>Title (If Applicable): </label><input type='text' name='title' value="<?=$experience['title']?>" />
                 </li>
                 <li>                    
                 	<label class='field'>Time Period: </label>
@@ -208,10 +208,10 @@ $(function(){
 					selectMonth("extra_month_start", "<?=$month_start?>");
 					selectMonth("extra_month_end", "<?=$month_end?>");
                     </script><br>
-					<label class='subscript'>Currently Involved: <input onclick="hideExtraEndTime(this)" type="checkbox" name="present" value="1" <?=$c_employed?> /></label>
+					<label class='subscript'>Currently Involved: </label><input onclick="hideExtraEndTime(this)" type="checkbox" name="present" value="1" <?=$c_employed?> />
                 </li>
                 <li>
-                <label class='field'>Achievement(s): <textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea></label>
+                <label class='field'>Achievement(s): </label><textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea>
                 </li>
                 <li><span style='margin-left: 300px;'>
                 <input type="hidden" name="lid" value="<?=$lid?>">

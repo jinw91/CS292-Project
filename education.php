@@ -169,7 +169,7 @@ $(function(){
                 <li><label class='field'>Major(s): </label><input type='text' name='major' value="<?=$education['major']?>" />
             <label class='subscript'>Example: Computer Science, Math</label></li><br>
             <li><label class='field'>Minor(s): </label><input type='text' name='minor' value="<?=$education['minor']?>" />
-            <label class='subscript'>Example: Corporate Strategies, Engineering Management</label><br></li>
+            <label class='subscript'>Example: Corporate Strategies, Engineering Management</label></li><br>
                 <li><label class='field'>Time Attended: </label>
                 <script>
                 document.write("<select name=\"college_month_start\">");

@@ -190,13 +190,13 @@ $(function(){
               <?=$error?><?=$message?><br>
               <ul id='education'>
                 <li>
-                    <label class='field'>Company Name: <input type='text' name='company' size=20 value="<?=$experience['company_name']?>" /></label>
+                    <label class='field'>Company Name: </label><input type='text' name='company' size=20 value="<?=$experience['company_name']?>" />
                 </li>
                 <li>
-                    <label class='field'>Title: <input type='text' name='title' value="<?=$experience['title']?>" /></label>
+                    <label class='field'>Title: </label><input type='text' name='title' value="<?=$experience['title']?>" />
                 </li>
                 <li>
-                <label class="field">City: <input name="city" value="<?=$experience['city']?>" size=150 /></label> State: <input name="state" value="<?=$experience['state']?>" size=60 />
+                <label class="field">City: </label><input name="city" value="<?=$experience['city']?>" style="width: 150px;" /> State: <input name="state" value="<?=$experience['state']?>" style="width: 60px;" />
                 <li>
                     <label class='field'>Time Period: </label>
                     <script>
@@ -212,10 +212,10 @@ $(function(){
 			selectMonth("work_month_start", "<?=$month_start?>");
 			selectMonth("work_month_end", "<?=$month_end?>");
                     </script><br>
-			<label class='subscript'>Currently Employed: <input onclick="hideWorkEndTime(this)" type="checkbox" name="present" value="1" <?=$c_employed?>></label>
+			<label class='subscript'>Currently Employed: </label><input onclick="hideWorkEndTime(this)" type="checkbox" name="present" value="1" <?=$c_employed?>>
                 </li>
                 <li>
-                <label class='field'>Achievement(s): <textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea></label>
+                <label class='field'>Achievement(s): </label><textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea>
                 </li>
                 <li><span style='margin-left: 300px;'>
                 <input type="hidden" name="wid" value="<?=$wid?>">
