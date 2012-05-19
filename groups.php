@@ -37,6 +37,7 @@ Phone Interview/Job Interview
 **/
 else if (isset($_POST['offer']))
 {
+	$_SESSION['subject'] = "";
 	$select = $_POST['select'];
 	for ($i = 0; $i < count($select); $i++)
 	{
@@ -67,7 +68,7 @@ else if (isset($_POST['offer']))
 		$_SESSION['time_edit'] = true;
 	}
 	
-	header("Location: inbox.php?write=true&default=true");
+	header("Location: inbox.php?write=true&multiple=true");
 }
 /**
 Add to job, move to job, delete.
@@ -188,13 +189,13 @@ else if (mysql_num_rows($result) > 0)
 		}
 		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
 		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
+		if (!isset($_POST['offer'])) {
 		$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
-		$_SESSION['contacts'] = "";
 		$_SESSION['subject'] = "Job Interview: ".$_SESSION['company']['company_name'];
 		$_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule an in-person interview with you. The following times are available, please let us know what works best for you.";
-		$_SESSION['time_edit'] = true;
-		$message = $message."<a href='inbox.php?write=true&default=true'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
-		$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."&subject='><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+		}
+		$message = $message."<a href='inbox.php?write=true&single=true'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
+		$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
 	$message .= "<div align='right'><select name='jid'>";

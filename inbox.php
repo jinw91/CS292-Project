@@ -20,7 +20,6 @@ if ($_POST['send'] == "Send")
 	$subject = $_POST['subject'];
 	$body = $_POST['body'];
 	
-	$error="Reached send";
 	
 	if (is_numeric($to_name))
 	{
@@ -84,18 +83,21 @@ if (isset($_GET['mid']))
 
 else if (isset($_GET['write']))
 {
-	if (isset($_GET['default']))
-	{
-		$tmp = $_SESSION['contacts'];
+	if (isset($_GET['single'])) {
 		$mes_to = $_SESSION['to'];
+		$mes_sub = $_SESSION['subject'];
+		$mes_body = $_SESSION['body'];
+		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
+	} else if (isset($_GET['multiple'])) {
+		$tmp = $_SESSION['contacts'];
+		$mes_to = "";
 		for ($i=0; $i<count($tmp); $i++)
 		{
 			$mes_to .= "".$tmp[$i].",";
 		}
 		$mes_sub = $_SESSION['subject'];
 		$mes_body = $_SESSION['body'];
-		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/>
-                	</li>";
+		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
 	} else if (isset($_GET['reply'])) {
 		$mes_to = $_SESSION['to'];
 		$mes_sub = $_SESSION['subject'];
