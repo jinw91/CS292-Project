@@ -233,10 +233,6 @@ $(function(){
                 </form>
                 <script>
 				selectDefault('major', '<?=$major?>');
-				function getSchools()
-				{
-					document.getElementsByName("college").item(0);
-				}
 				</script>
             </div>
             <div class="grid_6 suffix_2">
