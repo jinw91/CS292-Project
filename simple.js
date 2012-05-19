@@ -91,17 +91,11 @@ Selecting defaults for searches
 **/
 function selectMultipleId(idname, array)
 {
-	alert(array.length);
 	var l_tag = document.getElementById(idname);
-	for (var i = 0; i < array.length; i++)
-	{
-		alert(array[i]);
-	}
 	for (var i = 0; i < l_tag.length; i++)
 	{
-		if (array.indexOf(l_tag[i].value) > 0)
+		if (array.indexOf(l_tag[i].value) >= 0)
 		{
-			alert(l_tag[i].value);
 			l_tag[i].selected = true;
 		}
 	}

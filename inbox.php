@@ -70,7 +70,9 @@ if (isset($_GET['mid']))
 	$message = $message."<li><label class='inbox'>Subject: </label>".$mes['subject']."</li>";
 	$message = $message."<li><label class='inbox'>Body: </label>".$mes['body']."</li>";
 	//$message = $message."<li><a href='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."'>Reply</a></li>";
-        $message = $message."<li><span style='margin-left: 55px;'><form method='post' action='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."' ><input type='submit' value='Reply'/></form></span></li>";
+	$_SESSION['to'] = $mes['from_name'];
+	$_SESSION['subject'] = "Re: ".$mes['subject'];
+        $message = $message."<li><span style='margin-left: 55px;'><form method='post' action='inbox.php?write=true&reply=true'><input type='submit' value='Reply' /></form></li>";
 	$message = $message."</ul>";
 	$query = sprintf("UPDATE personnel_email SET is_read=1 WHERE mid='%d';", $_GET['mid']);
 	$result = mysql_query($query);
@@ -85,7 +87,7 @@ else if (isset($_GET['write']))
 	if (isset($_GET['default']))
 	{
 		$tmp = $_SESSION['contacts'];
-		$mes_to = "";
+		$mes_to = $_SESSION['to'];
 		for ($i=0; $i<count($tmp); $i++)
 		{
 			$mes_to .= "".$tmp[$i].",";
@@ -94,9 +96,9 @@ else if (isset($_GET['write']))
 		$mes_body = $_SESSION['body'];
 		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/>
                 	</li>";
-	} else if (isset($_GET['to'])) {
-		$mes_to = $_GET['to'];
-		$mes_sub = "Re: ".$_GET['subject'];
+	} else if (isset($_GET['reply'])) {
+		$mes_to = $_SESSION['to'];
+		$mes_sub = $_SESSION['subject'];
 	}
 	$message = "<form action='inbox.php' method='post'>
                   <ul id='education'>
