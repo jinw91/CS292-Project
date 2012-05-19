@@ -18,7 +18,7 @@ if ($_POST['send'] == "Send")
 {
 	$to_name = $_POST['to_name'];
 	$subject = $_POST['subject'];
-	$message = $_POST['message'];
+	$body = $_POST['body'];
 	
 	$error="Reached send";
 	
@@ -41,7 +41,7 @@ if ($_POST['send'] == "Send")
 			$to_idnum = mysql_result($result, 0);
 		}
 	}
-	$query = sprintf("INSERT INTO personnel_email (from_name, subject, body, from_id, to_id, time_sent) VALUES ('%s', '$subject',  '$message', '%d', '%d', NOW( ))", 
+	$query = sprintf("INSERT INTO personnel_email (from_name, subject, body, from_id, to_id, time_sent) VALUES ('%s', '$subject',  '$body', '%d', '%d', NOW( ))", 
 		$_SESSION['users']['first_name']." ".$_SESSION['users']['last_name'], $_SESSION['idnum'], $to_idnum);
 	$result = mysql_query($query);
 	if ($result)
@@ -66,11 +66,11 @@ if (isset($_GET['mid']))
 	}
 	$mes = mysql_fetch_assoc($result);
 	$message = "<ul>";
-	$message = $message."<li><lable class='inbox'>From: </lable>"."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
-	$message = $message."<li><lable class='inbox'>Subject: </lable>".$mes['subject']."</li>";
-	$message = $message."<li><lable class='inbox'>Body: </lable>".$mes['body']."</li>";
+	$message = $message."<li><label class='inbox'>From: </label>"."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
+	$message = $message."<li><label class='inbox'>Subject: </label>".$mes['subject']."</li>";
+	$message = $message."<li><label class='inbox'>Body: </label>".$mes['body']."</li>";
 	//$message = $message."<li><a href='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."'>Reply</a></li>";
-        $message = $message."<li><span style='margin-left: 58px;'><form method='post' action='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."' ><input type='submit' value='Reply'/></form></span></li>";
+        $message = $message."<li><span style='margin-left: 55px;'><form method='post' action='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."' ><input type='submit' value='Reply'/></form></span></li>";
 	$message = $message."</ul>";
 	$query = sprintf("UPDATE personnel_email SET is_read=1 WHERE mid='%d';", $_GET['mid']);
 	$result = mysql_query($query);
