@@ -65,9 +65,13 @@ if (isset($_GET['mid']))
 		$message = "Cannot open message";
 	}
 	$mes = mysql_fetch_assoc($result);
-	$message = "";
-	$message = $message."<li>From: "."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
-	$message = $message."<li>".$mes['body']."</li>";
+	$message = "<ul>";
+	$message = $message."<li><lable class='inbox'>From: </lable>"."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
+	$message = $message."<li><lable class='inbox'>Subject: </lable>".$mes['subject']."</li>";
+	$message = $message."<li><lable class='inbox'>Body: </lable>".$mes['body']."</li>";
+	//$message = $message."<li><a href='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."'>Reply</a></li>";
+        $message = $message."<li><span style='margin-left: 58px;'><form method='post' action='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."' ><input type='submit' value='Reply'/></form></span></li>";
+	$message = $message."</ul>";
 	$query = sprintf("UPDATE personnel_email SET is_read=1 WHERE mid='%d';", $_GET['mid']);
 	$result = mysql_query($query);
 	if (!$result)
@@ -90,6 +94,9 @@ else if (isset($_GET['write']))
 		$mes_body = $_SESSION['body'];
 		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/>
                 	</li>";
+	} else if (isset($_GET['to'])) {
+		$mes_to = $_GET['to'];
+		$mes_sub = "Re: ".$_GET['subject'];
 	}
 	$message = "<form action='inbox.php' method='post'>
                   <ul id='education'>
@@ -244,10 +251,10 @@ $(function(){
 <div class="wrapper border_bottom">
 <div class="grid_4">
 <?php
-if ($_SERVER['QUERY_STRING'] != 'write=true') {
-        echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php?write=true">Compose Message</a></h2></div>';
-} else {
+if (isset($_GET['write']) or isset($_GET['mid'])) {
         echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php">Back to Inbox</a></h2></div>';
+} else {
+        echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php?write=true">Compose Message</a></h2></div>';
 }
 ?>
 </div>
