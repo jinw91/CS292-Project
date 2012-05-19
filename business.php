@@ -50,7 +50,11 @@ if ($_POST['submit'] == "Save")
 	{
 		$error = mysql_error();
 	}
-	$query = sprintf("SELECT * FROM businesses WHERE company_name='%d' AND creator='%d'", $_SESSION['company']['b_id'], $idnum);
+	
+	/**
+	Updates the company variable
+	**/
+	$query = sprintf("SELECT * FROM businesses WHERE b_id='%d' AND creator='%d' LIMIT 1", $_SESSION['company']['b_id'], $idnum);
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -91,29 +95,6 @@ if (isset($_SESSION['company']))
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
 <script type="text/javascript" src="simple.js"></script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
 </head>
 <body>
 <!-- header -->
@@ -158,7 +139,7 @@ $(function(){
               <ul id='education'>
               <li><?=$picture?></li>
               <li><label class="field">Company Name: </label><input type="text" name="company_name" value="<?=$company_name?>" /></li>
-              <li><label class="field">Sector: </label><input name="sector" type="text" value="<?=$sector?>" /></li>
+              <li><label class="field">Industry: </label><input name="sector" type="text" value="<?=$sector?>" /></li>
     		  <li><label class="field">City: </label><input name="city" size=20 value="<?=$city?>" /> State: <input name="state" size=3 value="<?=$state?>" /></li>
 			  <li><label class="field">Description: </label><textarea name="description" rows="10"><?=$description?></textarea></li>
               <fieldset>
