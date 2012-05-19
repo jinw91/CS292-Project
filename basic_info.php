@@ -126,14 +126,15 @@ $(function(){
               <form action='basic_info.php' method='post'>
               <?=$error?><?=$message?><br>
               <ul id='education'>
-                <li><label class="field">City: </label><input name="city" value="<?=$user_info['city']?>" size=150 /> State: <input name="state" value="<?=$user_info['state']?>" size=60 /></li>
+                <li><label class="field">City: </label><input name="city" value="<?=$user_info['city']?>" style='width: 150px;' /> State: <input name="state" value="<?=$user_info['state']?>" style='width: 60px;' /></li>
                 <li id="school"></li>                    
-                <li><label class="field">Expected Pay: <input name="income" value="<?=$user_info['pay']?>" /></label> <label>  &nbsp;Hourly: </label>
+                <li><label class="field">Expected Pay: </label><input name="income" value="<?=$user_info['pay']?>" /></label> <label>  &nbsp;Hourly: </label>
     <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
-                <li><label class='field'>Primary Field: <input type='text' name='field' value="<?=$user_info['field']?>" /></label>
-<label class='subscript'>Example: Computer Science, Math</label><br></li>
-            <li><label class='field'>Technical Skills: <textarea name='skills' rows='2'><?=$user_info['skills']?></textarea></label>
-            <label class='subscript'>Example: Microsoft Excel, HTML</label><br></li>
+                <li><label class='field'>Primary Field: </label><input type='text' name='field' value="<?=$user_info['field']?>" />
+<label class='subscript'>Example: Computer Science, Math</label></li><br>
+            <li><label class='field'>Technical Skills: </label><textarea name='skills' rows='2'><?=$user_info['skills']?></textarea>
+            <label class='subscript'>Example: Microsoft Excel, HTML</label></li>
+            <br>
             <li>
             <span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             <input type='submit' name='skip' value='Skip' /></span></li>

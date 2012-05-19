@@ -112,6 +112,10 @@ $jobs = "";
 $priorities = "";
 $job_dropdown = "";
 
+
+/**
+Creates the left bar list of jobs.
+**/
 $query = sprintf("SELECT * FROM careers WHERE b_id='%d'", $_SESSION['company']['b_id']);
 $result = mysql_query($query);
 if (!$result)
@@ -137,7 +141,7 @@ $priority = "<li><label for='name' style='float: left;'>High: </label><input nam
 $query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
 if (isset($_GET['jid']))
 {
-	$query .= " AND jid=".$_GET['jid'];
+	$query .= " AND c.jid=".$_GET['jid'];
 }
 else if ($_POST['applicants']=="Submit")
 {

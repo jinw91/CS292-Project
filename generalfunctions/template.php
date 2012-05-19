@@ -27,9 +27,8 @@ function navBar($mes)
 			$message = $message."(".$mes.")";
 		}
 		$message .= "</a></li><li><a href='careers.php'>jobs</a></li>
-					 <li><a href='groups.php'>candidates</a></li>
 					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
-							<li><a href='#'>Privacy Settings</a></li>
+							<li><a href='privacysettings.php'>Privacy Settings</a></li>
 							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
 							<li><a href='logout.php'>Log Out</a></li>
 							</ul>
@@ -56,7 +55,7 @@ function navBar($mes)
 		}
 		$message .= "</a></li><li><a href='careers.php'>jobs</a></li>
 					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
-							<li><a href='#'>Privacy Settings</a></li>
+							<li><a href='privacysettings.php'>Privacy Settings</a></li>
 							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
 							<li><a href='logout.php'>Log Out</a></li>
 							</ul>
