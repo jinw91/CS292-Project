@@ -86,6 +86,22 @@ function selectDefault(name, value)
 	}
 }
 
+/**
+Selecting defaults for searches
+**/
+function selectMultiple(name, array)
+{
+	var l_tag = document.getElementsByName(name).item(0);
+	for (var i = 0; i < l_tag.length; i++)
+	{
+		if (l_tag[i].value==value)
+		{
+			l_tag[i].selected = i;
+			return true;
+		}
+	}
+}
+
 function hideEnd(name1, name2)
 {
 	var l_tag = document.getElementsByName(name1).item(0);

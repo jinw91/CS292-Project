@@ -15,7 +15,7 @@ if ($_POST['search'] == "Search")
 	$either = $_POST['either'];
 	$college = $_POST['college'];
 	$gpa = $_POST['gpa'];
-	$work_start = $_POST['work_start'];
+	$work_experience = $_POST['work_experience'];
 	$skills = $_POST['skills'];
 	
 	/**
@@ -81,10 +81,10 @@ if ($_POST['search'] == "Search")
 	
 	$query .= $add;
 	
-	if ($work_start != "")
+	if ($work_experience != "")
 	{
 		$query = "SELECT * FROM (".$query;
-		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_start";
+		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
 	}
 	
 	$error = $query;
@@ -199,9 +199,9 @@ $(function(){
                 </div>
                 <ul id="search">
                 <li><label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" /></li>
+                <input name="name" size="25" value="<?=$name?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
-                <select name="major" size="1">
+                <select id="major" name="major" size="1">
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>
@@ -211,7 +211,7 @@ $(function(){
                 <option>Mechanical Engineering</option>
                 </select></li>
                 <li><label for="college[]" style="float: left;">School: </label>
-                <select name="college[]" multiple="multiple" size="1">
+                <select id="college" name="college[]" multiple="multiple" size="1">
                 <option value='Vanderbilt University'>Vanderbilt University</option>
                 <option value='Duke University'>Duke University</option>
                 <option value='Northwestern University'>Northwestern University</option>
@@ -223,14 +223,21 @@ $(function(){
                 </select>
                 </li>
                 <li><label for="gpa" style="float: left;">Minimum GPA: </label>
-                <input name="gpa" size="25"  /></li>
-                <li><label for="work_start" style="float: left;">Work Experience: </label>
-                <input name="work_start" size="10" style="width: 150px;"/> Years</li>
-                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25"></li>
+                <input name="gpa" size="25" value="<?=$gpa?>" /></li>
+                <li><label for="work_experience" style="float: left;">Work Experience: </label>
+                <input name="work_experience" size="10" style="width: 150px;" value="<?=$work_experience?>"/> Years</li>
+                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$skills?>"></li>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="submit" name="search" value="Search"/>
                 </ul>
                 </form>
+                <script>
+				selectDefault('major', '<?=$major?>');
+				function getSchools()
+				{
+					document.getElementsByName("college").item(0);
+				}
+				</script>
             </div>
             <div class="grid_6 suffix_2">
                     <fieldset>
