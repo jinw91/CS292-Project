@@ -18,6 +18,8 @@ if ($_POST['search'] == "Search")
 	$work_experience = $_POST['work_experience'];
 	$skills = $_POST['skills'];
 	
+	
+	
 	/**
 	Searching by name
 	**/
@@ -57,10 +59,13 @@ if ($_POST['search'] == "Search")
 	**/
 	if (isset($college))
 	{
+		$array = "var college_array = new Array();";
 		for ($i = 0; $i < count($college); $i++)
 		{
 			$add .= " AND college LIKE '$college[$i]%%'";
+			$array .= "\ncollege_array[".$i."] = '".$college[$i]."';";
 		}
+		$array .= "\nselectMultipleId('college', college_array);";
 	}
 	
 	/**
@@ -93,11 +98,10 @@ if ($_POST['search'] == "Search")
 	{
 		$error = $query." ".mysql_error();
 	}
-	
-	$message = "<form action='search.php' method='POST'>";
-	if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
+	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
+		$message = "<form action='search.php' method='POST'>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
 				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
@@ -122,31 +126,7 @@ mysql_close();
 <script src="js/hoverIntent.js"></script>
 <script src="js/script.js"></script>
 <script src="js/FF-cash.js"></script>
-<script src="js/jquery.prettyPhoto.js"></script>
-<script src="js/slides.min.jquery.js"></script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
+<script src="simple.js"></script>
 </head>
 <body>
 <!--<?=$error?>-->
@@ -199,7 +179,7 @@ $(function(){
                 </div>
                 <ul id="search">
                 <li><label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" value="<?=$name?>"/></li>
+                <input name="name" size="25" value="<?=$archives?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
                 <option>Biomedical Engineering</option>
@@ -233,6 +213,7 @@ $(function(){
                 </form>
                 <script>
 				selectDefault('major', '<?=$major?>');
+				<?=$array?>
 				</script>
             </div>
             <div class="grid_6 suffix_2">

@@ -89,17 +89,23 @@ function selectDefault(name, value)
 /**
 Selecting defaults for searches
 **/
-function selectMultiple(name, array)
+function selectMultipleId(idname, array)
 {
-	var l_tag = document.getElementsByName(name).item(0);
+	alert(array.length);
+	var l_tag = document.getElementById(idname);
+	for (var i = 0; i < array.length; i++)
+	{
+		alert(array[i]);
+	}
 	for (var i = 0; i < l_tag.length; i++)
 	{
-		if (l_tag[i].value==value)
+		if (array.indexOf(l_tag[i].value) > 0)
 		{
-			l_tag[i].selected = i;
-			return true;
+			alert(l_tag[i].value);
+			l_tag[i].selected = true;
 		}
 	}
+	return true;
 }
 
 function hideEnd(name1, name2)
