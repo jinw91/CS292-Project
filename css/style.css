@@ -450,8 +450,8 @@ label.inbox
 {
 	display: block;
 	float: left;
-	margin-right: 15px;
-	width: 150px;
+	margin-right: 45px;
+	width: 15px;
 	text-align: right;
 }
 #compose li input[type=text]

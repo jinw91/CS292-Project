@@ -95,13 +95,13 @@ else if (isset($_GET['write']))
                   <ul id='education'>
                     <li id='compose'></li>
                     <li><label class='inbox' for='to_name'>To: </label>
-                    <input type='text' name='to_name' value='".$mes_to."'/></li>
-                    <li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."'/></li>
+                    <input type='text' name='to_name' value='".$mes_to."' style='width:450px'/></li>
+                    <li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
                     <li><label class='inbox' for='body'>Body: </label>
-                    <textarea name='body' rows='10'>".$mes_body."</textarea></li>
+                    <textarea name='body' rows='10' style='width:450px'>".$mes_body."</textarea></li>
                     ".$time."
                     <li>
-                    <span style='margin-left: 165px;'><input type='submit' name='send' value='Send'/></span></li>
+                    <span style='margin-left: 58px;'><input type='submit' name='send' value='Send'/></span></li>
                     </ul>
                 </form>";
 }
@@ -239,24 +239,29 @@ $(function(){
 <div class="container_12">
 </div>
 <!-- content -->
-<section id="content">  
-	<div class="container_12">
-    <div class="wrapper border_bottom">
-        	<div class="grid_4">
-                <div align="center"><h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php?write=true">Compose Message</a></h2></div>
-            </div>
-            <div class="grid_7">
-            <fieldset>
-            <div style="padding-top: 10px; font-size:12px;">
-                
-    		<?=$message?>
-            </div>
-            </fieldset>
-            </div>
-        </div>        
-	</div>
+<section id="content">
+<div class="container_12">
+<div class="wrapper border_bottom">
+<div class="grid_4">
+<?php
+if ($_SERVER['QUERY_STRING'] != 'write=true') {
+        echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php?write=true">Compose Message</a></h2></div>';
+} else {
+        echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php">Back to Inbox</a></h2></div>';
+}
+?>
+</div>
+<div class="grid_7">
+<fieldset>
+<div style="padding-top: 10px; font-size:12px;">
+<?=$message?>
+</div>
+</fieldset>
+</div>
+</div>
+</div>
 </section>
-<!-- footer -->
+	<!-- footer -->
 <?php
 	echo footer();
 ?>
