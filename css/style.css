@@ -465,3 +465,5 @@ label.inbox
 {
 	width: 180px;
 }
+#meslist li {display: block; height:4.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2; list-style-type:none;} 
+#meslist li a:link, #messages a:visited {text-decoration:none; }
