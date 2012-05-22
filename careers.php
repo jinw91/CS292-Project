@@ -82,11 +82,11 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 	}
 	else if (mysql_num_rows($result) == 0)
 	{
-		$message = "<ul id='messages_noborder'><li>Your company has yet to post any job opportunities.<br> <div id='edit_profile'><a href='career.php'>Add Job</a></div></li></ul>";
+		$message = "<ul id='messages_noborder'><li>Your company has yet to post any job opportunities.<br> <div id='edit_profile'><a href='career.php'>Add Career</a></div></li></ul>";
 	}
 	else
 	{
-		$message = "<ul id='company_job_entries'>";
+		$message = "<span class='job_title_font'>&nbsp;<a href='career.php'>Add Career</a></span><ul id='company_job_entries'>";
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
@@ -99,9 +99,21 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
 			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
-				<ul style='border-bottom: 1px dashed gray;'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+				<ul><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b></a></li></ul>
 			</ul>";
 			/**
+			
+			<ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
+				<ul><li><b>Major: </b>".$job['major']."</li>
+				<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>
+				<li><b>Description: </b>".$job['job_description']."</li>
+				<li><b>Qualifications: </b>".$job['qualifications']."</li>
+				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
+				<ul style='border-bottom: 1px dashed gray;'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+			</ul>";
+			
 			$query = sprintf("SELECT * FROM c_applied_%d i, users u, education_data ed WHERE i.idnum=u.idnum AND u.idnum=ed.idnum AND jid='%d' AND is_read=0", $_SESSION['company']['b_id'], $job['jid']);
 			$res2 = mysql_query($query);
 			if (!$res2)

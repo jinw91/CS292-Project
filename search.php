@@ -52,7 +52,10 @@ if ($_POST['search'] == "Search")
 			$add .= " AND major LIKE '%%$major[$i]%%'";
 		}
 		**/
-		$add .= " AND major LIKE '%%$major%%'";
+		if ($major!="All")
+		{
+			$add .= " AND major LIKE '%%$major%%'";
+		}
 	}
 	
 	/**
@@ -102,12 +105,17 @@ if ($_POST['search'] == "Search")
 	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
-		$message = "<form action='search.php' method='POST'>";
+		$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
-				$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
-				$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
-				$message = $message."<br>".$mes['field']."</li>"; //adds name.
+			if (is_null($mes['picture']))
+			{
+				$mes['picture'] = "images/default.png";
+			}
+			$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
+			$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
+			$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+			$message = $message."<br>".$mes['field']."</li>"; //adds name.
 		}
 		$message = $message."<div align='right'><input type='submit' name='submit' value='Send Interested In Message'/></div></form>";
 	}
@@ -183,6 +191,7 @@ mysql_close();
                 <input name="name" size="25" value="<?=$archives?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
+                <option>All</option>
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>
