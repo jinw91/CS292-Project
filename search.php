@@ -2,6 +2,7 @@
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once('generalfunctions/database.php');
+require_once('generalfunctions/template.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)

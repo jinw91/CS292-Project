@@ -67,6 +67,80 @@ function navBar($mes)
 }
 
 /**
+Creates the search bar
+**/
+function search()
+{
+	return("<div align='center' style='font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;'>
+                <label for='careers'>Search Candidates: </label>
+                </div>
+                <ul id='search'>
+                <li><label for='name' style='float: left;'>Name: </label>
+                <input name='name' size='25' value='<?=$archives?>'/></li>
+                <li><label for='major' style='float: left;'>Major: </label>
+                <select id='major' name='major' size='1'>
+                <option>Biomedical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Computer Science</option>
+                <option>Computer Engineering</option>
+                <option>Economics</option>
+                <option>Human Organizational Development</option>
+                <option>Mechanical Engineering</option>
+                </select></li>
+                <li><label for='college[]' style='float: left;'>School: </label>
+                <select id='college' name='college[]' multiple='multiple' size='1'>
+                <option value='Vanderbilt University'>Vanderbilt University</option>
+                <option value='Duke University'>Duke University</option>
+                <option value='Northwestern University'>Northwestern University</option>
+                <option value='University of Chicago'>University of Chicago</option>
+                <option value='University of Notre Dame'>University of Notre Dame</option>
+                <option value='University of North Carolina'>University of North Carolina</option>
+                <option value='University of Virginia'>University of Virginia</option>
+                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                </select>
+                </li>
+                <li><label for='gpa' style='float: left;'>Minimum GPA: </label>
+                <input name='gpa' size='25' value='<?=$gpa?>' /></li>
+                <li><label for='work_experience' style='float: left;'>Work Experience: </label>
+                <input name='work_experience' size='10' style='width: 150px;' value='<?=$work_experience?>'/> Years</li>
+                <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' value='<?=$skills?>'></li>");
+}
+function searchNoVar()
+{
+	return("<ul id='search'>
+                <li><label for='name' style='float: left;'>Name: </label>
+                <input name='name' size='25'/></li>
+                <li><label for='major' style='float: left;'>Major: </label>
+                <select id='major' name='major' size='1'>
+                <option>Biomedical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Computer Science</option>
+                <option>Computer Engineering</option>
+                <option>Economics</option>
+                <option>Human Organizational Development</option>
+                <option>Mechanical Engineering</option>
+                </select></li>
+                <li><label for='college[]' style='float: left;'>School: </label>
+                <select id='college' name='college[]' multiple='multiple' size='1'>
+                <option value='Vanderbilt University'>Vanderbilt University</option>
+                <option value='Duke University'>Duke University</option>
+                <option value='Northwestern University'>Northwestern University</option>
+                <option value='University of Chicago'>University of Chicago</option>
+                <option value='University of Notre Dame'>University of Notre Dame</option>
+                <option value='University of North Carolina'>University of North Carolina</option>
+                <option value='University of Virginia'>University of Virginia</option>
+                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                </select>
+                </li>
+                <li><label for='gpa' style='float: left;'>Minimum GPA: </label>
+                <input name='gpa' size='25' /></li>
+                <li><label for='work_experience' style='float: left;'>Work Experience: </label>
+                <input name='work_experience' size='10' style='width: 150px;' /> Years</li>
+                <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>");
+}
+
+
+/**
 Creates the footer for php.
 **/
 function footer()
@@ -102,5 +176,7 @@ function footer()
 	</div>
 </footer>");
 }
+
+
 
 ?>

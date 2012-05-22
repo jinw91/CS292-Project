@@ -6,6 +6,7 @@ if (!isset($_SESSION['idnum']))
 }
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
+require_once(__ROOT__.'/generalfunctions/template.php');
 require_once(__ROOT__.'/generalfunctions/career.php');
 $tbl_name="users";
 $connect = connectToDatabase();
@@ -14,8 +15,10 @@ if (!$connect)
 	$error = "failed to connect";	
 }
 
+$search = searchNoVar();
+
 //Apply to a job.
-else if (isset($_GET['jid']) && isset($_GET['apply']))
+if (isset($_GET['jid']) && isset($_GET['apply']))
 {
 	applyJob();
 }
@@ -87,7 +90,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
-			$message = $message."<li><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span>
+			$message = $message."<fieldset><legend><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span></legend><hr/><li>
 			<ul>
 			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
 				<ul><li><b>Major: </b>".$job['major']."</li>
@@ -96,7 +99,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
 			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
-				<ul><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
+				<ul style='border-bottom: 1px dashed gray;'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Saved Candidates</b></a></li></ul>
 			</ul>";
 			/**
 			$query = sprintf("SELECT * FROM c_applied_%d i, users u, education_data ed WHERE i.idnum=u.idnum AND u.idnum=ed.idnum AND jid='%d' AND is_read=0", $_SESSION['company']['b_id'], $job['jid']);
@@ -111,7 +114,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				$message .= "<a href='groups.php?jid=".$job['jid']."'>View Candidates</a>";
 			}
 			$message .= "<a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.**/
-			$message = $message."<hr></li>".$new_interested;
+			$message = $message."</fieldset></li>".$new_interested;
 		}
 		$message = $message."</ul>";
 	}
@@ -158,29 +161,6 @@ mysql_close();
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
 </head>
 <body>
 <!--<?=$error?>-->
@@ -222,36 +202,7 @@ $(function(){
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
                 <label for="careers">Search Candidates: </label>
                 </div>
-                <ul id="search">
-                <li><label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" /></li>
-                <li><label for="major" style="float: left;">Major: </label>
-                <select name="major" size="1">
-                <option>Biomedical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Economics</option>
-                <option>Human Organizational Development</option>
-                <option>Mechanical Engineering</option>
-                </select></li>
-                <li><label for="college[]" style="float: left;">School: </label>
-                <select name="college[]" multiple="multiple" size="1">
-                <option value='Vanderbilt University'>Vanderbilt University</option>
-                <option value='Duke University'>Duke University</option>
-                <option value='Northwestern University'>Northwestern University</option>
-                <option value='University of Chicago'>University of Chicago</option>
-                <option value='University of Notre Dame'>University of Notre Dame</option>
-                <option value='University of North Carolina'>University of North Carolina</option>
-                <option value='University of Virginia'>University of Virginia</option>
-                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
-                </select>
-                </li>
-                <li><label for="gpa" style="float: left;">Minimum GPA: </label>
-                <input name="gpa" size="25"  /></li>
-                <li><label for="work_start" style="float: left;">Work Experience: </label>
-                <input name="work_start" size="10" style="width: 150px;"/> Years</li>
-                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25"></li>
+                <?=$search?>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="submit" name="search" value="Search"/>
                 </ul>
