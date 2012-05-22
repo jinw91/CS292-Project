@@ -87,7 +87,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
-			$message = $message."<li><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span>
+			$message = $message."<li><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."<hr></span>
 			<ul>
 			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
 				<ul><li><b>Major: </b>".$job['major']."</li>
@@ -111,7 +111,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				$message .= "<a href='groups.php?jid=".$job['jid']."'>View Candidates</a>";
 			}
 			$message .= "<a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.**/
-			$message = $message."<hr></li>".$new_interested;
+			$message = $message."<br></li>".$new_interested;
 		}
 		$message = $message."</ul>";
 	}
@@ -227,6 +227,7 @@ $(function(){
                 <input name="name" size="25" /></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select name="major" size="1">
+		<option selected="selected">All</option>
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>
