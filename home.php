@@ -8,12 +8,14 @@ if (!isset($_SESSION['idnum']))
 if (isset($_GET['usermode']))
 {
 	$_SESSION['business_mode'] = !$_SESSION['business_mode'];
+	/**
 	if ($_SESSION['business_mode']) $error = "Business mode set to true";
 	else if (!$_SESSION['business_mode']) $error = "Business mode set to false";
 	else
 	{
 		$error = "invalid output";
 	}
+	**/
 }
 
 define('__ROOT__', dirname(__FILE__)); 

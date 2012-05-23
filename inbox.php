@@ -68,8 +68,13 @@ if (isset($_GET['mid']))
 		$message = "Cannot open message";
 	}
 	$mes = mysql_fetch_assoc($result);
+<<<<<<< HEAD
 	/*$message = "<ul>";
 	$message = $message."<li><label class='inbox'>From: </label>"."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
+=======
+	$message = "<ul>";
+	$message = $message."<li><label class='inbox'>From: </label>"."<a href='cprofile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
+>>>>>>> working-long
 	$message = $message."<li><label class='inbox'>Subject: </label>".$mes['subject']."</li>";
 	$message = $message."<li><label class='inbox'>Body: </label>".$mes['body']."</li>";
 	//$message = $message."<li><a href='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."'>Reply</a></li>";

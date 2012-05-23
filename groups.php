@@ -262,22 +262,9 @@ mysql_close();
         	<div class="grid_4">
             <form action="groups.php" method="post">
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-            <label for="careers">Search: </label>
+            <label for="careers">Search Applicants: </label>
             </div>
-            <ul id="search">
-            <li><label for="name" style="float: left;">Name: </label>
-            <input name="name" size="25" /></li>
-            <li><label for="major[]" style="float: left;">Major: </label>
-              <select name="major[]" multiple="multiple" size="1">
-                <option>Biomedical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Economics</option>
-                <option>Human Organizational Development</option>
-                <option>Mechanical Engineering</option>
-              </select>
-            </li>
+            <? echo searchNoVar();?>
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
             <label for="group">Job(s): </label>
             </div>
@@ -290,7 +277,7 @@ mysql_close();
             </ul>
             </form>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-                <a href='search.php'>Search Candidates: </a>
+                <a href='search.php'>Search For Candidates: </a>
                 </div>
             <?=$side_groups?>
             </div>

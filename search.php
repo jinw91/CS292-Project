@@ -2,6 +2,7 @@
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once('generalfunctions/database.php');
+require_once('generalfunctions/template.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
@@ -88,7 +89,10 @@ if ($_POST['search'] == "Search")
 			$add .= " AND major LIKE '%%$major[$i]%%'";
 		}
 		**/
-		$add .= " AND major LIKE '%%$major%%'";
+		if ($major!="All")
+		{
+			$add .= " AND major LIKE '%%$major%%'";
+		}
 	}
 	
 	/**
@@ -138,6 +142,7 @@ if ($_POST['search'] == "Search")
 	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
+<<<<<<< HEAD
 		$message = "<form action='search.php' method='POST'><hr>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
@@ -155,6 +160,19 @@ if ($_POST['search'] == "Search")
                 $message = $message."<a href='inbox.php?write=true&single=true'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='35' height='35' /></a>";
                 $message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='35' height='35' /></a>";
                 $message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
+=======
+		$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
+		while ($mes =  mysql_fetch_assoc($result))
+		{
+			if (is_null($mes['picture']))
+			{
+				$mes['picture'] = "images/default.png";
+			}
+			$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
+			$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
+			$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+			$message = $message."<br>".$mes['field']."</li>"; //adds name.
+>>>>>>> working-long
 		}
 		$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
 	}
@@ -230,7 +248,11 @@ mysql_close();
                 <input name="name" size="25" value="<?=$archives?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
+<<<<<<< HEAD
 		<option selected="selected">All</Option>
+=======
+                <option>All</option>
+>>>>>>> working-long
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>

@@ -223,42 +223,8 @@ $(function(){
 <section id="content">  
 	<div class="container_12">
     <div class="wrapper border_bottom">
-        	<div class="grid_4">
-                <div class="box-img"><a href="<?=$v_users['picture']?>" data-gal="prettyPhoto[gallery]" class="lightbox-image"><img src="<?=$v_users['picture']?>" alt=""></a></div>
-            </div>
-            <div class="grid_6 suffix_2">
-                    <fieldset>
-                    <div style="font-family: 'Lato', Arial, Helvetica; text-align: center; padding-top: 30px; font-size:18px;">
-                    <?php 
-					if (isset($v_bid))
-					{
-						brief_c();
-					}
-					else
-					{
-						echo $v_education['college']."<br />".$education['major']."<br />";
-						if ($v_users['city'] != "" && $v_users['state'] != "")
-						{
-							echo $v_users['city'].", ".$v_users['state']."<br />";
-						}
-						$temp = substr($v_education['college_end'], 0, 4);
-						$tmpmonth = intval(substr($v_education['college_end'], 5, 2));
-						if ($temp != '0000' && isset($temp))
-						{
-							if ($tmpmonth <= 6) 
-								echo "Expected Graduation: Spring ".$temp;
-							else if ($tmpmonth < 8)
-								echo "Expected Graduation: Summer ".$temp;
-							else
-								echo "Expected Graduation: Fall ".$temp;
-						}
-					}
-                    ?>
-                    <br />
-                    </p>
-                    <p><?=$v_users['status']?></p>
-                    </div>
-                    </fieldset>
+        	<div class="grid_11">
+                <a href="<?=$v_users['picture']?>" data-gal="prettyPhoto[gallery]" class="lightbox-image"><img src="<?=$v_users['picture']?>" alt=""></a>
             </div>
         </div>
 		<div class="wrapper">
