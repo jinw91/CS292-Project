@@ -68,13 +68,8 @@ if (isset($_GET['mid']))
 		$message = "Cannot open message";
 	}
 	$mes = mysql_fetch_assoc($result);
-<<<<<<< HEAD
 	/*$message = "<ul>";
 	$message = $message."<li><label class='inbox'>From: </label>"."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
-=======
-	$message = "<ul>";
-	$message = $message."<li><label class='inbox'>From: </label>"."<a href='cprofile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
->>>>>>> working-long
 	$message = $message."<li><label class='inbox'>Subject: </label>".$mes['subject']."</li>";
 	$message = $message."<li><label class='inbox'>Body: </label>".$mes['body']."</li>";
 	//$message = $message."<li><a href='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."'>Reply</a></li>";
@@ -229,29 +224,6 @@ mysql_close();
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
 </head>
 <body>
 <!-- header -->
