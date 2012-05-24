@@ -190,12 +190,12 @@ else if (mysql_num_rows($result) > 0)
 		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
 		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
 		if (!isset($_POST['offer'])) {
-			$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
-			$_SESSION['subject'] = "Job Interview: ".$_SESSION['company']['company_name'];
-			$_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule an in-person interview with you. The following times are available, please let us know what works best for you.";
+		$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
+		$_SESSION['subject'] = "Job Interview: ".$_SESSION['company']['company_name'];
+		$_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule an in-person interview with you. The following times are available, please let us know what works best for you.";
 		}
-		$message = $message."<a href='inbox.php?write=true&single=true'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='35' height='35' /></a>";
-		$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='35' height='35' /></a>";
+		$message = $message."<a href='inbox.php?write=true&single=true'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
+		$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
 	$message .= "<div align='right'><select name='jid'>";
@@ -262,22 +262,9 @@ mysql_close();
         	<div class="grid_4">
             <form action="groups.php" method="post">
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-            <label for="careers">Search: </label>
+            <label for="careers">Search Applicants: </label>
             </div>
-            <ul id="search">
-            <li><label for="name" style="float: left;">Name: </label>
-            <input name="name" size="25" /></li>
-            <li><label for="major[]" style="float: left;">Major: </label>
-              <select name="major[]" multiple="multiple" size="1">
-                <option>Biomedical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Economics</option>
-                <option>Human Organizational Development</option>
-                <option>Mechanical Engineering</option>
-              </select>
-            </li>
+            <? echo searchNoVar();?>
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
             <label for="group">Job(s): </label>
             </div>
@@ -290,7 +277,7 @@ mysql_close();
             </ul>
             </form>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-                <a href='search.php'>Search Candidates: </a>
+                <a href='search.php'>Search For Candidates: </a>
                 </div>
             <?=$side_groups?>
             </div>

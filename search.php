@@ -2,6 +2,7 @@
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once('generalfunctions/database.php');
+require_once('generalfunctions/template.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
@@ -65,15 +66,15 @@ if ($_POST['search'] == "Search")
 	{
 		$first_name = substr($archives, 0, strpos($archives, " "));
 		$last_name = substr(strchr($archives, " "), 1);
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end FROM users u JOIN education_data ed ON u.idnum=ed.idnum WHERE first_name='%s' AND last_name='%s'", $first_name, $last_name);
+		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u JOIN education_data ed ON u.idnum=ed.idnum WHERE first_name='%s' AND last_name='%s'", $first_name, $last_name);
 	}
-	else if ($archives == "") // subscribed friends.
+	else if ($archives == "") // all users.
 	{
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end FROM users u, education_data ed WHERE u.idnum=ed.idnum");
+		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u, education_data ed WHERE u.idnum=ed.idnum");
 	}
 	else //either first or last name entered.
 	{
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end FROM users u WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%'");
+		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%'");
 	}
 	
 	$add = "";
@@ -88,7 +89,10 @@ if ($_POST['search'] == "Search")
 			$add .= " AND major LIKE '%%$major[$i]%%'";
 		}
 		**/
-		$add .= " AND major LIKE '%%$major%%'";
+		if ($major!="All")
+		{
+			$add .= " AND major LIKE '%%$major%%'";
+		}
 	}
 	
 	/**
@@ -138,23 +142,18 @@ if ($_POST['search'] == "Search")
 	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
-		$message = "<form action='search.php' method='POST'><hr>";
+		$error = $query;
+		$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
-                if (is_null($mes['picture']))
-                {
-                       	$mes['picture'] = "images/default.png";
-                }
-		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
-		$message .= "<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum']."'/></span>";
-                if (!isset($_POST['offer'])) {
-                        $_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
-                        $_SESSION['subject'] = "Job Interview: ".$_SESSION['company']['company_name'];
-                        $_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule an in-person interview with you. The following times are available, please let us know what works best for you.";
-               	}
-                $message = $message."<a href='inbox.php?write=true&single=true'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='35' height='35' /></a>";
-                $message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='35' height='35' /></a>";
-                $message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
+			if (is_null($mes['picture']))
+			{
+				$mes['picture'] = "images/default.png";
+			}
+			$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
+			$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
+			$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+			$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>"; //adds name.
 		}
 		$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
 	}
@@ -177,7 +176,7 @@ mysql_close();
 <script src="simple.js"></script>
 </head>
 <body>
-<!--<?=$error?>-->
+<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -230,7 +229,7 @@ mysql_close();
                 <input name="name" size="25" value="<?=$archives?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
-		<option selected="selected">All</Option>
+				<option selected="selected">All</Option>
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>
@@ -265,7 +264,7 @@ mysql_close();
 				<?=$array?>
 				</script>
             </div>
-            <div class="grid_8 ">
+            <div class="grid_6 suffix_2">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
                     <ul id="messages">
