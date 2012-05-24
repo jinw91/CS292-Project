@@ -110,7 +110,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 					$(\"#job".$job_num."\").slideToggle(\"slow\");
 				});
 				$(\"#slidecandidates".$job_num."\").click(function() {
-					this.src = toggleicon(togglecandidates".$job_num.");
+					this.src = togglecandidates".$job_num." ? 'site_im/plussign' : 'site_im/minussign';
 					togglecandidates".$job_num." = !togglecandidates".$job_num.";
 					$(\"#candidates".$job_num."\").slideToggle(\"slow\");
 				});
@@ -195,13 +195,6 @@ mysql_close();
 	$(document).ready(function() {
 		$(".slidedown").hide();
 	});
-	function toggleicon(toggle) {
-		if (toggle) {
-			return 'site_im/plussign.jpg';
-		} else {
-			return 'site_im/minussign.jpg';
-		}
-	}
 </script>
 <!--<?=$error?>-->
 <!-- header -->
