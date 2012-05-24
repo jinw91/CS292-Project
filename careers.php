@@ -105,7 +105,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				var togglejob".$job_num." = false;
 				var togglecandidates".$job_num." = false;
 				$(\"#slidejob".$job_num."\").click(function() {
-					this.src = toggleicon(togglejob".$job_num.");
+					this.src = togglejob".$job_num." ? 'site_im/plussign' : 'site_im/minussign';
 					togglejob".$job_num." = !togglejob".$job_num.";
 					$(\"#job".$job_num."\").slideToggle(\"slow\");
 				});
