@@ -87,20 +87,34 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 	else
 	{
 		$message = "<span class='job_title_font'>&nbsp;<a href='career.php'>Add Career</a></span><ul id='company_job_entries'>";
+		$job_num = 0;
 		while ($job =  mysql_fetch_assoc($result))
 		{
 			$new_interested = "";
 			$message = $message."<fieldset><legend><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span></legend><hr/><li>
 			<ul>
-			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
-				<ul><li><b>Major: </b>".$job['major']."</li>
+			<li><img src='site_im/plussign.jpg' width='18' height='18' id='slidejob".$job_num."' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
+				<ul class='slidedown' id='job".$job_num."'><li><b>Major: </b>".$job['major']."</li>
 				<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>
 				<li><b>Description: </b>".$job['job_description']."</li>
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
-			<li><img src='site_im/plussign.jpg' width='18' height='18' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
-				<ul><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b></a></li></ul>
-			</ul>";
+			<li><img src='site_im/plussign.jpg' width='18' height='18' id='slidecandidates".$job_num."' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
+				<ul class='slidedown' id='candidates".$job_num."'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b></a></li></ul>
+			</ul><script>
+				var togglejob".$job_num." = false;
+				var togglecandidates".$job_num." = false;
+				$(\"#slidejob".$job_num."\").click(function() {
+					this.src = toggleicon(togglejob".$job_num.");
+					togglejob".$job_num." = !togglejob".$job_num.";
+					$(\"#job".$job_num."\").slideToggle(\"slow\");
+				});
+				$(\"#slidecandidates".$job_num."\").click(function() {
+					this.src = toggleicon(togglecandidates".$job_num.");
+					togglecandidates".$job_num." = !togglecandidates".$job_num.";
+					$(\"#candidates".$job_num."\").slideToggle(\"slow\");
+				});
+			</script>";
 			/**
 			
 			<ul>
@@ -127,6 +141,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 			}
 			$message .= "<a href='search.php?jid=".$job['jid']."'>Find candidates</a></div>"; //adds name and options.**/
 			$message = $message."</fieldset></li>".$new_interested;
+			$job_num ++;
 		}
 		$message = $message."</ul>";
 	}
@@ -166,6 +181,7 @@ mysql_close();
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/skeleton.css">
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="js/jquery-1.7.1.min.js"></script>
 <script src="js/superfish.js"></script>
 <script src="js/hoverIntent.js"></script>
@@ -175,6 +191,18 @@ mysql_close();
 <script src="js/slides.min.jquery.js"></script>
 </head>
 <body>
+<script>
+	$(document).ready(function() {
+		$(".slidedown").hide();
+	});
+	function toggleicon(toggle) {
+		if (toggle) {
+			return 'site_im/plussign.jpg';
+		} else {
+			return 'site_im/minussign.jpg';
+		}
+	}
+</script>
 <!--<?=$error?>-->
 <!-- header -->
 <header>
@@ -225,14 +253,7 @@ mysql_close();
                     <div class="message">
     				<?=$message?>
                     </div>
-                    </fieldset>
-            </div>
-        </div>        
-	</div>
-</section>
-<!-- footer -->
-<?php
-	echo footer();
+                    </fieldset> </div> </div>        </div> </section> <!-- footer --> <?php echo footer();
 ?>
 </body>
 </html>
