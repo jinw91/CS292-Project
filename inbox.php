@@ -83,7 +83,7 @@ if (isset($_GET['mid']))
 		$mes['picture'] = "images/default.png";
         }
         $message = $message."<div style='height:0px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br>";
-        $message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></div>"; //adds name.
+        $message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['first_name']." ".$mes['last_name']."</a></div>"; //adds name.
         $message = $message."<span style='float:left; margin-left:80px'><div style='font-weight: bold; color: black;'>";
 	if ($mes['subject'] == "") {
 		$message = $message."[untitled]";
