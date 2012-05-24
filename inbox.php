@@ -174,7 +174,14 @@ else
 				$mes['picture'] = "images/default.png";
 			}
 			$message = $message."<li><div style='height:40px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br>";
-			$message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></div>"; //adds name.
+			$from_name = $mes['first_name']." ".$mes['last_name'];
+			$message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>";
+			if (strlen($from_name) <= 11) {
+				$message = $message.$from_name."</a></div>";
+			} else {
+				$message = $message.substr($from_name,0,11)."...</a></div>";
+			}
+			//decides how unread messages look
 			/*if ($mes['read'] == 0)
 			{
 				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
@@ -189,12 +196,11 @@ else
 			} else {
 				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
 			}
-			$message = $message."</a><br>".substr($mes['body'],0,80)."</li>";
-			/*if (strlen($mes['body'] < 80)) {
+			if (strlen($mes['body']) <= 80) {
 				$message = $message."</a><br>".$mes['body']."</li>";
 			} else {
 				$message = $message."</a><br>".substr($mes['body'],0,80)."......</li>";
-			}*/
+			}
 		}
 		$message .= "<div class='paginator'>";
 		if ($limit != 0)
