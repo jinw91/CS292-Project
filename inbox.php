@@ -68,22 +68,12 @@ if (isset($_GET['mid']))
 		$message = "Cannot open message";
 	}
 	$mes = mysql_fetch_assoc($result);
-	/*$message = "<ul>";
-	$message = $message."<li><label class='inbox'>From: </label>"."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></li>";
-	$message = $message."<li><label class='inbox'>Subject: </label>".$mes['subject']."</li>";
-	$message = $message."<li><label class='inbox'>Body: </label>".$mes['body']."</li>";
-	//$message = $message."<li><a href='inbox.php?write=true&to=".$mes['from_name']."&subject=".$mes['subject']."'>Reply</a></li>";
-	$_SESSION['to'] = $mes['from_name'];
-	$_SESSION['subject'] = "Re: ".$mes['subject'];
-        $message = $message."<li><span style='margin-left: 55px;'><form method='post' action='inbox.php?write=true&reply=true'><input type='submit' value='Reply' /></form></li>";
-	$message = $message."</ul>";*/
-	//$message = "<ul id='meslist'>";
         if (is_null($mes['picture']))
         {
 		$mes['picture'] = "images/default.png";
         }
         $message = $message."<div style='height:0px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br>";
-        $message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></div>"; //adds name.
+        $message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['first_name']." ".$mes['last_name']."</a></div>"; //adds name.
         $message = $message."<span style='float:left; margin-left:80px'><div style='font-weight: bold; color: black;'>";
 	if ($mes['subject'] == "") {
 		$message = $message."[untitled]";
@@ -92,9 +82,8 @@ if (isset($_GET['mid']))
 	}
         $message = $message."</div>".$mes['body']."</span>";
         $message = $message."<span style='clear:both; float:left; margin-left:80px;'><form method='post' action='inbox.php?write=true&reply=true'><input type='submit' value='Reply' /></form>";
-
-
-
+	$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
+	$_SESSION['subject'] = "Re: ".$mes['subject'];
 	$query = sprintf("UPDATE personnel_email SET is_read=1 WHERE mid='%d';", $_GET['mid']);
 	$result = mysql_query($query);
 	if (!$result)
@@ -109,17 +98,22 @@ else if (isset($_GET['write']))
 		$mes_to = $_SESSION['to'];
 		$mes_sub = $_SESSION['subject'];
 		$mes_body = $_SESSION['body'];
-		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
+		if ($_SESSION['time_edit']) {
+			$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
+		}
 	} else if (isset($_GET['multiple'])) {
-		$tmp = $_SESSION['contacts'];
+		$tmp = $_SESSION['to'];
 		$mes_to = "";
 		for ($i=0; $i<count($tmp); $i++)
 		{
-			$mes_to .= "".$tmp[$i].",";
+			$mes_to = $mes_to.$tmp[$i].", ";
 		}
+		$mes_to = substr($mes_to, 0, strlen($substr)-2);
 		$mes_sub = $_SESSION['subject'];
 		$mes_body = $_SESSION['body'];
-		$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
+		if ($_SESSION['time_edit']) {
+			$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
+		}
 	} else if (isset($_GET['reply'])) {
 		$mes_to = $_SESSION['to'];
 		$mes_sub = $_SESSION['subject'];
@@ -174,7 +168,14 @@ else
 				$mes['picture'] = "images/default.png";
 			}
 			$message = $message."<li><div style='height:40px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br>";
-			$message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['from_name']."</a></div>"; //adds name.
+			$from_name = $mes['first_name']." ".$mes['last_name'];
+			$message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>";
+			if (strlen($from_name) <= 11) {
+				$message = $message.$from_name."</a></div>";
+			} else {
+				$message = $message.substr($from_name,0,11)."...</a></div>";
+			}
+			//decides how unread messages look
 			/*if ($mes['read'] == 0)
 			{
 				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
@@ -189,12 +190,11 @@ else
 			} else {
 				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
 			}
-			$message = $message."</a><br>".substr($mes['body'],0,80)."</li>";
-			/*if (strlen($mes['body'] < 80)) {
+			if (strlen($mes['body']) <= 80) {
 				$message = $message."</a><br>".$mes['body']."</li>";
 			} else {
 				$message = $message."</a><br>".substr($mes['body'],0,80)."......</li>";
-			}*/
+			}
 		}
 		$message .= "<div class='paginator'>";
 		if ($limit != 0)
