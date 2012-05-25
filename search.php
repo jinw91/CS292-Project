@@ -133,7 +133,6 @@ if ($_POST['search'] == "Search")
 		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
 	}
 	
-	$error = $query;
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -142,7 +141,6 @@ if ($_POST['search'] == "Search")
 	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
-		$error = $query;
 		$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
