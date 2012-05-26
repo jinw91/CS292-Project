@@ -11,37 +11,34 @@ if (!$connect)
 }
 if (isset($_POST['offer']))
 {
-        $_SESSION['subject'] = "";
         $select = $_POST['select'];
         for ($i = 0; $i < count($select); $i++)
         {
                 $tmp = $select[$i];
-                $tmp = substr($tmp, 0, strpos($tmp, "."));
-                if (!isset($contacts) || !array_search($tmp, $contacts))
+                if (!isset($to_id) || !array_search($tmp, $to_id))
                 {
-                        $contacts[] = $tmp;
+                        $to_id[] = $tmp;
                 }
         }
-        $_SESSION['contacts'] = $contacts;
+        $_SESSION['to_id'] = $to_id;
+	$mes = "messagetype=";
         if ($_POST['offer'] == "Schedule Phone Interview")
         {
-                $_SESSION['subject'] = "Phone Interview: ".$_SESSION['company']['company_name'];
-                $_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.";
-                $_SESSION['time_edit'] = true;
+		$mes = $mes."phone";
         }
         else if ($_POST['offer'] == "Schedule Job Interview")
         {
-                $_SESSION['subject'] = "Job Interview: ".$_SESSION['company']['company_name'];
-                $_SESSION['body'] = "Thank you for sending in your application to ".$_SESSION['company']['company_name'].". We are pleased with what we see on your resume and would like to schedule an in-person interview with you. The following times are available, please let us know what works best for you.";
-                $_SESSION['time_edit'] = true;
+		$mes = $mes."interview";
         }
         else if ($_POST['offer'] == "Offer Job")
         {
-                $_SESSION['subject'] = "Job Offer: ".$_SESSION['company']['company_name'];
-                $_SESSION['body'] = "Congratulations! We are pleased to have you to be part of ".$_SESSION['company']['company_name'].". Your compensation is as follows: You will begin work on the following day. Please let us know by then whether you will accept the job or not.";
-                $_SESSION['time_edit'] = true;
+		$mes = $mes."offer";
 	}
-        header("Location: inbox.php?write=true&multiple=true");
+	else if ($_POST['offer'] == "Send Supplement Material")
+	{
+		$mes = $mes."supplement";
+	}
+	header("Location: generalfunctions/message_template.php?multiple=true&".$mes);
 }
 
 
@@ -151,8 +148,10 @@ if ($_POST['search'] == "Search")
 				$mes['picture'] = "images/default.png";
 			}
 			$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
-			$message .= "<span style='float: right;'><input type='checkbox' name='selected[]' value='".$mes['idnum']."'/></span>";
-			$message = $message."<a href='inbox.php?write=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+			$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum']."'/></span>";
+			$message = $message."<a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
+			$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a>";
+			$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 			$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>"; //adds name.
 		}
 		$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
@@ -176,7 +175,7 @@ mysql_close();
 <script src="simple.js"></script>
 </head>
 <body>
-<?=$error?>
+<?//=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -229,7 +228,7 @@ mysql_close();
                 <input name="name" size="25" value="<?=$archives?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
-				<option selected="selected">All</Option>
+		<option selected="selected">All</Option>
                 <option>Biomedical Engineering</option>
                 <option>Civil Engineering</option>
                 <option>Computer Science</option>
@@ -264,7 +263,7 @@ mysql_close();
 				<?=$array?>
 				</script>
             </div>
-            <div class="grid_6 suffix_2">
+            <div class="grid_8">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
                     <ul id="messages">

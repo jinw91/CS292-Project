@@ -50,7 +50,15 @@ if (isset($_GET['multiple'])) {
 	$_SESSION['to'] = $to_name;
 	$url = $url."&multiple=true";
 } else if (isset($_GET['single'])) {
-	$_SESSION['to'] = $_GET['to'];
+	$query = sprintf("SELECT * FROM users WHERE idnum='%d'", $_GET['to_id']);
+	$result = mysql_query($query);
+        if (!$result)
+	{
+		echo mysql_error();
+	}
+       	$mes = mysql_fetch_assoc($result);
+	$to_name = $mes['first_name']." ".$mes['last_name'];
+	$_SESSION['to'] = $to_name;
 	$url = $url."&single=true";
 }
 header("Location: ".$url);

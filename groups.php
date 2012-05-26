@@ -185,9 +185,9 @@ else if (mysql_num_rows($result) > 0)
 		}
 		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
 		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
-		$message = $message."<a href='generalfunctions/message_template.php?messagetype=interview&single=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
-		$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a>";
-		$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to=".$mes['first_name']." ".$mes['last_name']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+		$message = $message."<a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
+		$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a>";
+		$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
 	$message .= "<div align='right'><select name='jid'>";
