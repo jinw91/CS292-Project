@@ -105,12 +105,12 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				var togglejob".$job_num." = false;
 				var togglecandidates".$job_num." = false;
 				$(\"#slidejob".$job_num."\").click(function() {
-					this.src = togglejob".$job_num." ? 'site_im/plussign' : 'site_im/minussign';
+					this.src = togglejob".$job_num." ? 'site_im/plussign.jpg' : 'site_im/minussign.jpg';
 					togglejob".$job_num." = !togglejob".$job_num.";
 					$(\"#job".$job_num."\").slideToggle(\"slow\");
 				});
 				$(\"#slidecandidates".$job_num."\").click(function() {
-					this.src = togglecandidates".$job_num." ? 'site_im/plussign' : 'site_im/minussign';
+					this.src = togglecandidates".$job_num." ? 'site_im/plussign.jpg' : 'site_im/minussign.jpg';
 					togglecandidates".$job_num." = !togglecandidates".$job_num.";
 					$(\"#candidates".$job_num."\").slideToggle(\"slow\");
 				});
