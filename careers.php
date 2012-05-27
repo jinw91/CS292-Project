@@ -93,13 +93,13 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 			$new_interested = "";
 			$message = $message."<fieldset><legend><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span></legend><hr/><li>
 			<ul>
-			<li><img src='site_im/plussign.jpg' width='18' height='18' id='slidejob".$job_num."' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
+			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidejob".$job_num."' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
 				<ul class='slidedown' id='job".$job_num."'><li><b>Major: </b>".$job['major']."</li>
 				<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>
 				<li><b>Description: </b>".$job['job_description']."</li>
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
-			<li><img src='site_im/plussign.jpg' width='18' height='18' id='slidecandidates".$job_num."' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
+			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidecandidates".$job_num."' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
 				<ul class='slidedown' id='candidates".$job_num."'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b></a></li></ul>
 			</ul><script>
 				var togglejob".$job_num." = false;
