@@ -13,48 +13,45 @@ if (!$connect)
 	echo "failed to connect";
 }
 
+// converts mysql query result to a json object
+function mysql2json($mysql_result) {
+	$json="[";
+	$rows = mysql_num_rows($mysql_result);
+	for ($x=0;$x<$rows;$x++) {
+		$row = mysql_fetch_array($mysql_result);
+		$json.="{'caption':'".$row[0]." ".$row[1]."','value':'".$row[2]."'";
+		if ($x==$rows-1) {
+			$json.="}";
+		} else {
+			$json.="},";
+		}
+	}
+	$json.="]";
+	return($json);
+}
+
 //sending a message
 if ($_POST['send'] == "Send")
 {
-	$to_name = $_POST['to_name'];
+	$to_id = split(',',$_POST['hidden_to_id']);
 	if (!isset($_POST['subject'])) {
 		$subject = "[untitled]";
 	} else {
 		$subject = $_POST['subject'];
 	}
 	$body = $_POST['body'];
-	
-	
-	if (is_numeric($to_name))
-	{
-		$to_idnum = $to_name;
-	}
-	else
-	{
-		$first_name = substr($to_name, 0, strpos($to_name, " "));
-		$last_name = substr(strchr($to_name, " "), 1);
-		$query = sprintf("SELECT idnum FROM users WHERE first_name='%s' AND last_name='%s'", $first_name, $last_name);
+	for ($i = 0; $i < count($to_id); $i ++) {
+		$query = sprintf("INSERT INTO personnel_email (subject, body, from_id, to_id, time_sent) VALUES ('$subject', '$body', '%d', '%d', NOW( ))", $_SESSION['idnum'], $to_id[$i]);
 		$result = mysql_query($query);
-		if (!$result)
-		{
-			$message = "Cannot find user to send message.";
-		}
-		else
-		{
-			$to_idnum = mysql_result($result, 0);
-		}
 	}
-	$query = sprintf("INSERT INTO personnel_email (from_name, subject, body, from_id, to_id, time_sent) VALUES ('%s', '$subject',  '$body', '%d', '%d', NOW( ))", 
-		$_SESSION['users']['first_name']." ".$_SESSION['users']['last_name'], $_SESSION['idnum'], $to_idnum);
-	$result = mysql_query($query);
-	if ($result)
+	/*if ($result)
 	{
 		$message = "Message sent.";
 	}
 	else
 	{
 		$message = mysql_error();
-	}
+	}*/
 }
 
 //Reading message if mid is found.
@@ -81,9 +78,10 @@ if (isset($_GET['mid']))
 		$message = $message.$mes['subject'];
 	}
         $message = $message."</div>".$mes['body']."</span>";
-        $message = $message."<span style='clear:both; float:left; margin-left:80px;'><form method='post' action='inbox.php?write=true&reply=true'><input type='submit' value='Reply' /></form>";
+        $message = $message."<span style='clear:both; float:left; margin-left:80px;'><form method='post' action='inbox.php?write=true&single=true'><input type='submit' value='Reply' /></form>";
 	$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
 	$_SESSION['subject'] = "Re: ".$mes['subject'];
+	$_SESSION['body'] = "";
 	$query = sprintf("UPDATE personnel_email SET is_read=1 WHERE mid='%d';", $_GET['mid']);
 	$result = mysql_query($query);
 	if (!$result)
@@ -94,43 +92,53 @@ if (isset($_GET['mid']))
 
 else if (isset($_GET['write']))
 {
-	if (isset($_GET['single'])) {
+	if (isset($_GET['single']) or isset($_GET['multiple'])) {
 		$mes_to = $_SESSION['to'];
 		$mes_sub = $_SESSION['subject'];
 		$mes_body = $_SESSION['body'];
 		if ($_SESSION['time_edit']) {
 			$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
 		}
-	} else if (isset($_GET['multiple'])) {
-		$tmp = $_SESSION['to'];
-		$mes_to = "";
-		for ($i=0; $i<count($tmp); $i++)
-		{
-			$mes_to = $mes_to.$tmp[$i].", ";
-		}
-		$mes_to = substr($mes_to, 0, strlen($substr)-2);
-		$mes_sub = $_SESSION['subject'];
-		$mes_body = $_SESSION['body'];
-		if ($_SESSION['time_edit']) {
-			$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
-		}
-	} else if (isset($_GET['reply'])) {
-		$mes_to = $_SESSION['to'];
-		$mes_sub = $_SESSION['subject'];
+	} else {
+		unset($mes_to);
+		unset($mes_sub);
+		unset($mes_body);
 	}
 	$message = "<form action='inbox.php' method='post'>
-                  <ul id='education'>
-                    <li id='compose'></li>
-                    <li><label class='inbox' for='to_name'>To: </label>
-                    <input type='text' name='to_name' value='".$mes_to."' style='width:450px'/></li>
-                    <li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
-                    <li><label class='inbox' for='body'>Body: </label>
-                    <textarea name='body' rows='10' style='width:450px'>".$mes_body."</textarea></li>
-                    ".$time."
-                    <li>
-                    <span style='margin-left: 58px;'><input type='submit' name='send' value='Send'/></span></li>
-                    </ul>
-                </form>";
+	<ul id='education'>
+	<li><label class='inbox' for='to_name'>To: </label>
+	<ol><li id='facebook-list' class='input-text'><input type='text' name='to_name' id='facebook-demo' style='width:450px'/>
+	<div id='facebook-auto'>
+	<div class='default'>separate user names with a comma</div>
+	<ul class='feed'>";
+	if (isset($_GET['single'])) {
+		$message = $message."<li value='".$_SESSION['to_id']."'>".$mes_to."</li>";
+	} else if (isset($_GET['multiple'])) {
+		for ($i=0; $i<count($mes_to); $i++) {
+			$message = $message."<li value='".$_SESSION['to_id'][$i]."'>".$mes_to[$i]."</li>";
+		}
+	}
+	$message = $message."</ul></div></li></ol></li>
+	<li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
+	<li><label class='inbox' for='body'>Body: </label><textarea name='body' rows='10' style='width:450px'>".$mes_body."</textarea></li>".$time."
+	<li><span style='margin-left: 58px;'><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
+	<li><input type='text' name='hidden_to_id' id='hidden_to_id' style='display:none;' /></li></ul></form>";
+	$query = sprintf("SELECT first_name, last_name, idnum FROM users");
+	$result = mysql_query($query);
+	if (!$result) {
+		echo mysql_error();
+	}
+	$myjson = mysql2json($result);
+	$message = $message."<script language=\"JavaScript\">
+	function copyid() {
+		document.getElementById(\"hidden_to_id\").value=\$F(\"facebook-demo\");
+	}
+	document.observe('dom:loaded', function() {
+		tlist2 = new FacebookList('facebook-demo', 'facebook-auto',{ newValues: true, regexSearch: false });
+		var myjson = ".$myjson.";
+		myjson.each(function(t){tlist2.autoFeed(t)});
+	});
+	</script>";
 }
 //Sets the inbox to show all emails.
 else
@@ -217,6 +225,7 @@ mysql_close();
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/test.css" type="text/css" media="screen" title="Test Stylesheet" charset="utf-8" />
 <script src="js/jquery-1.7.1.min.js"></script>
 <script src="js/superfish.js"></script>
 <script src="js/hoverIntent.js"></script>
@@ -224,6 +233,9 @@ mysql_close();
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script src="js/prototype/prototype.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/prototype/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/facebooklist.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <!-- header -->
@@ -281,7 +293,6 @@ if (isset($_GET['write']) or isset($_GET['mid'])) {
 </div>
 </div>
 </div>
-</section>
 	<!-- footer -->
 <?php
 	echo footer();

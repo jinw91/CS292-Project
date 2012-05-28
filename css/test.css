@@ -1,0 +1,38 @@
+/* TextboxList sample CSS */
+ul.holder { margin: 0; border: 1px solid #999; overflow: hidden; height: auto !important; height: 1%; padding: 4px 5px 0; }
+*:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; } /* ie7 and below */
+ul.holder li { float: left; list-style-type: none; margin: 0 5px 4px 0; }
+ul.holder li.bit-box, ul.holder li.bit-input input { font: 11px "Lucida Grande", "Verdana"; }
+ul.holder li.bit-box { -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; border: 1px solid #696969; background: #dbdbdb; padding: 1px 5px 2px; }
+ul.holder li.bit-box-focus { border-color: #cdc9c9; background: #696969; color: #fff; }
+ul.holder li.bit-input input { width: 150px; margin: 0; border: none; outline: 0; padding: 3px 0 2px; } /* no left/right padding here please */
+ul.holder li.bit-input input.smallinput { width: 20px; }
+
+/* Facebook demo CSS */      
+form ol { font: 11px "Lucida Grande", "Verdana"; margin: 0; padding: 0; }
+form ol li.input-text {list-style-type: none; }
+form ol li.input-text label { font-weight: bold; cursor: pointer; display: block; font-size: 13px; margin-bottom: 10px; }
+form ol li.input-text input { width: 500px; padding: 5px 5px 6px; font: 11px "Lucida Grande", "Verdana"; border: 1px solid #999; }
+form ul.holder { width: 443px; }
+#facebook-list ul.holder li.bit-box, #apple-list ul.holder li.bit-box { padding-right: 15px; position: relative; }
+#apple-list ul.holder li.bit-input { margin: 0; }
+#apple-list ul.holder li.bit-input input.smallinput { width: 5px; }
+ul.holder li.bit-hover { background: #bababa; border: 1px solid #8b8887; }
+ul.holder li.bit-box-focus { border-color: #d3d3d3; background: #8b8682; color: #fff; }
+ul.holder li.bit-box a.closebutton { position: absolute; right: 4px; top: 5px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('../site_im/close.gif'); }
+ul.holder li.bit-box a.closebutton:hover { background-position: 7px; }
+ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutton:hover { background-position: bottom; }
+
+/* Autocompleter */
+
+#facebook-auto { display: none; margin-left: 61px; position: absolute; width: 450px; background: #eee; }
+#facebook-auto .default { padding: 5px 7px; border: 1px solid #ccc; border-width: 0 1px 1px; }
+#facebook-auto ul { display: none; margin: 0; padding: 0; overflow: auto; }
+#facebook-auto ul li { padding: 5px 12px; z-index: 1000; cursor: pointer; margin: 0; list-style-type: none; border: 1px solid #ccc; border-width: 0 1px 1px; font: 11px "Lucida Grande", "Verdana"; }
+#facebook-auto ul li em { font-weight: bold; font-style: normal; background: #ccc; }
+#facebook-auto ul li.auto-focus { background: #3d3d3d; color: #fff; }
+#facebook-auto ul li.auto-focus em { background: none; }
+
+#demo ul.holder li.bit-input input { padding: 2px 0 1px; border: 1px solid #999; }
+#add a { color: #666; }
+#add-test { width: 100px; padding: 2px; }
