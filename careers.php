@@ -82,11 +82,11 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 	}
 	else if (mysql_num_rows($result) == 0)
 	{
-		$message = "<ul id='messages_noborder'><li>Your company has yet to post any job opportunities.<br> <div id='edit_profile'><a href='career.php'>Add Career</a></div></li></ul>";
+		$message = "<ul id='messages_noborder'><li>Your company has yet to post any job opportunities.<br> <div id='edit_profile'><a href='career.php'>Add Job</a></div></li></ul>";
 	}
 	else
 	{
-		$message = "<span class='job_title_font'>&nbsp;<a href='career.php'>Add Career</a></span><ul id='company_job_entries'>";
+		$message = "<span class='job_title_font'>&nbsp;<a class='header_font' href='career.php'>Add Job</a></span><ul id='company_job_entries'>";
 		$job_num = 0;
 		while ($job =  mysql_fetch_assoc($result))
 		{

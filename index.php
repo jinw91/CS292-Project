@@ -108,10 +108,8 @@ width="100px" name="password">
 	</div>
 </header>
 <div id="slides">
-	<div>
-		<div align="center">
-        <a href="index.php"><img src="site_im/p_a_logo.png" alt=""></a>
-        </div>
+	<div class="slides_container">
+		<div class=""><a href="index.php"><img src="site_im/p_a_logo.png" alt=""></a></div>
 	</div>
 </div>
 <!-- content -->

@@ -142,7 +142,7 @@ $(function(){
 	<div class="container_12">
 		<div class="wrapper">
 		  <div class="grid_10">
-            <h1 id='edit_title'>Edit Career Opening:</h1>
+            <h1 id='edit_title'>Edit Job Opening:</h1>
             <form id="careers" action="career.php" method="post">
             <?=$error?><?=$message?><br>
             <ul id="education">

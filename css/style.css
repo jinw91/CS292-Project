@@ -189,6 +189,18 @@ footer h1{ padding:42px 0 12px 0;}
 	#form-1 input{  width:273px;}
 	.map iframe {width:420px; height:200px;}}
 /* Site specifications */
+a.black:link, a.black:visited
+{
+	color: black;
+}
+a.header_font:link, a.header_font:visited
+{
+	color: black;
+	font-family: 'Lato', Arial, Helvetica; 
+	text-transform: uppercase;
+}
+
+/* Profiles */
 #prof_cat li
 {
 	display: inline;
@@ -273,17 +285,6 @@ Company Profile
 	text-decoration: underline;
 	border: 2px 2px 0 2px solid black;
 }
-
-/**
-Messages.
-**/
-#messages li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2; list-style-type:none;} 
-#messages li a:link, #messages a:visited {text-decoration:none; }
-
-#messages_noborder li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; list-style-type:none;} 
-
-#messages_short li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2;} 
-#messages_short li a:link, #messages_short a:visited {text-decoration:none; }
 
 /**
 Careers.
@@ -466,4 +467,20 @@ label.inbox
 	width: 180px;
 }
 #meslist li {display: block; height:4.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2; list-style-type:none;} 
-#meslist li a:link, #messages a:visited {text-decoration:none; }
+#meslist li a:link, #messages a:visited {text-decoration:none; color: gray; }
+
+a.mes_name:link, a.mes_name:visited
+{
+	margin-top:0px;
+	padding-top: 0px;
+	color: gray;
+	font-size:8px;
+}
+
+#messages li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2; list-style-type:none;} 
+#messages li a:link, #messages a:visited {text-decoration:none; }
+
+#messages_noborder li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; list-style-type:none;} 
+
+#messages_short li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2;} 
+#messages_short li a:link, #messages_short a:visited {text-decoration:none; }

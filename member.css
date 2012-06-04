@@ -348,3 +348,8 @@ Edit layout.
 	margin-left:105px;
 	color:#333;
 }
+
+a.name:link, a.name:visited
+{
+	color: green;
+}

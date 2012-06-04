@@ -162,7 +162,7 @@ else
 		$message = "<ul id='messages'><li><div align='center'>No messages</div></li>";
 		if (isset($_GET['limit']))
 		{
-			$message .= "<span style='float: left; position: absolute;'><a href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
+			$message .= "<span style='float: left; position: absolute;'><a class='black' href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
 		}
 		$message .= "</ul>";
 	}
@@ -175,9 +175,9 @@ else
 			{
 				$mes['picture'] = "images/default.png";
 			}
-			$message = $message."<li><div style='height:40px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br>";
+			$message = $message."<li><div style='height:40px;width:40px;float:left'><img style='margin-bottom: 0px; padding-bottom: 0px;' src='".$mes['picture']."' width='35' height='35'/><br>";
 			$from_name = $mes['first_name']." ".$mes['last_name'];
-			$message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>";
+			$message = $message."<a class='mes_name' href='profile.php?idnum=".$mes['from_id']."'>";
 			if (strlen($from_name) <= 11) {
 				$message = $message.$from_name."</a></div>";
 			} else {
@@ -207,10 +207,10 @@ else
 		$message .= "<div class='paginator'>";
 		if ($limit != 0)
 		{
-			$message .= "<span style='float: left; position: absolute;'><a href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
+			$message .= "<span style='float: left; position: absolute;'><a class='black' href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
 		}
 		
-		$message .= "<span style='float: right; position: relative;'><a href='inbox.php?limit=".($limit+10)."'>Next</a></span></div>";
+		$message .= "<span style='float: right; position: relative;'><a class='black' href='inbox.php?limit=".($limit+10)."'>Next</a></span></div>";
 		$message .= "</ul>";
 	}
 }
@@ -278,9 +278,9 @@ mysql_close();
 <div class="grid_4">
 <?php
 if (isset($_GET['write']) or isset($_GET['mid'])) {
-        echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php">Back to Inbox</a></h2></div>';
+        echo "<div align='center'><h2><a class='header_font' href='inbox.php'>Back to Inbox</a></h2></div>";
 } else {
-        echo '<div align="center"><h2 style="font-family: \'Lato\', Arial, Helvetica; text-transform: uppercase;"><a href="inbox.php?write=true">Compose Message</a></h2></div>';
+        echo "<div align='center'><h2><a class='header_font' href='inbox.php?write=true'>Compose Message</a></h2></div>";
 }
 ?>
 </div>

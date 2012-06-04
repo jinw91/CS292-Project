@@ -269,7 +269,7 @@ mysql_close();
             </ul>
             </form>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-                <a href='search.php'>Search For Candidates: </a>
+                <a class='header_font' href='search.php'>Search For Candidates: </a>
                 </div>
             <?=$side_groups?>
             </div>
