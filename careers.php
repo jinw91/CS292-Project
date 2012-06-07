@@ -100,7 +100,7 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
 			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidecandidates".$job_num."' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
-				<ul class='slidedown' id='candidates".$job_num."'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b></a></li></ul>
+				<ul class='slidedown' id='candidates".$job_num."'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Top Candidates</b></a></li></ul>
 			</ul><script>
 				var togglejob".$job_num." = false;
 				var togglecandidates".$job_num." = false;
