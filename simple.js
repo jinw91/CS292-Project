@@ -240,6 +240,14 @@ function hideExtraEndTime(box) {
 	document.getElementById("extra_month_end_id").style.visibility = vis;
 	document.getElementById("extra_year_end_id").style.visibility = vis;
 }
+
+function select_all(selected) {
+	selected = (!selected);
+	for (var i = 0; i < document.getElementById("candidate_list").elements.length; i ++) {
+		document.getElementById("candidate_list").elements[i].checked = selected;
+	}
+	return selected;
+}
 /**
 Generic Profile.
 **/
