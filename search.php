@@ -133,7 +133,11 @@ if ($_POST['search'] == "Search")
 	
 	$message = showQueryResults($query);
 }
-mysql_close();
+else if (isset($_GET['jid']))
+{
+	showSavedSearches($_GET['jid']);
+	$message = showQueryResults($query);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
