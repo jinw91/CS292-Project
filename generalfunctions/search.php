@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+function showSavedSearches($jid)
+{
+	$query = sprintf("SELECT * FROM c_top_%d WHERE jid='%d'", $_SESSION['company']['b_id'], $jid);
+}
+
 function showQueryResults($query)
 {
 	define('__ROOT__', dirname(__FILE__)); 
@@ -7,6 +13,7 @@ function showQueryResults($query)
 	require_once('template.php');
 	$connect = connectToDatabase();
 	$result = mysql_query($query);
+	mysql_close();
 	if (!$result)
 	{
 		$message = $query." ".mysql_error();
