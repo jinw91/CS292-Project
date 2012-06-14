@@ -19,6 +19,12 @@ else
 {
 	$education = mysql_fetch_assoc($result);
 }
+$query = "SELECT * FROM education_general";
+$result = mysql_query($query);
+$college_list = "";
+while ($college = mysql_fetch_assoc($result)) {
+	$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
+}
 $month_start = substr($education['college_start'], 5, 2);
 $year_start = substr($education['college_start'], 0, 4);
 $month_end = substr($education['college_end'], 5, 2);
@@ -147,15 +153,8 @@ $(function(){
               <ul id='education'>
                 <li><label class='field' for='college'>College Name: </label>
                 <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>
-                    <option value='Vanderbilt University'>Vanderbilt University</option>
-					<option value='Duke University'>Duke University</option>
-                    <option value='Northwestern University'>Northwestern University</option>
-                 	<option value='University of Chicago'>University of Chicago</option>
-                    <option value='University of Notre Dame'>University of Notre Dame</option>
-                    <option value='University of North Carolina'>University of North Carolina</option>
-                    <option value='University of Virginia'>University of Virginia</option>
-                    <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
-                    <option value='other'>Other</option>		
+		<?=$college_list?>
+		<option value='other'>Other</option>		
                 </select></li>
                 <li id="school"></li>
                 <li><label class='field' for='college'>Title: </label>
