@@ -66,6 +66,13 @@ if ($_POST['submit'] == "Register Now")
 	{
 		//header("Location: index.php");
 	}
+	$query = "SELECT * FROM education_general";
+	$result = mysql_query($query);
+	$college_list = "";
+	while ($college = mysql_fetch_assoc($result)) {
+		$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
+	}
+
 	$form_info = sprintf("<img src='site_im/one-thirds.png'>
 			  <p><h2>Here's how it will appear:</h2></p>
               <img src='site_im/sample_education.png'>
@@ -73,15 +80,7 @@ if ($_POST['submit'] == "Register Now")
               <form action='register.php' method='post' onSubmit='return validate_education();'>
               <ul id='education'>
                 <li><label class='field' for='college'>College Name: </label>
-                <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>
-                   	<option value='Vanderbilt University'>Vanderbilt University</option>
-					<option value='Duke University'>Duke University</option>
-                    <option value='Northwestern University'>Northwestern University</option>
-                 	<option value='University of Chicago'>University of Chicago</option>
-                    <option value='University of Notre Dame'>University of Notre Dame</option>
-                    <option value='University of North Carolina'>University of North Carolina</option>
-                    <option value='University of Virginia'>University of Virginia</option>
-                    <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                <select id='college' name='college' size=1 style='width: 300px;' onchange='addothercollege();'>".$college_list."
                     <option value='other'>Other</option>		
                 </select></li>
                 <li id='school'></li>
