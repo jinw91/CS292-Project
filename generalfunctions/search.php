@@ -6,7 +6,7 @@ function showSavedSearches($jid)
 	$query = sprintf("SELECT * FROM c_top_%d WHERE jid='%d'", $_SESSION['company']['b_id'], $jid);
 }
 
-function showQueryResults($query)
+function showQueryResults($query, $jid)
 {
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once('database.php');
@@ -30,8 +30,11 @@ function showQueryResults($query)
 			}
 			$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
 			$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum']."'/></span>";
-			$message = $message."<a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/add_user_to.jpg' width='30' height='30' /></a>";
-			$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/resume_icon.jpg' width='30' height='30' /></a>";
+			if ($jid > 0)
+			{
+				$message = $message."<a href='generalfunctions/message_template.php?top=true&to_id=".$mes['idnum']."&jid=".$jid."'><img style='float:right; margin-right:4px' src='site_im/add_user_to.jpg' width='30' height='30' /></a>";
+			}
+			$message = $message."<a href='cprofile.php?idnum=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/resume_icon.jpg' width='30' height='30' /></a>";
 			$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 			$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>"; //adds name.
 		}

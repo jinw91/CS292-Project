@@ -3,7 +3,6 @@ session_start();
 
 define('__ROOT__', dirname(__FILE__));
 require_once('database.php');
-$tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
 {
@@ -35,32 +34,45 @@ if ($_GET['messagetype'] == 'phone') {
 	$_SESSION['time_edit'] = false;
 }
 
-if (isset($_GET['multiple'])) {
+if (isset($_GET['multiple'])) 
+{
 	$tmp = $_SESSION['to_id'];
-	for ($i=0; $i<count($tmp); $i++) {
+	for ($i=0; $i<count($tmp); $i++) 
+	{
 		$query = sprintf("SELECT * FROM users WHERE idnum='%d'", $tmp[$i]);
 		$result = mysql_query($query);
-	        if (!$result)
+	    if (!$result)
 		{
 			echo mysql_error();
 		}
-        	$mes = mysql_fetch_assoc($result);
+       	$mes = mysql_fetch_assoc($result);
 		$to_name[] = $mes['first_name']." ".$mes['last_name'];
 	}
 	$_SESSION['to'] = $to_name;
 	$url = $url."&multiple=true";
-} else if (isset($_GET['single'])) {
+} 
+else if (isset($_GET['single'])) 
+{
 	$_SESSION['to_id'] = $_GET['to_id'];
 	$query = sprintf("SELECT * FROM users WHERE idnum='%d'", $_GET['to_id']);
 	$result = mysql_query($query);
-        if (!$result)
+    if (!$result)
 	{
 		echo mysql_error();
 	}
-       	$mes = mysql_fetch_assoc($result);
+    $mes = mysql_fetch_assoc($result);
 	$to_name = $mes['first_name']." ".$mes['last_name'];
 	$_SESSION['to'] = $to_name;
 	$url = $url."&single=true";
+}
+else if (isset($_GET['top']))
+{
+	$to_id = $_GET['to_id'];
+	$jid = $_GET['jid'];
+	$query = sprintf("INSERT INTO c_top_%d (idnum, jid) VALUES ('%d', '%d')", $_SESSION['company']['b_id'], $to_id, $jid);
+	$result = mysql_query($query);
+	// TODO: display message regarding adding the user.
+	$url = "search.php";
 }
 header("Location: ".$url);
 ?>

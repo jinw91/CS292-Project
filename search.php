@@ -131,12 +131,12 @@ if ($_POST['search'] == "Search")
 		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
 	}
 	
-	$message = showQueryResults($query);
+	$message = showQueryResults($query, 0);
 }
 else if (isset($_GET['jid']))
 {
 	showSavedSearches($_GET['jid']);
-	$message = showQueryResults($query);
+	$message = showQueryResults($query, $_GET['jid']);
 }
 ?>
 <!DOCTYPE html>
