@@ -188,7 +188,7 @@ else if (mysql_num_rows($result) > 0)
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
-		$message = $message."<a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/resume_icon.jpg' width='30' height='30' /></a>";
+		$message = $message."<a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
 	$message = $message."<script>var selected=false;</script>";
@@ -261,14 +261,14 @@ mysql_close();
             <label for="careers">Search Applicants: </label>
             </div>
             <? echo searchNoVar();?>
-            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
             <label for="group">Job(s): </label>
             </div>
-            <?=$jobs?><br>
-            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+            <?//=$jobs?><br>
+            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
             <label for="group">Priorities: </label>
             </div>
-            <?=$priorities?>
+            <?//=$priorities?>
             <input type="submit" name="search" value="Search"/>
             </ul>
             </form>

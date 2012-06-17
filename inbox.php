@@ -236,6 +236,7 @@ mysql_close();
 <script src="js/prototype/prototype.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/prototype/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/facebooklist.js" type="text/javascript" charset="utf-8"></script>
+<script src="simple.js"></script>
 </head>
 <body>
 <!-- header -->

@@ -8,7 +8,52 @@ define('__ROOT__', dirname(__FILE__));
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/profile_functions.php');
 require_once(__ROOT__.'/generalfunctions/business_profile.php');
+$connect = connectToDatabase();
+if (!$connect)
+{
+	echo "failed to connect";
+}
 
+$query = sprintf("SELECT * FROM privacy WHERE idnum='%d'", $_SESSION['idnum']);
+$result = mysql_query($query);
+$mes = mysql_fetch_assoc($result);
+$notification = $mes['notification'];
+$gpa = $mes['gpa'];
+
+if (isset($_POST['save'])) {
+	switch($_POST['notification']) {
+		case "Email & Text":
+			$notification = "ET";
+			break;
+		case "Direct Emailing":
+			$notification = "DE";
+			break;
+		case "Phone Message":
+			$notification = "PM";
+			break;
+		case "No notifications":
+			$notification = "NN";
+			break;
+	}
+	switch($_POST['gpa']) {
+		case "Yes":
+			$gpa = 1;
+			break;
+		case "No":
+			$gpa = 0;
+			break;
+	}
+	$query = sprintf("DELETE FROM privacy WHERE idnum='%d'", $_SESSION['idnum']);
+	$result = mysql_query($query);
+	$query = sprintf("INSERT INTO privacy (idnum, notification, gpa) VALUES ('%d', '%s', '%d')", $_SESSION['idnum'], $notification, $gpa);
+	$result = mysql_query($query);
+	if ($result) {
+		$message = "Settings saved.";
+	}
+	else {
+		$message = mysql_error();
+	}
+}
 
 ?>
 <!DOCTYPE html>
@@ -61,27 +106,25 @@ require_once(__ROOT__.'/generalfunctions/business_profile.php');
                     <fieldset>
                     <?=$error?>
                     <div class="message">
-    				<form action='basic_info.php' method='post'>
+    				<form action='privacysettings.php' method='post'>
               		<?=$error?><?=$message?><br>
               		<ul id='education'>
-                	<li><label class="field">Send Message Notifications via: </label><select name="emailoption" value="<?=$user_info['emailoption']?>">
-                    <option>Email & Text</option>
-                    <option>Direct Emailing</option>
-                    <option>Phone Message</option>
-                    <option>No notifications</option>
+                	<li><label class="field">Send Message Notifications via: </label><select name="notification" >
+                    <option <?echo($notification=="ET"?"selected=\"selected\"":"");?>>Email & Text</option>
+                    <option <?echo($notification=="DE"?"selected=\"selected\"":"");?>>Direct Emailing</option>
+                    <option <?echo($notification=="PM"?"selected=\"selected\"":"");?>>Phone Message</option>
+                    <option <?echo($notification=="NN"?"selected=\"selected\"":"");?>>No notifications</option>
                     </select></li>
                 	<li id="school"></li>
-                	<li><label class='field'>Hide GPA: </label><select name='gpa' ><option>No</option><option>Yes</option></select>
+                	<li><label class='field'>Hide GPA: </label><select name='gpa' ><option <?echo(!$gpa?"selected=\"selected\"":"");?>>No</option><option <?echo($gpa?"selected=\"selected\"":"");?>>Yes</option></select>
 					<label class='subscript'>GPA is currently hidden for those who are below the school average.</label></li><br>
             		<!--<li><label class='field'>Technical Skills: </label><textarea name='skills' rows='2'><?=$user_info['skills']?></textarea>
             		<label class='subscript'>Example: Microsoft Excel, HTML</label></li>-->
             		<br>
             		<li>
-            		<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
-            		<input type='submit' name='skip' value='Skip' /></span></li>
+            		<span style='margin-left: 300px;'><input type='submit' name='save' value='Save' /></span></li>
             		</ul>
         			</form>
-					<?=$message?>
                     </div>
                     </fieldset>
             </div>
