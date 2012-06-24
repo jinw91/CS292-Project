@@ -72,7 +72,7 @@ else if (isset($_GET['top']))
 	$query = sprintf("INSERT INTO c_top_%d (idnum, jid) VALUES ('%d', '%d')", $_SESSION['company']['b_id'], $to_id, $jid);
 	$result = mysql_query($query);
 	// TODO: display message regarding adding the user.
-	$url = "search.php";
+	$url = "../search.php?saved_search=true&jid=".$jid;
 }
 header("Location: ".$url);
 ?>

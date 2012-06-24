@@ -32,7 +32,7 @@ if (isset($_SESSION['idnum']))
 			{
 				$_SESSION['education'] = mysql_fetch_assoc($result);
 			}
-			$query = sprintf("SELECT * FROM businesses WHERE creator=%d", $_SESSION['idnum']);
+			$query = sprintf("SELECT b_id, company_name, sector, description, city, state, picture, founded FROM business_structure bs, businesses b WHERE idnum=%d AND bs.b_id=b.b_id", $_SESSION['idnum']);
 			$result = mysql_query($query);
 			if ($result && mysql_num_rows($result) > 0)
 			{

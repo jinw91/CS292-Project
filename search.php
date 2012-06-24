@@ -44,15 +44,15 @@ if (isset($_POST['offer']))
 
 
 
-if ($_POST['search'] == "Search")
+if ($_POST['search'] == "Search" || isset($_GET['saved_search']))
 {
-	$archives = $_POST['name'];
-	$major = $_POST['major'];
-	$either = $_POST['either'];
-	$college = $_POST['college'];
-	$gpa = $_POST['gpa'];
-	$work_experience = $_POST['work_experience'];
-	$skills = $_POST['skills'];
+	$archives = $_SESSION['search']['name'] = $_POST['name'];
+	$major = $_SESSION['search']['major'] = $_POST['major'];
+	$either = $_SESSION['search']['either'] = $_POST['either'];
+	$college = $_SESSION['search']['college'] = $_POST['college'];
+	$gpa = $_SESSION['search']['gpa'] = $_POST['gpa'];
+	$work_experience = $_SESSION['search']['work_experience'] = $_POST['work_experience'];
+	$skills = $_SESSION['search']['skills'] = $_POST['skills'];
 	
 	
 	
@@ -72,7 +72,7 @@ if ($_POST['search'] == "Search")
 	}
 	else //either first or last name entered.
 	{
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%'");
+		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM (SELECT * FROM users WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%') u, education_data ed WHERE u.idnum=ed.idnum");
 	}
 	
 	$add = "";
@@ -130,13 +130,28 @@ if ($_POST['search'] == "Search")
 		$query = "SELECT * FROM (".$query;
 		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
 	}
-	
-	$message = showQueryResults($query, 0);
 }
-else if (isset($_GET['jid']))
+//Checks when to clear search requirements
+else if (!isset($_GET['jid']) && !isset($_GET['saved_search']))
 {
+	unset($_SESSION['search']['name'],$_SESSION['search']['major'], $_SESSION['search']['either'], $_SESSION['search']['college'], $_SESSION['search']['gpa'], $_SESSION['search']['work_experience'], $_SESSION['search']['skills'], $_SESSION['search']['jid']);
+}
+
+//Checks whether to add jid or not.
+if (isset($_GET['jid']))
+{
+	$_SESSION['search']['jid'] = $_GET['jid'];
 	showSavedSearches($_GET['jid']);
 	$message = showQueryResults($query, $_GET['jid']);
+}
+else if (isset($_SESSION['search']['jid']))
+{
+	showSavedSearches($_SESSION['search']['jid']);
+	$message = showQueryResults($query, $_GET['jid']);
+}
+else
+{
+	$message = showQueryResults($query, 0);
 }
 ?>
 <!DOCTYPE html>
@@ -188,24 +203,19 @@ else if (isset($_GET['jid']))
 </header>
 </div>
 <div class="container_12">
-	<!--<div class="wrapper">
-		<div class="grid_12">
-			<div class="text1"><?=$p_name?></div>
-		</div>
-	</div>-->
 </div>
 <!-- content -->
 <section id="content">  
 	<div class="container_12">
     <div class="wrapper border_bottom">
         	<div class="grid_4">
-                <form action="search.php" method="post">
+                <form action='search.php' method='post'>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
                 <label for="careers">Search Candidates: </label>
                 </div>
                 <ul id="search">
                 <li><label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" value="<?=$archives?>"/></li>
+                <input name="name" size="25" value="<?=$_SESSION['search']['name']?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
 		<option selected="selected">All</Option>
@@ -230,16 +240,16 @@ else if (isset($_GET['jid']))
                 </select>
                 </li>
                 <li><label for="gpa" style="float: left;">Minimum GPA: </label>
-                <input name="gpa" size="25" value="<?=$gpa?>" /></li>
+                <input name="gpa" size="25" value="<?=$_SESSION['search']['gpa']?>" /></li>
                 <li><label for="work_experience" style="float: left;">Work Experience: </label>
-                <input name="work_experience" size="10" style="width: 150px;" value="<?=$work_experience?>"/> Years</li>
-                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$skills?>"></li>
+                <input name="work_experience" size="10" style="width: 150px;" value="<?=$_SESSION['search']['work_experience']?>"/> Years</li>
+                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$_SESSION['search']['skills']?>"></li>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="submit" name="search" value="Search"/>
                 </ul>
                 </form>
                 <script>
-				selectDefault('major', '<?=$major?>');
+				selectDefault('major', '<?=$_SESSION['search']['major']?>');
 				<?=$array?>
 				</script>
             </div>
