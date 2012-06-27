@@ -226,28 +226,18 @@ function validate_extra()
 	return true;
 }
 
-function hideWorkEndTime(box) {
-	var vis = (box.checked) ? "hidden" : "visible";
-	document.getElementById("work_dash_id").style.visibility = vis;
-	document.getElementById("work_month_end_id").style.visibility = vis;
-	document.getElementById("work_year_end_id").style.visibility = vis;
+function hideIfPresent() {
+	$(".hide_if_present").toggle();
 }
 
-
-function hideExtraEndTime(box) {
-	var vis = (box.checked) ? "hidden" : "visible";
-	document.getElementById("extra_dash_id").style.visibility = vis;
-	document.getElementById("extra_month_end_id").style.visibility = vis;
-	document.getElementById("extra_year_end_id").style.visibility = vis;
+function select_all() {
+    $(".candidate_checkbox").attr("checked", $("#selectall").prop("checked"));
 }
 
-function select_all(selected) {
-	selected = (!selected);
-	for (var i = 0; i < document.getElementById("candidate_list").elements.length; i ++) {
-		document.getElementById("candidate_list").elements[i].checked = selected;
-	}
-	return selected;
+function select_one() {
+    $("#selectall").attr("checked", $(".candidate_checkbox:checked").length == $(".candidate_checkbox").length);
 }
+
 /**
 Generic Profile.
 **/
