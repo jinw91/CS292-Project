@@ -10,6 +10,18 @@ if (!$connect)
 {
 	echo "failed to connect";
 }
+$query = "SELECT * FROM education_general";
+$result = mysql_query($query);
+$college_list = "";
+while ($college = mysql_fetch_assoc($result)) {
+	$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
+}
+$query = "SELECT * FROM majors";
+$result = mysql_query($query);
+$major_list = "";
+while ($major = mysql_fetch_assoc($result)) {
+	$major_list = $major_list."<option value='".$major['major']."'>".$major['major']."</option>";
+}
 if (isset($_POST['offer']))
 {
         $select = $_POST['select'];
@@ -218,25 +230,13 @@ else
                 <input name="name" size="25" value="<?=$_SESSION['search']['name']?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
-		<option selected="selected">All</Option>
-                <option>Biomedical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Economics</option>
-                <option>Human Organizational Development</option>
-                <option>Mechanical Engineering</option>
+                <option selected="selected">All</Option>
+                <?=$major_list?>
                 </select></li>
                 <li><label for="college[]" style="float: left;">School: </label>
                 <select id="college" name="college[]" multiple="multiple" size="1">
-                <option value='Vanderbilt University'>Vanderbilt University</option>
-                <option value='Duke University'>Duke University</option>
-                <option value='Northwestern University'>Northwestern University</option>
-                <option value='University of Chicago'>University of Chicago</option>
-                <option value='University of Notre Dame'>University of Notre Dame</option>
-                <option value='University of North Carolina'>University of North Carolina</option>
-                <option value='University of Virginia'>University of Virginia</option>
-                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                <?=$college_list?>
+                <option value='other'>Other</option>		
                 </select>
                 </li>
                 <li><label for="gpa" style="float: left;">Minimum GPA: </label>

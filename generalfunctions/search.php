@@ -29,7 +29,7 @@ function showQueryResults($query, $jid)
 				$mes['picture'] = "images/default.png";
 			}
 			$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."' target='_BLANK'>".$mes['first_name']." ".$mes['last_name']."</a>";
-			$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' value='".$mes['idnum']."'/></span>";
+			$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' class='candidate_checkbox' onclick='select_one()' value='".$mes['idnum']."'/></span>";
 			if ($jid > 0)
 			{
 				$message = $message."<a href='generalfunctions/message_template.php?top=true&to_id=".$mes['idnum']."&jid=".$jid."'><img style='float:right; margin-right:4px' src='site_im/add_user_to.jpg' width='30' height='30' /></a>";
@@ -38,6 +38,7 @@ function showQueryResults($query, $jid)
 			$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 			$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>"; //adds name.
 		}
+        $message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='select_all();'/></span></li>";
 		$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
 	}
 	
