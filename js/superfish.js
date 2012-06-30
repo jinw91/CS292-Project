@@ -120,5 +120,5 @@
 })(jQuery);
 /*---------------------*/
 $(function(){
-	$('.sf-menu').superfish()
+	jQuery('.sf-menu').superfish()
 })

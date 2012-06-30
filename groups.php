@@ -240,7 +240,7 @@ if (!$result)
 else if (mysql_num_rows($result) > 0)
 {
 	$lastjid = "";
-	$message = "<ul id='messages'><form id='candidate_list' action='groups.php' method='POST'>";
+	$message = $message."<ul id='messages'><form action='groups.php' method='POST'>";
 	$first_test = false;
 	while ($mes = mysql_fetch_assoc($result))
 	{
@@ -259,15 +259,14 @@ else if (mysql_num_rows($result) > 0)
 			$mes['picture'] = "images/default.png";
 		}
 		$message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
-		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' class='checkboxes' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
+		$message = $message."<span style='float: right;'><input type='checkbox' name='select[]' class='candidate_checkbox' onclick='select_one();' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
 	}
-	$message = $message."<script>var selected=false;</script>";
-	$message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='selected=select_all(selected);'/></span></li>";
+	$message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='select_all();'/></span></li>";
 	$message .= "<div align='right'><select name='jid'>";
 	$message .= $job_dropdown;
 	$message .= "</select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form></ul>"; //add option to pick job.

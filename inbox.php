@@ -104,7 +104,8 @@ else if (isset($_GET['write']))
 		$mes_sub = $_SESSION['subject'];
 		$mes_body = $_SESSION['body'];
 		if ($_SESSION['time_edit']) {
-			$time = "<li><label class='inbox' for='time'>Time of Interview: </label><input type='text' name='time' value='Sep. 1 at 9:00AM'/></li>";
+			$date = "<li><label class='inbox' for='time'>Date: </label><input type='text' id='date_field' size='35'/></li>";
+			$time = "<li><label class='inbox' for='time'>Time: </label><input type='text' id='time_field' size='5'/></li>";
 		}
 	} else {
 		unset($mes_to);
@@ -112,7 +113,7 @@ else if (isset($_GET['write']))
 		unset($mes_body);
 	}
 	$message = "<form action='inbox.php' method='post'>
-	<ul id='education'>
+	<ul id='inbox'>
 	<li><label class='inbox' for='to_name'>To: </label>
 	<ol><li id='facebook-list' class='input-text'><input type='text' name='to_name' id='facebook-demo' style='width:450px'/>
 	<div id='facebook-auto'>
@@ -127,7 +128,11 @@ else if (isset($_GET['write']))
 	}
 	$message = $message."</ul></div></li></ol></li>
 	<li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
-	<li><label class='inbox' for='body'>Body: </label><textarea name='body' rows='10' style='width:450px'>".$mes_body."</textarea></li>".$time."
+	<li><label class='inbox' for='body'>Body: </label><textarea name='body' rows='10' style='width:450px' style='position:absolute;z-index:0'>".$mes_body."</textarea></li>".$date.$time."
+    <script>
+    AnyTime.picker(\"date_field\",{format:\"%W, %M %D %z\",placement:\"popup\",earliest:new Date()});
+    AnyTime.picker(\"time_field\",{format:\"%H:%i\",placement:\"popup\"});
+    </script>
 	<li><span style='margin-left: 58px;'><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
 	<li><input type='text' name='hidden_to_id' id='hidden_to_id' style='display:none;' /></li></ul></form>";
 	$query = sprintf("SELECT first_name, last_name, idnum FROM users");
@@ -280,6 +285,7 @@ mysql_close();
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/anytime.css">
 <link rel="stylesheet" href="css/test.css" type="text/css" media="screen" title="Test Stylesheet" charset="utf-8" />
 <script src="js/jquery-1.7.1.min.js"></script>
 <script src="js/superfish.js"></script>
@@ -291,7 +297,8 @@ mysql_close();
 <script src="js/prototype/prototype.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/prototype/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/facebooklist.js" type="text/javascript" charset="utf-8"></script>
-<script src="simple.js"></script>
+<script src="js/anytime.js" type="text/javascript" charset="utf-8"></script>
+<script src="simple.js" type="text/javascript" ></script>
 </head>
 <body>
 <!-- header -->

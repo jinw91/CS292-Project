@@ -200,15 +200,15 @@ $(function(){
 					months();
 					document.write("<select name=\"extra_year_start\">");
 					years(<?=$year_start?>);
-					document.write("<label id=\"extra_dash_id\"> - </label>");
-					document.write("<select id=\"extra_month_end_id\" name=\"extra_month_end\">");
+					document.write("<label class=\"hide_if_present\"> - </label>");
+					document.write("<select class=\"hide_if_present\" name=\"extra_month_end\">");
 					months();
-					document.write("<select id=\"extra_year_end_id\" name=\"extra_year_end\">");
+					document.write("<select class=\"hide_if_present\" name=\"extra_year_end\">");
 					years(<?=$year_end?>);
 					selectMonth("extra_month_start", "<?=$month_start?>");
 					selectMonth("extra_month_end", "<?=$month_end?>");
                     </script><br>
-					<label class='subscript'>Currently Involved: </label><input onclick="hideExtraEndTime(this)" type="checkbox" name="present" value="1" <?=$c_employed?> />
+					<label class='subscript'>Currently Involved: </label><input onclick='hideIfPresent()' type="checkbox" name="present" value="1" <?=$c_employed?> />
                 </li>
                 <li>
                 <label class='field'>Achievement(s): </label><textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea>
