@@ -40,6 +40,13 @@ if ($_POST['send'] == "Send")
 		$subject = $_POST['subject'];
 	}
 	$body = $_POST['body'];
+	if (isset($_SESSION['company']['b_id']))
+	{
+		for ($i = 0; $i < count($to_id); $i ++) 
+		{
+			$query = sprintf("INSERT INTO requests (subject, body, from_bid, to_id, time_sent) VALUES ('$subject', '$body', '%d', '%d', NOW( ))", $_SESSION['company']['b_id'], $to_id[$i]);
+		}
+	}
 	for ($i = 0; $i < count($to_id); $i ++) {
 		$query = sprintf("INSERT INTO personnel_email (subject, body, from_id, to_id, time_sent) VALUES ('$subject', '$body', '%d', '%d', NOW( ))", $_SESSION['idnum'], $to_id[$i]);
 		$result = mysql_query($query);
@@ -109,7 +116,7 @@ else if (isset($_GET['write']))
 	<li><label class='inbox' for='to_name'>To: </label>
 	<ol><li id='facebook-list' class='input-text'><input type='text' name='to_name' id='facebook-demo' style='width:450px'/>
 	<div id='facebook-auto'>
-	<div class='default'>separate user names with a comma</div>
+	<div class='default'>Separate names with a comma</div>
 	<ul class='feed'>";
 	if (isset($_GET['single'])) {
 		$message = $message."<li value='".$_SESSION['to_id']."'>".$mes_to."</li>";
@@ -151,13 +158,62 @@ else
 	{
 		$limit = 0;
 	}
+	//Always displays requests on top of messages.
+	$query = sprintf("SELECT * FROM requests r, users u, businesses b WHERE r.from_bid=b.b_id AND to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
+	$has_messages = false;
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error = $query."".mysql_error();
+	}
+	else
+	{
+		$has_messages = true;
+		$message = "<ul id='meslist'>";
+		while ($mes =  mysql_fetch_assoc($result))
+		{
+			if (is_null($mes['picture']))
+			{
+				$mes['picture'] = "images/default.png";
+			}
+			$message = $message."<li><div style='height:40px;width:40px;float:left'><img style='margin-bottom: 0px; padding-bottom: 0px;' src='".$mes['picture']."' width='35' height='35'/><br>";
+			$from_name = $mes['first_name']." ".$mes['last_name'];
+			$message = $message."<a class='mes_name' href='profile.php?b_id=".$mes['from_bid']."'>";
+			if (strlen($from_name) <= 11) 
+			{
+				$message = $message.$from_name."</a></div>";
+			} 
+			else 
+			{
+				$message = $message.substr($from_name,0,11)."...</a></div>";
+			}
+			if ($mes['subject'] == "") 
+			{
+				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>[untitled]";
+			} 
+			else 
+			{
+				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
+			}
+			if (strlen($mes['body']) <= 80) 
+			{
+				$message = $message."</a><br>".$mes['body']."</li>";
+			} 
+			else 
+			{
+				$message = $message."</a><br>".substr($mes['body'],0,80)."......</li>";
+			}
+		}
+	}
+	
+	
 	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
 	$result = mysql_query($query);
 	if (!$result)
 	{
 		echo mysql_error();
 	}
-	else if (mysql_num_rows($result) == 0)
+	else if (mysql_num_rows($result) == 0 && !$has_messages)
 	{
 		$message = "<ul id='messages'><li><div align='center'>No messages</div></li>";
 		if (isset($_GET['limit']))
@@ -168,7 +224,6 @@ else
 	}
 	else
 	{
-		$message = "<ul id='meslist'>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
 			if (is_null($mes['picture']))
@@ -240,6 +295,7 @@ mysql_close();
 </head>
 <body>
 <!-- header -->
+<?=$error?>
 <header>
 	<div class="top-header">
 		<div class="container_12">

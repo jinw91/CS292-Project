@@ -4,12 +4,9 @@ define('__ROOT__', dirname(__FILE__));
 require_once('generalfunctions/database.php');
 require_once('generalfunctions/template.php');
 require_once('generalfunctions/search.php');
-$tbl_name="users";
 $connect = connectToDatabase();
-if (!$connect)
-{
-	echo "failed to connect";
-}
+
+//If selected an offer.
 if (isset($_POST['offer']))
 {
         $select = $_POST['select'];
@@ -42,9 +39,14 @@ if (isset($_POST['offer']))
 	header("Location: generalfunctions/message_template.php?multiple=true&".$mes);
 }
 
+// Store jid as well.
+if (isset($_GET['jid']))
+{
+	$_SESSION['search']['jid'] = $_GET['jid'];
+}
 
-
-if ($_POST['search'] == "Search" || isset($_GET['saved_search']))
+// If currently searching.
+if ($_POST['search'] == "Search")
 {
 	$archives = $_SESSION['search']['name'] = $_POST['name'];
 	$major = $_SESSION['search']['major'] = $_POST['major'];
@@ -53,7 +55,6 @@ if ($_POST['search'] == "Search" || isset($_GET['saved_search']))
 	$gpa = $_SESSION['search']['gpa'] = $_POST['gpa'];
 	$work_experience = $_SESSION['search']['work_experience'] = $_POST['work_experience'];
 	$skills = $_SESSION['search']['skills'] = $_POST['skills'];
-	
 	
 	
 	/**
@@ -116,7 +117,7 @@ if ($_POST['search'] == "Search" || isset($_GET['saved_search']))
 	}
 	
 	/**
-	Search by skills
+	Search by Skills
 	**/
 	if ($skills != "")
 	{
@@ -131,23 +132,19 @@ if ($_POST['search'] == "Search" || isset($_GET['saved_search']))
 		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
 	}
 }
+
 //Checks when to clear search requirements
-else if (!isset($_GET['jid']) && !isset($_GET['saved_search']))
+else if (isset($_GET['new_search']))
 {
 	unset($_SESSION['search']['name'],$_SESSION['search']['major'], $_SESSION['search']['either'], $_SESSION['search']['college'], $_SESSION['search']['gpa'], $_SESSION['search']['work_experience'], $_SESSION['search']['skills'], $_SESSION['search']['jid']);
 }
 
 //Checks whether to add jid or not.
-if (isset($_GET['jid']))
+if (isset($_SESSION['search']['jid']))
 {
-	$_SESSION['search']['jid'] = $_GET['jid'];
-	showSavedSearches($_GET['jid']);
-	$message = showQueryResults($query, $_GET['jid']);
-}
-else if (isset($_SESSION['search']['jid']))
-{
+	//$error = "jid: ".$_SESSION['search']['jid']." ".$query;
 	showSavedSearches($_SESSION['search']['jid']);
-	$message = showQueryResults($query, $_GET['jid']);
+	$message = showQueryResults($query, $_SESSION['search']['jid']);
 }
 else
 {
@@ -170,7 +167,7 @@ else
 <script src="simple.js"></script>
 </head>
 <body>
-<?//=$error?>
+<?=$error?>
 <!-- header -->
 <header>
 	<div class="top-header">
@@ -245,6 +242,7 @@ else
                 <input name="work_experience" size="10" style="width: 150px;" value="<?=$_SESSION['search']['work_experience']?>"/> Years</li>
                 <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$_SESSION['search']['skills']?>"></li>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
+                <input type="hidden" name="jid" value="<?=$_SESSION['search']['jid']?>">
                 <input type="submit" name="search" value="Search"/>
                 </ul>
                 </form>

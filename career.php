@@ -23,16 +23,17 @@ if ($_POST['add_job'] == "Submit")
 	$state = $_POST['state'];
 	$rate = $_POST['rate'];
 	$description = $_POST['description'];
+	$qualifications = $_POST['qualifications'];
 	$company_name = $_SESSION['company']['company_name'];
 	$b_id = $_SESSION['company']['b_id'];
 	
 	if (trim($_POST['jid']) != "")
 	{
-		$query = sprintf("UPDATE careers SET company_name='$company_name', b_id='$b_id', job_name='$job_name', major='$major', job_description='$description', pay='$pay', rate='$rate', city='$city', state='$state', internship='$internship' WHERE jid=%d", $_POST['jid']);
+		$query = sprintf("UPDATE careers SET company_name='$company_name', b_id='$b_id', job_name='$job_name', major='$major', job_description='$description', qualifications='$qualifications', pay='$pay', rate='$rate', city='$city', state='$state', internship='$internship' WHERE jid=%d", $_POST['jid']);
 	}
 	else
 	{
-		$query = sprintf("INSERT INTO careers (company_name, b_id, job_name, major, job_description, pay, rate, city, state, country, internship) VALUES ('$company_name', '$b_id', '$job_name', '$major', '$description', '$pay', '$rate', '$city', '$state', 'United States', $internship)");
+		$query = sprintf("INSERT INTO careers (company_name, b_id, job_name, major, job_description, qualifications, pay, rate, city, state, country, internship) VALUES ('$company_name', '$b_id', '$job_name', '$major', '$description', '$qualifications', '$pay', '$rate', '$city', '$state', 'United States', $internship)");
 	}
 	$result = mysql_query($query);
 	if (!$result)

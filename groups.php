@@ -3,7 +3,6 @@ session_start();
 
 define('__ROOT__', dirname(__FILE__)); 
 require_once('generalfunctions/database.php');
-$tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
 {
@@ -127,7 +126,7 @@ else if (mysql_num_rows($result) > 0)
 {
 	while ($job = mysql_fetch_assoc($result))
 	{
-		$jobs = $jobs."<li><label for='name' style='float: left;'>".$job['job_name']." </label><input name='jobs[]' type='checkbox'/></li>";
+		$jobs = $jobs."<li><label for='name' style='float: left; width: 200px;'>".$job['job_name']." </label><input name='jobs[]' type='checkbox'/></li>";
 		$job_dropdown .= "<option value='".$job['jid']."'>".$job['job_name']."</option>";
 	}
 }
@@ -140,11 +139,17 @@ if (isset($_GET['jid']))
 {
 	$query .= " AND c.jid=".$_GET['jid'];
 }
-else if ($_POST['applicants']=="Submit")
+
+//Limit based on search.
+if ($_POST['search']=="Search")
 {
-	$name = $_POST['name'];
-	$major = $_POST['major'];
-	$job = $_POST['jobs'];
+	$archives = $_SESSION['groups']['name'] = $_POST['name'];
+	$major = $_SESSION['groups']['major'] = $_POST['major'];
+	$either = $_SESSION['groups']['either'] = $_POST['either'];
+	$college = $_SESSION['groups']['college'] = $_POST['college'];
+	$gpa = $_SESSION['groups']['gpa'] = $_POST['gpa'];
+	$work_experience = $_SESSION['groups']['work_experience'] = $_POST['work_experience'];
+	$skills = $_SESSION['groups']['skills'] = $_POST['skills'];
 	
 	if (isset($job))
 	{
@@ -154,6 +159,76 @@ else if ($_POST['applicants']=="Submit")
 		}
 	}
 	
+	/**
+	Searching by name
+	**/
+	$spaceplace = strpos($archives, " ");
+	if ($spaceplace > 0) // two words
+	{
+		$first_name = substr($archives, 0, strpos($archives, " "));
+		$last_name = substr(strchr($archives, " "), 1);
+		$query .= " AND u.first_name=$first_name AND u.last_name=$last_name";
+	}
+	else //either first or last name entered.
+	{
+		$query = sprintf("SELECT * FROM c_applied_%d c, (SELECT * FROM users WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%') u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
+	}
+	
+	$add = "";
+	/**
+	Searching by Major
+	**/
+	if (isset($major))
+	{
+		/**
+		for ($i = 0; $i < count($major); $i++)
+		{
+			$add .= " AND major LIKE '%%$major[$i]%%'";
+		}
+		**/
+		if ($major!="All")
+		{
+			$add .= " AND ed.major LIKE '%%$major%%'";
+		}
+	}
+	
+	/**
+	Searching by School
+	**/
+	if (isset($college))
+	{
+		$array = "var college_array = new Array();";
+		for ($i = 0; $i < count($college); $i++)
+		{
+			$add .= " AND college LIKE '$college[$i]%%'";
+			$array .= "\ncollege_array[".$i."] = '".$college[$i]."';";
+		}
+		$array .= "\nselectMultipleId('college', college_array);";
+	}
+	
+	/**
+	Search by GPA
+	**/
+	if ($gpa != "")
+	{
+		$add .= " AND gpa >= '$gpa'";
+	}
+	
+	/**
+	Search by Skills
+	**/
+	if ($skills != "")
+	{
+		$add .= " AND skills LIKE '%%$skills%%'";
+	}
+	
+	$query .= $add;
+	
+	if ($work_experience != "")
+	{
+		$query = "SELECT * FROM (".$query;
+		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
+	}
 }
 $query .= " ORDER BY c.jid";
 
@@ -260,18 +335,49 @@ mysql_close();
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
             <label for="careers">Search Applicants: </label>
             </div>
-            <? echo searchNoVar();?>
+            <ul id='search'>
+                <li><label for='name' style='float: left;'>Name: </label>
+                <input name='name' size='25'/></li>
+                <li><label for='major' style='float: left;'>Major: </label>
+                <select id='major' name='major' size='1'>
+				<option>All</option>
+                <option>Biomedical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Computer Science</option>
+                <option>Computer Engineering</option>
+                <option>Economics</option>
+                <option>Human Organizational Development</option>
+                <option>Mechanical Engineering</option>
+                </select></li>
+                <li><label for='college[]' style='float: left;'>School: </label>
+                <select id='college' name='college[]' multiple='multiple' size='1'>
+                <option value='Vanderbilt University'>Vanderbilt University</option>
+                <option value='Duke University'>Duke University</option>
+                <option value='Northwestern University'>Northwestern University</option>
+                <option value='University of Chicago'>University of Chicago</option>
+                <option value='University of Notre Dame'>University of Notre Dame</option>
+                <option value='University of North Carolina'>University of North Carolina</option>
+                <option value='University of Virginia'>University of Virginia</option>
+                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                </select>
+                </li>
+                <li><label for='gpa' style='float: left;'>Minimum GPA: </label>
+                <input name='gpa' size='25' /></li>
+                <li><label for='work_experience' style='float: left;'>Work Experience: </label>
+                <input name='work_experience' size='10' style='width: 150px;' /> Years</li>
+                <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
             <label for="group">Job(s): </label>
             </div>
-            <?//=$jobs?><br>
-            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
+            <?=$jobs?><br>
+            <!--<div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
             <label for="group">Priorities: </label>
             </div>
-            <?//=$priorities?>
+            <?=$priorities?>-->
             <input type="submit" name="search" value="Search"/>
             </ul>
             </form>
+            <br>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
                 <a class='header_font' href='search.php'>Search For Candidates: </a>
                 </div>

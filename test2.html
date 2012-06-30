@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Professional Archives</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/superfish.js"></script>
+<script type="text/javascript" src="js/hoverIntent.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/FF-cash.js"></script>
+<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="simple.js"></script>
+</head>
+<body>
+<!-- header -->
+<header>
+	<div class="top-header">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="fright">
+					<ul class="top-menu">
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<div class="fleft"></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="header-line"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+			
+        <div id='main-menu'>
+				<ul class='sf-menu fright responsive-menu'>
+					<li class='current'><a href='home.php'>home</a></li>
+					<li><a href='profile.php'>profile<span class='arrow'></span></a><ul>
+							<li><a href='business.php'>Edit Business Information</a></li>
+						</ul>
+					</li>
+					<li><a href='inbox.php'>inbox</a></li><li><a href='careers.php'>careers</a></li>
+					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
+							<li><a href='privacysettings.php'>Privacy Settings</a></li>
+							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
+							<li><a href='logout.php'>Log Out</a></li>
+							</ul>
+				</ul>
+			</div>		</div>
+	</div>
+</header>
+</div>
+<div class="container_12">
+</div>
+<!-- content -->
+<section id="content">  
+	<div class="container_12">
+    <div class="wrapper border_bottom">
+        	<div class="grid_4">
+            <form action="groups.php" method="post">
+            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+            <label for="careers">Search Applicants: </label>
+            </div>
+            <ul id='search'>
+                <li><label for='name' style='float: left;'>Name: </label>
+                <input name='name' size='25'/></li>
+                <li><label for='major' style='float: left;'>Major: </label>
+                <select id='major' name='major' size='1'>
+				<option>All</option>
+                <option>Biomedical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Computer Science</option>
+                <option>Computer Engineering</option>
+                <option>Economics</option>
+                <option>Human Organizational Development</option>
+                <option>Mechanical Engineering</option>
+                </select></li>
+                <li><label for='college[]' style='float: left;'>School: </label>
+                <select id='college' name='college[]' multiple='multiple' size='1'>
+                <option value='Vanderbilt University'>Vanderbilt University</option>
+                <option value='Duke University'>Duke University</option>
+                <option value='Northwestern University'>Northwestern University</option>
+                <option value='University of Chicago'>University of Chicago</option>
+                <option value='University of Notre Dame'>University of Notre Dame</option>
+                <option value='University of North Carolina'>University of North Carolina</option>
+                <option value='University of Virginia'>University of Virginia</option>
+                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                </select>
+                </li>
+                <li><label for='gpa' style='float: left;'>Minimum GPA: </label>
+                <input name='gpa' size='25' /></li>
+                <li><label for='work_experience' style='float: left;'>Work Experience: </label>
+                <input name='work_experience' size='10' style='width: 150px;' /> Years</li>
+                <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>
+            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
+            <label for="group">Job(s): </label>
+            </div>
+            <li><label for='name' style='float: left; width: 200px;'>Software Development Co-op </label>
+              <input name='jobs[]' type='checkbox'/>
+            </li>
+            <br>
+            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
+            <label for="group">Priorities: </label>
+            </div>
+                        <input type="submit" name="search" value="Search"/>
+            </ul>
+            </form>
+                <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+                <a class='header_font' href='search.php'>Search For Candidates: </a>
+                </div>
+                        </div>
+            <div class="grid_8">
+                                        <div style="padding-top: 10px; font-size:12px;">
+    				<ul id='messages'><form id='candidate_list' action='groups.php' method='POST'><fieldset><legend><span class='job_title_font'>Software Development Co-op</span></legend><hr /><li><img style='float:left; margin-right:2px' src='/images/5.jpg' width='35' height='35'/><a href='cprofile.php?idnum=5'>Nanhua Jin</a><span style='float: right;'><input type='checkbox' name='select[]' class='checkboxes' value='5.6'/></span><a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=5'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=5'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=5'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=5'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a><br>Computer Science at Vanderbilt University</li><li><img style='float:left; margin-right:2px' src='/images/20.jpg' width='35' height='35'/><a href='cprofile.php?idnum=20'>Collin Grimes</a><span style='float: right;'><input type='checkbox' name='select[]' class='checkboxes' value='20.6'/></span><a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=20'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=20'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=20'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=20'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a><br>Mechanical Engineering at Vanderbilt University</li><li><img style='float:left; margin-right:2px' src='images/default.png' width='35' height='35'/><a href='cprofile.php?idnum=29'>Taylor Zurcher</a><span style='float: right;'><input type='checkbox' name='select[]' class='checkboxes' value='29.6'/></span><a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=29'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=29'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=29'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=29'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a><br>Civil Engineering  at Vanderbilt University</li><li><img style='float:left; margin-right:2px' src='/images/31.jpg' width='35' height='35'/><a href='cprofile.php?idnum=31'>Van Kegel</a><span style='float: right;'><input type='checkbox' name='select[]' class='checkboxes' value='31.6'/></span><a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=31'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=31'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=31'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=31'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a><br>Mechanical Engineering at Vanderbilt University</li><li><img style='float:left; margin-right:2px' src='/images/35.jpg' width='35' height='35'/><a href='cprofile.php?idnum=35'>Drew Hamilton</a><span style='float: right;'><input type='checkbox' name='select[]' class='checkboxes' value='35.6'/></span><a href='generalfunctions/message_template.php?messagetype=interview&single=true&to_id=35'><img style='float:right; margin-right:4px' src='site_im/interviewicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=35'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=35'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a><a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=35'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a><br>Computer engineering at Vanderbilt University</li><script>var selected=false;</script>
+<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='selected=select_all(selected);'/></span></li><div align='right'><select name='jid'><option value='6'>Software Development Co-op</option></select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form></ul>                    </div>
+                    </fieldset>
+            </div>
+        </div>
+	</div>
+</section>
+<!-- footer -->
+<footer>
+	<div class='container_12'>
+		<div class='wrapper z1'>
+		</div>
+		<div class='z2'><div class='grid_center'><div class='copyright'>Professional Archives &copy; 2012 <a href='home.php'>Privacy Policy</a> <a href='home.php?usermode=true'>User Mode</a><br>
+        </div></div><div class='clear'></div></div>
+	</div>
+</footer></body>
+</html>

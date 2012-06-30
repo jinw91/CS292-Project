@@ -351,7 +351,7 @@ Company view
 **/
 function ceducation($id)
 {
-	$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $id);
+	$query = sprintf("SELECT * FROM education_data e, education_general g WHERE idnum=%d AND e.college=g.college", $id);
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -376,7 +376,7 @@ function ceducation($id)
 		{
 			$year = "";
 		}
-		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
+		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>".$education['city'].", ".$education['state']."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
 		$eduhtml = $eduhtml."<span style='float: right; position: relative;'>".$year."</span><br/>"; //on right.
 		if ($education['gpa'] >= 3.0)
@@ -401,7 +401,7 @@ function ceducation($id)
 //Editable company view.
 function ceducation_own($id)
 {
-	$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $id);
+	$query = sprintf("SELECT * FROM education_data e, education_general g WHERE idnum=%d AND e.college=g.college", $id);
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -426,7 +426,7 @@ function ceducation_own($id)
 		{
 			$year = "";
 		}
-		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>Nashville, TN".$location."</span>"; //location not added yet.
+		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>".$education['city'].", ".$education['state']."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
 		$eduhtml = $eduhtml."<span style='float: right; position: relative;'>".$year."</span><br/>"; //on right.
 		if ($education['gpa'] >= 3.0)
