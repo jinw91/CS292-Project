@@ -16,6 +16,13 @@ if (!$connect)
 if ($_GET['submit'] == "Search" || isset($_GET['idnum']))
 {
 	$idnum = $_GET['idnum'];
+    $query = sprintf("SELECT * FROM friends WHERE from_id=%d AND to_id=%d", $_SESSION['idnum'], $_GET['idnum']);
+    $result = mysql_query($query);
+    if (!$result)
+    {
+        echo mysql_error();	
+    }
+    $friends = (mysql_num_rows($result) > 0);
 }
 else
 {
@@ -48,6 +55,10 @@ else if (mysql_num_rows($result) > 0)
 	$query = sprintf("UPDATE viewed SET viewed=NOW() WHERE to_id=$idnum");
 	$result = mysql_query($query);
 }*/
+if (isset($_GET['addfriend'])) {
+    $query = sprintf("INSERT INTO friends (from_id, to_id, friends_since) VALUES ('%d', '%d', NOW())", $_SESSION['idnum'], $_GET['idnum']);
+    mysql_query($query);
+}
 
 if (is_null($v_users['picture']))
 {
@@ -138,6 +149,7 @@ mysql_close();
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script src="simple.js"></script>
 <script>
 $(function(){
 	$('#slides').slides({
@@ -223,6 +235,13 @@ $(function(){
                     <br />
                     </p>
                     <p><?=$v_users['status']?></p>
+                    <?
+                    if (isset($_GET['idnum'])) {
+                        $new_buttons = $friends?"":"<a href='cprofile.php?idnum=".$_GET['idnum']."&addfriend=true'><img src='site_im/addusericon.jpg' width='40' height='40' onclick='if(confirm_add_friend(\"".$p_name."\")){}else return false;'/></a>";
+                        $new_buttons .= "<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$_GET['idnum']."'><img src='site_im/messageicon.jpg' width='40' height='40'/></a>";
+                        echo $new_buttons;
+                    }
+                    ?>
                     </div>
                     </fieldset>
             </div>
