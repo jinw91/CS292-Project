@@ -146,9 +146,9 @@ else if (isset($_GET['write']))
 		document.getElementById(\"hidden_to_id\").value=\$F(\"facebook-demo\");
 	}
 	document.observe('dom:loaded', function() {
-		tlist2 = new FacebookList('facebook-demo', 'facebook-auto',{ newValues: true, regexSearch: false });
-		var myjson = ".$myjson.";
-		myjson.each(function(t){tlist2.autoFeed(t)});
+        tlist = new FacebookList('facebook-demo', 'facebook-auto',{ regexSearch: false });
+        var myjson = ".$myjson.";
+        myjson.each(function(t){tlist.autoFeed(t)});
 	});
 	</script>";
 }

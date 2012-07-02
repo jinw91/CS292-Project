@@ -238,6 +238,16 @@ function select_one() {
     $("#selectall").attr("checked", $(".candidate_checkbox:checked").length == $(".candidate_checkbox").length);
 }
 
+function confirm_add_friend(name) {
+    var message = "Are you sure you want to add " + name + " as your friend?";
+    var confirmed = confirm(message);
+    if (confirmed) {
+        alert(name + " is now your friend.");
+        return true;
+    }
+    return false;
+}
+
 /**
 Generic Profile.
 **/
