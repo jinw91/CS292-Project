@@ -126,7 +126,7 @@ else if (mysql_num_rows($result) > 0)
 {
 	while ($job = mysql_fetch_assoc($result))
 	{
-        $jobs = $jobs."<li><label for='name' style='float: left; width: 200px;'>".$job['job_name']." </label><input name='jobs[]' value='".$job['jid']."' type='checkbox' ".(($job['jid']==$_GET['jid']||in_array($job['jid'],$_POST['jobs']))?"checked='checked'":"")."/></li>";
+        $jobs = $jobs."<li><label for='name' style='float: left; width: 21em;'>".$job['job_name']." </label><input name='jobs[]' value='".$job['jid']."' type='checkbox' ".(($job['jid']==$_GET['jid']||in_array($job['jid'],$_POST['jobs']))?"checked='checked'":"")."/></li>";
 		$job_dropdown .= "<option value='".$job['jid']."'>".$job['job_name']."</option>";
 	}
 }
@@ -363,7 +363,7 @@ mysql_close();
                 <li><label for='gpa' style='float: left;'>Minimum GPA: </label>
                 <input name='gpa' size='25' /></li>
                 <li><label for='work_experience' style='float: left;'>Work Experience: </label>
-                <input name='work_experience' size='10' style='width: 150px;' /> Years</li>
+                <input name='work_experience' size='10' style='width: 11em;' /> Years</li>
                 <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>
             <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
             <label for="group">Job(s): </label>
