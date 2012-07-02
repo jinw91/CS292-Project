@@ -135,7 +135,11 @@ else if (isset($_GET['write']))
     </script>
 	<li><span style='margin-left: 58px;'><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
 	<li><input type='text' name='hidden_to_id' id='hidden_to_id' style='display:none;' /></li></ul></form>";
-	$query = sprintf("SELECT first_name, last_name, idnum FROM users");
+    if ($_SESSION['business_mode']) {
+        $query = sprintf("SELECT first_name, last_name, idnum FROM users");
+    } else {
+        $query = sprintf("SELECT u.first_name, u.last_name, u.idnum FROM users u, friends f WHERE f.from_id=%d AND f.to_id=u.idnum", $_SESSION['idnum']);
+    }
 	$result = mysql_query($query);
 	if (!$result) {
 		echo mysql_error();
