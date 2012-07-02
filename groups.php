@@ -126,7 +126,7 @@ else if (mysql_num_rows($result) > 0)
 {
 	while ($job = mysql_fetch_assoc($result))
 	{
-		$jobs = $jobs."<li><label for='name' style='float: left; width: 200px;'>".$job['job_name']." </label><input name='jobs[]' value='".$job['jid']."' type='checkbox'/></li>";
+        $jobs = $jobs."<li><label for='name' style='float: left; width: 200px;'>".$job['job_name']." </label><input name='jobs[]' value='".$job['jid']."' type='checkbox' ".(($job['jid']==$_GET['jid']||in_array($job['jid'],$_POST['jobs']))?"checked='checked'":"")."/></li>";
 		$job_dropdown .= "<option value='".$job['jid']."'>".$job['job_name']."</option>";
 	}
 }

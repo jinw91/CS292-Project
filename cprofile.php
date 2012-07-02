@@ -236,7 +236,7 @@ $(function(){
                     </p>
                     <p><?=$v_users['status']?></p>
                     <?
-                    if (isset($_GET['idnum'])) {
+                    if (isset($_GET['idnum']) || !$_SESSION['business_mode']) {
                         $new_buttons = $friends?"":"<a href='cprofile.php?idnum=".$_GET['idnum']."&addfriend=true'><img src='site_im/addusericon.jpg' width='40' height='40' onclick='if(confirm_add_friend(\"".$p_name."\")){}else return false;'/></a>";
                         $new_buttons .= "<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$_GET['idnum']."'><img src='site_im/messageicon.jpg' width='40' height='40'/></a>";
                         echo $new_buttons;
