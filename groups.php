@@ -126,7 +126,7 @@ else if (mysql_num_rows($result) > 0)
 {
 	while ($job = mysql_fetch_assoc($result))
 	{
-		$jobs = $jobs."<li><label for='name' style='float: left; width: 200px;'>".$job['job_name']." </label><input name='jobs[]' type='checkbox'/></li>";
+		$jobs = $jobs."<li><label for='name' style='float: left; width: 200px;'>".$job['job_name']." </label><input name='jobs[]' value='".$job['jid']."' type='checkbox'/></li>";
 		$job_dropdown .= "<option value='".$job['jid']."'>".$job['job_name']."</option>";
 	}
 }
@@ -150,14 +150,7 @@ if ($_POST['search']=="Search")
 	$gpa = $_SESSION['groups']['gpa'] = $_POST['gpa'];
 	$work_experience = $_SESSION['groups']['work_experience'] = $_POST['work_experience'];
 	$skills = $_SESSION['groups']['skills'] = $_POST['skills'];
-	
-	if (isset($job))
-	{
-		for ($i = 0; $i<count($job); $i++)
-		{
-			$query .= " AND c.jid=".$job[$i];
-		}
-	}
+	$jids = $_POST['jobs'];
 	
 	/**
 	Searching by name
@@ -175,17 +168,23 @@ if ($_POST['search']=="Search")
 	}
 	
 	$add = "";
+	
+	/**
+	Searching by job id
+	**/
+	if (count($jids) > 0)
+	{
+		for ($i = 0; $i<count($jids); $i++)
+		{
+			$add .= " AND c.jid=".$jids[$i];
+		}
+	}
+	
 	/**
 	Searching by Major
 	**/
 	if (isset($major))
 	{
-		/**
-		for ($i = 0; $i < count($major); $i++)
-		{
-			$add .= " AND major LIKE '%%$major[$i]%%'";
-		}
-		**/
 		if ($major!="All")
 		{
 			$add .= " AND ed.major LIKE '%%$major%%'";
@@ -232,6 +231,7 @@ if ($_POST['search']=="Search")
 }
 $query .= " ORDER BY c.jid";
 
+//$error = $query;
 $result = mysql_query($query);
 if (!$result)
 {
