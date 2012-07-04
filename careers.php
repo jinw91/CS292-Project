@@ -93,28 +93,14 @@ else if (!isset($_GET['jid']) && isset($_SESSION['company']))
 			$new_interested = "";
 			$message = $message."<fieldset><legend><span class='job_title_font'>&nbsp;".$job['job_name']." in ".$job['city'].", ".$job['state']."</span></legend><hr/><li>
 			<ul>
-			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidejob".$job_num."' onclick='return true;'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
-				<ul class='slidedown' id='job".$job_num."'><li><b>Major: </b>".$job['major']."</li>
+			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidejob".$job_num."' onclick='slideDown(this.id, \"job".$job_num."\");'/><span class='job_entry_font'>Job Description</span><span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span></li>
+				<ul id='job".$job_num."' style='display: none'><li><b>Major: </b>".$job['major']."</li>
 				<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>
 				<li><b>Description: </b>".$job['job_description']."</li>
 				<li><b>Qualifications: </b>".$job['qualifications']."</li>
 				<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>
-			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidecandidates".$job_num."' onclick='return true;'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
-				<ul class='slidedown' id='candidates".$job_num."'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Top Candidates</b></a></li></ul>
-			</ul><script>
-				var togglejob".$job_num." = false;
-				var togglecandidates".$job_num." = false;
-				$(\"#slidejob".$job_num."\").click(function() {
-					this.src = togglejob".$job_num." ? 'site_im/plussign.jpg' : 'site_im/minussign.jpg';
-					togglejob".$job_num." = !togglejob".$job_num.";
-					$(\"#job".$job_num."\").slideToggle(\"slow\");
-				});
-				$(\"#slidecandidates".$job_num."\").click(function() {
-					this.src = togglecandidates".$job_num." ? 'site_im/plussign.jpg' : 'site_im/minussign.jpg';
-					togglecandidates".$job_num." = !togglecandidates".$job_num.";
-					$(\"#candidates".$job_num."\").slideToggle(\"slow\");
-				});
-			</script>";
+			<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidecandidates".$job_num."' onclick='slideDown(this.id, \"candidates".$job_num."\");'/><span class='job_entry_font'>Candidates</span><span id='edit_profile'><a href='search.php?jid=".$job['jid']."'>Start New Search</a></span></li>
+				<ul id='candidates".$job_num."' style='display: none'><li><a href='groups.php?jid=".$job['jid']."'><img src='site_im/folderofcands.jpg' width='50'></a><a href='groups.php'><img style='margin-left: 50px;' src='site_im/folderofcands.jpg' width='50'><br><b>Applied</b><b style='margin-left: 50px;'>Top Candidates</b></a></li></ul></ul>";
 			/**
 			
 			<ul>
@@ -189,13 +175,9 @@ mysql_close();
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script src="simple.js"></script>
 </head>
 <body>
-<script>
-	$(document).ready(function() {
-		$(".slidedown").hide();
-	});
-</script>
 <!--<?=$error?>-->
 <!-- header -->
 <header>
