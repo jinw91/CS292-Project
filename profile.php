@@ -155,6 +155,7 @@ else
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script src="simple.js"></script>
 <script>
 $(function(){
 	$('#slides').slides({

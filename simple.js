@@ -248,6 +248,10 @@ function confirm_add_friend(name) {
     return false;
 }
 
+function slideDown(clickId, toggleId) {
+    $("#"+clickId).attr("src", ($("#"+clickId).attr("src") == "site_im/plussign.jpg") ? "site_im/minussign.jpg" : "site_im/plussign.jpg");
+    $("#"+toggleId).slideToggle("fast");
+}
 /**
 Generic Profile.
 **/
