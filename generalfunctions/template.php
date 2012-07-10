@@ -19,6 +19,7 @@ function navBar($mes)
 					<li class='current'><a href='home.php'>home</a></li>
 					<li><a href='profile.php'>profile<span class='arrow'></span></a><ul>
 							<li><a href='business.php'>Edit Business Information</a></li>
+							<li><a href='supplemental.php'>Add Supplemental Forms</a></li>
 						</ul>
 					</li>
 					<li><a href='inbox.php'>inbox";
@@ -54,6 +55,7 @@ function navBar($mes)
 			$message = $message."(".$mes.")";
 		}
 		$message .= "</a></li><li><a href='careers.php'>careers</a></li>
+					 <li><a href='search.php'>friends</a></li>
 					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
 							<li><a href='privacysettings.php'>Privacy Settings</a></li>
 							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
@@ -110,7 +112,7 @@ Creates the footer for php.
 **/
 function footer()
 {
-	if ($_SESSION['business_mode'])
+	if (isset($_SESSION['company']) && $_SESSION['business_mode'])
 	{
 		return("<footer>
 	<div class='container_12'>
@@ -121,7 +123,7 @@ function footer()
 	</div>
 </footer>");
 	}
-	else if (!$_SESSION['business_mode'])
+	else if (isset($_SESSION['company']) && !$_SESSION['business_mode'])
 	{
 		return("<footer>
 	<div class='container_12'>

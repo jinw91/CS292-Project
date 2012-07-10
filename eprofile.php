@@ -6,18 +6,19 @@ if (!isset($_SESSION['idnum']))
 }
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
+require_once(__ROOT__.'/generalfunctions/education_profile.php');
 
 {
 	if (isset($_GET['eid']))
 	{
-		$idnum = $_GET['eid'];
+		$eid = $_GET['eid'];
 	}
 	else
 	{
-		$idnum = 1;//$_SESSION['idnum'];
+		$eid = 1;//$_SESSION['idnum'];
 	}
 	connectToDatabase();
-	$query = sprintf("SELECT * FROM education_general WHERE eid=%d", $idnum);
+	$query = sprintf("SELECT * FROM education_general WHERE eid=%d", $eid);
 	$result = mysql_query($query);
 	if (!$result)
 	{
@@ -25,6 +26,7 @@ require_once(__ROOT__.'/generalfunctions/database.php');
 	}
 	
 	//TODO:
+	/**
 	$v_users = mysql_fetch_assoc($result);
 	
 	if (is_null($v_users['picture']))
@@ -32,45 +34,41 @@ require_once(__ROOT__.'/generalfunctions/database.php');
 		$v_users['picture'] = "images/default.png";
 	}
 	$p_name = $v_users['first_name']." ".$v_users['last_name'];
-	
-	$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $idnum);
-	$result = mysql_query($query);
-	$v_education = mysql_fetch_assoc($result);
-	$query = sprintf("SELECT * FROM work_data WHERE idnum=%d", $idnum);
-	$result = mysql_query($query);
-	$v_work = mysql_fetch_assoc($result);
+	**/
+	$education_general = mysql_fetch_assoc($result);
+	$name = $education_general['college'];
 	/**
 	Creates the message under experience.
 	**/
-	if ($idnum == $_SESSION['idnum'])
+	if ($eid == $_SESSION['eid'])
 	{
-		$v_work_message = work_own($idnum);
+		$about = about($eid);
 	}
 	else
 	{
-		$v_work_message = work($idnum);
+		$about = about($eid);
 	}
 	/**
 	Creates the message under skills.
 	**/
-	if ($idnum == $_SESSION['idnum'])
+	if ($eid == $_SESSION['eid'])
 	{
-		$v_skills = skills_own($idnum);
+		$students = students($eid);
 	}
 	else
 	{
-		$v_skills = skills($idnum);
+		$students = students($eid);
 	}
 	/**
 	Creates the message under extracurriculars.
 	**/
-	if ($idnum == $_SESSION['idnum'])
+	if ($eid == $_SESSION['eid'])
 	{
-		$extracurriculars = extra_own($idnum);
+		$partners = "";//partners($eid);
 	}
 	else
 	{
-		$extracurriculars = extra($idnum);
+		$partners = "";//partners($eid);
 	}
 	
 	/**
@@ -166,7 +164,7 @@ $(function(){
 <div class="container_12">
 	<div class="wrapper">
 		<div class="grid_12">
-			<div class="text1"><?=$p_name?></div>
+			<div class="text1"><?=$name?></div>
 		</div>
 	</div>
 </div>
@@ -182,7 +180,10 @@ $(function(){
                   <fieldset>
                   <br>
                   <ul id="news">
-				  <?=$news?>
+				  <li>Vanderbilt University becomes number one in Basketball<br>
+<a href="#">View All</a></li>
+				  <li>Vanderbilt University is ranked number 17 again on US News and World Reports<br>
+<a href="#">View All</a></li>
                   </ul>
                   <br>
                 </fieldset>
@@ -205,33 +206,27 @@ $(function(){
 				{
 					clear();
 					var tag = document.getElementById("start");
-					tag.innerHTML += "<?=$look?>";
+					//alert("<?=$students?>");
+					tag.innerHTML += "<?=$students?>";
 				}
 				function partners()
 				{
 					clear();
 					var tag = document.getElementById("start");
-					tag.innerHTML += "<?=$postings?>";
+					tag.innerHTML += "<?=$partners?>";
 				}
 				</script>
                   <br>
                   <ul id="prof_cat">
                   <li><a id='about' href='javascript:about();'>About</a></li>
-                  <li><a id='postings' href='javascript:postings();'>Students</a></li>
-				  <li><a id='looking' href='javascript:look();'>Partners</a></li>
+                  <li><a id='postings' href='javascript:students();'>Students</a></li>
+				  <li><a id='looking' href='javascript:partners();'>Partners</a></li>
                   </ul>
                   <fieldset>
                   <br>
-                  <ul id="start"><?
-				  if (isset($v_bid))
-				  {
-					  echo $about;
-				  }
-				  else
-				  {
-                  	  echo $v_work_message;
-				  }
-				  ?></ul>
+                  <ul id="start">
+                    <?=$about?>
+                  </ul>
                   <br>
                 </fieldset>
             </div>

@@ -101,6 +101,11 @@ else
 	
 	$job_mes = "<ul style='list-style-type: none;'><li>Please fill out your work experience for jobs to appear.</li></ul>";
 }
+//setting picture
+if ($_SESSION['users']['picture'] != "")
+{
+	$picture = "<a href='image.php'><img src='".$_SESSION['users']['picture']."' alt='' width='200px'></a>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -167,7 +172,7 @@ else
 		<div class="wrapper">
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Notifications</h2>
-				<div class="box-img"><a href="image.php"><img src="<?=$_SESSION['users']['picture']?>" alt="" width="200px"></a></div>
+				<div class="box-img"><?=$picture?></div>
       <p><?=$message1?></p>
       <p><?=$viewers?></p>
 				<a href="#" class="button1">See all</a>

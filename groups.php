@@ -8,6 +8,20 @@ if (!$connect)
 {
 	$error = "failed to connect";
 }
+$query = "SELECT * FROM education_general";
+$result = mysql_query($query);
+$college_list = "";
+while ($college = mysql_fetch_assoc($result)) 
+{
+	$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
+}
+$query = "SELECT * FROM majors";
+$result = mysql_query($query);
+$major_list = "";
+while ($major = mysql_fetch_assoc($result)) 
+{
+	$major_list = $major_list."<option value='".$major['major']."'>".$major['major']."</option>";
+}
 /**
 Change Priority
 **/
@@ -82,7 +96,7 @@ else if (isset($_POST['submit']))
 			$from_job = substr(strchr($tmp, "."), 1);
 			$query = sprintf("DELETE FROM c_applied_%d WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $idn);
 			$result = mysql_query($query);
-			//if (!$result)
+			if (!$result)
 			{
 				$error = $query." ".mysql_error();
 			}
@@ -97,7 +111,46 @@ else if (isset($_POST['submit']))
 			$from_job = substr(strchr($tmp, "."), 1);
 			$query = sprintf("INSERT INTO c_applied_%d (idnum, jid) VALUES ('%d', '$job')", $_SESSION['company']['b_id'], $idn);
 			$result = mysql_query($query);
-			//if (!$result)
+			if (!$result)
+			{
+				$error = $query." ".mysql_error();
+			}
+		}
+	}
+}
+
+//Priority changing
+else if (isset($_POST['prior']))
+{
+	$select = $_POST['select'];
+	$from_job = $_POST['from_jid'];
+	$job = $_POST['jid'];
+	if ($_POST['prior']=="Move to Top Candidates")
+	{
+		for ($i = 0; $i < count($select); $i++)
+		{
+			$tmp = $select[$i];
+			$idn = substr($tmp, 0, strpos($tmp, "."));
+			$from_job = substr(strchr($tmp, "."), 1);
+			$query = sprintf("UPDATE c_applied_%d SET priority=1 WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $idn);
+			$result = mysql_query($query);
+			if (!$result)
+			{
+				$error = $query." ".mysql_error();
+			}
+		}
+	}
+	// Should reduce by one instead of to 1.
+	else if ($_POST['prior']=="Reduce Priority")
+	{
+		for ($i = 0; $i < count($select); $i++)
+		{
+			$tmp = $select[$i];
+			$idn = substr($tmp, 0, strpos($tmp, "."));
+			$from_job = substr(strchr($tmp, "."), 1);
+			$query = sprintf("UPDATE c_applied_%d SET priority=3 WHERE idnum='%d' AND jid='$from_job'", $_SESSION['company']['b_id'], $idn);
+			$result = mysql_query($query);
+			if (!$result)
 			{
 				$error = $query." ".mysql_error();
 			}
@@ -131,13 +184,17 @@ else if (mysql_num_rows($result) > 0)
 	}
 }
 
-$priority = "<li><label for='name' style='float: left;'>High: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Medium: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>Low: </label><input name='priorities[]' type='checkbox'/></li><li><label for='name' style='float: left;'>None: </label><input name='priorities[]' type='checkbox'/></li>";
+$priorities = "<li><label for='name' style='float: left;'>High: </label><input name='priorities[]' value='1' type='checkbox' ".(((isset($_POST['priorities']) && in_array(1, $_POST['priorities'])))?"checked='checked'":"")."/></li><li><label for='name' style='float: left;'>Medium: </label><input name='priorities[]' value='2' type='checkbox' ".(((isset($_POST['priorities']) && in_array(2, $_POST['priorities'])))?"checked='checked'":"")."/></li><li><label for='name' style='float: left;'>Low: </label><input name='priorities[]' value='3' type='checkbox' ".(((isset($_POST['priorities']) && in_array(3, $_POST['priorities'])))?"checked='checked'":"")."/></li><li><label for='name' style='float: left;'>None: </label><input name='priorities[]' value='0' type='checkbox' ".(((isset($_POST['priorities']) && in_array(0, $_POST['priorities'])))?"checked='checked'":"")."/></li>";
 
 //Base query
 $query = sprintf("SELECT * FROM c_applied_%d c, users u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
 if (isset($_GET['jid']))
 {
 	$query .= " AND c.jid=".$_GET['jid'];
+}
+if (isset($_GET['priority']))
+{
+	$query .= " AND c.priority=".$_GET['priority'];
 }
 
 //Limit based on search.
@@ -151,6 +208,7 @@ if ($_POST['search']=="Search")
 	$work_experience = $_SESSION['groups']['work_experience'] = $_POST['work_experience'];
 	$skills = $_SESSION['groups']['skills'] = $_POST['skills'];
 	$jids = $_POST['jobs'];
+	$priority = $_POST['priorities'];
 	
 	/**
 	Searching by name
@@ -164,7 +222,7 @@ if ($_POST['search']=="Search")
 	}
 	else //either first or last name entered.
 	{
-		$query = sprintf("SELECT * FROM c_applied_%d c, (SELECT * FROM users WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%') u, education_data ed, careers ca WHERE c.idnum=u.idnum AND u.idnum=ed.idnum AND ca.jid=c.jid", $_SESSION['company']['b_id']);
+		$query .= " AND (u.first_name LIKE '%%$archives%%' OR u.last_name LIKE '%%$archives%%')";
 	}
 	
 	$add = "";
@@ -174,10 +232,25 @@ if ($_POST['search']=="Search")
 	**/
 	if (count($jids) > 0)
 	{
-		for ($i = 0; $i<count($jids); $i++)
+		$add = $add . " AND (c.jid=" . $jids[0];
+		for ($i = 1; $i<count($jids); $i++)
 		{
-			$add .= " AND c.jid=".$jids[$i];
+			$add .= " OR c.jid=".$jids[$i];
 		}
+		$add .= ")";
+	}
+	
+	/**
+	Searching by priority
+	**/
+	if (count($priority) > 0)
+	{
+		$add = $add . " AND (c.priority=" . $priority[0];
+		for ($i = 1; $i<count($priority); $i++)
+		{
+			$add .= " OR c.priority=".$priority[$i];
+		}
+		$add .= ")";
 	}
 	
 	/**
@@ -229,7 +302,7 @@ if ($_POST['search']=="Search")
 		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
 	}
 }
-$query .= " ORDER BY c.jid";
+$query .= " ORDER BY c.jid, c.priority DESC";
 
 //$error = $query;
 $result = mysql_query($query);
@@ -264,12 +337,12 @@ else if (mysql_num_rows($result) > 0)
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=phone&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/phoneicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
 		$message = $message."<a href='generalfunctions/message_template.php?messagetype=supplement&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/resumeicon.jpg' width='30' height='30' /></a>";
-		$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>";
+		$message = $message."<br>".substr($mes['field'],0,30)." at ".$mes['college']."</li>";
 	}
 	$message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='select_all();'/></span></li>";
 	$message .= "<div align='right'><select name='jid'>";
 	$message .= $job_dropdown;
-	$message .= "</select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='submit' value='Change Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form></ul>"; //add option to pick job.
+	$message .= "</select><input type='submit' name='submit' value='Add to Job'><input type='submit' name='submit' value='Move to Job'><input type='submit' name='prior' value='Move to Top Candidates'><input type='submit' name='prior' value='Reduce Priority'><input type='submit' name='submit' value='Delete'></div><div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form></ul>"; //add option to pick job.
 }
 
 mysql_close();
@@ -339,25 +412,13 @@ mysql_close();
                 <input name='name' size='25'/></li>
                 <li><label for='major' style='float: left;'>Major: </label>
                 <select id='major' name='major' size='1'>
-				<option>All</option>
-                <option>Biomedical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Computer Science</option>
-                <option>Computer Engineering</option>
-                <option>Economics</option>
-                <option>Human Organizational Development</option>
-                <option>Mechanical Engineering</option>
+                <option selected="selected">All</Option>
+				<?=$major_list?>
                 </select></li>
                 <li><label for='college[]' style='float: left;'>School: </label>
                 <select id='college' name='college[]' multiple='multiple' size='1'>
-                <option value='Vanderbilt University'>Vanderbilt University</option>
-                <option value='Duke University'>Duke University</option>
-                <option value='Northwestern University'>Northwestern University</option>
-                <option value='University of Chicago'>University of Chicago</option>
-                <option value='University of Notre Dame'>University of Notre Dame</option>
-                <option value='University of North Carolina'>University of North Carolina</option>
-                <option value='University of Virginia'>University of Virginia</option>
-                <option value='Washington University in St. Louis'>Washington University in St. Louis</option>
+                <?=$college_list?>
+                <option value='other'>Other</option>
                 </select>
                 </li>
                 <li><label for='gpa' style='float: left;'>Minimum GPA: </label>
@@ -369,10 +430,10 @@ mysql_close();
             <label for="group">Job(s): </label>
             </div>
             <?=$jobs?><br>
-            <!--<div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase; display:none;">
-            <label for="group">Priorities: </label>
+            <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+            <label for="priorities[]">Priorities: </label>
             </div>
-            <?=$priorities?>-->
+            <?=$priorities?>
             <input type="submit" name="search" value="Search"/>
             </ul>
             </form>

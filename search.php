@@ -14,13 +14,15 @@ if (!$connect)
 $query = "SELECT * FROM education_general";
 $result = mysql_query($query);
 $college_list = "";
-while ($college = mysql_fetch_assoc($result)) {
+while ($college = mysql_fetch_assoc($result)) 
+{
 	$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
 }
 $query = "SELECT * FROM majors";
 $result = mysql_query($query);
 $major_list = "";
-while ($major = mysql_fetch_assoc($result)) {
+while ($major = mysql_fetch_assoc($result)) 
+{
 	$major_list = $major_list."<option value='".$major['major']."'>".$major['major']."</option>";
 }
 if (isset($_POST['offer']))
@@ -54,6 +56,7 @@ if (isset($_POST['offer']))
 	}
 	header("Location: generalfunctions/message_template.php?multiple=true&".$mes);
 }
+$query = "";
 
 // Store jid as well.
 if (isset($_GET['jid']))
@@ -156,14 +159,27 @@ else if (isset($_GET['new_search']))
 }
 
 //Checks whether to add jid or not.
-if (isset($_SESSION['search']['jid']))
+if (isset($_GET['jid']))
 {
 	//$error = "jid: ".$_SESSION['search']['jid']." ".$query;
-	showSavedSearches($_SESSION['search']['jid']);
+	$query = showSavedSearches($_SESSION['search']['jid']);
+	//$error = $query;
+	$message = showQueryResults($query, 0);
+}
+else if (!$_SESSION['business_mode'])
+{
+	$query = showSavedSearches(0);
+	$message = showQueryResults($query, 0);
+	//$error = $query;
+}
+else if (isset($_SESSION['search']['jid']))
+{
+	//$error = $query;
 	$message = showQueryResults($query, $_SESSION['search']['jid']);
 }
 else
 {
+	//$error = $query;
 	$message = showQueryResults($query, 0);
 }
 ?>

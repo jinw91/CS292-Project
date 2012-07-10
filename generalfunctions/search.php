@@ -3,7 +3,15 @@ session_start();
 
 function showSavedSearches($jid)
 {
-	$query = sprintf("SELECT * FROM c_top_%d WHERE jid='%d'", $_SESSION['company']['b_id'], $jid);
+	if($_SESSION['business_mode'])
+	{
+		$query = sprintf("SELECT * FROM c_top_%d c, users u, education_data ed WHERE jid='%d' AND u.idnum=ed.idnum AND c.idnum=u.idnum", $_SESSION['company']['b_id'], $jid);
+	}
+	else if ($jid == 0)
+	{
+		$query = sprintf("SELECT * FROM friends f, users u, education_data ed WHERE to_id=u.idnum AND u.idnum=ed.idnum AND from_id=%d", $_SESSION['idnum']);
+	}
+	return($query);
 }
 
 function showQueryResults($query, $jid)

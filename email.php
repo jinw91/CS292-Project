@@ -8,7 +8,7 @@ if (!$connect)
 {
 	$error = "failed to connect";
 }
-$query = sprintf("SELECT * FROM users WHERE idnum<>164 OR idnum<>168");
+$query = sprintf("SELECT * FROM users");
 $result = mysql_query($query);
 if (!$result)
 {
@@ -16,7 +16,7 @@ if (!$result)
 }
 while ($user = mysql_fetch_assoc($result))
 {
-		$message = "Hey ".$user['first_name'].",<br/><br/>If you are looking for an internship, and<br />
+		/**$message = "Hey ".$user['first_name'].",<br/><br/>If you are looking for an internship, and<br />
   especially for those of you in Nashville, we're here to help.<br />
   First, head over to <a href='http://www.proarcs.com/'>www.proarcs.com</a> to polish your professional<br />
   profile. Then email <a href='mailto:proarcs@proarcs.com'>proarcs@proarcs.com</a> with the following:<br />
@@ -34,8 +34,26 @@ while ($user = mysql_fetch_assoc($result))
 		$msgheader .= "MIME-Version: 1.0\n";
 		$msgheader .= "Content-type: text/html; charset=us-ascii\n";
 		mail($user['email'], "Professional Archives: Filling Out Your Profile For Internships", $message, $msgheader);
+		if (sha1($user['password']) == sha1(decrypt(encrypt($user['password']))))
+		{
+			$sent = $sent . "USER: ".$user['email']. " true<br>";
+		}
+		else
+		{
+			$sent = $sent . "USER: ".$user['email']. " false<br>";	
+		}**/
 		
-		$sent = $sent . "TO: ".$user['idnum']." EMAIL: ".$user['email'];
+		//$sent = $sent . " ". $user['password']. " " . sha1(encrypt($user['password'])) . " " . $user['idnum'] . "<br>";
+		/**
+		$query = sprintf("UPDATE users SET password='%s' WHERE idnum=%d", sha1(encrypt($user['password'])), $user['idnum']);
+		
+		$res = mysql_query($query);
+		
+		if (!$res)
+		{
+			$error = mysql_error($res).$query;
+		}**/
+		//$sent = $sent . "USER: ".$user['email']."\tPASS: ".$user['password']." ENCRYPTPASS: ".encrypt($user['password'])." DECRYPTPASS: ".decrypt(encrypt($user['password']))."<br>";
 }
 
 		
