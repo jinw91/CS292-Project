@@ -228,12 +228,7 @@ mysql_close();
                     <div class="message">
     				<?=$message?>
                     </div>
-                    </fieldset> 
-            </div> 
-    </div>        
-    </div> 
-</section> 
-<!-- footer --> 
-<?php echo footer(); ?>
+                    </fieldset> </div> </div>        </div> </section> <!-- footer --> <?php echo footer();
+?>
 </body>
 </html>
