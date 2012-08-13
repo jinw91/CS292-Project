@@ -55,7 +55,7 @@ function navBar($mes)
 			$message = $message."(".$mes.")";
 		}
 		$message .= "</a></li><li><a href='careers.php'>careers</a></li>
-					 <li><a href='search.php'>friends</a></li>
+					 <li><a href='friend.php'>friends</a></li>
 					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
 							<li><a href='privacysettings.php'>Privacy Settings</a></li>
 							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
