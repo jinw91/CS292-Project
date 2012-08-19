@@ -46,7 +46,7 @@ if ($_POST['submit'] == "Register Now")
 	$first_name = $_POST['first_name'];
 	$last_name = $_POST['last_name'];
 	$emailaddress = $_POST['emailaddress'];
-	$user_password = $_POST['user_password'];
+	$user_password = mysql_real_escape_string(sha1(encrypt($_POST['user_password'])));
 	
 	$emailavailable = emailAvailable($emailaddress);
 	if ($emailavailable)

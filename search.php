@@ -166,7 +166,7 @@ if (isset($_GET['jid']))
 	//$error = $query;
 	$message = showQueryResults($query, 0);
 }
-else if (!$_SESSION['business_mode'])
+else if (!$_SESSION['business_mode'] && !isset($_POST['search']))
 {
 	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0);

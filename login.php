@@ -26,6 +26,15 @@ if (isset($_SESSION['idnum']))
 		else
 		{
 			$_SESSION['idnum'] = $idnum;
+			
+			//Acquires about data.
+			$query = sprintf("SELECT * FROM about WHERE idnum=%d",$_SESSION['idnum']);
+			$result = mysql_query($query);
+			if ($result && mysql_num_rows($result) > 0)
+			{
+				$_SESSION['about'] = mysql_fetch_assoc($result);
+			}
+			//Acquires education data.
 			$query = sprintf("SELECT * FROM education_data WHERE idnum=%d",$_SESSION['idnum']);
 			$result = mysql_query($query);
 			if ($result && mysql_num_rows($result) > 0)

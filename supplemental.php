@@ -53,14 +53,9 @@
               			<?=$message?><br>
               			<ul id='education'>
                         What would you like to ask your candidate?
-                		<li><label class="field">Cover Letter: </label><input name="cover" type="radio" value="<?=$user_info['city']?>" style='width: 150px;' /> State: <input name="state" value="<?=$user_info['state']?>" style='width: 60px;' /></li>
-         	       		<li id="school"></li>                    
-                		<li><label class="field">Expected Pay: </label><input name="income" value="<?=$user_info['pay']?>" /></label> <label>  &nbsp;Hourly: </label><input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
-                		<li><label class='field'>Primary Field: </label><input type='text' name='field' value="<?=$user_info['field']?>" />
-<label class='subscript'>Example: Computer Science, Math</label></li><br>
-            			<li><label class='field'>Technical Skills: </label><textarea name='skills' rows='2'><?=$user_info['skills']?></textarea>
-            <label class='subscript'>Example: Microsoft Excel, HTML</label></li>
-            			<br>
+                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" value="<?=$user_info['city']?>" style='width: 150px;' /> </li>                   
+                		<li><label class="field">Form 1: </label><input name="income" type="checkbox" style='width: 150px;' /></li>
+                		
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>

@@ -220,19 +220,24 @@ $(function(){
                     {
                         echo $v_users['city'].", ".$v_users['state']."<br />";
                     }
-                    $temp = substr($v_education['college_end'], 0, 4);
-                    $tmpmonth = intval(substr($v_education['college_end'], 5, 2));
-                    if ($temp != '0000' && isset($temp))
-                    {
-                        if ($tmpmonth <= 6) 
-                            echo "Expected Graduation: Spring ".$temp;
-                        else if ($tmpmonth < 8)
-                            echo "Expected Graduation: Summer ".$temp;
-                        else
-                            echo "Expected Graduation: Fall ".$temp;
-                    }
+					if (isset($v_education['college_end']))
+					{
+                    	$temp = substr($v_education['college_end'], 0, 4);
+                    	$tmpmonth = intval(substr($v_education['college_end'], 5, 2));
+                    	if (isset($temp) && $temp > '2012')
+                    	{
+                        	if ($tmpmonth <= 6) 
+                            	echo "Expected Graduation: Spring ".$temp;
+							else if ($tmpmonth < 8)
+								echo "Expected Graduation: Summer ".$temp;
+							else
+								echo "Expected Graduation: Fall ".$temp;
+								
+							echo "<br>";
+						}
+					}
                     ?>
-                    <br />
+                    
                     </p>
                     <p><?=$v_users['status']?></p>
                     <?

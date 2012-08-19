@@ -43,6 +43,10 @@ else
 	{
 		$_SESSION['users']['picture'] = "images/default.png";
 	}
+	//Updates last-visited date.
+	$query = sprintf("UPDATE users SET last_logged_in = NOW( ) WHERE idnum='%d'", $_SESSION['idnum']);
+	$result = mysql_query($query);
+	
 	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' AND is_read=0 ORDER BY time_sent DESC LIMIT 10", $_SESSION['idnum']);
 	$result = mysql_query($query);
 	mysql_close();

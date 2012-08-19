@@ -1,78 +1,37 @@
 <?php
+/**
+Friends page
+@Accessibility: From the navigation bar.
+@Business: Should not exist.
+@College: Should not exist.
+@User: Pulls up a list of friends.
+
+**/
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once('generalfunctions/database.php');
 require_once('generalfunctions/template.php');
 require_once('generalfunctions/search.php');
-$connect = connectToDatabase();
 
+$connect = connectToDatabase();
 //If selected an offer.
 if (!$connect)
 {
 	echo "failed to connect";
 }
-$query = "SELECT * FROM education_general";
-$result = mysql_query($query);
-$college_list = "";
-while ($college = mysql_fetch_assoc($result)) 
-{
-	$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
-}
-$query = "SELECT * FROM majors";
-$result = mysql_query($query);
-$major_list = "";
-while ($major = mysql_fetch_assoc($result)) 
-{
-	$major_list = $major_list."<option value='".$major['major']."'>".$major['major']."</option>";
-}
-if (isset($_POST['offer']))
-{
-        $select = $_POST['select'];
-        for ($i = 0; $i < count($select); $i++)
-        {
-                $tmp = $select[$i];
-                if (!isset($to_id) || !array_search($tmp, $to_id))
-                {
-                        $to_id[] = $tmp;
-                }
-        }
-        $_SESSION['to_id'] = $to_id;
-	$mes = "messagetype=";
-        if ($_POST['offer'] == "Schedule Phone Interview")
-        {
-		$mes = $mes."phone";
-        }
-        else if ($_POST['offer'] == "Schedule Job Interview")
-        {
-		$mes = $mes."interview";
-        }
-        else if ($_POST['offer'] == "Offer Job")
-        {
-		$mes = $mes."offer";
-	}
-	else if ($_POST['offer'] == "Send Supplement Material")
-	{
-		$mes = $mes."supplement";
-	}
-	header("Location: generalfunctions/message_template.php?multiple=true&".$mes);
-}
+
+//Select all schools
+$college_list = retrieveAllColleges();
+$major_list = retrieveAllMajors();
 $query = "";
 
-// Store jid as well.
-if (isset($_GET['jid']))
-{
-	$_SESSION['search']['jid'] = $_GET['jid'];
-}
-
-// If currently searching.
+// If currently searching through friend's list
 if ($_POST['search'] == "Search")
 {
 	$archives = $_SESSION['search']['name'] = $_POST['name'];
 	$major = $_SESSION['search']['major'] = $_POST['major'];
 	$either = $_SESSION['search']['either'] = $_POST['either'];
 	$college = $_SESSION['search']['college'] = $_POST['college'];
-	$gpa = $_SESSION['search']['gpa'] = $_POST['gpa'];
-	$work_experience = $_SESSION['search']['work_experience'] = $_POST['work_experience'];
 	$skills = $_SESSION['search']['skills'] = $_POST['skills'];
 	
 	
@@ -84,15 +43,15 @@ if ($_POST['search'] == "Search")
 	{
 		$first_name = substr($archives, 0, strpos($archives, " "));
 		$last_name = substr(strchr($archives, " "), 1);
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u JOIN education_data ed ON u.idnum=ed.idnum WHERE first_name='%s' AND last_name='%s'", $first_name, $last_name);
+		$query = sprintf("SELECT DISTINCT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u, education_data ed, friends f WHERE u.idnum=ed.idnum AND f.to_id=u.idnum AND first_name='%s' AND last_name='%s' AND f.from_id='%d'", $first_name, $last_name, $_SESSION['idnum']);
 	}
 	else if ($archives == "") // all users.
 	{
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u, education_data ed WHERE u.idnum=ed.idnum");
+		$query = sprintf("SELECT DISTINCT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM users u, education_data ed, friends f WHERE u.idnum=ed.idnum AND f.to_id=u.idnum AND f.from_id='%d'", $_SESSION['idnum']);
 	}
 	else //either first or last name entered.
 	{
-		$query = sprintf("SELECT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM (SELECT * FROM users WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%') u, education_data ed WHERE u.idnum=ed.idnum");
+		$query = sprintf("SELECT DISTINCT u.idnum, first_name, last_name, picture, status, skills, college, title, major, minor, gpa, college_start, college_end, field FROM (SELECT * FROM users WHERE first_name LIKE '%%$archives%%' OR last_name LIKE '%%$archives%%') u, education_data ed, friends f WHERE u.idnum=ed.idnum AND f.to_id=u.idnum AND f.from_id='%d'", $_SESSION['idnum']);
 	}
 	
 	$add = "";
@@ -128,14 +87,6 @@ if ($_POST['search'] == "Search")
 	}
 	
 	/**
-	Search by GPA
-	**/
-	if ($gpa != "")
-	{
-		$add .= " AND gpa >= '$gpa'";
-	}
-	
-	/**
 	Search by Skills
 	**/
 	if ($skills != "")
@@ -144,12 +95,6 @@ if ($_POST['search'] == "Search")
 	}
 	
 	$query .= $add;
-	
-	if ($work_experience != "")
-	{
-		$query = "SELECT * FROM (".$query;
-		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
-	}
 }
 
 //Checks when to clear search requirements
@@ -158,24 +103,12 @@ else if (isset($_GET['new_search']))
 	unset($_SESSION['search']['name'],$_SESSION['search']['major'], $_SESSION['search']['either'], $_SESSION['search']['college'], $_SESSION['search']['gpa'], $_SESSION['search']['work_experience'], $_SESSION['search']['skills'], $_SESSION['search']['jid']);
 }
 
-//Checks whether to add jid or not.
-if (isset($_GET['jid']))
-{
-	//$error = "jid: ".$_SESSION['search']['jid']." ".$query;
-	$query = showSavedSearches($_SESSION['search']['jid']);
-	//$error = $query;
-	$message = showQueryResults($query, 0);
-}
-else if (!$_SESSION['business_mode'])
+//Checks whether searching or not.
+if (!isset($_POST['search']))
 {
 	$query = showSavedSearches(0);
-	$message = showQueryResults($query, 0);
+	$message = showQueryResults($query, 0, true);
 	//$error = $query;
-}
-else if (isset($_SESSION['search']['jid']))
-{
-	//$error = $query;
-	$message = showQueryResults($query, $_SESSION['search']['jid']);
 }
 else
 {
@@ -238,9 +171,9 @@ else
 	<div class="container_12">
     <div class="wrapper border_bottom">
         	<div class="grid_4">
-                <form action='search.php' method='post'>
+                <form action='friend.php' method='post'>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-                <label for="careers">Search Candidates: </label>
+                <label for="careers">Search Friends: </label>
                 </div>
                 <ul id="search">
                 <li><label for="name" style="float: left;">Name: </label>
@@ -256,16 +189,16 @@ else
                 <option value='other'>Other</option>		
                 </select>
                 </li>
-                <li><label for="gpa" style="float: left;">Minimum GPA: </label>
-                <input name="gpa" size="25" value="<?=$_SESSION['search']['gpa']?>" /></li>
-                <li><label for="work_experience" style="float: left;">Work Experience: </label>
-                <input name="work_experience" size="10" style="width: 150px;" value="<?=$_SESSION['search']['work_experience']?>"/> Years</li>
                 <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$_SESSION['search']['skills']?>"></li>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="hidden" name="jid" value="<?=$_SESSION['search']['jid']?>">
+                <li></li>
                 <input type="submit" name="search" value="Search"/>
                 </ul>
                 </form>
+                <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
+                <a class='header_font' href='search.php?friends=true'>Search For Friends: </a>
+                </div>
                 <script>
 				selectDefault('major', '<?=$_SESSION['search']['major']?>');
 				<?=$array?>

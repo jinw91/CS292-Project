@@ -2,22 +2,20 @@
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
-$tbl_name="users";
 $connect = connectToDatabase();
-if (!$connect)
-{
-	$error = "failed to connect";
-}
+if (!$connect) { die("failed to connect"); }
 
-$query = sprintf("SELECT * FROM users WHERE idnum=%d", $_SESSION['idnum']);
-$result = mysql_query($query);
-$user_info = mysql_fetch_assoc($result);
 if ($_POST['submit'] == "Save")
 {
+	$status = $_POST['looking_for'];
 	$city = $_POST['city'];
 	$state = $_POST['state'];
-	$field = $_POST['field'];
+	$field = $_POST['industry'];
 	$pay = $_POST['income'];
+	$transportation = $_POST['transportation'];
+	$relocate = $_POST['relocate'];
+	
+	//Will be editable on main page later.
 	$skills = $_POST['skills'];
 	if (isset($_POST['hourly']))
 	{
@@ -27,22 +25,54 @@ if ($_POST['submit'] == "Save")
 	{
 		$hourly = 0;
 	}
-	$query = sprintf("UPDATE users SET city='%s', state='%s', country='United States', field='%s', pay='$pay', hourly=$hourly, skills='$skills' WHERE idnum=%d LIMIT 1", $city, $state, $field, $_SESSION['idnum']);
+
+	$query = sprintf("UPDATE about SET field='$field', city='$city', state='$state', country='United States', pay='$pay', hourly=$hourly, status='$status', transportation='$transportation', relocate='$relocate' WHERE idnum=%d LIMIT 1", $_SESSION['idnum']);
 	$message = "<p id=\"update_message\">Basic information updated.</p>";
 	$result = mysql_query($query);	
 	if (!$result)
 	{
 		$error = mysql_error();	
 	}
+	
+	
 }
 
-$query = sprintf("SELECT * FROM users WHERE idnum=%d", $_SESSION['idnum']);
+$query = sprintf("SELECT * FROM about WHERE idnum=%d", $_SESSION['idnum']);
+$result = mysql_query($query);
+$about = mysql_fetch_assoc($result);
+
+//creating default buttons for transportation and relocate.
+if ($about['transportation'] == 1)
+{
+	$transportation_mes = "<li><label class='field'>Available Transportation: </label><input type='radio' name='transportation' value='1' checked>Yes<input type='radio' name='transportation' value='0'>No</li>";
+}
+else
+{
+	$transportation_mes = "<li><label class='field'>Available Transportation: </label><input type='radio' name='transportation' value='1'>Yes<input type='radio' name='transportation' value='0' checked>No</li>";
+}
+if ($about['relocate'] == 1)
+{
+	$relocate_mes = "<li><label class='field'>Willing To Relocate? </label><input type='radio' name='relocate' value='1' checked>Yes<input type='radio' name='relocate' value='0'>No</li>";
+}
+else
+{
+	$relocate_mes = "<li><label class='field'>Willing To Relocate? </label><input type='radio' name='relocate' value='1'>Yes<input type='radio' name='relocate' value='0' checked>No</li>";
+}
+
+
+$query = sprintf("SELECT skills FROM users WHERE idnum=%d", $_SESSION['idnum']);
 $result = mysql_query($query);
 $user_info = mysql_fetch_assoc($result);
+
 if ($user_info['hourly'] == 1)
 {
 	$hourly_mes = "checked='checked'";
 }
+else
+{
+	$hourly_mes = "";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,29 +91,6 @@ if ($user_info['hourly'] == 1)
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
 <script type="text/javascript" src="simple.js"></script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
 </head>
 <body>
 <!-- header -->
@@ -91,12 +98,6 @@ $(function(){
 	<div class="top-header">
 		<div class="container_12">
 			<div class="grid_12">
-				<div class="fright">
-					<ul class="top-menu">
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
 				<div class="fleft"></div>
 				<div class="clear"></div>
 			</div>
@@ -122,16 +123,41 @@ $(function(){
 	<div class="container_12">
 		<div class="wrapper">
 		  <div class="grid_10">
-			  <h1 id='edit_title'>Basic Information:</h1>
+			  <h1 id='edit_title'>Looking For:</h1>
               <form action='basic_info.php' method='post'>
               <?=$error?><?=$message?><br>
               <ul id='education'>
-                <li><label class="field">City: </label><input name="city" value="<?=$user_info['city']?>" style='width: 150px;' /> State: <input name="state" value="<?=$user_info['state']?>" style='width: 60px;' /></li>
+                <li><label class="field">Looking For: </label>
+                <select name="looking_for">
+                	<option>Summer Internship</option>
+                    <option>Winter Internship</option>
+                    <option>Cooperative Internship</option>
+                    <option>Full Time Position</option>
+                    <option>Employed</option>
+                    <option>Undecided</option>
+                </select>
+                </li><br>
+                <li><label class="field">Current City: </label><input name="city" value="<?=$about['city']?>" style='width: 150px;' /> State: <input name="state" value="<?=$about['state']?>" style='width: 60px;' /></li>
                 <li id="school"></li>                    
-                <li><label class="field">Expected Pay: </label><input name="income" value="<?=$user_info['pay']?>" /></label> <label>  &nbsp;Hourly: </label>
+                <li><label class="field">Expected Pay: </label><input name="income" value="<?=$about['pay']?>" /></label> <label>  &nbsp;Hourly: </label>
     <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>
-                <li><label class='field'>Primary Field: </label><input type='text' name='field' value="<?=$user_info['field']?>" />
-<label class='subscript'>Example: Computer Science, Math</label></li><br>
+                <li><label class="field">Industry: </label>
+                <select name='industry'>
+                	<option>Public Policy, Government, Law</option>
+                    <option>Education, Non-Profit</option>
+                    <option>Communications, Media, Art</option>
+                    <option>Finance, Real-Estate, Insurance</option>
+                    <option>Consulting, Human Resource</option>
+                    <option>Engineering, Information Technology</option>
+                	<option>Healthcare</option>
+                </select>
+<label class='subscript'>Example: Healthcare</label></li><br>
+			<?
+			echo $transportation_mes;
+			echo $relocate_mes;
+			?>
+<br>
+			<li>
             <li><label class='field'>Technical Skills: </label><textarea name='skills' rows='2'><?=$user_info['skills']?></textarea>
             <label class='subscript'>Example: Microsoft Excel, HTML</label></li>
             <br>
@@ -140,6 +166,10 @@ $(function(){
             <input type='submit' name='skip' value='Skip' /></span></li>
             </ul>
         	</form>
+            <script>
+			selectDefault('looking_for', "<?=$about['status']?>");
+			selectDefault('industry', "<?=$about['field']?>");
+			</script>
 			</div>
 		</div>
 	</div>

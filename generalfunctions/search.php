@@ -1,5 +1,49 @@
 <?php
 session_start();
+/**************************
+NJ:
+Helper functions for searching.
+Includes the following:
+
+retrieveAllColleges
+retrieveAllMajors
+showSavedSearches
+showQueryResults
+
+**************************/
+
+
+/**
+Retrieves the list of colleges in SELECT format for searching.
+DB query
+**/
+function retrieveAllColleges()
+{
+	$query = "SELECT * FROM education_general";
+	$result = mysql_query($query);
+	$college_list = "";
+	while ($college = mysql_fetch_assoc($result)) 
+	{
+		$college_list = $college_list."<option value='".$college['college']."'>".$college['college']."</option>";
+	}
+	return($college_list);
+}
+
+/**
+Retrieves the list of majors in SELECT format for searching.
+DB query
+**/
+function retrieveAllMajors()
+{
+	$query = "SELECT * FROM majors";
+	$result = mysql_query($query);
+	$major_list = "";
+	while ($major = mysql_fetch_assoc($result)) 
+	{
+		$major_list = $major_list."<option value='".$major['major']."'>".$major['major']."</option>";
+	}
+	return($major_list);
+}
 
 function showSavedSearches($jid)
 {
@@ -14,7 +58,7 @@ function showSavedSearches($jid)
 	return($query);
 }
 
-function showQueryResults($query, $jid)
+function showQueryResults($query, $jid, $is_friends = false)
 {
 	define('__ROOT__', dirname(__FILE__)); 
 	require_once('database.php');
@@ -29,7 +73,14 @@ function showQueryResults($query, $jid)
 	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
-		$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
+		if ($is_friends)
+		{
+			$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Friends</span></legend><hr /></fieldset>";
+		}
+		else
+		{
+			$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
+		}
 		while ($mes =  mysql_fetch_assoc($result))
 		{
 			if (is_null($mes['picture']))
@@ -47,7 +98,10 @@ function showQueryResults($query, $jid)
 			$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>"; //adds name.
 		}
         $message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='select_all();'/></span></li>";
-		$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
+		if (!$is_friends)
+		{
+			$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
+		}
 	}
 	
 	return($message);
