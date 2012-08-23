@@ -27,13 +27,18 @@ if ($_POST['submit'] == "Save")
 	}
 
 	$query = sprintf("UPDATE about SET field='$field', city='$city', state='$state', country='United States', pay='$pay', hourly=$hourly, status='$status', transportation='$transportation', relocate='$relocate' WHERE idnum=%d LIMIT 1", $_SESSION['idnum']);
+	$result = mysql_query($query);	
+	if (!$result)
+	{
+		$error = mysql_error();	
+	}
+	$query = sprintf("UPDATE users SET skills='$skills' WHERE idnum=%d LIMIT 1", $_SESSION['idnum']);
 	$message = "<p id=\"update_message\">Basic information updated.</p>";
 	$result = mysql_query($query);	
 	if (!$result)
 	{
 		$error = mysql_error();	
 	}
-	
 	
 }
 
@@ -137,7 +142,9 @@ else
                     <option>Undecided</option>
                 </select>
                 </li><br>
-                <li><label class="field">Current City: </label><input name="city" value="<?=$about['city']?>" style='width: 150px;' /> State: <input name="state" value="<?=$about['state']?>" style='width: 60px;' /></li>
+                <li><label class="field">Current City: </label><input name="city" value="<?=$about['city']?>" style='width: 150px;' /> State: <select name="state"  style='width: 60px;'><script>
+				states("<?=$about['state']?>");
+				</script></select></li>
                 <li id="school"></li>                    
                 <li><label class="field">Expected Pay: </label><input name="income" value="<?=$about['pay']?>" /></label> <label>  &nbsp;Hourly: </label>
     <input type="checkbox" name="hourly" <?=$hourly_mes?>/></li>

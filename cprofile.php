@@ -28,6 +28,8 @@ else
 {
 	$idnum = $_SESSION['idnum'];
 }
+
+//Will phase out eventually.
 $query = sprintf("SELECT * FROM users WHERE idnum=%d", $idnum);
 $result = mysql_query($query);
 if (!$result)
@@ -36,6 +38,16 @@ if (!$result)
 }
 
 $v_users = mysql_fetch_assoc($result);
+
+//Adding about.
+$query = sprintf("SELECT * FROM about WHERE idnum=%d", $idnum);
+$result = mysql_query($query);
+if (!$result)
+{
+	echo mysql_error();	
+}
+
+$v_about = mysql_fetch_assoc($result);
 
 //Checks if visited.
 /*
@@ -216,9 +228,9 @@ $(function(){
                     <?=$v_education['college']?><br />
 					<?=$v_education['major']?><br />
                     <?php 
-                    if ($v_users['city'] != "" && $v_users['state'] != "")
+                    if ($v_about['city'] != "" && $v_about['state'] != "")
                     {
-                        echo $v_users['city'].", ".$v_users['state']."<br />";
+                        echo $v_about['city'].", ".$v_about['state']."<br />";
                     }
 					if (isset($v_education['college_end']))
 					{
@@ -239,7 +251,7 @@ $(function(){
                     ?>
                     
                     </p>
-                    <p><?=$v_users['status']?></p>
+                    <p><?=$v_about['status']?></p>
                     <?
                     if (isset($_GET['idnum'])) {
                         $new_buttons = $friends?"":"<a href='cprofile.php?idnum=".$_GET['idnum']."&addfriend=true'><img src='site_im/addusericon.jpg' width='40' height='40' onclick='if(confirm_add_friend(\"".$p_name."\")){}else return false;'/></a>";

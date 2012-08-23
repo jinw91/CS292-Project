@@ -38,6 +38,24 @@ function years(year)
 	}
 	document.write("</select>");
 }
+
+function states(default_state)
+{
+	var states_array = new Array('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY');
+	for (i in states_array)
+	{
+		if (default_state == states_array[i])
+		{
+			document.write("<option selected='selected'>"+states_array[i]+"</option>");
+		}
+		else
+		{
+			document.write("<option>"+states_array[i]+"</option>");
+		}
+	}
+    //document.write("</select>");
+}
+
 function addfield(divName)
 {
 	var newdiv = document.createElement('div');

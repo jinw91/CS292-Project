@@ -58,7 +58,7 @@ if ($_POST['submit'] == "Register Now")
 		{
 			$error = mysql_error();	
 		}
-		$_SESSION['idnum'] = validateLogin($emailaddress, $user_password);
+		$_SESSION['idnum'] = validateLogin($emailaddress, $_POST['user_password']);
 		
 		
 	}
