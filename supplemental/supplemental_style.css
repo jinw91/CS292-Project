@@ -1,0 +1,15 @@
+/* CSS Document */
+label.form_main
+{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	width: 100px;
+	text-align: right;
+	list-style-type: none;
+}
+h3.header_question
+{
+	font-family: Lato, Arial, sans-serif;
+	padding-left: 50px;
+}

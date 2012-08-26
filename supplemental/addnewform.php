@@ -9,6 +9,7 @@ session_start();
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="supplemental_style.css">
 <link rel="stylesheet" href="../css/skeleton.css">
 <script src="../js/jquery-1.7.1.min.js"></script>
 <script src="../js/superfish.js"></script>
@@ -54,14 +55,25 @@ session_start();
                     <div class="message">
     				<h1 id='edit_title'>Form Basic Information:</h1>
               			<form action='addnewform.php' method='post'>
-                        <li><label>Form Name: </label><input name='name' type='text'></li>
-                        <li><label>Form Description: </label><textarea name='description' rows="3"></textarea></li>
+                        <ul id='education'>
+                        <li><label class='form_main'>Form Name: </label><input name='name' type='text'></li>
+                        <li><label class='form_main'>Form Description: </label><textarea name='description' rows="3"></textarea></li>
               			<?=$message?><br>
-              			<ul id='education'>
-                        What would you like to ask your candidate?
-                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" value="<?=$user_info['city']?>" style='width: 150px;' /> </li>                   
-                		<li><label class="field">Form 1: </label><input name="income" type="checkbox" style='width: 150px;' /></li>
-                		<li><label class='field'></label><a href='../addform.php'>Add new form</a></li>
+                        <h3 class="header_question">Question 1</h3>
+                        <li><label class='field'>Question: </label><input name="question" type="text" style='width: 150px;' /></li>
+                		<li><label class='field'>Type: </label><select name="type" style='width: 150px;' onchange='addothercollege();'> 
+                        <option value='1'>Single-line Answer</option>
+                        <option value='2'>Paragraph Answer</option>
+                        <option value='3'>Multiple Choice</option>
+                        <option value='4'>Checkboxes</option>
+                        <option value='5'>Choose From List</option>
+                        <option value='6'>Scale</option>
+                        <option value='7'>Fill in the Blank</option>
+                        </select> </li>
+                		
+                        <li id='question_specific'><ul><li><label class='field'></label><input type='radio'><input type='text' name='1' size='200'></li>
+                        <li><label class='field'></label><input type='radio'><a href='javascript: addOption();'>Add Another Option</a></li></ul></li>
+                        <li><label class='field'></label><a href='../addform.php'>Add Another Question</a></li>
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>
