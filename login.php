@@ -226,18 +226,6 @@ width="100px" name="password">
 		<div class="clear"></div>
 	</div>
 </header>
-<!--
-<div align="center">
-	<h1 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Retrieve Your Password:</h1>
-    <form action="login.php" method="post">
-    <div style="color: gray; margin-left: 15px;"></div>
-      <p align="center">Please enter your email: <br />
-	  <input name="email_address" width="300px" size="40"/></p>
-      <p align="center">
-      <input type="submit" name="submit" value="Submit" /></p>
-    </form>
-</div>
---!>
 <?=$message?>
 <!-- content -->
 <section id="content">  
