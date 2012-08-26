@@ -14,6 +14,36 @@ if (isset($_SESSION['idnum']))
 	{
 		$error = "failed to connect";	
 	}
+    $message = "<div align='center'>
+                    <h1 style='font-family: Lato, Arial, Helvetica; text-transform: uppercase;'>Retrieve Your Password:</h1>
+                    <form action='login.php' method='post'>
+                    <div style='color: gray; margin-left: 15px;'></div>
+                      <p align='center'>Please enter your email: <br />
+                      <input name='email_address' width='300px' size='40'/></p>
+                      <p align='center'>
+                      <input type='submit' name='submit' value='Submit' /></p>
+                    </form>
+                </div>";
+    if (isset($_GET['id']) && isset($_GET['idnum']))
+    {
+        $query = sprintf("SELECT * FROM users WHERE idnum=%d",$_GET['idnum']);
+        $result = mysql_query($query);
+        if ($result && mysql_num_rows($result) > 0)
+        {
+            $message = "<div align='center'>
+                            <h1 style='font-family: lato, arial, helvetica; text-transform: uppercase;'>reset your password:</h1>
+                            <form action='login.php' method='post'>
+                            <div style='color: gray; margin-left: 15px;'></div>
+                              <p align='center'>Enter new password: <br />
+                              <input name='new_password' width='300px' size='40'/></p>
+                              <p align='center'>Confirm password: <br />
+                              <input name='confirm_password' width='300px' size='40'/></p>
+                              <p align='center'>
+                              <input type='hidden' name='hidden_idnum' value='".$_GET['idnum']."'>
+                              <input type='submit' name='change_password' value='Change password' /></p> </form>
+                        </div>";
+        }
+    }
 	if ($_POST['login'] == "Log In")
 	{
 		$_SESSION['email'] = $_POST['email'];
@@ -71,11 +101,11 @@ if (isset($_SESSION['idnum']))
 			if ($res['disabled']==0)
 			{
 				$error = "Message sent. Please check your inbox.";
-				$message = "To reset your password, please go <a href='http://www.proarcs.com/login.php?id=".$res['password']."'>here</a><br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";
+                $msgbody = "To reset your password, please go <a href='http://www.proarcs.com/login.php?id=".$res['password']."&idnum=".$res['idnum']."'>here</a><br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";
 				$msgheader = "From: Professional Archives <proarc@proarcs.com>\r\n";
 				$msgheader .= "MIME-Version: 1.0\n";
 				$msgheader .= "Content-type: text/html; charset=us-ascii\n";
-				mail($emailaddress, "Professional Archives Lost Password", $message, $msgheader);
+				mail($emailaddress, "Professional Archives Lost Password", $msgbody, $msgheader);
 			}
 			else
 			{
@@ -84,6 +114,26 @@ if (isset($_SESSION['idnum']))
 			}
 		}
 	}
+    else if ($_POST['change_password'] == "Change password")
+    {
+        $new_password = $_POST['new_password'];
+        $confirm_password = $_POST['confirm_password'];
+        if ($new_password == $confirm_password)
+        {
+            $hashed_password = mysql_real_escape_string(sha1(encrypt($new_password)));
+            $query = sprintf("UPDATE users SET password='%s' WHERE idnum=%d", $hashed_password, $_POST['hidden_idnum']);
+            $error = "Your password has been changed.";
+            $result = mysql_query($query);
+            if (!$result)
+            {
+                $error = mysql_error();	
+            }
+        }
+        else
+        {
+            $error = "Password mismatch.";
+        }
+    }
 	else
 	{
 		$error = "Error message.";
@@ -176,16 +226,19 @@ width="100px" name="password">
 		<div class="clear"></div>
 	</div>
 </header>
+<!--
 <div align="center">
 	<h1 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Retrieve Your Password:</h1>
     <form action="login.php" method="post">
-    <div style="color: gray; margin-left: 15px;"><?=$error?></div>
+    <div style="color: gray; margin-left: 15px;"></div>
       <p align="center">Please enter your email: <br />
 	  <input name="email_address" width="300px" size="40"/></p>
       <p align="center">
       <input type="submit" name="submit" value="Submit" /></p>
     </form>
 </div>
+--!>
+<?=$message?>
 <!-- content -->
 <section id="content">  
 	<div class="container_12">
