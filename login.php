@@ -68,14 +68,14 @@ if (isset($_SESSION['idnum']))
 		else
 		{
 			$res = mysql_fetch_assoc($result);
-			if ($res['idnum'] != 5)
+			if ($res['disabled']==0)
 			{
 				$error = "Message sent. Please check your inbox.";
-			$message = "Your password is: ".$res['password']."<br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";
-			$msgheader = "From: Professional Archives <proarc@proarcs.com>\r\n";
-			$msgheader .= "MIME-Version: 1.0\n";
-			$msgheader .= "Content-type: text/html; charset=us-ascii\n";
-			mail($emailaddress, "Professional Archives Lost Password", $message, $msgheader);
+				$message = "To reset your password, please go <a href='http://www.proarcs.com/login.php?id=".$res['password']."'>here</a><br/><br/>Thanks, <br/>Professional Archives<br/>Please do not respond to this email.";
+				$msgheader = "From: Professional Archives <proarc@proarcs.com>\r\n";
+				$msgheader .= "MIME-Version: 1.0\n";
+				$msgheader .= "Content-type: text/html; charset=us-ascii\n";
+				mail($emailaddress, "Professional Archives Lost Password", $message, $msgheader);
 			}
 			else
 			{

@@ -248,11 +248,20 @@ $(function(){
 							echo "<br>";
 						}
 					}
-                    ?>
-                    
-                    </p>
-                    <p><?=$v_about['status']?></p>
-                    <?
+					echo "</p>";
+					if (isset($v_about['status']))
+					{
+						echo "<p>";
+						if ($v_about['status'] != "Employed")
+						{
+							echo "Looking for ".$v_about['status'];
+						}
+						else
+						{
+							echo $v_about['status'];
+						}
+						echo "</p>";
+					}
                     if (isset($_GET['idnum'])) {
                         $new_buttons = $friends?"":"<a href='cprofile.php?idnum=".$_GET['idnum']."&addfriend=true'><img src='site_im/addusericon.jpg' width='40' height='40' onclick='if(confirm_add_friend(\"".$p_name."\")){}else return false;'/></a>";
                         $new_buttons .= "<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$_GET['idnum']."'><img src='site_im/messageicon.jpg' width='40' height='40'/></a>";

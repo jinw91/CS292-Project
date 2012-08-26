@@ -36,6 +36,7 @@ if ($_POST['submit'] == "Submit")
 	$title = $_POST['title'];
 	$major = $_POST['major'];
 	$minor = $_POST['minor'];
+	$type = $_POST['type'];
 	$college_month_start = $_POST['college_month_start'];
 	$college_year_start = $_POST['college_year_start'];
 	$college_month_end = $_POST['college_month_end'];
@@ -47,27 +48,54 @@ if ($_POST['submit'] == "Submit")
 	$college_end = $college_year_end."-".$college_month_end."-01"; //arbitrary day.
 	if (!is_null($education))
 	{
-		$query = sprintf("UPDATE education_data SET college='$college', title='$title', major='$major', minor='$minor', college_start='$college_start', college_end='$college_end', gpa='$gpa', honors='$honors' WHERE idnum=$idnum LIMIT 1");
+		$query = sprintf("UPDATE education_data SET college='$college', type='$type', title='$title', major='$major', minor='$minor', college_start='$college_start', college_end='$college_end', gpa='$gpa', honors='$honors' WHERE idnum=$idnum LIMIT 1");
 	}
 	else
 	{
-		$query = sprintf("INSERT INTO education_data (idnum, college, title, major, minor, college_start, college_end, gpa, honors) VALUES ('$idnum', '$college', '$title', '$major', '$minor', '$college_start', '$college_end', '$gpa', '$honors')");
+		$query = sprintf("INSERT INTO education_data (idnum, type, college, title, major, minor, college_start, college_end, gpa, honors) VALUES ('$idnum', '$type', '$college', '$title', '$major', '$minor', '$college_start', '$college_end', '$gpa', '$honors')");
 	}
 	$result = mysql_query($query);
 	if (!$result)
 	{
 		echo mysql_error();	
 	}
-	$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $_SESSION['idnum']);
-	$result = mysql_query($query);
-	$education = mysql_fetch_assoc($result);
-	$month_start = substr($education['college_start'], 5, 2);
-	$year_start = substr($education['college_start'], 0, 4);
-	$month_end = substr($education['college_end'], 5, 2);
-	$year_end = substr($education['college_end'], 0, 4);
-	$_SESSION['education'] = $education;
-	$message = "<p id='update_message'>Education updated.</p>";
 }
+$query = sprintf("SELECT * FROM education_data WHERE idnum=%d", $_SESSION['idnum']);
+$result = mysql_query($query);
+$education = mysql_fetch_assoc($result);
+
+//Select box
+if ($education['type']==0)
+{
+	$attended = "<input type='radio' name='type' value='2' />Graduate School
+				<input type='radio' name='type' value='1' />College
+				<input type='radio' name='type' value='0' checked/>High School";
+}
+else if ($education['type']==1)
+{
+	$attended = "<input type='radio' name='type' value='2' />Graduate School
+				<input type='radio' name='type' value='1' checked />College
+				<input type='radio' name='type' value='0' />High School";
+}
+else if ($education['type'] == 2)
+{
+	$attended = "<input type='radio' name='type' value='2' checked/>Graduate School
+				<input type='radio' name='type' value='1' />College
+				<input type='radio' name='type' value='0' />High School";
+}
+else
+{
+	$attended = "<input type='radio' name='type' value='2' />Graduate School
+				<input type='radio' name='type' value='1' />College
+				<input type='radio' name='type' value='0' />High School";
+}
+
+$month_start = substr($education['college_start'], 5, 2);
+$year_start = substr($education['college_start'], 0, 4);
+$month_end = substr($education['college_end'], 5, 2);
+$year_end = substr($education['college_end'], 0, 4);
+$_SESSION['education'] = $education;
+$message = "<p id='update_message'>Education updated.</p>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -134,14 +162,10 @@ if ($_POST['submit'] == "Submit")
 		<option value='other'>Other</option>		
                 </select></li>
                 <li id="school"></li>
-                <li><label class='field' for='college'>Title: </label>
-                <select name='title' size=1 style='width: 300px;'>
-                    <option value='Bachelor of Arts'>Bachelor of Arts</option>
-                    <option value='Bachelor of Science'>Bachelor of Science</option>
-                    <option value='Bachelor of Engineering'>Bachelor of Engineering</option>
-                    <option value='Bachelor of Nursing'>Bachelor of Nursing</option>
-                    <option value="Associate's Degree">Associate's Degree</option> 
-                </select></li>
+                <li><label class='field' for='college'>Attended School for: </label>
+                <?=$attended?>
+                </li>
+                <li><label class='field' for='college'>Title: </label><input type='text' name='title' value='<?=$education['title']?>'></li>
                 <li><label class='field'>Major(s): </label><input type='text' name='major' value="<?=$education['major']?>" />
             <label class='subscript'>Example: Computer Science, Math</label></li><br>
             <li><label class='field'>Minor(s): </label><input type='text' name='minor' value="<?=$education['minor']?>" />
@@ -159,7 +183,7 @@ if ($_POST['submit'] == "Submit")
 				years("<?=$year_end?>");
 				selectMonth("college_month_start", "<?=$month_start?>");
 				selectMonth("college_month_end", "<?=$month_end?>");
-				selectDefault('title', "<?=$education['title']?>");
+				//selectDefault('title', "<?=$education['title']?>");
 				selectDefault('college', "<?=$education['college']?>");
                 </script>
             </li>
@@ -168,7 +192,8 @@ if ($_POST['submit'] == "Submit")
             <label class='subscript'>Example: Dean's List, National Merit Scholarship</label><br></li>
             <li>
             <span style='margin-left: 300px;'><input type='submit' name='submit' value='Submit' />
-            <input type='submit' name='skip' value='Skip' /></span></li>
+            <input type='submit' name='skip' value='Skip' />
+            <input type='submit' name='add' value='Add Another School' /></span></li>
             </ul>
         	</form>
 			</div>
