@@ -3,7 +3,7 @@
 function getSelected()
 {
 	var tag = document.getElementsByName('type').item(0);
-	var new_tag = document.getElementsByName('question_specific').item(0);
+	var new_tag = document.getElementById('question_specific');
 	alert(tag.value);
 	if (tag.value <= 2)
 	{

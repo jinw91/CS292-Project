@@ -9,7 +9,7 @@ function connectToDatabase()
 	$password="publicclass";
 	$db_name="pa_members";
 	
-	$connect=mysql_connect("$host", "$username", "$password");
+	$connect=mysqli_connect("$host", "$username", "$password");
 	if (!$connect)
 	{
 		printf( "Error connecting to mySQL");
