@@ -120,39 +120,29 @@ if (!isset($_POST['search']))
     {
         $group_dropdown .= "<option value='".$group."'>".$group."</option>";
     }
-	$message .= "<div align='right'><select name='group' id='select_group'>";
-    $message .= $group_dropdown;
-    $message .= "</select><input type='submit' name='submit' value='Add to Group' onclick='copy_group()'>";
-    $message .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div>"; //add option to pick job.
+	$add_to_group .= "<div align='right'><select name='group' id='select_group'>";
+    $add_to_group .= $group_dropdown;
+    $add_to_group .= "</select><input type='submit' name='submit' value='Add to Group' onclick='copy_group()'>";
+    $add_to_group .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div>"; //add option to pick job.
 }
 if ($_POST['submit'] == "Add to Group")
 {
-    if ($_POST['group'] == "new_group")
-    {
-        $group = $_POST['hidden_group_name'];
-    }
-    else
-    {
-        $group = $_POST['group'];
-    }
+    $group = $_POST['hidden_group_name'];
     $select = $_POST['select'];
     for ($i = 0; $i < count($select); $i++)
     {
-        $query = sprintf("UPDATE friends SET group='%s' WHERE from_id='%d' AND to_id='%d'", $group, $_SESSION['idnum'], $select[$i]);
+        $query = sprintf("UPDATE friends SET groups='%s' WHERE from_id='%d' AND to_id='%d'", $group, $_SESSION['idnum'], $select[$i]);
         $result = mysql_query($query);
     }
-
 }
 else
 {
-<<<<<<< HEAD
-    //$error = $query;
-    $message = showQueryResults($query, 0);
-=======
-	//$error = $query;
+	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0, true);
->>>>>>> 4d152ad06eb3523937170f0d6de7eb51cae865ee
+    //$error .= $query;
 }
+
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -245,8 +235,9 @@ echo navBar($_SESSION['num_mes']);
             <div class="grid_8">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
-                    <ul id="messages">
-    				<?=$message?>
+                    <ul id="friend_list">
+                    <?=$message?>
+    				<?=$add_to_group?>
                     </ul>
                     </div>
                     </fieldset>
