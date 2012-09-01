@@ -113,7 +113,7 @@ if (!isset($_POST['search']))
 else
 {
 	//$error = $query;
-	$message = showQueryResults($query, 0);
+	$message = showQueryResults($query, 0, true);
 }
 ?>
 <!DOCTYPE html>

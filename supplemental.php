@@ -59,7 +59,7 @@ session_start();
                         What would you like to ask your candidate?
                 		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" value="<?=$user_info['city']?>" style='width: 150px;' /> </li>                   
                 		<li><label class="field">Form 1: </label><input name="income" type="checkbox" style='width: 150px;' /></li>
-                		<li><label class='field'></label><a href='addform.php'>Add new form</a></li>
+                		<li><label class='field'></label><a href='supplemental/addnewform.php'>Add new form</a></li>
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>
