@@ -14,6 +14,7 @@ function getSelected()
 		new_tag.innerHTML = "";
 		new_tag.innerHTML = multipleChoice();
 	}
+	alert(new_tag.innerHTML);
 }
 
 function clearQuestion()
