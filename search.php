@@ -182,6 +182,7 @@ else
 	//$error = $query;
 	$message = showQueryResults($query, 0);
 }
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -60,12 +60,13 @@ function showSavedSearches($jid)
 
 function showQueryResults($query, $jid, $is_friends = false)
 {
-	define('__ROOT__', dirname(__FILE__)); 
+	/**define('__ROOT__', dirname(__FILE__)); 
 	require_once('database.php');
 	require_once('template.php');
 	$connect = connectToDatabase();
 	$result = mysql_query($query);
-	mysql_close();
+	mysql_close();**/
+	$result = mysql_query($query);
 	if (!$result)
 	{
 		$message = $query." ".mysql_error();
@@ -75,7 +76,7 @@ function showQueryResults($query, $jid, $is_friends = false)
 	{
 		if ($is_friends)
 		{
-			$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Friends</span></legend><hr /></fieldset>";
+			$message = "<form action='friend.php' method='POST'><fieldset><legend><span class='job_title_font'>Friends</span></legend><hr /></fieldset>";
 		}
 		else
 		{

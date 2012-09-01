@@ -108,12 +108,12 @@ if (!isset($_POST['search']))
 {
 	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0, true);
-    $query = sprintf("SELECT DISTINCT groups FROM friends WHERE from_id='%d'", $_SESSION['idnum']);
-    $result = mysql_query($query);
+    $query2 = sprintf("SELECT DISTINCT groups FROM friends WHERE from_id='%d'", $_SESSION['idnum']);
+    $result = mysql_query($query2);
     if (!$result)
     {
-        //$error .= mysql_error();
-        $error .= $query;
+        $error .= mysql_error();
+        //$error .= $query2;
     }
     $group_dropdown = "<option value=new_group>Create new group</option>";
 	while ($groups = mysql_fetch_assoc($result))
@@ -137,7 +137,6 @@ if ($_POST['submit'] == "Add to Group")
 }
 else
 {
-	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0, true);
     //$error .= $query;
 }
