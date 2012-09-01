@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: custsql-ipg09.eigbox.net
--- Generation Time: Sep 01, 2012 at 04:43 PM
+-- Generation Time: Sep 01, 2012 at 05:06 PM
 -- Server version: 5.0.91
 -- PHP Version: 4.4.9
 -- 
@@ -219,6 +219,9 @@ CREATE TABLE `accepted` (
 CREATE TABLE `available_slots` (
   `slot_id` int(255) NOT NULL auto_increment,
   `r_id` int(255) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `user_id` int(255) NOT NULL default '0',
   PRIMARY KEY  (`slot_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
