@@ -16,22 +16,22 @@ function navBar($mes)
 	{
 		$message = "<div id='main-menu'>
 				<ul class='sf-menu fright responsive-menu'>
-					<li class='current'><a href='home.php'>home</a></li>
-					<li><a href='profile.php'>profile<span class='arrow'></span></a><ul>
-							<li><a href='business.php'>Edit Business Information</a></li>
-							<li><a href='supplemental.php'>Add Supplemental Forms</a></li>
+					<li class='current'><a href='http://www.proarcs.com/home.php'>home</a></li>
+					<li><a href='http://www.proarcs.com/profile.php'>profile<span class='arrow'></span></a><ul>
+							<li><a href='http://www.proarcs.com/business.php'>Edit Business Information</a></li>
+							<li><a href='http://www.proarcs.com/supplemental.php'>Add Supplemental Forms</a></li>
 						</ul>
 					</li>
-					<li><a href='inbox.php'>inbox";
+					<li><a href='http://www.proarcs.com/inbox.php'>inbox";
 		if ($mes > 0)
 		{
 			$message = $message."(".$mes.")";
 		}
-		$message .= "</a></li><li><a href='careers.php'>careers</a></li>
+		$message .= "</a></li><li><a href='http://www.proarcs.com/careers.php'>careers</a></li>
 					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
-							<li><a href='privacysettings.php'>Privacy Settings</a></li>
+							<li><a href='http://www.proarcs.com/privacysettings.php'>Privacy Settings</a></li>
 							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
-							<li><a href='logout.php'>Log Out</a></li>
+							<li><a href='http://www.proarcs.com/logout.php'>Log Out</a></li>
 							</ul>
 				</ul>
 			</div>";

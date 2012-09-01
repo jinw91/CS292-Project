@@ -17,7 +17,7 @@ if (isset($_SESSION['idnum']))
     $message = "<div align='center'>
                     <h1 style='font-family: Lato, Arial, Helvetica; text-transform: uppercase;'>Retrieve Your Password:</h1>
                     <form action='login.php' method='post'>
-                    <div style='color: gray; margin-left: 15px;'></div>
+                    <div style='color: gray; margin-left: 15px;'>".$error."</div>
                       <p align='center'>Please enter your email: <br />
                       <input name='email_address' width='300px' size='40'/></p>
                       <p align='center'>
@@ -33,11 +33,11 @@ if (isset($_SESSION['idnum']))
             $message = "<div align='center'>
                             <h1 style='font-family: lato, arial, helvetica; text-transform: uppercase;'>reset your password:</h1>
                             <form action='login.php' method='post'>
-                            <div style='color: gray; margin-left: 15px;'></div>
+                            <div style='color: gray; margin-left: 15px;'>".$error."</div>
                               <p align='center'>Enter new password: <br />
-                              <input name='new_password' width='300px' size='40'/></p>
+                              <input name='new_password' type='password' width='300px' size='40'/></p>
                               <p align='center'>Confirm password: <br />
-                              <input name='confirm_password' width='300px' size='40'/></p>
+                              <input name='confirm_password' type='password' width='300px' size='40'/></p>
                               <p align='center'>
                               <input type='hidden' name='hidden_idnum' value='".$_GET['idnum']."'>
                               <input type='submit' name='change_password' value='Change password' /></p> </form>

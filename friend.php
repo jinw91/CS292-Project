@@ -145,8 +145,13 @@ if ($_POST['submit'] == "Add to Group")
 }
 else
 {
+<<<<<<< HEAD
     //$error = $query;
     $message = showQueryResults($query, 0);
+=======
+	//$error = $query;
+	$message = showQueryResults($query, 0, true);
+>>>>>>> 4d152ad06eb3523937170f0d6de7eb51cae865ee
 }
 ?>
 <!DOCTYPE html>

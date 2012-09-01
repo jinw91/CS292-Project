@@ -16,6 +16,7 @@ session_start();
 <script src="../js/hoverIntent.js"></script>
 <script src="../js/script.js"></script>
 <script src="../js/FF-cash.js"></script>
+<script src="../js/supplemental.js"></script>
 </head>
 <body>
 <!-- header -->
@@ -36,7 +37,7 @@ session_start();
 			
         <?
 		define('__ROOT__', dirname(__FILE__)); 
-		require_once(__ROOT__.'/generalfunctions/template.php');
+		require_once(__ROOT__.'/../generalfunctions/template.php');
 		echo navBar($_SESSION['num_mes']);
 		?>
 		</div>
@@ -59,9 +60,10 @@ session_start();
                         <li><label class='form_main'>Form Name: </label><input name='name' type='text'></li>
                         <li><label class='form_main'>Form Description: </label><textarea name='description' rows="3"></textarea></li>
               			<?=$message?><br>
+                        <section id='question1'>
                         <h3 class="header_question">Question 1</h3>
                         <li><label class='field'>Question: </label><input name="question" type="text" style='width: 150px;' /></li>
-                		<li><label class='field'>Type: </label><select name="type" style='width: 150px;' onchange='addothercollege();'> 
+                		<li><label class='field'>Type: </label><select name="type" style='width: 150px;' onchange='getSelected();'> 
                         <option value='1'>Single-line Answer</option>
                         <option value='2'>Paragraph Answer</option>
                         <option value='3'>Multiple Choice</option>
@@ -71,9 +73,9 @@ session_start();
                         <option value='7'>Fill in the Blank</option>
                         </select> </li>
                 		
-                        <li id='question_specific'><ul><li><label class='field'></label><input type='radio'><input type='text' name='1' size='200'></li>
-                        <li><label class='field'></label><input type='radio'><a href='javascript: addOption();'>Add Another Option</a></li></ul></li>
-                        <li><label class='field'></label><a href='../addform.php'>Add Another Question</a></li>
+                        <li id='question_specific'></li>
+                        </section>
+                        <li><label class='field'></label><a href='#' onClick='addAnotherQuestion(this);'>Add Another Question</a></li>
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>
@@ -82,7 +84,7 @@ session_start();
                     </div>
                     </fieldset>
             </div>
-        </div>        
+        </div>
 	</div>
 </section>
 <!-- footer -->

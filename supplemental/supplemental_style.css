@@ -8,6 +8,11 @@ label.form_main
 	text-align: right;
 	list-style-type: none;
 }
+label.multiple
+{
+	display: block;
+	width: 200px;
+}
 h3.header_question
 {
 	font-family: Lato, Arial, sans-serif;

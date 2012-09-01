@@ -36,7 +36,7 @@ function postings($bid)
 	{
 		if (isset($_SESSION['company'])) {
             $postings = $postings."<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidejob".$job['jid']."' onclick='slideDown(this.id, \\\"job".$job['jid']."\\\");'/>";
-            $postings = $postings."<a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a>";
+            $postings = $postings."<span class='job_title_font'><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a></span>";
             $postings = $postings."<span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span>";
 			$postings = $postings."<ul id='job".$job['jid']."' style='display: none'><li><b>Major: </b>".$job['major']."</li>";
 			$postings = $postings."<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>";

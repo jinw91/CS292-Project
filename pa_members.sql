@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: custsql-ipg09.eigbox.net
--- Generation Time: Aug 19, 2012 at 05:07 PM
+-- Generation Time: Sep 01, 2012 at 04:43 PM
 -- Server version: 5.0.91
 -- PHP Version: 4.4.9
 -- 
@@ -34,8 +34,8 @@ CREATE TABLE `about` (
 -- Dumping data for table `about`
 -- 
 
-INSERT INTO `about` VALUES (5, 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 0, 0);
-INSERT INTO `about` VALUES (13, 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 0, 0);
+INSERT INTO `about` VALUES (5, 'Education, Non-Profit', 'Brookfield', 'WI', 'United States', 70000, 0, 'Cooperative Internship', 0, 0);
+INSERT INTO `about` VALUES (13, 'Public Policy, Government, Law', 'Brookfield', 'WI', 'United States', 50000, 0, 'Summer Internship', 0, 1);
 INSERT INTO `about` VALUES (23, '', '', '', '', 0, 0, 'Searching for Internship', 0, 0);
 INSERT INTO `about` VALUES (20, 'Mechanical Engineering', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', 0, 0);
 INSERT INTO `about` VALUES (27, 'Engineering, Information Technology', 'Nashville', 'TN', 'United States', 0, 0, 'Summer Internship', 0, 1);
@@ -207,6 +207,23 @@ CREATE TABLE `accepted` (
 
 -- 
 -- Dumping data for table `accepted`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `available_slots`
+-- 
+
+CREATE TABLE `available_slots` (
+  `slot_id` int(255) NOT NULL auto_increment,
+  `r_id` int(255) NOT NULL,
+  PRIMARY KEY  (`slot_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- 
+-- Dumping data for table `available_slots`
 -- 
 
 
@@ -512,136 +529,9 @@ CREATE TABLE `connections` (
 -- 
 
 CREATE TABLE `education_data` (
-  `idnum` int(255) NOT NULL,
-  `college` varchar(255) NOT NULL,
-  `title` varchar(255) character set utf8 NOT NULL,
-  `major` varchar(512) character set utf8 NOT NULL,
-  `minor` varchar(512) NOT NULL,
-  `college_start` date NOT NULL,
-  `college_end` date NOT NULL,
-  `gpa` float NOT NULL,
-  `honors` text NOT NULL,
-  PRIMARY KEY  (`idnum`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- 
--- Dumping data for table `education_data`
--- 
-
-INSERT INTO `education_data` VALUES (5, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-05-01', 3.71, 'Dean''s List');
-INSERT INTO `education_data` VALUES (20, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2014-05-01', 3.94, '');
-INSERT INTO `education_data` VALUES (25, 'Vanderbilt University', 'Bachelor of Arts', 'German', '', '0000-00-00', '0000-00-00', 3.17, '');
-INSERT INTO `education_data` VALUES (27, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering ', '', '2010-08-01', '2014-05-01', 2.8, '');
-INSERT INTO `education_data` VALUES (28, 'Vanderbilt University', 'Bachelor of Arts', '', '', '0000-00-00', '0000-00-00', 0, '');
-INSERT INTO `education_data` VALUES (29, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', '', '0000-00-00', '0000-00-00', 3.6, 'KA');
-INSERT INTO `education_data` VALUES (31, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Finance', '', '0000-00-00', '0000-00-00', 3.9, '');
-INSERT INTO `education_data` VALUES (32, 'Vanderbilt University', 'Bachelor of Science', 'Economics', '', '0000-00-00', '0000-00-00', 3, '');
-INSERT INTO `education_data` VALUES (33, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Finance, Corporate Strategy', '', '0000-00-00', '0000-00-00', 3.88, '');
-INSERT INTO `education_data` VALUES (34, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Premed', '', '2010-08-01', '2012-01-01', 3.44, '');
-INSERT INTO `education_data` VALUES (36, 'Vanderbilt University', 'Bachelor of Arts', 'Business, Spanish', '', '0000-00-00', '0000-00-00', 3.481, '');
-INSERT INTO `education_data` VALUES (35, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Engineering', '', '2010-08-01', '2014-05-01', 3.9, 'National Merit Scholar, Dean''s List');
-INSERT INTO `education_data` VALUES (39, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, HOD, Financial Economics', '', '0000-00-00', '0000-00-00', 3.56, '');
-INSERT INTO `education_data` VALUES (40, 'Vanderbilt University', 'Bachelor of Arts', 'Communication Studies', '', '2010-08-01', '2014-05-01', 3.313, '');
-INSERT INTO `education_data` VALUES (41, 'Duke University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.5, '');
-INSERT INTO `education_data` VALUES (43, 'Vanderbilt University', 'Bachelor of Science', 'Human & Organizational Development, Spanish', '', '0000-00-00', '0000-00-00', 3.42, '');
-INSERT INTO `education_data` VALUES (44, 'Vanderbilt University', 'Bachelor of Science', 'Neuroscience, Linguistics', '', '0000-00-00', '0000-00-00', 3.65, '');
-INSERT INTO `education_data` VALUES (46, 'Vanderbilt University', 'Bachelor of Arts', 'History, Spanish, Corporate Strategy', '', '0000-00-00', '0000-00-00', 0, '');
-INSERT INTO `education_data` VALUES (47, 'Vanderbilt University', 'Bachelor of Arts', 'Chemistry', '', '0000-00-00', '0000-00-00', 3.84, '');
-INSERT INTO `education_data` VALUES (48, 'Lyon College', 'Bachelor of Arts', 'History', '', '0000-00-00', '0000-00-00', 3.61, '');
-INSERT INTO `education_data` VALUES (50, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science, Math', '', '0000-00-00', '0000-00-00', 3.9, '');
-INSERT INTO `education_data` VALUES (51, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.8, '');
-INSERT INTO `education_data` VALUES (52, 'Vanderbilt University', 'Bachelor of Arts', 'Medicine, Health, and Society and Psychology ', '', '0000-00-00', '0000-00-00', 3.1, '');
-INSERT INTO `education_data` VALUES (53, 'Vanderbilt University', 'Bachelor of Arts', 'Human & Organizational Development', '', '0000-00-00', '0000-00-00', 2.67, '');
-INSERT INTO `education_data` VALUES (54, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.628, '');
-INSERT INTO `education_data` VALUES (57, 'Vanderbilt University', 'Bachelor of Arts', 'sociology', '', '0000-00-00', '0000-00-00', 0, '');
-INSERT INTO `education_data` VALUES (59, 'University of South Carolina', 'Bachelor of Science', 'Biological Science/Pre-Med, Southern Studies', '', '0000-00-00', '0000-00-00', 3.65, '');
-INSERT INTO `education_data` VALUES (60, 'Vanderbilt University', 'Bachelor of Engineering', 'Biomedical Engineering/Pre-Med', '', '0000-00-00', '0000-00-00', 3.931, '');
-INSERT INTO `education_data` VALUES (150, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Anthropology', '', '2010-08-01', '2014-05-01', 3.4, 'National Merit Scholarship Recipient ');
-INSERT INTO `education_data` VALUES (63, 'University of Virginia', 'Bachelor of Nursing', 'Nursing', '', '2010-08-01', '2014-05-01', 3.558, '');
-INSERT INTO `education_data` VALUES (65, 'Vanderbilt University', 'Bachelor of Arts', 'Biology, Economics', '', '1990-01-01', '1990-01-01', 2.6, '');
-INSERT INTO `education_data` VALUES (7, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-05-01', 3.705, '');
-INSERT INTO `education_data` VALUES (69, 'Harvard College', 'Bachelor of Arts', 'Portuguese', '', '2010-11-01', '2014-05-01', 3.705, '');
-INSERT INTO `education_data` VALUES (70, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science ', '', '2009-08-01', '2013-05-01', 2.96, '');
-INSERT INTO `education_data` VALUES (71, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', 'Material Science, ', '2010-08-01', '2014-05-01', 2.65, '');
-INSERT INTO `education_data` VALUES (122, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', '', '2010-08-01', '2014-05-01', 3.85, 'Dean''s List');
-INSERT INTO `education_data` VALUES (78, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-03-01', 3.3, 'Independent Study');
-INSERT INTO `education_data` VALUES (80, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2014-05-01', 2.78, 'Alpha Tau Omega Fraternity, HOPE scholarship, ');
-INSERT INTO `education_data` VALUES (81, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science', '', '2011-08-01', '2015-05-01', 4, '');
-INSERT INTO `education_data` VALUES (82, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Human and Organizational Development', '', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data` VALUES (83, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Math', '', '2010-08-01', '2014-05-01', 3.421, 'Dean''s List, Theta Tau (new member educator), Alpha Omicron Pi (Keeper of the Ritual)');
-INSERT INTO `education_data` VALUES (84, 'Vanderbilt University', 'Bachelor of Engineering', 'Biomedical Engineering', '', '2010-08-01', '2014-05-01', 3.085, '');
-INSERT INTO `education_data` VALUES (85, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Math', '', '2008-08-01', '2012-05-01', 3.68, 'VSVS, Dean''s List, Tau Beta Pi');
-INSERT INTO `education_data` VALUES (86, 'Vanderbilt University', 'Bachelor of Arts', 'Sociology, Spanish', '', '2011-09-01', '2013-05-01', 3.5, 'Dean''s list \r\nNewspaper\r\nHer Campus Online Magazine\r\nPencil Pals \r\nMANNA High School Tutoring\r\nAlpha Phi Omega Volunteer Fraternity');
-INSERT INTO `education_data` VALUES (87, 'Vanderbilt University', 'Bachelor of Science', 'Medicine, Health, and Society; Nursing', '', '2010-08-01', '2014-05-01', 2.74, 'Alpha Phi Omega\r\nComplete Capture\r\nVanderbuddies\r\nCafe Con Leche\r\nAmerican Red Cross Internship\r\nPREP\r\n\r\n');
-INSERT INTO `education_data` VALUES (88, 'Vanderbilt University', 'Bachelor of Science', 'Psychology, Pre-medical', '', '2010-08-01', '2014-05-01', 2.8, 'National Merit Scholarship, Leadership Hall, Youth Encouragement Services, Minority Association of Pre-Health Students, Alpha Phi Omega ');
-INSERT INTO `education_data` VALUES (89, 'Vanderbilt University', 'Bachelor of Arts', 'Biological Sciences, Economics', '', '2007-08-01', '2013-05-01', 2.006, '');
-INSERT INTO `education_data` VALUES (90, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Spanish, Italian', '', '2008-08-01', '2012-05-01', 3.61, 'Alpha Phi Omega, Alternative Winter Break, Alternative Spring Break, Vanderbilt VIEW, Vanderbilt VISAGE Cost Rica, Vanderbilt PREP');
-INSERT INTO `education_data` VALUES (91, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2011-08-01', '2014-05-01', 3.25, '');
-INSERT INTO `education_data` VALUES (92, 'Vanderbilt University', 'Bachelor of Science', 'Child Studies, Pre-Med', '', '2011-08-01', '2015-05-01', 0, '');
-INSERT INTO `education_data` VALUES (94, 'Vanderbilt University', 'Bachelor of Arts', 'Public Policy Studies', '', '2009-09-01', '2013-05-01', 3.86, 'Vanderbilt Undergraduate Advisory Board, Dean''s List, Alpha Phi Omega, Vanderbilt Off-Broadway, Vanderbilt Undergraduate Concert Choir, Alternative Spring Break, Alternative Summer Break, Vanderbilt Internship Experience in Washington D.C.');
-INSERT INTO `education_data` VALUES (95, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil & Environmental Engineering', '', '1990-01-01', '1990-01-01', 3.548, 'Dean''s List (Spring 2010, Fall 2011), Chi Epsilon Civil Engineering Honor Society');
-INSERT INTO `education_data` VALUES (96, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology', '', '2011-08-01', '2015-05-01', 3.821, 'Dean''s List, VOCE A Capella, APO, Habitat for Humanity, ACE Design Team');
-INSERT INTO `education_data` VALUES (99, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Studio Art', '', '2010-08-01', '2013-05-01', 3.287, 'Recipient of Provost award at Richmond the American International University in London. Received Spring 2010\r\n');
-INSERT INTO `education_data` VALUES (101, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, General', '', '1990-01-01', '1990-01-01', 2.74, 'Alpha Phi Omega, Cafe Con Leche, PREP Program, Calling Center, Front Desk Reeve');
-INSERT INTO `education_data` VALUES (103, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.68, 'Dean''s List all semesters\r\nSigma Nu Fraternity\r\nVanderbilt Student Government- Peabody Council Member');
-INSERT INTO `education_data` VALUES (105, 'Vanderbilt University', 'Bachelor of Arts', 'Economics/Chinese', '', '2011-08-01', '2013-08-01', 3.5, 'Alpha Phi Omega\r\nGlobal China Connection\r\nIntramural');
-INSERT INTO `education_data` VALUES (106, 'University of Alabama', 'Bachelor of Science', 'Finance and Economics', '', '2010-08-01', '2014-05-01', 3.68, 'Dean''s List, University Honors College, Golden Key International Honour Society, Phi Eta Sigma National Honor Society, The National Society of Collegiate Scholars');
-INSERT INTO `education_data` VALUES (113, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, HOD', '', '2011-08-01', '2015-05-01', 0, 'Vanderbilt Dodecaphonics, Mosaic');
-INSERT INTO `education_data` VALUES (102, 'Vanderbilt University', 'Bachelor of Arts', 'English; Financial Economics; Corporate Strategy', '', '1990-01-01', '1990-01-01', 3.64, 'Dean''s List');
-INSERT INTO `education_data` VALUES (108, 'Duke University', 'Associate', 'Information Technology', '', '2019-12-01', '1990-01-01', 1.2, 'FRAT');
-INSERT INTO `education_data` VALUES (109, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy, French', '', '2010-08-01', '2014-05-01', 3.38, 'Dean''s List');
-INSERT INTO `education_data` VALUES (30, 'Vanderbilt University', 'Bachelor of Science', 'Human Organizational Development', 'Managerial Studies: Corporate Strategy', '2010-08-01', '2012-05-01', 3, '');
-INSERT INTO `education_data` VALUES (116, '', 'Bachelor of Arts', 'Communication Studies, Italian', '', '2011-08-01', '2014-05-01', 3.5, 'Member of Kappa Kappa Gamma');
-INSERT INTO `education_data` VALUES (118, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development; Economics', '', '2010-08-01', '2014-05-01', 3.52, 'Dean''s List, Phi Sigma Pi National Honor Fraternity, Vanderbilt Club Hockey, Young Americans for Liberty.');
-INSERT INTO `education_data` VALUES (119, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2011-08-01', '2012-02-01', 3.55, 'Dean''s List');
-INSERT INTO `education_data` VALUES (120, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development, Corporate Strategy', '', '2010-08-01', '2014-05-01', 3.88, '');
-INSERT INTO `education_data` VALUES (121, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science & Philosophy', '', '2011-08-01', '2014-05-01', 3.7, 'Vanderbilt Mobile Applications Team\r\nVanderbilt Model United Nations\r\nCTO of Solution Pack Nonprofit Organization\r\nServer Administrator for Dept. of Chemical Engineering');
-INSERT INTO `education_data` VALUES (123, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2010-08-01', '2014-05-01', 2.9, '');
-INSERT INTO `education_data` VALUES (124, 'Vanderbilt University', 'Bachelor of Science', 'ajifo', '', '1990-12-01', '1990-01-01', 3.2, 'aijdsf');
-INSERT INTO `education_data` VALUES (126, 'Vanderbilt University', 'Bachelor of Science', 'Human & Organizational Development', '', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data` VALUES (127, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '1993-08-01', '1997-05-01', 3.85, 'Dean''s List, National Merit Scholarship');
-INSERT INTO `education_data` VALUES (131, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.3, 'Dean''s List Sophomore Fall');
-INSERT INTO `education_data` VALUES (133, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy Minor', '', '2010-09-01', '2014-05-01', 0, '');
-INSERT INTO `education_data` VALUES (135, 'University of Tennessee Knoxville', 'Bachelor of Arts', 'Finance', '', '2010-08-01', '2014-05-01', 3.4, 'Dean''s List');
-INSERT INTO `education_data` VALUES (136, 'Vanderbilt University', 'Bachelor of Arts', 'Communication Studies', '', '2008-08-01', '2012-05-01', 0, '');
-INSERT INTO `education_data` VALUES (139, 'Vanderbilt University', 'Bachelor of Arts', 'Medicine', '', '2009-08-01', '2012-12-01', 3.5, 'Dean''s List');
-INSERT INTO `education_data` VALUES (141, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2011-08-01', '2015-05-01', 0, '');
-INSERT INTO `education_data` VALUES (142, 'Vanderbilt University', 'Bachelor of Science', 'Molecular and Cellular Biology', 'Corporate Strategy, Leadership and Organization', '2010-08-01', '2014-05-01', 3.2, '');
-INSERT INTO `education_data` VALUES (144, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Managerial Studies', '', '2011-08-01', '2014-05-01', 0, 'Ã¢â‚¬Â¢Phi Eta Sigma Honor Society for Freshmen (Tulane, 2010-2011)\r\nÃ¢â‚¬Â¢Alpha Lamba Delta National Honor Society (Tulane, 2010-2011)\r\nÃ¢â‚¬Â¢National Honors Society (9th Ã¢â‚¬â€œ 12th Grade)\r\nÃ¢â‚¬Â¢Honor Roll (9th  - 12th Grade)\r\n');
-INSERT INTO `education_data` VALUES (145, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science, Math', '', '2010-08-01', '2014-05-01', 3.22, '');
-INSERT INTO `education_data` VALUES (146, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Engineering Management', '', '2008-08-01', '2012-05-01', 2.875, 'National Merit Scholar');
-INSERT INTO `education_data` VALUES (147, 'Vanderbilt University', 'Bachelor of Arts', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.79, 'Dean''s List');
-INSERT INTO `education_data` VALUES (148, 'University of Virginia', 'Bachelor of Engineering', 'Systems Engineering', '', '2010-09-01', '2014-05-01', 3, '');
-INSERT INTO `education_data` VALUES (149, 'Vanderbilt University', 'Bachelor of Arts', 'Philosophy', '', '2010-08-01', '2014-05-01', 3.77, 'Dean''s List');
-INSERT INTO `education_data` VALUES (151, 'Vanderbilt University', 'Bachelor of Engineering', 'Electrical Engineering', '', '2011-08-01', '2015-05-01', 3.67, 'Dean''s List');
-INSERT INTO `education_data` VALUES (152, 'Vanderbilt University', 'Bachelor of Arts', 'Marketing, Chinese', '', '2010-08-01', '2014-05-01', 3.6, 'Dean''s List');
-INSERT INTO `education_data` VALUES (154, 'Vanderbilt University', 'Bachelor of Science', 'Elementary Education, Math & Science Studies', '', '2007-08-01', '2011-12-01', 0, '');
-INSERT INTO `education_data` VALUES (157, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy, Art History', '', '2010-08-01', '2014-05-01', 3.8, 'Dean''s List;\r\nAlpha Lambda Delta Honorary Society;\r\nPhi Eta Sigma Honorary Society\r\n\r\n');
-INSERT INTO `education_data` VALUES (159, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2015-05-01', 0, '');
-INSERT INTO `education_data` VALUES (162, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Mathematics', '', '2010-08-01', '2013-05-01', 3.12, '');
-INSERT INTO `education_data` VALUES (9, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Math', 'Theatre', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data` VALUES (164, 'Shanghai University', 'Bachelor of Engineering', 'Electrical Engineering', '', '1990-01-01', '1990-01-01', 0, '');
-INSERT INTO `education_data` VALUES (165, 'Vanderbilt University', 'Bachelor of Arts', 'ji', '', '1990-01-01', '1990-01-01', 0, 'fin');
-INSERT INTO `education_data` VALUES (170, 'Vanderbilt University', 'Bachelor of Arts', 'Huh?', '', '1990-01-01', '1990-01-01', 0, '');
-INSERT INTO `education_data` VALUES (171, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology, Corporate Strategy', '', '2010-08-01', '2014-04-01', 3.37, '');
-INSERT INTO `education_data` VALUES (178, 'University of California at Berkeley', 'Bachelor of Arts', 'Immunology and Pathogenesis, French', '', '2010-08-01', '2014-05-01', 3.26, '');
-INSERT INTO `education_data` VALUES (179, 'University of Virginia', 'Bachelor of Nursing', 'nursing', '', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data` VALUES (180, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2010-09-01', '2014-05-01', 3.87, 'Dean''s List');
-INSERT INTO `education_data` VALUES (186, 'Brigham Young University', 'Bachelor of Arts', 'Chinese', '', '2001-08-01', '2007-05-01', 0, 'all of them');
-INSERT INTO `education_data` VALUES (182, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology', '', '2011-08-01', '2015-05-01', 3.92, 'Dean''s List ');
-INSERT INTO `education_data` VALUES (183, 'Milwaukee School of Engineering', 'Bachelor of Science', 'BioMolecular Engineering', '', '2010-09-01', '2014-05-01', 0, '');
-INSERT INTO `education_data` VALUES (184, 'Sewanee: The University of the South', 'Bachelor of Arts', 'Philosophy, Political Science', '', '2010-08-01', '2012-08-01', 3.2, '');
-INSERT INTO `education_data` VALUES (187, 'Stanford University', 'Bachelor of Engineering', 'Management Science and Engineering', 'Computer Science', '2011-09-01', '2015-06-01', 3.9, 'National Merit Scholarship');
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table `education_data_new`
--- 
-
-CREATE TABLE `education_data_new` (
   `eid` int(255) unsigned NOT NULL auto_increment,
   `idnum` int(255) unsigned NOT NULL,
+  `type` tinyint(2) NOT NULL default '1',
   `college` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `major` varchar(512) NOT NULL,
@@ -651,116 +541,117 @@ CREATE TABLE `education_data_new` (
   `gpa` float NOT NULL,
   `honors` text NOT NULL,
   PRIMARY KEY  (`eid`)
-) ENGINE=MyISAM AUTO_INCREMENT=105 DEFAULT CHARSET=latin1 AUTO_INCREMENT=105 ;
+) ENGINE=MyISAM AUTO_INCREMENT=106 DEFAULT CHARSET=latin1 AUTO_INCREMENT=106 ;
 
 -- 
--- Dumping data for table `education_data_new`
+-- Dumping data for table `education_data`
 -- 
 
-INSERT INTO `education_data_new` VALUES (1, 5, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-05-01', 3.71, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (2, 20, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2014-05-01', 3.94, '');
-INSERT INTO `education_data_new` VALUES (3, 25, 'Vanderbilt University', 'Bachelor of Arts', 'German', '', '0000-00-00', '0000-00-00', 3.17, '');
-INSERT INTO `education_data_new` VALUES (4, 27, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering ', '', '2010-08-01', '2014-05-01', 2.8, '');
-INSERT INTO `education_data_new` VALUES (5, 28, 'Vanderbilt University', 'Bachelor of Arts', '', '', '0000-00-00', '0000-00-00', 0, '');
-INSERT INTO `education_data_new` VALUES (6, 29, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', '', '0000-00-00', '0000-00-00', 3.6, 'KA');
-INSERT INTO `education_data_new` VALUES (7, 31, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Finance', '', '0000-00-00', '0000-00-00', 3.9, '');
-INSERT INTO `education_data_new` VALUES (8, 32, 'Vanderbilt University', 'Bachelor of Science', 'Economics', '', '0000-00-00', '0000-00-00', 3, '');
-INSERT INTO `education_data_new` VALUES (9, 33, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Finance, Corporate Strategy', '', '0000-00-00', '0000-00-00', 3.88, '');
-INSERT INTO `education_data_new` VALUES (10, 34, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Premed', '', '2010-08-01', '2012-01-01', 3.44, '');
-INSERT INTO `education_data_new` VALUES (11, 36, 'Vanderbilt University', 'Bachelor of Arts', 'Business, Spanish', '', '0000-00-00', '0000-00-00', 3.481, '');
-INSERT INTO `education_data_new` VALUES (12, 35, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Engineering', '', '2010-08-01', '2014-05-01', 3.9, 'National Merit Scholar, Dean''s List');
-INSERT INTO `education_data_new` VALUES (13, 39, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, HOD, Financial Economics', '', '0000-00-00', '0000-00-00', 3.56, '');
-INSERT INTO `education_data_new` VALUES (14, 40, 'Vanderbilt University', 'Bachelor of Arts', 'Communication Studies', '', '2010-08-01', '2014-05-01', 3.313, '');
-INSERT INTO `education_data_new` VALUES (15, 41, 'Duke University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.5, '');
-INSERT INTO `education_data_new` VALUES (16, 43, 'Vanderbilt University', 'Bachelor of Science', 'Human & Organizational Development, Spanish', '', '0000-00-00', '0000-00-00', 3.42, '');
-INSERT INTO `education_data_new` VALUES (17, 44, 'Vanderbilt University', 'Bachelor of Science', 'Neuroscience, Linguistics', '', '0000-00-00', '0000-00-00', 3.65, '');
-INSERT INTO `education_data_new` VALUES (18, 46, 'Vanderbilt University', 'Bachelor of Arts', 'History, Spanish, Corporate Strategy', '', '0000-00-00', '0000-00-00', 0, '');
-INSERT INTO `education_data_new` VALUES (19, 47, 'Vanderbilt University', 'Bachelor of Arts', 'Chemistry', '', '0000-00-00', '0000-00-00', 3.84, '');
-INSERT INTO `education_data_new` VALUES (20, 48, 'Lyon College', 'Bachelor of Arts', 'History', '', '0000-00-00', '0000-00-00', 3.61, '');
-INSERT INTO `education_data_new` VALUES (21, 50, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science, Math', '', '0000-00-00', '0000-00-00', 3.9, '');
-INSERT INTO `education_data_new` VALUES (22, 51, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.8, '');
-INSERT INTO `education_data_new` VALUES (23, 52, 'Vanderbilt University', 'Bachelor of Arts', 'Medicine, Health, and Society and Psychology ', '', '0000-00-00', '0000-00-00', 3.1, '');
-INSERT INTO `education_data_new` VALUES (24, 53, 'Vanderbilt University', 'Bachelor of Arts', 'Human & Organizational Development', '', '0000-00-00', '0000-00-00', 2.67, '');
-INSERT INTO `education_data_new` VALUES (25, 54, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.628, '');
-INSERT INTO `education_data_new` VALUES (26, 57, 'Vanderbilt University', 'Bachelor of Arts', 'sociology', '', '0000-00-00', '0000-00-00', 0, '');
-INSERT INTO `education_data_new` VALUES (27, 59, 'University of South Carolina', 'Bachelor of Science', 'Biological Science/Pre-Med, Southern Studies', '', '0000-00-00', '0000-00-00', 3.65, '');
-INSERT INTO `education_data_new` VALUES (28, 60, 'Vanderbilt University', 'Bachelor of Engineering', 'Biomedical Engineering/Pre-Med', '', '0000-00-00', '0000-00-00', 3.931, '');
-INSERT INTO `education_data_new` VALUES (29, 150, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Anthropology', '', '2010-08-01', '2014-05-01', 3.4, 'National Merit Scholarship Recipient ');
-INSERT INTO `education_data_new` VALUES (30, 63, 'University of Virginia', 'Bachelor of Nursing', 'Nursing', '', '2010-08-01', '2014-05-01', 3.558, '');
-INSERT INTO `education_data_new` VALUES (31, 65, 'Vanderbilt University', 'Bachelor of Arts', 'Biology, Economics', '', '1990-01-01', '1990-01-01', 2.6, '');
-INSERT INTO `education_data_new` VALUES (32, 7, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-05-01', 3.705, '');
-INSERT INTO `education_data_new` VALUES (33, 69, 'Harvard College', 'Bachelor of Arts', 'Portuguese', '', '2010-11-01', '2014-05-01', 3.705, '');
-INSERT INTO `education_data_new` VALUES (34, 70, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science ', '', '2009-08-01', '2013-05-01', 2.96, '');
-INSERT INTO `education_data_new` VALUES (35, 71, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', 'Material Science, ', '2010-08-01', '2014-05-01', 2.65, '');
-INSERT INTO `education_data_new` VALUES (36, 122, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', '', '2010-08-01', '2014-05-01', 3.85, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (37, 78, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-03-01', 3.3, 'Independent Study');
-INSERT INTO `education_data_new` VALUES (38, 80, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2014-05-01', 2.78, 'Alpha Tau Omega Fraternity, HOPE scholarship, ');
-INSERT INTO `education_data_new` VALUES (39, 81, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science', '', '2011-08-01', '2015-05-01', 4, '');
-INSERT INTO `education_data_new` VALUES (40, 82, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Human and Organizational Development', '', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (41, 83, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Math', '', '2010-08-01', '2014-05-01', 3.421, 'Dean''s List, Theta Tau (new member educator), Alpha Omicron Pi (Keeper of the Ritual)');
-INSERT INTO `education_data_new` VALUES (42, 84, 'Vanderbilt University', 'Bachelor of Engineering', 'Biomedical Engineering', '', '2010-08-01', '2014-05-01', 3.085, '');
-INSERT INTO `education_data_new` VALUES (43, 85, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Math', '', '2008-08-01', '2012-05-01', 3.68, 'VSVS, Dean''s List, Tau Beta Pi');
-INSERT INTO `education_data_new` VALUES (44, 86, 'Vanderbilt University', 'Bachelor of Arts', 'Sociology, Spanish', '', '2011-09-01', '2013-05-01', 3.5, 'Dean''s list \r\nNewspaper\r\nHer Campus Online Magazine\r\nPencil Pals \r\nMANNA High School Tutoring\r\nAlpha Phi Omega Volunteer Fraternity');
-INSERT INTO `education_data_new` VALUES (45, 87, 'Vanderbilt University', 'Bachelor of Science', 'Medicine, Health, and Society; Nursing', '', '2010-08-01', '2014-05-01', 2.74, 'Alpha Phi Omega\r\nComplete Capture\r\nVanderbuddies\r\nCafe Con Leche\r\nAmerican Red Cross Internship\r\nPREP\r\n\r\n');
-INSERT INTO `education_data_new` VALUES (46, 88, 'Vanderbilt University', 'Bachelor of Science', 'Psychology, Pre-medical', '', '2010-08-01', '2014-05-01', 2.8, 'National Merit Scholarship, Leadership Hall, Youth Encouragement Services, Minority Association of Pre-Health Students, Alpha Phi Omega ');
-INSERT INTO `education_data_new` VALUES (47, 89, 'Vanderbilt University', 'Bachelor of Arts', 'Biological Sciences, Economics', '', '2007-08-01', '2013-05-01', 2.006, '');
-INSERT INTO `education_data_new` VALUES (48, 90, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Spanish, Italian', '', '2008-08-01', '2012-05-01', 3.61, 'Alpha Phi Omega, Alternative Winter Break, Alternative Spring Break, Vanderbilt VIEW, Vanderbilt VISAGE Cost Rica, Vanderbilt PREP');
-INSERT INTO `education_data_new` VALUES (49, 91, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2011-08-01', '2014-05-01', 3.25, '');
-INSERT INTO `education_data_new` VALUES (50, 92, 'Vanderbilt University', 'Bachelor of Science', 'Child Studies, Pre-Med', '', '2011-08-01', '2015-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (51, 94, 'Vanderbilt University', 'Bachelor of Arts', 'Public Policy Studies', '', '2009-09-01', '2013-05-01', 3.86, 'Vanderbilt Undergraduate Advisory Board, Dean''s List, Alpha Phi Omega, Vanderbilt Off-Broadway, Vanderbilt Undergraduate Concert Choir, Alternative Spring Break, Alternative Summer Break, Vanderbilt Internship Experience in Washington D.C.');
-INSERT INTO `education_data_new` VALUES (52, 95, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil & Environmental Engineering', '', '1990-01-01', '1990-01-01', 3.548, 'Dean''s List (Spring 2010, Fall 2011), Chi Epsilon Civil Engineering Honor Society');
-INSERT INTO `education_data_new` VALUES (53, 96, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology', '', '2011-08-01', '2015-05-01', 3.821, 'Dean''s List, VOCE A Capella, APO, Habitat for Humanity, ACE Design Team');
-INSERT INTO `education_data_new` VALUES (54, 99, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Studio Art', '', '2010-08-01', '2013-05-01', 3.287, 'Recipient of Provost award at Richmond the American International University in London. Received Spring 2010\r\n');
-INSERT INTO `education_data_new` VALUES (55, 101, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, General', '', '1990-01-01', '1990-01-01', 2.74, 'Alpha Phi Omega, Cafe Con Leche, PREP Program, Calling Center, Front Desk Reeve');
-INSERT INTO `education_data_new` VALUES (56, 103, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.68, 'Dean''s List all semesters\r\nSigma Nu Fraternity\r\nVanderbilt Student Government- Peabody Council Member');
-INSERT INTO `education_data_new` VALUES (57, 105, 'Vanderbilt University', 'Bachelor of Arts', 'Economics/Chinese', '', '2011-08-01', '2013-08-01', 3.5, 'Alpha Phi Omega\r\nGlobal China Connection\r\nIntramural');
-INSERT INTO `education_data_new` VALUES (58, 106, 'University of Alabama', 'Bachelor of Science', 'Finance and Economics', '', '2010-08-01', '2014-05-01', 3.68, 'Dean''s List, University Honors College, Golden Key International Honour Society, Phi Eta Sigma National Honor Society, The National Society of Collegiate Scholars');
-INSERT INTO `education_data_new` VALUES (59, 113, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, HOD', '', '2011-08-01', '2015-05-01', 0, 'Vanderbilt Dodecaphonics, Mosaic');
-INSERT INTO `education_data_new` VALUES (60, 102, 'Vanderbilt University', 'Bachelor of Arts', 'English; Financial Economics; Corporate Strategy', '', '1990-01-01', '1990-01-01', 3.64, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (61, 108, 'Duke University', 'Associate', 'Information Technology', '', '2019-12-01', '1990-01-01', 1.2, 'FRAT');
-INSERT INTO `education_data_new` VALUES (62, 109, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy, French', '', '2010-08-01', '2014-05-01', 3.38, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (63, 30, 'Vanderbilt University', 'Bachelor of Science', 'Human Organizational Development', 'Managerial Studies: Corporate Strategy', '2010-08-01', '2012-05-01', 3, '');
-INSERT INTO `education_data_new` VALUES (64, 116, '', 'Bachelor of Arts', 'Communication Studies, Italian', '', '2011-08-01', '2014-05-01', 3.5, 'Member of Kappa Kappa Gamma');
-INSERT INTO `education_data_new` VALUES (65, 118, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development; Economics', '', '2010-08-01', '2014-05-01', 3.52, 'Dean''s List, Phi Sigma Pi National Honor Fraternity, Vanderbilt Club Hockey, Young Americans for Liberty.');
-INSERT INTO `education_data_new` VALUES (66, 119, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2011-08-01', '2012-02-01', 3.55, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (67, 120, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development, Corporate Strategy', '', '2010-08-01', '2014-05-01', 3.88, '');
-INSERT INTO `education_data_new` VALUES (68, 121, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science & Philosophy', '', '2011-08-01', '2014-05-01', 3.7, 'Vanderbilt Mobile Applications Team\r\nVanderbilt Model United Nations\r\nCTO of Solution Pack Nonprofit Organization\r\nServer Administrator for Dept. of Chemical Engineering');
-INSERT INTO `education_data_new` VALUES (69, 123, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2010-08-01', '2014-05-01', 2.9, '');
-INSERT INTO `education_data_new` VALUES (70, 124, 'Vanderbilt University', 'Bachelor of Science', 'ajifo', '', '1990-12-01', '1990-01-01', 3.2, 'aijdsf');
-INSERT INTO `education_data_new` VALUES (71, 126, 'Vanderbilt University', 'Bachelor of Science', 'Human & Organizational Development', '', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (72, 127, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '1993-08-01', '1997-05-01', 3.85, 'Dean''s List, National Merit Scholarship');
-INSERT INTO `education_data_new` VALUES (73, 131, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.3, 'Dean''s List Sophomore Fall');
-INSERT INTO `education_data_new` VALUES (74, 133, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy Minor', '', '2010-09-01', '2014-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (75, 135, 'University of Tennessee Knoxville', 'Bachelor of Arts', 'Finance', '', '2010-08-01', '2014-05-01', 3.4, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (76, 136, 'Vanderbilt University', 'Bachelor of Arts', 'Communication Studies', '', '2008-08-01', '2012-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (77, 139, 'Vanderbilt University', 'Bachelor of Arts', 'Medicine', '', '2009-08-01', '2012-12-01', 3.5, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (78, 141, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2011-08-01', '2015-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (79, 142, 'Vanderbilt University', 'Bachelor of Science', 'Molecular and Cellular Biology', 'Corporate Strategy, Leadership and Organization', '2010-08-01', '2014-05-01', 3.2, '');
-INSERT INTO `education_data_new` VALUES (80, 144, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Managerial Studies', '', '2011-08-01', '2014-05-01', 0, 'Ã¢â‚¬Â¢Phi Eta Sigma Honor Society for Freshmen (Tulane, 2010-2011)\r\nÃ¢â‚¬Â¢Alpha Lamba Delta National Honor Society (Tulane, 2010-2011)\r\nÃ¢â‚¬Â¢National Honors Society (9th Ã¢â‚¬â€œ 12th Grade)\r\nÃ¢â‚¬Â¢Honor Roll (9th  - 12th Grade)\r\n');
-INSERT INTO `education_data_new` VALUES (81, 145, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science, Math', '', '2010-08-01', '2014-05-01', 3.22, '');
-INSERT INTO `education_data_new` VALUES (82, 146, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Engineering Management', '', '2008-08-01', '2012-05-01', 2.875, 'National Merit Scholar');
-INSERT INTO `education_data_new` VALUES (83, 147, 'Vanderbilt University', 'Bachelor of Arts', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.79, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (84, 148, 'University of Virginia', 'Bachelor of Engineering', 'Systems Engineering', '', '2010-09-01', '2014-05-01', 3, '');
-INSERT INTO `education_data_new` VALUES (85, 149, 'Vanderbilt University', 'Bachelor of Arts', 'Philosophy', '', '2010-08-01', '2014-05-01', 3.77, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (86, 151, 'Vanderbilt University', 'Bachelor of Engineering', 'Electrical Engineering', '', '2011-08-01', '2015-05-01', 3.67, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (87, 152, 'Vanderbilt University', 'Bachelor of Arts', 'Marketing, Chinese', '', '2010-08-01', '2014-05-01', 3.6, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (88, 154, 'Vanderbilt University', 'Bachelor of Science', 'Elementary Education, Math & Science Studies', '', '2007-08-01', '2011-12-01', 0, '');
-INSERT INTO `education_data_new` VALUES (89, 157, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy, Art History', '', '2010-08-01', '2014-05-01', 3.8, 'Dean''s List;\r\nAlpha Lambda Delta Honorary Society;\r\nPhi Eta Sigma Honorary Society\r\n\r\n');
-INSERT INTO `education_data_new` VALUES (90, 159, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2015-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (91, 162, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Mathematics', '', '2010-08-01', '2013-05-01', 3.12, '');
-INSERT INTO `education_data_new` VALUES (92, 9, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Math', 'Theatre', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (93, 164, 'Shanghai University', 'Bachelor of Engineering', 'Electrical Engineering', '', '1990-01-01', '1990-01-01', 0, '');
-INSERT INTO `education_data_new` VALUES (94, 165, 'Vanderbilt University', 'Bachelor of Arts', 'ji', '', '1990-01-01', '1990-01-01', 0, 'fin');
-INSERT INTO `education_data_new` VALUES (95, 170, 'Vanderbilt University', 'Bachelor of Arts', 'Huh?', '', '1990-01-01', '1990-01-01', 0, '');
-INSERT INTO `education_data_new` VALUES (96, 171, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology, Corporate Strategy', '', '2010-08-01', '2014-04-01', 3.37, '');
-INSERT INTO `education_data_new` VALUES (97, 178, 'University of California at Berkeley', 'Bachelor of Arts', 'Immunology and Pathogenesis, French', '', '2010-08-01', '2014-05-01', 3.26, '');
-INSERT INTO `education_data_new` VALUES (98, 179, 'University of Virginia', 'Bachelor of Nursing', 'nursing', '', '2010-08-01', '2014-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (99, 180, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2010-09-01', '2014-05-01', 3.87, 'Dean''s List');
-INSERT INTO `education_data_new` VALUES (100, 186, 'Brigham Young University', 'Bachelor of Arts', 'Chinese', '', '2001-08-01', '2007-05-01', 0, 'all of them');
-INSERT INTO `education_data_new` VALUES (101, 182, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology', '', '2011-08-01', '2015-05-01', 3.92, 'Dean''s List ');
-INSERT INTO `education_data_new` VALUES (102, 183, 'Milwaukee School of Engineering', 'Bachelor of Science', 'BioMolecular Engineering', '', '2010-09-01', '2014-05-01', 0, '');
-INSERT INTO `education_data_new` VALUES (103, 184, 'Sewanee: The University of the South', 'Bachelor of Arts', 'Philosophy, Political Science', '', '2010-08-01', '2012-08-01', 3.2, '');
-INSERT INTO `education_data_new` VALUES (104, 187, 'Stanford University', 'Bachelor of Engineering', 'Management Science and Engineering', 'Computer Science', '2011-09-01', '2015-06-01', 3.9, 'National Merit Scholarship');
+INSERT INTO `education_data` VALUES (1, 5, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-05-01', 3.71, 'Dean''s List');
+INSERT INTO `education_data` VALUES (2, 20, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2014-05-01', 3.94, '');
+INSERT INTO `education_data` VALUES (3, 25, 1, 'Vanderbilt University', 'Bachelor of Arts', 'German', '', '0000-00-00', '0000-00-00', 3.17, '');
+INSERT INTO `education_data` VALUES (4, 27, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering ', '', '2010-08-01', '2014-05-01', 2.8, '');
+INSERT INTO `education_data` VALUES (5, 28, 1, 'Vanderbilt University', 'Bachelor of Arts', '', '', '0000-00-00', '0000-00-00', 0, '');
+INSERT INTO `education_data` VALUES (6, 29, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', '', '0000-00-00', '0000-00-00', 3.6, 'KA');
+INSERT INTO `education_data` VALUES (7, 31, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Finance', '', '0000-00-00', '0000-00-00', 3.9, '');
+INSERT INTO `education_data` VALUES (8, 32, 1, 'Vanderbilt University', 'Bachelor of Science', 'Economics', '', '0000-00-00', '0000-00-00', 3, '');
+INSERT INTO `education_data` VALUES (9, 33, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Finance, Corporate Strategy', '', '0000-00-00', '0000-00-00', 3.88, '');
+INSERT INTO `education_data` VALUES (10, 34, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Premed', '', '2010-08-01', '2012-01-01', 3.44, '');
+INSERT INTO `education_data` VALUES (11, 36, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Business, Spanish', '', '0000-00-00', '0000-00-00', 3.481, '');
+INSERT INTO `education_data` VALUES (12, 35, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Engineering', '', '2010-08-01', '2014-05-01', 3.9, 'National Merit Scholar, Dean''s List');
+INSERT INTO `education_data` VALUES (13, 39, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, HOD, Financial Economics', '', '0000-00-00', '0000-00-00', 3.56, '');
+INSERT INTO `education_data` VALUES (14, 40, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Communication Studies', '', '2010-08-01', '2014-05-01', 3.313, '');
+INSERT INTO `education_data` VALUES (15, 41, 1, 'Duke University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.5, '');
+INSERT INTO `education_data` VALUES (16, 43, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human & Organizational Development, Spanish', '', '0000-00-00', '0000-00-00', 3.42, '');
+INSERT INTO `education_data` VALUES (17, 44, 1, 'Vanderbilt University', 'Bachelor of Science', 'Neuroscience, Linguistics', '', '0000-00-00', '0000-00-00', 3.65, '');
+INSERT INTO `education_data` VALUES (18, 46, 1, 'Vanderbilt University', 'Bachelor of Arts', 'History, Spanish, Corporate Strategy', '', '0000-00-00', '0000-00-00', 0, '');
+INSERT INTO `education_data` VALUES (19, 47, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Chemistry', '', '0000-00-00', '0000-00-00', 3.84, '');
+INSERT INTO `education_data` VALUES (20, 48, 1, 'Lyon College', 'Bachelor of Arts', 'History', '', '0000-00-00', '0000-00-00', 3.61, '');
+INSERT INTO `education_data` VALUES (21, 50, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science, Math', '', '0000-00-00', '0000-00-00', 3.9, '');
+INSERT INTO `education_data` VALUES (22, 51, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.8, '');
+INSERT INTO `education_data` VALUES (23, 52, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Medicine, Health, and Society and Psychology ', '', '0000-00-00', '0000-00-00', 3.1, '');
+INSERT INTO `education_data` VALUES (24, 53, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Human & Organizational Development', '', '0000-00-00', '0000-00-00', 2.67, '');
+INSERT INTO `education_data` VALUES (25, 54, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '0000-00-00', '0000-00-00', 3.628, '');
+INSERT INTO `education_data` VALUES (26, 57, 1, 'Vanderbilt University', 'Bachelor of Arts', 'sociology', '', '0000-00-00', '0000-00-00', 0, '');
+INSERT INTO `education_data` VALUES (27, 59, 1, 'University of South Carolina', 'Bachelor of Science', 'Biological Science/Pre-Med, Southern Studies', '', '0000-00-00', '0000-00-00', 3.65, '');
+INSERT INTO `education_data` VALUES (28, 60, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Biomedical Engineering/Pre-Med', '', '0000-00-00', '0000-00-00', 3.931, '');
+INSERT INTO `education_data` VALUES (29, 150, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Anthropology', '', '2010-08-01', '2014-05-01', 3.4, 'National Merit Scholarship Recipient ');
+INSERT INTO `education_data` VALUES (30, 63, 1, 'University of Virginia', 'Bachelor of Nursing', 'Nursing', '', '2010-08-01', '2014-05-01', 3.558, '');
+INSERT INTO `education_data` VALUES (31, 65, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Biology, Economics', '', '1990-01-01', '1990-01-01', 2.6, '');
+INSERT INTO `education_data` VALUES (32, 7, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-05-01', 3.705, '');
+INSERT INTO `education_data` VALUES (33, 69, 1, 'Harvard College', 'Bachelor of Arts', 'Portuguese', '', '2010-11-01', '2014-05-01', 3.705, '');
+INSERT INTO `education_data` VALUES (34, 70, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science ', '', '2009-08-01', '2013-05-01', 2.96, '');
+INSERT INTO `education_data` VALUES (35, 71, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', 'Material Science, ', '2010-08-01', '2014-05-01', 2.65, '');
+INSERT INTO `education_data` VALUES (36, 122, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil Engineering', '', '2010-08-01', '2014-05-01', 3.85, 'Dean''s List');
+INSERT INTO `education_data` VALUES (37, 78, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science', '', '2010-08-01', '2014-03-01', 3.3, 'Independent Study');
+INSERT INTO `education_data` VALUES (38, 80, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2014-05-01', 2.78, 'Alpha Tau Omega Fraternity, HOPE scholarship, ');
+INSERT INTO `education_data` VALUES (39, 81, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science', '', '2011-08-01', '2015-05-01', 4, '');
+INSERT INTO `education_data` VALUES (40, 82, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Human and Organizational Development', '', '2010-08-01', '2014-05-01', 0, '');
+INSERT INTO `education_data` VALUES (41, 83, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Math', '', '2010-08-01', '2014-05-01', 3.421, 'Dean''s List, Theta Tau (new member educator), Alpha Omicron Pi (Keeper of the Ritual)');
+INSERT INTO `education_data` VALUES (42, 84, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Biomedical Engineering', '', '2010-08-01', '2014-05-01', 3.085, '');
+INSERT INTO `education_data` VALUES (43, 85, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Math', '', '2008-08-01', '2012-05-01', 3.68, 'VSVS, Dean''s List, Tau Beta Pi');
+INSERT INTO `education_data` VALUES (44, 86, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Sociology, Spanish', '', '2011-09-01', '2013-05-01', 3.5, 'Dean''s list \r\nNewspaper\r\nHer Campus Online Magazine\r\nPencil Pals \r\nMANNA High School Tutoring\r\nAlpha Phi Omega Volunteer Fraternity');
+INSERT INTO `education_data` VALUES (45, 87, 1, 'Vanderbilt University', 'Bachelor of Science', 'Medicine, Health, and Society; Nursing', '', '2010-08-01', '2014-05-01', 2.74, 'Alpha Phi Omega\r\nComplete Capture\r\nVanderbuddies\r\nCafe Con Leche\r\nAmerican Red Cross Internship\r\nPREP\r\n\r\n');
+INSERT INTO `education_data` VALUES (46, 88, 1, 'Vanderbilt University', 'Bachelor of Science', 'Psychology, Pre-medical', '', '2010-08-01', '2014-05-01', 2.8, 'National Merit Scholarship, Leadership Hall, Youth Encouragement Services, Minority Association of Pre-Health Students, Alpha Phi Omega ');
+INSERT INTO `education_data` VALUES (47, 89, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Biological Sciences, Economics', '', '2007-08-01', '2013-05-01', 2.006, '');
+INSERT INTO `education_data` VALUES (48, 90, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Spanish, Italian', '', '2008-08-01', '2012-05-01', 3.61, 'Alpha Phi Omega, Alternative Winter Break, Alternative Spring Break, Vanderbilt VIEW, Vanderbilt VISAGE Cost Rica, Vanderbilt PREP');
+INSERT INTO `education_data` VALUES (49, 91, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2011-08-01', '2014-05-01', 3.25, '');
+INSERT INTO `education_data` VALUES (50, 92, 1, 'Vanderbilt University', 'Bachelor of Science', 'Child Studies, Pre-Med', '', '2011-08-01', '2015-05-01', 0, '');
+INSERT INTO `education_data` VALUES (51, 94, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Public Policy Studies', '', '2009-09-01', '2013-05-01', 3.86, 'Vanderbilt Undergraduate Advisory Board, Dean''s List, Alpha Phi Omega, Vanderbilt Off-Broadway, Vanderbilt Undergraduate Concert Choir, Alternative Spring Break, Alternative Summer Break, Vanderbilt Internship Experience in Washington D.C.');
+INSERT INTO `education_data` VALUES (52, 95, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Civil & Environmental Engineering', '', '1990-01-01', '1990-01-01', 3.548, 'Dean''s List (Spring 2010, Fall 2011), Chi Epsilon Civil Engineering Honor Society');
+INSERT INTO `education_data` VALUES (53, 96, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology', '', '2011-08-01', '2015-05-01', 3.821, 'Dean''s List, VOCE A Capella, APO, Habitat for Humanity, ACE Design Team');
+INSERT INTO `education_data` VALUES (54, 99, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Political Science, Studio Art', '', '2010-08-01', '2013-05-01', 3.287, 'Recipient of Provost award at Richmond the American International University in London. Received Spring 2010\r\n');
+INSERT INTO `education_data` VALUES (55, 101, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, General', '', '1990-01-01', '1990-01-01', 2.74, 'Alpha Phi Omega, Cafe Con Leche, PREP Program, Calling Center, Front Desk Reeve');
+INSERT INTO `education_data` VALUES (56, 103, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.68, 'Dean''s List all semesters\r\nSigma Nu Fraternity\r\nVanderbilt Student Government- Peabody Council Member');
+INSERT INTO `education_data` VALUES (57, 105, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics/Chinese', '', '2011-08-01', '2013-08-01', 3.5, 'Alpha Phi Omega\r\nGlobal China Connection\r\nIntramural');
+INSERT INTO `education_data` VALUES (58, 106, 1, 'University of Alabama', 'Bachelor of Science', 'Finance and Economics', '', '2010-08-01', '2014-05-01', 3.68, 'Dean''s List, University Honors College, Golden Key International Honour Society, Phi Eta Sigma National Honor Society, The National Society of Collegiate Scholars');
+INSERT INTO `education_data` VALUES (59, 113, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, HOD', '', '2011-08-01', '2015-05-01', 0, 'Vanderbilt Dodecaphonics, Mosaic');
+INSERT INTO `education_data` VALUES (60, 102, 1, 'Vanderbilt University', 'Bachelor of Arts', 'English; Financial Economics; Corporate Strategy', '', '1990-01-01', '1990-01-01', 3.64, 'Dean''s List');
+INSERT INTO `education_data` VALUES (61, 108, 1, 'Duke University', 'Associate', 'Information Technology', '', '2019-12-01', '1990-01-01', 1.2, 'FRAT');
+INSERT INTO `education_data` VALUES (62, 109, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy, French', '', '2010-08-01', '2014-05-01', 3.38, 'Dean''s List');
+INSERT INTO `education_data` VALUES (63, 30, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human Organizational Development', 'Managerial Studies: Corporate Strategy', '2010-08-01', '2012-05-01', 3, '');
+INSERT INTO `education_data` VALUES (64, 116, 1, '', 'Bachelor of Arts', 'Communication Studies, Italian', '', '2011-08-01', '2014-05-01', 3.5, 'Member of Kappa Kappa Gamma');
+INSERT INTO `education_data` VALUES (65, 118, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development; Economics', '', '2010-08-01', '2014-05-01', 3.52, 'Dean''s List, Phi Sigma Pi National Honor Fraternity, Vanderbilt Club Hockey, Young Americans for Liberty.');
+INSERT INTO `education_data` VALUES (66, 119, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2011-08-01', '2012-02-01', 3.55, 'Dean''s List');
+INSERT INTO `education_data` VALUES (67, 120, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development, Corporate Strategy', '', '2010-08-01', '2014-05-01', 3.88, '');
+INSERT INTO `education_data` VALUES (68, 121, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science & Philosophy', '', '2011-08-01', '2014-05-01', 3.7, 'Vanderbilt Mobile Applications Team\r\nVanderbilt Model United Nations\r\nCTO of Solution Pack Nonprofit Organization\r\nServer Administrator for Dept. of Chemical Engineering');
+INSERT INTO `education_data` VALUES (69, 123, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2010-08-01', '2014-05-01', 2.9, '');
+INSERT INTO `education_data` VALUES (70, 124, 1, 'Vanderbilt University', 'Bachelor of Science', 'ajifo', '', '1990-12-01', '1990-01-01', 3.2, 'aijdsf');
+INSERT INTO `education_data` VALUES (71, 126, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human & Organizational Development', '', '2010-08-01', '2014-05-01', 0, '');
+INSERT INTO `education_data` VALUES (72, 127, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '1993-08-01', '1997-05-01', 3.85, 'Dean''s List, National Merit Scholarship');
+INSERT INTO `education_data` VALUES (73, 131, 1, 'Vanderbilt University', 'Bachelor of Science', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.3, 'Dean''s List Sophomore Fall');
+INSERT INTO `education_data` VALUES (74, 133, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy Minor', '', '2010-09-01', '2014-05-01', 0, '');
+INSERT INTO `education_data` VALUES (75, 135, 1, 'University of Tennessee Knoxville', 'Bachelor of Arts', 'Finance', '', '2010-08-01', '2014-05-01', 3.4, 'Dean''s List');
+INSERT INTO `education_data` VALUES (76, 136, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Communication Studies', '', '2008-08-01', '2012-05-01', 0, '');
+INSERT INTO `education_data` VALUES (77, 139, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Medicine', '', '2009-08-01', '2012-12-01', 3.5, 'Dean''s List');
+INSERT INTO `education_data` VALUES (78, 141, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2011-08-01', '2015-05-01', 0, '');
+INSERT INTO `education_data` VALUES (79, 142, 1, 'Vanderbilt University', 'Bachelor of Science', 'Molecular and Cellular Biology', 'Corporate Strategy, Leadership and Organization', '2010-08-01', '2014-05-01', 3.2, '');
+INSERT INTO `education_data` VALUES (80, 144, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Managerial Studies', '', '2011-08-01', '2014-05-01', 0, 'Ã¢â‚¬Â¢Phi Eta Sigma Honor Society for Freshmen (Tulane, 2010-2011)\r\nÃ¢â‚¬Â¢Alpha Lamba Delta National Honor Society (Tulane, 2010-2011)\r\nÃ¢â‚¬Â¢National Honors Society (9th Ã¢â‚¬â€œ 12th Grade)\r\nÃ¢â‚¬Â¢Honor Roll (9th  - 12th Grade)\r\n');
+INSERT INTO `education_data` VALUES (81, 145, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Computer Science, Math', '', '2010-08-01', '2014-05-01', 3.22, '');
+INSERT INTO `education_data` VALUES (82, 146, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering, Engineering Management', '', '2008-08-01', '2012-05-01', 2.875, 'National Merit Scholar');
+INSERT INTO `education_data` VALUES (83, 147, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Human and Organizational Development', '', '2010-08-01', '2014-05-01', 3.79, 'Dean''s List');
+INSERT INTO `education_data` VALUES (84, 148, 1, 'University of Virginia', 'Bachelor of Engineering', 'Systems Engineering', '', '2010-09-01', '2014-05-01', 3, '');
+INSERT INTO `education_data` VALUES (85, 149, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Philosophy', '', '2010-08-01', '2014-05-01', 3.77, 'Dean''s List');
+INSERT INTO `education_data` VALUES (86, 151, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Electrical Engineering', '', '2011-08-01', '2015-05-01', 3.67, 'Dean''s List');
+INSERT INTO `education_data` VALUES (87, 152, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Marketing, Chinese', '', '2010-08-01', '2014-05-01', 3.6, 'Dean''s List');
+INSERT INTO `education_data` VALUES (88, 154, 1, 'Vanderbilt University', 'Bachelor of Science', 'Elementary Education, Math & Science Studies', '', '2007-08-01', '2011-12-01', 0, '');
+INSERT INTO `education_data` VALUES (89, 157, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics, Corporate Strategy, Art History', '', '2010-08-01', '2014-05-01', 3.8, 'Dean''s List;\r\nAlpha Lambda Delta Honorary Society;\r\nPhi Eta Sigma Honorary Society\r\n\r\n');
+INSERT INTO `education_data` VALUES (90, 159, 1, 'Vanderbilt University', 'Bachelor of Engineering', 'Mechanical Engineering', '', '2010-08-01', '2015-05-01', 0, '');
+INSERT INTO `education_data` VALUES (91, 162, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Mathematics', '', '2010-08-01', '2013-05-01', 3.12, '');
+INSERT INTO `education_data` VALUES (92, 9, 1, 'Vanderbilt University', 'Bachelor of Science', 'Computer Science, Math', 'Theatre', '2010-08-01', '2014-05-01', 0, '');
+INSERT INTO `education_data` VALUES (93, 164, 1, 'Shanghai University', 'Bachelor of Engineering', 'Electrical Engineering', '', '1990-01-01', '1990-01-01', 0, '');
+INSERT INTO `education_data` VALUES (94, 165, 1, 'Vanderbilt University', 'Bachelor of Arts', 'ji', '', '1990-01-01', '1990-01-01', 0, 'fin');
+INSERT INTO `education_data` VALUES (95, 170, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Huh?', '', '1990-01-01', '1990-01-01', 0, '');
+INSERT INTO `education_data` VALUES (96, 171, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology, Corporate Strategy', '', '2010-08-01', '2014-04-01', 3.37, '');
+INSERT INTO `education_data` VALUES (97, 178, 1, 'University of California at Berkeley', 'Bachelor of Arts', 'Immunology and Pathogenesis, French', '', '2010-08-01', '2014-05-01', 3.26, '');
+INSERT INTO `education_data` VALUES (98, 179, 1, 'University of Virginia', 'Bachelor of Nursing', 'nursing', '', '2010-08-01', '2014-05-01', 0, '');
+INSERT INTO `education_data` VALUES (99, 180, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Economics', '', '2010-09-01', '2014-05-01', 3.87, 'Dean''s List');
+INSERT INTO `education_data` VALUES (100, 186, 1, 'Brigham Young University', 'Bachelor of Arts', 'Chinese', '', '2001-08-01', '2007-05-01', 0, 'all of them');
+INSERT INTO `education_data` VALUES (101, 182, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Psychology', '', '2011-08-01', '2015-05-01', 3.92, 'Dean''s List ');
+INSERT INTO `education_data` VALUES (102, 183, 1, 'Milwaukee School of Engineering', 'Bachelor of Science', 'BioMolecular Engineering', '', '2010-09-01', '2014-05-01', 0, '');
+INSERT INTO `education_data` VALUES (103, 184, 1, 'Sewanee: The University of the South', 'Bachelor of Arts', 'Philosophy, Political Science', '', '2010-08-01', '2012-08-01', 3.2, '');
+INSERT INTO `education_data` VALUES (104, 187, 1, 'Stanford University', 'Bachelor of Engineering', 'Management Science and Engineering', 'Computer Science', '2011-09-01', '2015-06-01', 3.9, 'National Merit Scholarship');
+INSERT INTO `education_data` VALUES (105, 189, 1, 'Wake Forest University', 'Bachelor of Science', 'Computer Science, Math', '', '2009-08-01', '2013-06-01', 3.7, 'Dean''s List, George Hankins Scholar, Graduated with Honors in CS');
 
 -- --------------------------------------------------------
 
@@ -777,7 +668,7 @@ CREATE TABLE `education_general` (
   `rankings` text NOT NULL,
   PRIMARY KEY  (`eid`),
   UNIQUE KEY `college` (`college`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- 
 -- Dumping data for table `education_general`
@@ -793,6 +684,7 @@ INSERT INTO `education_general` VALUES (7, 'Washington University', 'St. Louis',
 INSERT INTO `education_general` VALUES (8, 'University of Virginia', 'Charlottesville', 'VA', '', '');
 INSERT INTO `education_general` VALUES (9, 'University of Alabama', 'Tuscaloosa', 'AL', '', '');
 INSERT INTO `education_general` VALUES (10, 'Stanford University', 'Stanford', 'CA', '', '');
+INSERT INTO `education_general` VALUES (11, 'Wake Forest University', 'Winston-Salem', 'NC', '', '');
 
 -- --------------------------------------------------------
 
@@ -805,7 +697,7 @@ CREATE TABLE `friends` (
   `from_id` int(255) NOT NULL,
   `to_id` int(255) NOT NULL,
   `friends_since` date NOT NULL,
-  `group` varchar(255) NOT NULL,
+  `groups` varchar(255) NOT NULL,
   PRIMARY KEY  (`r_id`),
   UNIQUE KEY `iddifferent` (`from_id`,`to_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
@@ -842,7 +734,7 @@ CREATE TABLE `leadership_data` (
   `present` tinyint(1) NOT NULL,
   `achievement` text NOT NULL,
   PRIMARY KEY  (`l_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=latin1 AUTO_INCREMENT=54 ;
 
 -- 
 -- Dumping data for table `leadership_data`
@@ -895,6 +787,7 @@ INSERT INTO `leadership_data` VALUES (48, 142, 'Dance Marathon', 'Technology Cha
 INSERT INTO `leadership_data` VALUES (50, 142, 'WRVU Radio', 'Radio DJ', '2012-01-01', '1990-01-01', 1, '');
 INSERT INTO `leadership_data` VALUES (51, 142, 'Dance Marathon', 'Technology Chair', '2012-04-01', '1990-01-01', 1, 'Responsible for maintaining website as well as social media sites. \r\nManage listserves.\r\nTake photos and videos at all events.\r\nMake slideshows, videos, and other media for all events.');
 INSERT INTO `leadership_data` VALUES (52, 187, 'Business Association of Stanford Entrepreneurial Students', '', '2012-04-01', '1990-06-01', 1, '');
+INSERT INTO `leadership_data` VALUES (53, 189, 'WFU Aikido Club', 'President', '2009-08-01', '1990-01-01', 1, '');
 
 -- --------------------------------------------------------
 
@@ -956,7 +849,7 @@ CREATE TABLE `personnel_email` (
   `time_sent` datetime NOT NULL,
   `is_read` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`mid`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 -- 
 -- Dumping data for table `personnel_email`
@@ -988,6 +881,8 @@ INSERT INTO `personnel_email` VALUES (27, 'testing', 'testing', 27, 27, '2012-05
 INSERT INTO `personnel_email` VALUES (28, 'testing', 'testing', 27, 5, '2012-05-29 20:06:30', 1);
 INSERT INTO `personnel_email` VALUES (29, 'Phone Interview: Professional Archives', 'Thank you for sending in your application to Professional Archives. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 5, 5, '2012-06-27 00:28:55', 1);
 INSERT INTO `personnel_email` VALUES (30, 'Professional Archives ', 'I just added you as my friend, but I think we should talk a little more before we actually become friends. ', 27, 5, '2012-07-01 22:28:12', 1);
+INSERT INTO `personnel_email` VALUES (31, 'Phone Interview: Epic', 'Thank you for sending in your application to Epic. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 27, 5, '2012-08-19 21:57:30', 1);
+INSERT INTO `personnel_email` VALUES (32, 'Phone Interview: Epic', 'Thank you for sending in your application to Epic. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 27, 20, '2012-08-19 21:57:30', 0);
 
 -- --------------------------------------------------------
 
@@ -1036,13 +931,33 @@ CREATE TABLE `requests` (
 -- --------------------------------------------------------
 
 -- 
+-- Table structure for table `sid_to_bus`
+-- 
+
+CREATE TABLE `sid_to_bus` (
+  `b_id` int(255) NOT NULL,
+  `s_id` int(255) NOT NULL,
+  PRIMARY KEY  (`b_id`,`s_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `sid_to_bus`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
 -- Table structure for table `supplemental`
 -- 
 
 CREATE TABLE `supplemental` (
   `sid` int(255) NOT NULL,
-  `b_id` int(255) NOT NULL,
-  `question` text NOT NULL,
+  `q_number` int(255) NOT NULL,
+  `total_q` int(255) NOT NULL,
+  `question` varchar(4096) NOT NULL,
+  `type` int(3) NOT NULL,
+  `body` text NOT NULL,
   PRIMARY KEY  (`sid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -1076,17 +991,17 @@ CREATE TABLE `users` (
   `last_logged_in` datetime NOT NULL default '2012-06-28 10:38:00',
   `disabled` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`idnum`)
-) ENGINE=MyISAM AUTO_INCREMENT=189 DEFAULT CHARSET=latin1 AUTO_INCREMENT=189 ;
+) ENGINE=MyISAM AUTO_INCREMENT=191 DEFAULT CHARSET=latin1 AUTO_INCREMENT=191 ;
 
 -- 
 -- Dumping data for table `users`
 -- 
 
-INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'HTML, CSS, JavaScript, Java', '2012-08-15 23:45:31', 0);
-INSERT INTO `users` VALUES (13, 'lmathson@sbcglobal.net', 'ac29eac4d2463413227f8b0a0a9f24bfa79cb3a6', 'Leslie', 'Mathson', NULL, '', 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 'Audio-video systems, telecom and fiber networks, RF and 2-way radio applications and practices.', '2012-06-28 10:38:00', 0);
+INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'bd27d1d79e5c410324ff438111c3e9184480cddb', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'HTML, CSS, JavaScript, Java, PHP', '2012-08-26 19:32:57', 0);
+INSERT INTO `users` VALUES (13, 'lmathson@sbcglobal.net', 'ac29eac4d2463413227f8b0a0a9f24bfa79cb3a6', 'Leslie', 'Mathson', NULL, '', 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 'Audio-video systems, telecom and fiber networks, RF and 2-way radio applications and practices.', '2012-09-01 00:04:01', 0);
 INSERT INTO `users` VALUES (23, 'vankegel@yahoo.com', 'c8fd40db3226a3ddab62fc32c505feab426870ed', 'Van', 'Kegel', NULL, '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (20, 'collin.h.grimes@vanderbilt.edu', 'c5c524e87447bc3df969662f65d4b8c56f11623c', 'Collin', 'Grimes', '/images/20.jpg', '', 'Mechanical Engineering', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
-INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-18 22:50:22', 0);
+INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-25 00:53:30', 0);
 INSERT INTO `users` VALUES (9, 'seth.n.friedma@vanderbilt.edu', '5b2ff4c2d9b8f4982de0336ec842dd9f6b5e8521', 'Seth', 'Friedman', '/images/9.jpeg', '', 'Computer Science', 'Pensacola', 'FL', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 1);
 INSERT INTO `users` VALUES (29, 'tszurcher@gmail.com', '76ab4f3ccab0b37a78ea395523f3206d3c41f22b', 'Taylor', 'Zurcher', NULL, '', 'Civil Engineering ', 'Nashville', 'SC', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (30, 'christina.c.chapman@vanderbilt.edu', '42dc244f40234f944013d72260908f4b30752ac3', 'Christina', 'Chapman', '/images/30.jpeg', '', 'Human Organizational Development and Corporate Strategy', 'Nashville', 'Tn', 'United States', 0, 0, 'Employed', 'Microsoft Excel, FishBowl Inventory', '2012-06-28 10:38:00', 0);
@@ -1104,7 +1019,7 @@ INSERT INTO `users` VALUES (40, 'kileigh.a.barringer@vanderbilt.edu', '2a6e52f60
 INSERT INTO `users` VALUES (41, 'tyler.brock@gmail.com', '90b629570ec1081a31962fec2eabe7552589d117', 'Tyler', 'Brock', '/images/41.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (42, 'Kornsuwann@hotmail.com', '8abac22556aa55886a99bb8d5684e1a727580ce8', 'Nutcha', 'Kornsuwan', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (43, 'john.l.ormerod@vanderbilt.edu', '245bdfa2a012905f745014c62d21ecd80f228416', 'Logan', 'Ormerod', '/images/43.jpeg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
-INSERT INTO `users` VALUES (44, 'zach.blume@vanderbilt.edu', '82114d5b6448f5e5ff95d152eac84e2f5ec79463', 'Zach', 'Blume', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
+INSERT INTO `users` VALUES (44, 'zach.blume@vanderbilt.edu', '82114d5b6448f5e5ff95d152eac84e2f5ec79463', 'Zach', 'Blume', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-20 22:05:46', 0);
 INSERT INTO `users` VALUES (45, 'graham.b.gaylor@vanderbilt.edu', '5c0ef4deb84a823e1ca318b77bdd7a0a3ee206e0', 'Graham', 'Gaylor', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (46, 'margaret.m.mccain@vanderbilt.edu', '8b77bc2940d0dded91e3c899f18faf8b776a7480', 'Margaret', 'McCain', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (47, 'arjun.pillai10@gmail.com', '1c529785882ca369537fba5c0665a71559f87b41', 'Arjun', 'Pillai', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
@@ -1240,6 +1155,8 @@ INSERT INTO `users` VALUES (184, 'kelleev0@sewanee.edu', '7c4c72430bfa2699510486
 INSERT INTO `users` VALUES (185, 'mayur.kmt@gmail.com', 'cb71d8547c6bafd38ddc8c4f744330a1a5a08d49', 'Mayur', 'Kamat', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (187, 'jmckinnon99@gmail.com', 'db238ff18d8b953d5574564928a8f9fed0da9e5c', 'Jake', 'McKinnon', '/images/187.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-15 16:40:06', 0);
 INSERT INTO `users` VALUES (188, 'somasundarambk@gmail.com', '3adf38f3ca212c793c763435e1083f738058c7fb', 'Somasundaram', 'Beerana', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
+INSERT INTO `users` VALUES (189, 'theborg3of5@gmail.com', 'acedcba8b2aa920152d9bad7da962602b8a0f4c4', 'Gavin', 'Borg', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-20 23:09:09', 0);
+INSERT INTO `users` VALUES (190, 'jackkuhl@vanderbilt.edu', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Jack', 'Kuhl', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1350,7 +1267,7 @@ CREATE TABLE `work_data` (
   `state` varchar(255) NOT NULL,
   `achievement` mediumtext NOT NULL,
   PRIMARY KEY  (`w_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=97 DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
+) ENGINE=MyISAM AUTO_INCREMENT=102 DEFAULT CHARSET=latin1 AUTO_INCREMENT=102 ;
 
 -- 
 -- Dumping data for table `work_data`
@@ -1437,4 +1354,7 @@ INSERT INTO `work_data` VALUES (89, 142, 'The Wildlife Experience', 'Visitor Exp
 INSERT INTO `work_data` VALUES (90, 142, 'Vanderbilt Biology Department', 'Undergraduate Research Assistant', '2011-08-01', '2012-05-01', 0, 'Nashville', 'TN', 'Bred fish weekly and sorted embryos for experiments.\r\nLearned further lab techniques.');
 INSERT INTO `work_data` VALUES (91, 142, 'Vanderbilt Neuroscience Department', 'Undergraduate Assistant', '2010-09-01', '2011-04-01', 0, 'Nashville', 'TN', 'Learned basic lab techniques and equipment (agarose gel preparation and use, transform bacteria, purify DNA).\r\nOrganized oligonucleotide and vector databases.');
 INSERT INTO `work_data` VALUES (95, 58, 'Breezy Point Cooperative', 'Lifeguard', '2012-06-01', '2012-08-01', 0, 'Breezy Point', 'NY', '');
-INSERT INTO `work_data` VALUES (96, 0, 'Intel', 'Software Development Engineer', '2009-01-01', '2012-07-01', 0, '', '', 'Received "Bravo" Award');
+INSERT INTO `work_data` VALUES (96, 188, 'Intel', 'Software Development Engineer', '2009-01-01', '2012-07-01', 0, '', '', 'Received "Bravo" Award');
+INSERT INTO `work_data` VALUES (99, 189, 'Shodor Education Foundation', 'Software Development Intern', '2005-01-01', '2012-02-01', 0, 'Durham', 'NC', '');
+INSERT INTO `work_data` VALUES (100, 189, 'Epic', 'Research and Development Intern', '2012-05-01', '2012-08-01', 0, 'Madison', 'WI', '');
+INSERT INTO `work_data` VALUES (101, 0, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
