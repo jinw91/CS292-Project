@@ -17,7 +17,7 @@ $connect = connectToDatabase();
 //If selected an offer.
 if (!$connect)
 {
-	echo "failed to connect";
+	$error = "failed to connect";
 }
 
 //Select all schools
@@ -108,13 +108,41 @@ if (!isset($_POST['search']))
 {
 	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0, true);
-	//$error = $query;
+    $query = sprintf("SELECT DISTINCT groups FROM friends WHERE from_id='%d'", $_SESSION['idnum']);
+    $result = mysql_query($query);
+    if (!$result)
+    {
+        //$error .= mysql_error();
+        $error .= $query;
+    }
+    $group_dropdown = "<option value=new_group>Create new group</option>";
+	while ($groups = mysql_fetch_assoc($result))
+    {
+        $group_dropdown .= "<option value='".$group."'>".$group."</option>";
+    }
+	$add_to_group .= "<div align='right'><select name='group' id='select_group'>";
+    $add_to_group .= $group_dropdown;
+    $add_to_group .= "</select><input type='submit' name='submit' value='Add to Group' onclick='copy_group()'>";
+    $add_to_group .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div>"; //add option to pick job.
+}
+if ($_POST['submit'] == "Add to Group")
+{
+    $group = $_POST['hidden_group_name'];
+    $select = $_POST['select'];
+    for ($i = 0; $i < count($select); $i++)
+    {
+        $query = sprintf("UPDATE friends SET groups='%s' WHERE from_id='%d' AND to_id='%d'", $group, $_SESSION['idnum'], $select[$i]);
+        $result = mysql_query($query);
+    }
 }
 else
 {
-	//$error = $query;
+	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0, true);
+    //$error .= $query;
 }
+
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,42 +163,42 @@ else
 <?=$error?>
 <!-- header -->
 <header>
-	<div class="top-header">
-		<div class="container_12">
-			<div class="grid_12">
-				<div class="fright">
-					<ul class="top-menu">
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<div class="fleft"></div>
-				<div class="clear"></div>
-			</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-	<div class="header-line"></div>
-	<div class="container_12">
-		<div class="grid_12">
-			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
-			
-        <?
-		define('__ROOT__', dirname(__FILE__)); 
-		require_once(__ROOT__.'/generalfunctions/template.php');
-		echo navBar($_SESSION['num_mes']);
-		?>
-		</div>
-	</div>
+    <div class="top-header">
+        <div class="container_12">
+            <div class="grid_12">
+                <div class="fright">
+                    <ul class="top-menu">
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="fleft"></div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="header-line"></div>
+    <div class="container_12">
+        <div class="grid_12">
+            <h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
+
+<?
+define('__ROOT__', dirname(__FILE__)); 
+require_once(__ROOT__.'/generalfunctions/template.php');
+echo navBar($_SESSION['num_mes']);
+?>
+        </div>
+    </div>
 </header>
 </div>
 <div class="container_12">
 </div>
 <!-- content -->
 <section id="content">  
-	<div class="container_12">
+    <div class="container_12">
     <div class="wrapper border_bottom">
-        	<div class="grid_4">
+            <div class="grid_4">
                 <form action='friend.php' method='post'>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
                 <label for="careers">Search Friends: </label>
@@ -207,8 +235,9 @@ else
             <div class="grid_8">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
-                    <ul id="messages">
-    				<?=$message?>
+                    <ul id="friend_list">
+                    <?=$message?>
+    				<?=$add_to_group?>
                     </ul>
                     </div>
                     </fieldset>
