@@ -77,7 +77,7 @@ if (isset($_GET['mid']))
 		$mes['picture'] = "images/default.png";
         }
         $message = $message."<div style='height:0px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br></div>";
-        $message = $message."<span style='float:left; margin-left:80px'><div style='font-weight: bold; color: black; font-size: 1.4em;'>";
+        $message = $message."<span style='float:left; margin-left:45px'><div style='font-weight: bold; color: black; font-size: 1.4em;'>";
 	if ($mes['subject'] == "") {
 		$message = $message."[untitled]";
 	} else {
