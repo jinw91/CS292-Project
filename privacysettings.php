@@ -30,11 +30,11 @@ $skills = $mes['skills'];
 $message = $mes['message'];
 
 function choose_selected($privacy_level) {
-    $selected = "<option ".($privacy_level==0?"selected=\'selected\'":"").">Myself only</option>";
+    $selected = "<option ".($privacy_level==0?"selected=\'selected\'":"").">Public</option>";
     $selected .= "<option ".($privacy_level==1?"selected=\'selected\'":"").">Friends and Company</option>";
     $selected .= "<option ".($privacy_level==2?"selected=\'selected\'":"").">Friends but not Company</option>";
     $selected .= "<option ".($privacy_level==3?"selected=\'selected\'":"").">Company but not Friends</option>";
-    $selected .= "<option ".($privacy_level==4?"selected=\'selected\'":"").">Public</option>";
+    $selected .= "<option ".($privacy_level==4?"selected=\'selected\'":"").">Myself only</option>";
     return $selected;
 }
 
@@ -53,7 +53,7 @@ function parse_notification($text) {
 
 function parse_privacy_level($text) {
     switch($text) {
-        case "Myself only":
+        case "Public":
             return 0;
         case "Friends and Company":
             return 1;
@@ -61,7 +61,7 @@ function parse_privacy_level($text) {
             return 2;
         case "Company but not Friends":
             return 3;
-        case "Public":
+        case "Myself only":
             return 4;
     }
 }
@@ -135,6 +135,10 @@ if (isset($_POST['save'])) {
     $settings .= "<li><label class='field' style='font-weight: bold;'>Message</label><select name='message'>".choose_selected($message)."</select></li>";
 }
 
+if (isset($_POST['cancel'])) {
+    header('Location: cprofile.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,7 +196,9 @@ if (isset($_POST['save'])) {
                     <?=$settings?>
             		<br>
             		<li>
-            		<span style='margin-left: 300px;'><input type='submit' name='save' value='Save' /></span></li>
+                    <span style='margin-left: 25em;'>
+            		<input type='submit' name='cancel' value='Cancel' />
+                    <input type='submit' name='save' value='Save' /></span></li>
             		</ul>
         			</form>
                     </div>
