@@ -107,7 +107,7 @@ else if (isset($_GET['new_search']))
 if (!isset($_POST['search']))
 {
 	$query = showSavedSearches(0);
-	$message = showQueryResults($query, 0, true);
+	$message = showFriendsList($query, 0);
     $query2 = sprintf("SELECT DISTINCT groups FROM friends WHERE from_id='%d'", $_SESSION['idnum']);
     $result2 = mysql_query($query2);
     //$error .= $query2;
@@ -124,7 +124,7 @@ if (!isset($_POST['search']))
 	$add_to_group .= "<div align='right'><select name='group' id='select_group'>";
     $add_to_group .= $group_dropdown;
     $add_to_group .= "</select><input type='submit' name='submit' value='Add to Group' onsubmit='copy_group();'>";
-    $add_to_group .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div>"; //add option to pick job.
+    $add_to_group .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div></ul>"; //add option to pick job.
 }
 if ($_POST['submit'] == "Add to Group")
 {
@@ -138,7 +138,7 @@ if ($_POST['submit'] == "Add to Group")
 }
 else
 {
-	$message = showQueryResults($query, 0, true);
+	$message = showFriendsList($query, 0);
     //$error .= $query;
 }
 
