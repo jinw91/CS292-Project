@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: custsql-ipg09.eigbox.net
--- Generation Time: Sep 01, 2012 at 05:06 PM
+-- Generation Time: Sep 02, 2012 at 12:05 PM
 -- Server version: 5.0.91
 -- PHP Version: 4.4.9
 -- 
@@ -283,7 +283,11 @@ CREATE TABLE `businesses` (
   `b_id` int(20) NOT NULL auto_increment,
   `company_name` varchar(255) NOT NULL,
   `sector` varchar(255) NOT NULL,
+  `company_overview` varchar(2048) NOT NULL,
   `description` text NOT NULL,
+  `mission` text NOT NULL,
+  `awards` text NOT NULL,
+  `products` text NOT NULL,
   `city` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `creator` int(255) NOT NULL,
@@ -296,11 +300,11 @@ CREATE TABLE `businesses` (
 -- Dumping data for table `businesses`
 -- 
 
-INSERT INTO `businesses` VALUES (1, 'Ingram Industries', 'Book', 'Ingram Industries is a company based in Nashville founded by the late Erskine Bronson Ingram and still owned and run by the Ingram family. Ingram Barge Company was founded by his father, Orrin Henry Ingram. Since the death of Erskine in 1995, Ingram Industries has been run by his widow Martha Rivers Ingram and their sons Orrin and John.', 'La Vergne', 'TN', 30, 'business_img/1.gif', '1970-01-01');
-INSERT INTO `businesses` VALUES (2, 'Professional Archives', 'Internet', 'Here at ProArcs we are just trying to make the job process easier for employers and candidates. Let us start matching you with interns/internships today!', 'Nashville', 'TN', 27, '/business_img/27.png', '0000-00-00');
-INSERT INTO `businesses` VALUES (3, 'Goldenstone Automation Co.', '', '', 'Greenfield', 'WI', 164, '', '0000-00-00');
-INSERT INTO `businesses` VALUES (4, 'Pinpoint Interests', '', '', 'Nashville', 'TN', 168, '/business_img/168.jpg', '0000-00-00');
-INSERT INTO `businesses` VALUES (5, 'Epic', 'Healthcare Software', 'Epic makes software for mid-size and large medical groups, hospitals and integrated healthcare organizations working with customers that include community hospitals, academic facilities, children''s organizations, safety net providers and multi-hospital systems. Our integrated software spans clinical, access and revenue functions and extends into the home. Epic is a national leader in software development for healthcare systems. We create and implement a wide range of integrated software for many of the largest healthcare organizations in the country. Our software improves patient care and reduces costs. Over the last 15 years we have seen steady growth, and currently, organizations using our software care for about 140 million people across the United States. That means that 1 in 3 people in the U.S. are directly affected by the work we do. Beyond all of that Epic is an exciting, innovative place to work.', 'Verona', 'WI', 27, '/business_img/6.jpg', '0000-00-00');
+INSERT INTO `businesses` VALUES (1, 'Ingram Industries', 'Book', '', 'Ingram Industries is a company based in Nashville founded by the late Erskine Bronson Ingram and still owned and run by the Ingram family. Ingram Barge Company was founded by his father, Orrin Henry Ingram. Since the death of Erskine in 1995, Ingram Industries has been run by his widow Martha Rivers Ingram and their sons Orrin and John.', '', '', '', 'La Vergne', 'TN', 30, 'business_img/1.gif', '1970-01-01');
+INSERT INTO `businesses` VALUES (2, 'Professional Archives', 'Internet', '', 'Here at ProArcs we are just trying to make the job process easier for employers and candidates. Let us start matching you with interns/internships today!', '', '', '', 'Nashville', 'TN', 27, '/business_img/27.png', '0000-00-00');
+INSERT INTO `businesses` VALUES (3, 'Goldenstone Automation Co.', '', '', '', '', '', '', 'Greenfield', 'WI', 164, '', '0000-00-00');
+INSERT INTO `businesses` VALUES (4, 'Pinpoint Interests', '', '', '', '', '', '', 'Nashville', 'TN', 168, '/business_img/168.jpg', '0000-00-00');
+INSERT INTO `businesses` VALUES (5, 'Epic', 'Healthcare Software', '', 'Epic makes software for mid-size and large medical groups, hospitals and integrated healthcare organizations working with customers that include community hospitals, academic facilities, children''s organizations, safety net providers and multi-hospital systems. Our integrated software spans clinical, access and revenue functions and extends into the home. Epic is a national leader in software development for healthcare systems. We create and implement a wide range of integrated software for many of the largest healthcare organizations in the country. Our software improves patient care and reduces costs. Over the last 15 years we have seen steady growth, and currently, organizations using our software care for about 140 million people across the United States. That means that 1 in 3 people in the U.S. are directly affected by the work we do. Beyond all of that Epic is an exciting, innovative place to work.', '', '', '', 'Verona', 'WI', 27, '/business_img/6.jpg', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -505,7 +509,7 @@ CREATE TABLE `careers` (
 
 INSERT INTO `careers` VALUES (1, 'Professional Archives', 2, 'Internet Engineer', 'Computer Science, Computer Engineering', '', '', 60000, '', 'Nashville', 'TN', 'United States', 1);
 INSERT INTO `careers` VALUES (2, 'Professional Archives', 2, 'Marketing ', 'Economics, HOD', '', '', 40000, '', 'Nashville', 'TN', 'United States', 1);
-INSERT INTO `careers` VALUES (3, 'Professional Archives', 2, 'Web Design Intern', 'Computer Science, Computer Engineering', 'Web Design Intern', '', 0, 'Hourly', 'Nashville', 'TN', 'United States', 1);
+INSERT INTO `careers` VALUES (3, 'Professional Archives', 2, 'Web Design Intern', 'Computer Science, Computer Engineering', 'Web Design Intern', '', 20, 'Hourly', 'Nashville', 'TN', 'United States', 0);
 INSERT INTO `careers` VALUES (6, 'Epic', 5, 'Software Development Co-op', 'Computer Science, Software Engineering, Mathematics, or a related field (with more than one semester left)', 'Work on a project that makes an impact in healthcare over just a semester. You will receive mentoring from brilliant colleagues, and learn about the software development industry from the experts. We have an entrepreneurial mentality, so you''ll see everything that goes into software development from user requirement gathering, design, testing, documentation, customer support, and user interface design-this is more than coding.\r\n\r\nWe''ll give you a lot to do, and we''ll expect you to deliver something great.\r\n\r\nDevelopers'' work directly impacts the way one in three Americans receives healthcare - in fact, it''s likely affecting the life of someone close to you. Working at the juncture of two growing fields, medicine and computer science, you''ll help create the best software for your users'' needs. Epic is located in Madison, Wisconsin, a city regularly ranked as one of America''s best places to live.', 'Currently attending school in the US, Willing to work full-time for at least one semester, A history of academic success, Visa sponsorship is available.', 0, 'Annual/Total', 'Verona', 'WI', 'United States', 0);
 
 -- --------------------------------------------------------
@@ -896,7 +900,16 @@ INSERT INTO `personnel_email` VALUES (32, 'Phone Interview: Epic', 'Thank you fo
 CREATE TABLE `privacy` (
   `idnum` int(255) NOT NULL,
   `notification` char(2) NOT NULL default 'ET',
-  `gpa` tinyint(2) NOT NULL default '0',
+  `basic_information` int(4) NOT NULL default '15',
+  `graduation` int(4) NOT NULL default '15',
+  `status` int(4) NOT NULL default '15',
+  `picture` int(4) NOT NULL default '15',
+  `education` int(4) NOT NULL default '15',
+  `gpa` int(4) NOT NULL,
+  `work_experience` int(4) NOT NULL,
+  `extracurricular` int(4) NOT NULL,
+  `skills` int(4) NOT NULL,
+  `message` int(4) NOT NULL,
   PRIMARY KEY  (`idnum`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -904,8 +917,8 @@ CREATE TABLE `privacy` (
 -- Dumping data for table `privacy`
 -- 
 
-INSERT INTO `privacy` VALUES (27, 'DE', 0);
-INSERT INTO `privacy` VALUES (5, 'DE', 0);
+INSERT INTO `privacy` VALUES (27, 'DE', 15, 15, 15, 15, 15, 0, 0, 0, 0, 0);
+INSERT INTO `privacy` VALUES (5, 'DE', 15, 15, 15, 15, 15, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -939,9 +952,11 @@ CREATE TABLE `requests` (
 
 CREATE TABLE `sid_to_bus` (
   `b_id` int(255) NOT NULL,
-  `s_id` int(255) NOT NULL,
+  `s_id` int(255) NOT NULL auto_increment,
+  `form_name` varchar(255) NOT NULL,
+  `form_description` text NOT NULL,
   PRIMARY KEY  (`b_id`,`s_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `sid_to_bus`
@@ -1000,8 +1015,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 -- 
 
-INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'bd27d1d79e5c410324ff438111c3e9184480cddb', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'HTML, CSS, JavaScript, Java, PHP', '2012-08-26 19:32:57', 0);
-INSERT INTO `users` VALUES (13, 'lmathson@sbcglobal.net', 'ac29eac4d2463413227f8b0a0a9f24bfa79cb3a6', 'Leslie', 'Mathson', NULL, '', 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 'Audio-video systems, telecom and fiber networks, RF and 2-way radio applications and practices.', '2012-09-01 00:04:01', 0);
+INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'HTML, CSS, JavaScript, Java, PHP', '2012-09-02 11:44:26', 0);
+INSERT INTO `users` VALUES (13, 'lmathson@sbcglobal.net', 'ac29eac4d2463413227f8b0a0a9f24bfa79cb3a6', 'Leslie', 'Mathson', NULL, '', 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 'Audio-video systems, telecom and fiber networks, RF and 2-way radio applications and practices.', '2012-09-02 11:27:04', 0);
 INSERT INTO `users` VALUES (23, 'vankegel@yahoo.com', 'c8fd40db3226a3ddab62fc32c505feab426870ed', 'Van', 'Kegel', NULL, '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (20, 'collin.h.grimes@vanderbilt.edu', 'c5c524e87447bc3df969662f65d4b8c56f11623c', 'Collin', 'Grimes', '/images/20.jpg', '', 'Mechanical Engineering', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0);
 INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-25 00:53:30', 0);
