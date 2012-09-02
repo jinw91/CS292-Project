@@ -76,16 +76,17 @@ if (isset($_GET['mid']))
         {
 		$mes['picture'] = "images/default.png";
         }
-        $message = $message."<div style='height:0px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br>";
-        $message = $message."<a href='profile.php?idnum=".$mes['from_id']."'>".$mes['first_name']." ".$mes['last_name']."</a></div>"; //adds name.
-        $message = $message."<span style='float:left; margin-left:80px'><div style='font-weight: bold; color: black;'>";
+        $message = $message."<div style='height:0px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br></div>";
+        $message = $message."<span style='float:left; margin-left:80px'><div style='font-weight: bold; color: black; font-size: 1.4em;'>";
 	if ($mes['subject'] == "") {
 		$message = $message."[untitled]";
 	} else {
 		$message = $message.$mes['subject'];
 	}
-        $message = $message."</div>".$mes['body']."</span>";
-        $message = $message."<span style='clear:both; float:left; margin-left:80px;'><form method='post' action='inbox.php?write=true&single=true'><input type='submit' value='Reply' /></form>";
+        $message = $message."</div>";
+        $message = $message."<a id='sender_name' href='profile.php?idnum=".$mes['from_id']."' style='font-size: 1.2em; color: grey;'>".$mes['first_name']." ".$mes['last_name']."</a><hr/>"; //adds name.
+        $message = $message.$mes['body']."</span>";
+        $message = $message."<span style='clear:both; float:left; margin-left:80px; margin-top: 3em;'><form method='post' action='inbox.php?write=true&single=true'><input type='submit' value='Reply' /></form>";
 	$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
 	$_SESSION['subject'] = "Re: ".$mes['subject'];
 	$_SESSION['body'] = "";
