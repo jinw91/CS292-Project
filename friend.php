@@ -109,20 +109,21 @@ if (!isset($_POST['search']))
 	$query = showSavedSearches(0);
 	$message = showQueryResults($query, 0, true);
     $query2 = sprintf("SELECT DISTINCT groups FROM friends WHERE from_id='%d'", $_SESSION['idnum']);
-    $result = mysql_query($query2);
-    if (!$result)
+    $result2 = mysql_query($query2);
+    //$error .= $query2;
+    //$error .= $result2;
+    if (!$result2)
     {
         $error .= mysql_error();
-        //$error .= $query2;
     }
     $group_dropdown = "<option value=new_group>Create new group</option>";
-	while ($groups = mysql_fetch_assoc($result))
+	while ($groups = mysql_fetch_assoc($result2))
     {
-        $group_dropdown .= "<option value='".$group."'>".$group."</option>";
+        $group_dropdown .= "<option value='".$groups['groups']."'>".$groups['groups']."</option>";
     }
 	$add_to_group .= "<div align='right'><select name='group' id='select_group'>";
     $add_to_group .= $group_dropdown;
-    $add_to_group .= "</select><input type='submit' name='submit' value='Add to Group' onclick='copy_group()'>";
+    $add_to_group .= "</select><input type='submit' name='submit' value='Add to Group' onsubmit='copy_group();'>";
     $add_to_group .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div>"; //add option to pick job.
 }
 if ($_POST['submit'] == "Add to Group")

@@ -128,10 +128,11 @@ else if (isset($_GET['write']))
 	}
 	$message = $message."</ul></div></li></ol></li>
 	<li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
-	<li><label class='inbox' for='body'>Body: </label><textarea name='body' rows='10' style='width:450px' style='position:absolute;z-index:0'>".$mes_body."</textarea></li>".$date.$time."
+	<li><label class='inbox' for='body'>Body: </label><textarea id='ckeditor' name='body' rows='10' style='width:450px' style='position:absolute;z-index:0'>".$mes_body."</textarea></li>".$date.$time."
     <script>
-    AnyTime.picker(\"date_field\",{format:\"%W, %M %D %z\",placement:\"popup\",earliest:new Date()});
-    AnyTime.picker(\"time_field\",{format:\"%H:%i\",placement:\"popup\"});
+        CKEDITOR.replace('ckeditor');
+        AnyTime.picker(\"date_field\",{format:\"%W, %M %D %z\",placement:\"popup\",earliest:new Date()});
+        AnyTime.picker(\"time_field\",{format:\"%H:%i\",placement:\"popup\"});
     </script>
 	<li><span style='margin-left: 58px;'><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
 	<li><input type='text' name='hidden_to_id' id='hidden_to_id' style='display:none;' /></li></ul></form>";
@@ -303,6 +304,7 @@ mysql_close();
 <script src="js/facebooklist.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/anytime.js" type="text/javascript" charset="utf-8"></script>
 <script src="simple.js" type="text/javascript" ></script>
+<script src="ckeditor/ckeditor.js" type="text/javascript""></script>
 </head>
 <body>
 <!-- header -->
