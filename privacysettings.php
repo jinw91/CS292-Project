@@ -18,41 +18,121 @@ $query = sprintf("SELECT * FROM privacy WHERE idnum='%d'", $_SESSION['idnum']);
 $result = mysql_query($query);
 $mes = mysql_fetch_assoc($result);
 $notification = $mes['notification'];
+$basic_information = $mes['basic_information'];
+$graduation = $mes['graduation'];
+$status = $mes['status'];
+$picture = $mes['picture'];
+$education = $mes['education'];
 $gpa = $mes['gpa'];
+$work_experience = $mes['work_experience'];
+$extracurricular = $mes['extracurricular'];
+$skills = $mes['skills'];
+$message = $mes['message'];
+
+function choose_selected($privacy_level) {
+    $selected = "<option ".($privacy_level==0?"selected=\'selected\'":"").">Myself only</option>";
+    $selected .= "<option ".($privacy_level==1?"selected=\'selected\'":"").">Friends and Company</option>";
+    $selected .= "<option ".($privacy_level==2?"selected=\'selected\'":"").">Friends but not Company</option>";
+    $selected .= "<option ".($privacy_level==3?"selected=\'selected\'":"").">Company but not Friends</option>";
+    $selected .= "<option ".($privacy_level==4?"selected=\'selected\'":"").">Public</option>";
+    return $selected;
+}
+
+function parse_notification($text) {
+	switch($text) {
+		case "Email & Text":
+			return "ET";
+		case "Direct Emailing":
+			return "DE";
+		case "Phone Message":
+			return "PM";
+		case "No notifications":
+			return "NN";
+    }
+}
+
+function parse_privacy_level($text) {
+    switch($text) {
+        case "Myself only":
+            return 0;
+        case "Friends and Company":
+            return 1;
+        case "Friends but not Company":
+            return 2;
+        case "Company but not Friends":
+            return 3;
+        case "Public":
+            return 4;
+    }
+}
+
+$settings = "<li><label class='field'>Send Message Notifications via: </label><select name='notification' >";
+$settings .= "<option ".($notification=="ET"?"selected=\'selected\'":"").">Email & Text</option>";
+$settings .= "<option ".($notification=="DE"?"selected=\'selected\'":"").">Direct Emailing</option>";
+$settings .= "<option ".($notification=="PM"?"selected=\'selected\'":"").">Phone Message</option>";
+$settings .= "<option ".($notification=="NN"?"selected=\'selected\'":"").">No notifications</option>";
+$settings .= "</select></li>";
+$settings .= "<br><br><li><label class='field' style='font-size: 1.5em; font-family: lato; text-transform: uppercase;'>Show my profile to:</label></li><br><br>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Basic Information</label><select name='basic_information'>".choose_selected($basic_information)."</select></li>";
+$settings .= "<li><label class='field'>Expected Graduation</label><select name='graduation'>".choose_selected($graduation)."</select></li>";
+$settings .= "<li><label class='field'>Status</label><select name='status'>".choose_selected($status)."</select></li>";
+$settings .= "<li><label class='field'>Picture</label><select name='picture'>".choose_selected($picture)."</select></li>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Education</label><select name='education'>".choose_selected($education)."</select></li>";
+$settings .= "<li><label class='field'>GPA</label><select name='gpa'>".choose_selected($gpa)."</select></li>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Work Experience</label><select name='work_experience'>".choose_selected($work_experience)."</select></li>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Extracurricular</label><select name='extracurricular'>".choose_selected($extracurricular)."</select></li>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Skills</label><select name='skills'>".choose_selected($skills)."</select></li>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Message</label><select name='message'>".choose_selected($message)."</select></li>";
 
 if (isset($_POST['save'])) {
-	switch($_POST['notification']) {
-		case "Email & Text":
-			$notification = "ET";
-			break;
-		case "Direct Emailing":
-			$notification = "DE";
-			break;
-		case "Phone Message":
-			$notification = "PM";
-			break;
-		case "No notifications":
-			$notification = "NN";
-			break;
-	}
-	switch($_POST['gpa']) {
-		case "Yes":
-			$gpa = 1;
-			break;
-		case "No":
-			$gpa = 0;
-			break;
-	}
-	$query = sprintf("DELETE FROM privacy WHERE idnum='%d'", $_SESSION['idnum']);
-	$result = mysql_query($query);
-	$query = sprintf("INSERT INTO privacy (idnum, notification, gpa) VALUES ('%d', '%s', '%d')", $_SESSION['idnum'], $notification, $gpa);
+    $notification = parse_notification($_POST['notification']);
+    $basic_information = parse_privacy_level($_POST['basic_information']);
+    $graduation = parse_privacy_level($_POST['graduation']);
+    $status = parse_privacy_level($_POST['status']);
+    $picture = parse_privacy_level($_POST['picture']);
+    $education = parse_privacy_level($_POST['education']);
+    $gpa = parse_privacy_level($_POST['gpa']);
+    $work_experience = parse_privacy_level($_POST['work_experience']);
+    $extracurricular = parse_privacy_level($_POST['extracurricular']);
+    $skills = parse_privacy_level($_POST['skills']);
+    $message = parse_privacy_level($_POST['message']);
+    $query = sprintf("UPDATE privacy SET
+        notification='%s',
+        basic_information='%d',
+        graduation='%d',
+        status='%d',
+        picture='%d',
+        education='%d',
+        gpa='%d',
+        work_experience='%d',
+        extracurricular='%d',
+        skills='%d',
+        message='%d'
+        WHERE idnum='%d'", $notification, $basic_information, $graduation, $status, $picture, $education, $gpa, $work_experience, $extracurricular, $skills, $message, $_SESSION['idnum']);
 	$result = mysql_query($query);
 	if ($result) {
-		$message = "Settings saved.";
+		$notice = "Settings saved.";
 	}
 	else {
-		$message = mysql_error();
+		$notice = mysql_error();
 	}
+    $settings = "<li><label class='field'>Send Message Notifications via: </label><select name='notification' >";
+    $settings .= "<option ".($notification=="ET"?"selected=\'selected\'":"").">Email & Text</option>";
+    $settings .= "<option ".($notification=="DE"?"selected=\'selected\'":"").">Direct Emailing</option>";
+    $settings .= "<option ".($notification=="PM"?"selected=\'selected\'":"").">Phone Message</option>";
+    $settings .= "<option ".($notification=="NN"?"selected=\'selected\'":"").">No notifications</option>";
+    $settings .= "</select></li>";
+    $settings .= "<br><br><li><label class='field' style='font-size: 1.5em; font-family: lato; text-transform: uppercase;'>Show my profile to:</label></li><br><br>";
+    $settings .= "<li><label class='field' style='font-weight: bold;'>Basic Information</label><select name='basic_information'>".choose_selected($basic_information)."</select></li>";
+    $settings .= "<li><label class='field'>Expected Graduation</label><select name='graduation'>".choose_selected($graduation)."</select></li>";
+    $settings .= "<li><label class='field'>Status</label><select name='status'>".choose_selected($status)."</select></li>";
+    $settings .= "<li><label class='field'>Picture</label><select name='picture'>".choose_selected($picture)."</select></li>";
+    $settings .= "<li><label class='field' style='font-weight: bold;'>Education</label><select name='education'>".choose_selected($education)."</select></li>";
+    $settings .= "<li><label class='field'>GPA</label><select name='gpa'>".choose_selected($gpa)."</select></li>";
+    $settings .= "<li><label class='field' style='font-weight: bold;'>Work Experience</label><select name='work_experience'>".choose_selected($work_experience)."</select></li>";
+    $settings .= "<li><label class='field' style='font-weight: bold;'>Extracurricular</label><select name='extracurricular'>".choose_selected($extracurricular)."</select></li>";
+    $settings .= "<li><label class='field' style='font-weight: bold;'>Skills</label><select name='skills'>".choose_selected($skills)."</select></li>";
+    $settings .= "<li><label class='field' style='font-weight: bold;'>Message</label><select name='message'>".choose_selected($message)."</select></li>";
 }
 
 ?>
@@ -107,19 +187,9 @@ if (isset($_POST['save'])) {
                     <?=$error?>
                     <div class="message">
     				<form action='privacysettings.php' method='post'>
-              		<?=$error?><?=$message?><br>
-              		<ul id='education'>
-                	<li><label class="field">Send Message Notifications via: </label><select name="notification" >
-                    <option <?echo($notification=="ET"?"selected=\"selected\"":"");?>>Email & Text</option>
-                    <option <?echo($notification=="DE"?"selected=\"selected\"":"");?>>Direct Emailing</option>
-                    <option <?echo($notification=="PM"?"selected=\"selected\"":"");?>>Phone Message</option>
-                    <option <?echo($notification=="NN"?"selected=\"selected\"":"");?>>No notifications</option>
-                    </select></li>
-                	<li id="school"></li>
-                	<li><label class='field'>Hide GPA: </label><select name='gpa' ><option <?echo(!$gpa?"selected=\"selected\"":"");?>>No</option><option <?echo($gpa?"selected=\"selected\"":"");?>>Yes</option></select>
-					<label class='subscript'>GPA is currently hidden for those who are below the school average.</label></li><br>
-            		<!--<li><label class='field'>Technical Skills: </label><textarea name='skills' rows='2'><?=$user_info['skills']?></textarea>
-            		<label class='subscript'>Example: Microsoft Excel, HTML</label></li>-->
+                    <ul>
+              		<?=$notice?><br>
+                    <?=$settings?>
             		<br>
             		<li>
             		<span style='margin-left: 300px;'><input type='submit' name='save' value='Save' /></span></li>
