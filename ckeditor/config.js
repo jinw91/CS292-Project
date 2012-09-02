@@ -17,4 +17,10 @@ CKEDITOR.editorConfig = function( config )
         { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','-','RemoveFormat' ] },
         { name: 'colors', items : [ 'TextColor','BGColor' ] },
     ];
+    config.removePlugins = 'elementspath';
+
+    config.skin = 'kama';
+
+    config.resize_dir = 'vertical';
+    config.width = 455;
 };

@@ -128,14 +128,14 @@ else if (isset($_GET['write']))
 	}
 	$message = $message."</ul></div></li></ol></li>
 	<li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
-	<li><label class='inbox' for='body'>Body: </label><textarea id='ckeditor' name='body' rows='10' style='width:450px' style='position:absolute;z-index:0'>".$mes_body."</textarea></li>".$date.$time."
+	<li><label class='inbox' for='body'>Body: </label><div><textarea id='ckeditor' name='body' style='position:absolute;'>".$mes_body."</textarea></div></li>".$date.$time."
     <script>
         CKEDITOR.replace('ckeditor');
-        AnyTime.picker(\"date_field\",{format:\"%W, %M %D %z\",placement:\"popup\",earliest:new Date()});
-        AnyTime.picker(\"time_field\",{format:\"%H:%i\",placement:\"popup\"});
+        AnyTime.picker('date_field',{format:'%W, %M %D %z',placement:'popup',earliest:new Date()});
+        AnyTime.picker('time_field',{format:'%H:%i',placement:'popup'});
     </script>
 	<li><span style='margin-left: 58px;'><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
-	<li><input type='text' name='hidden_to_id' id='hidden_to_id' style='display:none;' /></li></ul></form>";
+	<li><input type='hidden' name='hidden_to_id' id='hidden_to_id' /></li></ul></form>";
     if ($_SESSION['business_mode']) {
         $query = sprintf("SELECT first_name, last_name, idnum FROM users");
     } else {
@@ -146,9 +146,9 @@ else if (isset($_GET['write']))
 		echo mysql_error();
 	}
 	$myjson = mysql2json($result);
-	$message = $message."<script language=\"JavaScript\">
+	$message = $message."<script language='JavaScript'>
 	function copyid() {
-		document.getElementById(\"hidden_to_id\").value=\$F(\"facebook-demo\");
+		$('#hidden_to_id').value=\$F('facebook-demo');
 	}
 	document.observe('dom:loaded', function() {
         tlist = new FacebookList('facebook-demo', 'facebook-auto',{ regexSearch: false });

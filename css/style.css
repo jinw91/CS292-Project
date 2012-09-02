@@ -496,3 +496,6 @@ Education Profile Page
 #studlist li {display: block; height:3.2em; margin-left: 0px; padding-left: 0.125em; border-bottom:1px dotted #b2b2b2; list-style-type:none;} 
 #studlist li a:link, #messages a:visited {text-decoration:none; color: gray; }
 
+#cke_ckeditor {margin-left: 5em;}
+#facebook-auto {z-index: 2147483643;}
+
