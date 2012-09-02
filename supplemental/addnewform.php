@@ -1,6 +1,40 @@
 <?php
 session_start();
 
+// Just saved a form.
+if ($_POST['submit']=="Save")
+{
+	$form_name = $_POST['form_name'];
+	$form_description = $_POST['form_description'];
+	$s_id = $_POST['s_id'];
+	
+	//insert into database for s_id.
+	if (isset($_POST['s_id']))
+	{
+		$query = sprintf("UPDATE sid_to_bid SET form_name='$form_name', form_description='$form_description' WHERE s_id='%d'", $_POST['s_id']);
+	}
+	else
+	{
+		$query = sprintf("INSERT INTO sid_to_bid (b_id, form_name, form_description) VALUES ('%d', '$form_name', '$form_description')", $_SESSION['company']['b_id']);
+	}
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$error .= $query.mysql_error();
+	}
+	
+	if (!isset($s_id))
+	{
+		$query = sprintf("SELECT * FROM sid_to_bid WHERE b_id='%d' AND form_name='$form_name' LIMIT 1", $_SESSION['company']['b_id']);
+		$result = mysql_query($query);
+		if (!$result || mysql_num_rows($result) <= 0)
+		{
+			$error .= $query.mysql_error();
+		}
+		$res = mysql_fetch_assoc($result);
+		$s_id = $res['s_id'];
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +54,7 @@ session_start();
 </head>
 <body>
 <!-- header -->
+<?=$error?>
 <header>
 	<div class="top-header">
 		<div class="container_12">
@@ -61,21 +96,21 @@ session_start();
                         <li><label class='form_main'>Form Description: </label><textarea name='description' rows="3"></textarea></li>
               			<?=$message?><br>
                         <section id='question1'>
-                        <h3 class="header_question">Question 1</h3>
+                        <h3 class='header_question'>Question 1</h3>
                         <li><label class='field'>Question: </label><input name="question" type="text" style='width: 150px;' /></li>
-                		<li><label class='field'>Type: </label><select name="type" style='width: 150px;' onchange='getSelected();'> 
+                		<li><label class='field'>Type: </label><select name='type' style='width: 150px;' onchange='getSelected();'> 
                         <option value='1'>Single-line Answer</option>
                         <option value='2'>Paragraph Answer</option>
                         <option value='3'>Multiple Choice</option>
-                        <option value='4'>Checkboxes</option>
-                        <option value='5'>Choose From List</option>
+                        <option value='4'>Choose From List</option>
+                        <option value='5'>Checkboxes</option>
                         <option value='6'>Scale</option>
                         <option value='7'>Fill in the Blank</option>
                         </select> </li>
                 		
-                        <li id='question_specific'></li>
+                        <li id='question_specific'><ul><li><label class='field'>Scale</label><select name='from'><option>0</option><option>1</option></select> To <select name='to'><option>3</option><option>5</option><option>9</option><option>10</option></select></li><li><label class='field'>Minimum: </label><input name='minimum' type='text' style='width:150px;'></li><li><label class='field'>Maximum: </label><input name='maximum' type='text' style='width:150px;'></li></ul></li>
                         </section>
-                        <li><label class='field'></label><a href='#' onClick='addAnotherQuestion(this);'>Add Another Question</a></li>
+                        <li><label class='field'></label><a class='lato' href='#' onClick='addAnotherQuestion(this);'>Add Another Question</a></li>
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>

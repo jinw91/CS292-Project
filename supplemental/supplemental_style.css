@@ -15,6 +15,13 @@ label.multiple
 }
 h3.header_question
 {
-	font-family: Lato, Arial, sans-serif;
+	font-family: Lato, Arial, Helvetica;
 	padding-left: 50px;
+}
+a.lato:link, a.lato:visited 
+{
+	font-family: Lato, Arial, Helvetica;
+	font-weight: 100;
+	color: black;
+	text-transform: uppercase;
 }

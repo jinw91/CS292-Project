@@ -109,15 +109,15 @@ width="100px" name="password">
 </header>
 <div id="slides">
 	<div class="slides_container">
-		<div class=""><a href="index.php"><img src="site_im/p_a_logo.png" alt=""></a></div>
+		<div class="img"><a href="index.php"><img src="site_im/slide3.jpg" alt=""></a></div>
 	</div>
 </div>
 <!-- content -->
 <section id="content">  
 	<div class="container_12">
-		<div class="wrapper">
+		<div class="wrapper" style="padding-top:100px;">
 			<div class="grid_6 padbot2">
-				<h2>About Us</h2>
+				<h2 style="padding-left: 150px;">About Us</h2>
 				<div class="box-img"><a href="#"><img src="site-images/1page_img2.jpg" alt="" width="400"></a></div>
 				<p class="padtop padbot">Professional Archives is a website formed by Vanderbilt students to connect students with professionals and companies around the world.</p>
 				<!--<a href="#" class="button1">Continue reading</a>-->
