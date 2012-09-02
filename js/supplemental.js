@@ -4,12 +4,8 @@ function getSelected()
 {
 	var tag = document.getElementsByName('type').item(0);
 	var new_tag = document.getElementById('question_specific');
-	alert(tag.value);
-	if (tag.value <= 2)
-	{
-		new_tag.innerHTML = "";
-	}
-	else if (tag.value >= 3 && tag.value < 5)
+	
+	if (tag.value >= 3 && tag.value < 5)
 	{
 		clearQuestion();
 		new_tag.innerHTML = multipleChoice();
@@ -24,12 +20,15 @@ function getSelected()
 		clearQuestion();
 		new_tag.innerHTML = scale();
 	}
-	alert(new_tag.innerHTML);
+	else
+	{
+		clearQuestion();
+	}
 }
 
 function clearQuestion()
 {
-	var new_tag = document.getElementsByName('question_specific').item(0);
+	var new_tag = document.getElementById('question_specific');
 	new_tag.innerHTML = "";
 }
 // For handling 1==SHORT ANSWER. 
@@ -71,5 +70,6 @@ function addAnotherChoice(tag)
 var question_counter = 2;
 function addAnotherQuestion(tag)
 {
-	newNode.innerHTML += "<section id='question1'><h3 class='header_question'>Question "+question_counter+"</h3><li><label class='field'>Question: </label><input name='question' type='text' style='width: 150px;' /></li><li><label class='field'>Type: </label><select name='type' style='width: 150px;' onchange='getSelected();'><option value='1'>Single-line Answer</option><option value='2'>Paragraph Answer</option><option value='3'>Multiple Choice</option><option value='4'>Choose From List</option><option value='5'>Checkboxes</option><option value='6'>Scale</option><option value='7'>Fill in the Blank</option></select></li><li id='question_specific'><ul><li><label class='field'>Scale</label><select name='from'><option>0</option><option>1</option></select> To <select name='to'><option>3</option><option>5</option><option>9</option><option>10</option></select></li></ul></li></section>";
+	newNode.innerHTML += "<section id='question"+question_counter+"'><h3 class='header_question'>Question "+question_counter+"</h3><li><label class='field'>Question: </label><input name='question"+question_counter+"' type='text' style='width: 150px;' /></li><li><label class='field'>Type: </label><select name='type"+question_counter+"' style='width: 150px;' onchange='getSelected();'><option value='1'>Single-line Answer</option><option value='2'>Paragraph Answer</option><option value='3'>Multiple Choice</option><option value='4'>Choose From List</option><option value='5'>Checkboxes</option><option value='6'>Scale</option><option value='7'>Fill in the Blank</option></select></li><li id='question_specific"+question_counter+"'></li></section>";
+	question_counter++;
 }

@@ -108,7 +108,7 @@ if ($_POST['submit']=="Save")
                         <option value='7'>Fill in the Blank</option>
                         </select> </li>
                 		
-                        <li id='question_specific'><ul><li><label class='field'>Scale</label><select name='from'><option>0</option><option>1</option></select> To <select name='to'><option>3</option><option>5</option><option>9</option><option>10</option></select></li><li><label class='field'>Minimum: </label><input name='minimum' type='text' style='width:150px;'></li><li><label class='field'>Maximum: </label><input name='maximum' type='text' style='width:150px;'></li></ul></li>
+                        <li id='question_specific'></li>
                         </section>
                         <li><label class='field'></label><a class='lato' href='#' onClick='addAnotherQuestion(this);'>Add Another Question</a></li>
             			<li>
