@@ -37,7 +37,7 @@ function postings($bid)
 		if (isset($_SESSION['company'])) {
             $postings = $postings."<li><img src='site_im/plussign.jpg' width='16' height='16' id='slidejob".$job['jid']."' onclick='slideDown(this.id, \\\"job".$job['jid']."\\\");'/>";
             $postings = $postings."<span class='job_title_font'><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." in ".$job['city'].", ".$job['state']."</a></span>";
-            $postings = $postings."<span id='edit_profile'><a href='career.php?jid=".$job['jid']."'>Edit</a></span>";
+            $postings = $postings."<span id='edit_profile'><a href='career.php?jid=".$job['jid']."'><button style='position: relative;'>Edit</button></a></span>";
 			$postings = $postings."<ul id='job".$job['jid']."' style='display: none'><li><b>Major: </b>".$job['major']."</li>";
 			$postings = $postings."<li><b>Location: </b>".$job['city'].", ".$job['state']."</li>";
             $postings = $postings."<li><b>Description: </b>".$job['job_description']."</li>";
@@ -45,7 +45,7 @@ function postings($bid)
 			$postings = $postings."<li><b>Pay: </b>".$job['pay']." ".$job['rate']."</li></ul>";
 			$postings .= "</li>";
 		} else {
-			$postings = $postings."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a><div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'>Apply</a></div>"; //adds name and options.
+			$postings = $postings."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a><div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'><button style='position: relative;'>Apply</button></a></div>"; //adds name and options.
 			$postings .= "</li>";
 		}
 	}

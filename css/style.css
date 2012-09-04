@@ -227,10 +227,11 @@ a.header_font:link, a.header_font:visited
 }
 #edit_profile a
 {
+	height: 1.1em;
 	float: right; 
 	text-decoration: none; 
-	color: black; 
-	border: 1px solid #666;
+	/**color: black; 
+	border: 1px solid #666;**/
 	margin-right: 10px;
 }
 #edit_profile a:visited, a:link
@@ -246,10 +247,11 @@ a.header_font:link, a.header_font:visited
 
 #edit_info a
 {
+	height: 1.1em;
 	margin-left: 600px;
 	text-decoration: none; 
-	color: black; 
-	border: 1px solid #666;
+	/**color: black; 
+	border: 1px solid #666;**/
 	margin-right: 10px;
 	position: relative;
 }

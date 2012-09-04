@@ -104,9 +104,14 @@ else if (isset($_GET['write']))
 		$mes_to = $_SESSION['to'];
 		$mes_sub = $_SESSION['subject'];
 		$mes_body = $_SESSION['body'];
-		if ($_SESSION['time_edit']) {
-			$date = "<li><label class='inbox' for='time'>Date: </label><input type='text' id='date_field' size='35'/></li>";
-			$time = "<li><label class='inbox' for='time'>Time: </label><input type='text' id='time_field' size='5'/></li>";
+		if ($_SESSION['time_edit']) 
+		{
+			/**
+			Madhur's code**/
+			$date = "<li><label class='inbox' for='time'>Date: </label><input type='text' id='pickdatetime' size='35'/></li>";
+			$time = "<li><label class='inbox' for='time'>Time: </label><input type='text' id='picktime' size='5'/></li>";
+			//$date = "<li><label class='inbox' for='time'>Date: </label><input type='text' id='date_field' size='35'/></li>";
+			//$time = "<li><label class='inbox' for='time'>Time: </label><input type='text' id='time_field' size='5'/></li>";
 		}
 	} else {
 		unset($mes_to);
@@ -132,11 +137,20 @@ else if (isset($_GET['write']))
 	<li><label class='inbox' for='body'>Body: </label><div><textarea id='ckeditor' name='body' style='position:absolute;'>".$mes_body."</textarea></div></li>".$date.$time."
     <script>
         CKEDITOR.replace('ckeditor');
+    </script>
+	<li><span style='margin-left: 58px;'><button id='add' onClick='return false;'>Add Slot</button><button id='submit' onClick='return false;'>Submit Slots</button><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
+	<li><input type='hidden' name='hidden_to_id' id='hidden_to_id' /></li></ul></form>";
+	
+	/*$message = $message."</ul></div></li></ol></li>
+	<li><label class='inbox' for='subject'>Subject: </label> <input type='text' name='subject' value='".$mes_sub."' style='width:450px'/></li>
+	<li><label class='inbox' for='body'>Body: </label><div><textarea id='ckeditor' name='body' style='position:absolute;'>".$mes_body."</textarea></div></li>".$date.$time."
+    <script>
+        CKEDITOR.replace('ckeditor');
         AnyTime.picker('date_field',{format:'%W, %M %D %z',placement:'popup',earliest:new Date()});
         AnyTime.picker('time_field',{format:'%H:%i',placement:'popup'});
     </script>
 	<li><span style='margin-left: 58px;'><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
-	<li><input type='hidden' name='hidden_to_id' id='hidden_to_id' /></li></ul></form>";
+	<li><input type='hidden' name='hidden_to_id' id='hidden_to_id' /></li></ul></form>";*/
     if ($_SESSION['business_mode']) {
         $query = sprintf("SELECT first_name, last_name, idnum FROM users");
     } else {
@@ -286,6 +300,8 @@ mysql_close();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
 <title>Inbox</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -305,7 +321,76 @@ mysql_close();
 <script src="js/facebooklist.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/anytime.js" type="text/javascript" charset="utf-8"></script>
 <script src="simple.js" type="text/javascript" ></script>
-<script src="ckeditor/ckeditor.js" type="text/javascript""></script>
+<script src="ckeditor/ckeditor.js" type="text/javascript"></script>
+
+
+<!--putting new content starts-->
+    <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="madhur/datepicker/dp/jquery-ui-timepicker-addon.css" />
+
+ <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script> 
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="madhur/datepicker/dp/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="madhur/datepicker/dp/jquery-ui-sliderAccess.js"></script>
+    <script type="text/javascript" >
+    $(document).ready( function() {
+    var myGlobal={};
+    myGlobal.count=0;
+    //myGlobal.storeSlots=new Array();
+    myGlobal.storeSlots={};
+    $('#pickdatetime').datetimepicker();
+    $('#picktime').timepicker({});
+    $('#add').click(addSlots);
+    $('#submit').click(sendToDataBase);
+    
+    
+    function addSlots() {
+        
+        //parse the string from input
+        var pickedDate=document.getElementById('pickdatetime').value;
+        var pickedEndTime=document.getElementById('picktime').value;
+        var arrayString=pickedDate.split(' ');
+        var slots={};
+        slots.date=arrayString[0];
+        slots.starttime=arrayString[1];
+        slots.endtime=pickedEndTime;
+        slots.duration=15;
+        myGlobal.storeSlots[myGlobal.count]=slots; //using an object instead of array
+        myGlobal.count++;
+        //myGlobal.storeSlots[count++]=slots;
+    }
+    
+    function sendToDataBase() {
+        
+        $.ajax(
+            {
+                type:"POST",
+                url:"enterslots.php",
+                //datatype:"json",
+                data:{ jsondata:JSON.stringify(myGlobal.storeSlots)},
+                
+            }
+            
+        ).done( function(json) {
+            $('#print').html(json);
+           //var jsonobj=$.parseJSON(json);
+            //$.each(jsonobj,function(key,value) {
+            //    $('#availableslots').append("<li id='"+value['slotid']+"'>"+"Start Time:"+value['starttime']+"<br/>End time:"+value['endtime']+"<br/>Recruiter:"+value['interviewer']+"</li>");
+            //});
+            
+            });
+        
+        for ( var slotnum in myGlobal.storeSlots) {
+            $('#print').append(myGlobal.storeSlots[slotnum].date);
+        }
+    }
+    
+    } );
+    </script>
+
+<!--putting new content ends-->
+
+
 </head>
 <body>
 <!-- header -->

@@ -1,8 +1,10 @@
 <?php
-include_once("connect.php"); 
+session_start();
+include_once("generalfunctions/database.php"); 
+connectToDatabase();
 $jsonstring=$_POST['jsondata'];
-$jsonassocarray=json_decode($jsonstring,true);
-$insertcount=20;
+$jsonassocarray=json_decode(stripslashes($jsonstring),true); 
+echo $jsonstring;
 
 foreach($jsonassocarray as $key=>$value) {
         $store=array();
@@ -25,7 +27,7 @@ foreach($jsonassocarray as $key=>$value) {
         $currentdate=date("Y-m-d H:i:s",$current);
         $previousdate=date("Y-m-d H:i:s",$previous);
         echo "sixth: $currentdate";
-        $insertSlots="INSERT INTO available_slots (slot_id,r_id,start_time,end_time,user_id) VALUES ( $insertcount,1009,'$previousdate','$currentdate',0)";
+        $insertSlots=sprintf("INSERT INTO available_slots (r_id, start_time, end_time, user_id) VALUES ('%d', '$previousdate','$currentdate', 0)", $_SESSION['idnum']);
         $insertcount++;
         mysql_query($insertSlots);
         $previous=$current;
@@ -33,5 +35,6 @@ foreach($jsonassocarray as $key=>$value) {
         $diff=$end-$current;
     }
 }
+mysql_close();
 echo "done";
 ?>

@@ -34,7 +34,7 @@ function handler() {
     
     $('#availableslots').on('click','li', function(event) {
 
-		alert("something");
+		//alert("something");
 		var listid=$(this).attr("id");
         $.ajax(
             {
@@ -49,7 +49,7 @@ function handler() {
 		if( text == "done" ) {
 		alert("Your slot has been booked");
 	}
-	alert(text);
+//	alert(text);
             });
             
             });

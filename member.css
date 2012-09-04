@@ -225,7 +225,7 @@ Profile
 	border: 1px solid #666;
 	margin-right: 10px;
 }
-#edit_profile a:visited, a:link
+#edit_profile a:visited, #edit_profile a:link
 {
 	text-decoration: none; 
 	color: black; 

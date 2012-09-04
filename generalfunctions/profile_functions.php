@@ -104,7 +104,7 @@ function work_own($id)
 	$html = "";
 	while ($work =  mysql_fetch_assoc($result))
 	{
-		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong><span id='edit_info'><a href='work.php?w_id=".$work['w_id']."'>Edit</a></span>";
+		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong><span id='edit_info'><a href='work.php?w_id=".$work['w_id']."'><button>Edit</button></a></span>";
 		if ($work['city']=="" || $work['state']=="")
 		{
 			$html .= "<span style='float: right; position: relative; font-weight: bold;'></span>";
@@ -223,7 +223,7 @@ function extra_own($id)
 	$html = "";
 	while ($work =  mysql_fetch_assoc($result))
 	{
-		$html = $html."<li><strong style='position: absolute;'>".$work['organization']."</strong><span id='edit_info'><a href='extracurricular.php?l_id=".$work['l_id']."'>Edit</a></span>";
+		$html = $html."<li><strong style='position: absolute;'>".$work['organization']."</strong><span id='edit_info'><a href='extracurricular.php?l_id=".$work['l_id']."'><button>Edit</button></a></span>";
 		$start = date("F Y", strtotime($work['start']));
 		if ($work['present'] > 0)
 		{
@@ -341,7 +341,7 @@ function skills_own($id)
 	{
 		$html = $html.", and <a>".$skills."</a>";
 	}
-	$html .= "</span> <span id='edit_profile'><a href='basic_info.php?'>Edit</a></span>";
+	$html .= "</span> <span id='edit_profile'><a href='basic_info.php?'><button>Edit</button></a></span>";
 	//$eduhtml = $eduhtml."</ul>";
 	return($html);
 }
@@ -436,7 +436,7 @@ function ceducation_own($id)
 		$eduhtml = $eduhtml; // Add in major GPA later.
 		if (trim($education['honors']) != "")
 		{
-			$eduhtml = $eduhtml."<li><strong>Honors: </strong>".$education['honors']."</li></ul><span id='edit_profile'><a href='education.php?'>Edit</a></span></li>";
+			$eduhtml = $eduhtml."<li><strong>Honors: </strong>".$education['honors']."</li></ul><span id='edit_profile'><a href='education.php?'><button>Edit</button></a></span></li>";
 		}
 	}
 	//$eduhtml = $eduhtml."</ul>";

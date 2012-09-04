@@ -9,7 +9,7 @@ $to=$_GET['to'];
 //echo "madhur";
 $json=array();
 $count=0;
-$queryGetSlots="Select * from available_slots where start_time>='$from' AND end_time<='$to'";
+$queryGetSlots="Select * from available_slots where start_time>='$from' AND end_time<='$to' AND user_id=0";
 $resultSlots=mysql_query($queryGetSlots);
 while($row=mysql_fetch_array($resultSlots)) {
 

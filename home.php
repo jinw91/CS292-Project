@@ -184,7 +184,7 @@ if ($_SESSION['users']['picture'] != "")
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Scheduled Events</h2>
 				<p class="padtop padbot"><?=$job_mes?></p>
-				<a href="careers.php" class="button1">See all</a><a href="careers.php" class="button1" style="padding-left:50px;">Add event</a>
+				<a href="careers.php" class="button1">See all</a><!--<a href="careers.php" class="button1" style="padding-left:50px;">Add event</a>-->
 			</div>
 			<div class="grid_4 padbot2">
 				<h2 style="font-family: 'Lato', Arial, Helvetica; text-transform: uppercase;">Inbox</h2>

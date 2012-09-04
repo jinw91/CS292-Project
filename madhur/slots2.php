@@ -9,12 +9,12 @@ $to='2012-09-22';
 //echo "madhur";
 $json=array();
 $count=0;
-$queryGetSlots="Select * from availableslots";
+$queryGetSlots="Select * from available_slots";
 $resultSlots=mysql_query($queryGetSlots);
 while($row=mysql_fetch_array($resultSlots)) {
 
     
-    echo $row['timeofslot'] . "<br/>" . $row['endtimeslot']. "<br/>" . $row['checked']. "<br/>";
+    echo $row['start_time'] . "<br/>" . $row['end_time']. "<br/>" . $row['user_id']. "<br/>";
     
 }
 mysql_close($con);
