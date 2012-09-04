@@ -53,7 +53,7 @@ function showSavedSearches($jid)
 	}
 	else if ($jid == 0)
 	{
-		$query = sprintf("SELECT * FROM friends f, users u, education_data ed WHERE to_id=u.idnum AND u.idnum=ed.idnum AND from_id=%d", $_SESSION['idnum']);
+		$query = sprintf("SELECT * FROM friends f, users u, education_data ed WHERE to_id=u.idnum AND u.idnum=ed.idnum AND from_id=%d ORDER BY f.groups", $_SESSION['idnum']);
 	}
 	return($query);
 }
@@ -74,14 +74,7 @@ function showQueryResults($query, $jid, $is_friends = false)
 	else if (mysql_num_rows($result) == 0) { $message = "<strong>No results found.</strong>"; }
 	else
 	{
-		if ($is_friends)
-		{
-			$message = "<form action='friend.php' method='POST'><fieldset><legend><span class='job_title_font'>Friends</span></legend><hr /></fieldset>";
-		}
-		else
-		{
-			$message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
-		}
+        $message = "<form action='search.php' method='POST'><fieldset><legend><span class='job_title_font'>Matched Candidates</span></legend><hr /></fieldset>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
 			if (is_null($mes['picture']))
@@ -99,13 +92,51 @@ function showQueryResults($query, $jid, $is_friends = false)
 			$message = $message."<br>".$mes['field']." at ".$mes['college']."</li>"; //adds name.
 		}
         $message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='select_all();'/></span></li>";
-		if (!$is_friends)
-		{
-			$message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
-		}
+        $message = $message."<div align='right'><input type='submit' name='offer' value='Send Supplement Material'/><input type='submit' name='offer' value='Schedule Phone Interview'/><input type='submit' name='offer' value='Schedule Job Interview'/><input type='submit' name='offer' value='Offer Job'/></div></form>";
 	}
 	
 	return($message);
+}
+
+function showFriendsList($query, $jid) {
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$message = $query." ".mysql_error();
+	}
+    else if (mysql_num_rows($result) == 0)
+    {
+        $message = "<strong>No results found.</strong>";
+    }
+	else
+	{
+        $lastgroup = "none";
+        $message = $message."<ul id='messages'><form action='friend.php' method='POST'>";
+        $first_test = false;
+        while ($mes = mysql_fetch_assoc($result))
+        {
+            if ($mes['groups'] != $lastgroup && $lastgroup != "none" && $first_test)
+            {
+                $message .= "</fieldset><fieldset><legend><span class='job_title_font'>".($mes['groups']?$mes['groups']:"ungrouped")."</span></legend><hr />";
+            }
+            else if (!$first_test)
+            {
+                $message .= "<fieldset><legend><span class='job_title_font'>".($mes['groups']?$mes['groups']:"ungrouped")."</span></legend><hr />";
+                $first_test = true;
+            }
+            $lastgroup = $mes['groups'];
+            if (is_null($mes['picture']))
+            {
+                $mes['picture'] = "images/default.png";
+            }
+            $message = $message."<li><img style='float:left; margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><a href='cprofile.php?idnum=".$mes['idnum']."'>".$mes['first_name']." ".$mes['last_name']."</a>";
+            $message = $message."<span style='float: right;'><input type='checkbox' name='select[]' class='candidate_checkbox' onclick='select_one();' value='".$mes['idnum'].".".$mes['jid']."'/></span>";
+            $message = $message."<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$mes['idnum']."'><img style='float:right; margin-right:4px' src='site_im/messageicon.jpg' width='30' height='30' /></a>";
+            $message = $message."<br>".substr($mes['field'],0,30)." at ".$mes['college']."</li>";
+        }
+        $message = $message."\n<li><span style='float: right;'>Select all<input type='checkbox' id='selectall' onclick='select_all();'/></span></li></form></ul>";
+    }
+    return $message;
 }
 
 ?>
