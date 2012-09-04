@@ -55,11 +55,12 @@ session_start();
                     <div class="message">
     				<h1 id='edit_title'>Supplemental Information:</h1>
               			<form action='basic_info.php' method='post'>
-              			<?=$message?><br>
+              			<?=$message?>
               			<ul id='education'>
-                        What would you like to ask your candidate?
+                        What would you like to ask your candidate?<br>
+                        <li></li>
                 		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" value="<?=$user_info['city']?>" style='width: 150px;' /> </li>                   
-                		<li><label class='field'></label><a class='lato' href='supplemental/addnewform.php'>Add new form</a></li>
+                		<li><a class='lato_marginleft' href='supplemental/addnewform.php'>Add new form</a></li>
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>

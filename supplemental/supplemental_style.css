@@ -18,6 +18,14 @@ h3.header_question
 	font-family: Lato, Arial, Helvetica;
 	padding-left: 50px;
 }
+a.lato_marginleft:link, a.lato_marginleft:visited 
+{
+	font-family: Lato, Arial, Helvetica;
+	font-weight: 100;
+	color: black;
+	text-transform: uppercase;
+	margin-left: 250px;
+}
 a.lato:link, a.lato:visited 
 {
 	font-family: Lato, Arial, Helvetica;

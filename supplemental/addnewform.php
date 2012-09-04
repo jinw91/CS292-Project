@@ -34,6 +34,8 @@ if ($_POST['submit']=="Save")
 		$res = mysql_fetch_assoc($result);
 		$s_id = $res['s_id'];
 	}
+	
+	
 }
 ?>
 <!DOCTYPE html>
@@ -95,10 +97,10 @@ if ($_POST['submit']=="Save")
                         <li><label class='form_main'>Form Name: </label><input name='name' type='text'></li>
                         <li><label class='form_main'>Form Description: </label><textarea name='description' rows="3"></textarea></li>
               			<?=$message?><br>
-                        <section id='question1'>
+                        <section>
                         <h3 class='header_question'>Question 1</h3>
-                        <li><label class='field'>Question: </label><input name="question" type="text" style='width: 150px;' /></li>
-                		<li><label class='field'>Type: </label><select name='type' style='width: 150px;' onchange='getSelected();'> 
+                        <li><label class='field'>Question: </label><input name="question1" type="text" style='width: 150px;' /></li>
+                		<li><label class='field'>Type: </label><select name='type1' style='width: 150px;' onchange='getSelected();'> 
                         <option value='1'>Single-line Answer</option>
                         <option value='2'>Paragraph Answer</option>
                         <option value='3'>Multiple Choice</option>
@@ -107,10 +109,9 @@ if ($_POST['submit']=="Save")
                         <option value='6'>Scale</option>
                         <option value='7'>Fill in the Blank</option>
                         </select> </li>
-                		
-                        <li id='question_specific'></li>
+                        <li id='question_specific1'></li>
                         </section>
-                        <li><label class='field'></label><a class='lato' href='#' onClick='addAnotherQuestion(this);'>Add Another Question</a></li>
+                        <li><label class='field'></label><a class='lato_marginleft' href='#' onClick='addAnotherQuestion(this);'>Add Another Question</a></li>
             			<li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>
