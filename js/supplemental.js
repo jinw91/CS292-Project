@@ -38,13 +38,12 @@ function clearQuestion()
 // For handling 1==SHORT ANSWER. 
 function multipleChoice()
 {
-	alert("reached mc");
-	return("<ul><li><input type='radio' style='margin-left: 300px;'><input type='text' name='"+(counter++)+"' size='200'></li><li><input type='radio' style='margin-left: 300px;'><a class='lato' href='#' onClick='addAnotherChoice(this);'>Add Another Choice</a></li></ul>");
+	return("<ul><li><input type='radio' style='margin-left: 300px;'><input type='text' name='q"+question_counter+"c"+(counter++)+"' size='200'></li><li><input type='radio' style='margin-left: 300px;'><a class='lato' href='#' onClick='addAnotherChoice(this);'>Add Another Choice</a></li></ul>");
 }
 
 function checkBoxes()
 {
-	return("<ul><li><input type='checkbox' style='margin-left: 300px;'><input type='text' name='"+(counter++)+"' size='200'></li><li><input type='checkbox' style='margin-left: 300px;'><a class='lato' href='#' onClick='addAnotherCheckbox(this);'>Add Another Choice</a></li></ul>");
+	return("<ul><li><input type='checkbox' style='margin-left: 300px;'><input type='text' name='q"+question_counter+"c"+(counter++)+"' size='200'></li><li><input type='checkbox' style='margin-left: 300px;'><a class='lato' href='#' onClick='addAnotherCheckbox(this);'>Add Another Choice</a></li></ul>");
 }
 
 function scale()
@@ -57,8 +56,7 @@ function addAnotherChoice(tag)
 {
 	var newNode = document.createElement('li');
 	newNode.innerHTML += "<input type='radio' style='margin-left: 300px;'>";
-	newNode.innerHTML += "<input type='text' name='"+counter+"' size='200'>";
-	counter++;
+	newNode.innerHTML += "<input type='text' name='q"+question_counter+"c"+(counter++)+"' size='200'>";
 	tag.parentNode.parentNode.insertBefore(newNode, tag.parentNode);
 }
 
@@ -66,8 +64,7 @@ function addAnotherCheckbox(tag)
 {
 	var newNode = document.createElement('li');
 	newNode.innerHTML += "<input type='checkbox' style='margin-left: 300px;'>";
-	newNode.innerHTML += "<input type='text' name='"+counter+"' size='200'>";
-	counter++;
+	newNode.innerHTML += "<input type='text' name='q"+question_counter+"c"+(counter++)+"' size='200'>";
 	tag.parentNode.parentNode.insertBefore(newNode, tag.parentNode);
 }
 

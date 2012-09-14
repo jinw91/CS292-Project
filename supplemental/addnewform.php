@@ -1,9 +1,13 @@
 <?php
 session_start();
+include("../generalfunctions/database.php");
+connectToDatabase();
 
 // Just saved a form.
 if ($_POST['submit']=="Save")
 {
+	
+	
 	$form_name = $_POST['form_name'];
 	$form_description = $_POST['form_description'];
 	$s_id = $_POST['s_id'];
@@ -35,7 +39,57 @@ if ($_POST['submit']=="Save")
 		$s_id = $res['s_id'];
 	}
 	
+	//Testing, retrieving question.
+	//Different strategy:
+	$num = 1;
+	$question_num = "question".$num;
+	$type_num = "type".$num;
+	while (isset($_POST[$question_num]))
+	{
+		$question = $_POST[$question_num];
+		//$error .= $question . "<br>";
+		$type = $_POST[$type_num];
+		//$error .= $type . "<br>";
+		$c_num = 1;
+		$choice_num = "q".$num."c".$c_num;
+		$body = "";
+		while (isset($_POST[$choice_num]))
+		{
+			//$error .= $_POST[$choice_num];
+			$body = $body . $_POST[$choice_num] . "|";
+			$c_num++;
+			$choice_num = "q".$num."c".$c_num;
+		}
+		
+		$query = sprintf("INSERT INTO supplemental(q_number, question, type, body) VALUES ('$num', '$question', '$type', '$body')");
+		$result = mysql_query($query);
+		if (!$result)
+		{
+			$error .= "Did not insert into supplemental. " . mysql_error() . $query;
+		}
+		$num++;
+		$question_num = "question".$num;
+		$type_num = "type".$num;
+	}
 	
+	
+	/**foreach($_POST as $key => $var)
+	{
+	
+		if (strpos($key, "question"))
+		{
+			
+			$num = strpos($key, "question");
+			$error .= $num . "<br>";
+			$type_entry = "type".$num;
+			$type = $_POST[$type_entry];
+			$error .= $type . "<br>";
+		}
+		else
+		{
+			$error .= $key . " is not question#<br>";
+		}
+	}**/
 }
 ?>
 <!DOCTYPE html>
@@ -56,7 +110,6 @@ if ($_POST['submit']=="Save")
 </head>
 <body>
 <!-- header -->
-<?=$error?>
 <header>
 	<div class="top-header">
 		<div class="container_12">
@@ -94,13 +147,13 @@ if ($_POST['submit']=="Save")
     				<h1 id='edit_title'>Form Basic Information:</h1>
               			<form action='addnewform.php' method='post'>
                         <ul id='education'>
-                        <li><label class='form_main'>Form Name: </label><input name='name' type='text'></li>
-                        <li><label class='form_main'>Form Description: </label><textarea name='description' rows="3"></textarea></li>
+                        <li><label class='form_main'>Form Name: </label><input name='form_name' value='<?=$form_name?>' type='text'></li>
+                        <li><label class='form_main'>Form Description: </label><textarea name='form_description' rows="3"><?=$form_description?></textarea></li>
               			<?=$message?><br>
                         <section>
                         <h3 class='header_question'>Question 1</h3>
                         <li><label class='field'>Question: </label><input name="question1" type="text" style='width: 150px;' /></li>
-                		<li><label class='field'>Type: </label><select name='type1' style='width: 150px;' onchange='getSelected();'> 
+                		<li><label class='field'>Type: </label><select name='type1' style='width: 150px;' onchange='getSelected();' onFocus="getSelected();"> 
                         <option value='1'>Single-line Answer</option>
                         <option value='2'>Paragraph Answer</option>
                         <option value='3'>Multiple Choice</option>

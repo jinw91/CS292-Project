@@ -15,6 +15,11 @@ if (!$connect)
 	$error = "failed to connect";	
 }
 
+if ($_POST['export']=="Export to CSV")
+{
+	header("Location: sample.csv");
+}
+
 $search = searchNoVar();
 
 //Apply to a job.
@@ -221,6 +226,9 @@ mysql_close();
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="submit" name="search" value="Search"/>
                 </ul>
+                </form>
+                <form action="careers.php" method="post">
+                <input type="submit" name="export" value="Export to CSV"/>
                 </form>
             </div>
             <div class="grid_8">
