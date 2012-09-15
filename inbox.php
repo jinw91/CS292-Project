@@ -31,7 +31,7 @@ function mysql2json($mysql_result) {
 }
 
 //sending a message
-if ($_POST['send'] == "Send")
+if (isset($_POST['send']) && $_POST['send'] == "Send")
 {
 	$to_id = split(',',$_POST['hidden_to_id']);
 	if (!isset($_POST['subject'])) {
@@ -416,10 +416,14 @@ mysql_close();
 	  <div class="grid_12">
 			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 			
-        <?
-		define('__ROOT__', dirname(__FILE__)); 
+        <?php
+		if(!defined('__ROOT__')) define('__ROOT__', dirname(__FILE__)); 
 		require_once(__ROOT__.'/generalfunctions/template.php');
-		echo navBar($_SESSION['num_mes']);
+		if(isset($_SESSION['num_mes'])){
+			echo navBar($_SESSION['num_mes']);
+		}else{
+			echo navBar(0);
+		}
 		?>
 		</div>
 	</div>

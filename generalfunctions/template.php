@@ -1,6 +1,11 @@
+
 <?php
+<<<<<<< HEAD
 if (!isset($_SESSION))
 {
+=======
+if (!isset ($_COOKIE[ini_get('session.name')])) {
+>>>>>>> 6667d6d3d53f91727b8098bb8760bc58b897f9fd
 	session_start();
 }
 /**
@@ -15,7 +20,8 @@ Creates the navigation bar.
 **/
 function navBar($mes)
 {
-	if ($_SESSION['business_mode'])
+	//echo $mes;
+	if ( isset($SESSION['business_mode'])&&$_SESSION['business_mode'])
 	{
 		$message = "<div id='main-menu'>
 				<ul class='sf-menu fright responsive-menu'>
@@ -66,7 +72,9 @@ function navBar($mes)
 							</ul>
 				</ul>
 			</div>";
+		
 	}
+
 	
 	return($message);
 }
