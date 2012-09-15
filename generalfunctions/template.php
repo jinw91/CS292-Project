@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (!isset($_SESSION))
+{
+	session_start();
+}
 /**
 Creates the page for html.
 **/
@@ -73,7 +76,8 @@ Creates the search bar
 **/
 function searchNoVar()
 {
-	return("<ul id='search'>
+	return("<ul id='search'><li><label for='name' style='float: left;'>Name: </label><input name='name' size='25'/></li><li><label for='major' style='float: left;'>Major: </label><select id='major' name='major' size='1'><option>All</option><option>Biomedical Engineering</option><option>Civil Engineering</option><option>Computer Science</option><option>Computer Engineering</option><option>Economics</option><option>Human Organizational Development</option><option>Mechanical Engineering</option></select></li><li><label for='college[]' style='float: left;'>School: </label><select id='college' name='college[]' multiple='multiple' size='1'><option value='Vanderbilt University'>Vanderbilt University</option><option value='Duke University'>Duke University</option><option value='Northwestern University'>Northwestern University</option><option value='University of Chicago'>University of Chicago</option><option value='University of Notre Dame'>University of Notre Dame</option><option value='University of North Carolina'>University of North Carolina</option><option value='University of Virginia'>University of Virginia</option><option value='Washington University in St. Louis'>Washington University in St. Louis</option></select></li><li><label for='gpa' style='float: left;'>Minimum GPA: </label><input name='gpa' size='25' /></li><li><label for='work_experience' style='float: left;'>Work Experience: </label><input name='work_experience' size='10' style='width: 150px;' /> Years</li><li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>");
+	/*return("<ul id='search'>
                 <li><label for='name' style='float: left;'>Name: </label>
                 <input name='name' size='25'/></li>
                 <li><label for='major' style='float: left;'>Major: </label>
@@ -103,7 +107,7 @@ function searchNoVar()
                 <input name='gpa' size='25' /></li>
                 <li><label for='work_experience' style='float: left;'>Work Experience: </label>
                 <input name='work_experience' size='10' style='width: 150px;' /> Years</li>
-                <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>");
+                <li><label for='skills' style='float:left;'>Skill(s): </label><input name='skills' size='25' /></li>");*/
 }
 
 
