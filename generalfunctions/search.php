@@ -106,7 +106,7 @@ function showFriendsList($query, $jid) {
 	}
     else if (mysql_num_rows($result) == 0)
     {
-        $message = "<strong>No results found.</strong>";
+        $message = "<strong>No results found.  Do you want to import friends from Facebook?</strong>";
     }
 	else
 	{

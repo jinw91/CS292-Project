@@ -1,6 +1,12 @@
 <?php
-session_start();
+if (!isset($_SESSION))
+{
+	session_start();
+}
+include("../generalfunctions/database.php");
+connectToDatabase();
 
+mysql_close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
