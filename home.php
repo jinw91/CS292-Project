@@ -21,6 +21,43 @@ if (isset($_GET['usermode']))
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/home.php');
+if ($_POST['save'] == 'Save') {
+    if (isset($_POST0['company']))
+    {
+        $company = $_POST['company'];
+        $title = $_POST['title'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $work_month_start = $_POST['work_month_start'];
+        $work_year_start = $_POST['work_year_start'];
+        $work_month_end = $_POST['work_month_end'];
+        $work_year_end = $_POST['work_year_end'];
+        $achievement = $_POST['achievement'];
+        $idnum = $_SESSION['idnum'];
+        $company_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
+        $company_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
+        if (isset($_POST['present']))
+        {
+            $query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, present, achievement) VALUES ('$idnum', '$company', '$title', '$company_start', '$company_end', '$city', '$state', 1, '$achievement')");
+        }
+        else
+        {
+            $query = sprintf("INSERT INTO work_data (idnum, company_name, title, company_start, company_end, city, state, present, achievement) VALUES ('$idnum', '$company', '$title', '$company_start', '$company_end', '$city', '$state', 0, '$achievement')");
+        }
+        $result = mysql_query($query);
+        if (!$result)
+        {
+            $error = mysql_error();
+        }
+    } 
+    $query = sprintf("UPDATE users SET summer=1 WHERE idnum='$idnum'");
+    $result = mysql_query($query);
+    if (!$result)
+    {
+        $error = mysql_error();
+    }
+    $message = "<p id='update_message'>Work experience updated.</p>";
+}
 if ( $_SESSION['business_mode'])
 {
 	$job_mes = "No events scheduled. Please send some invitations for Interviews.";
@@ -39,6 +76,15 @@ else
 	$result = mysql_query($query);
 	if (!$result) { echo mysql_error();} 
 	$_SESSION['users'] = mysql_fetch_assoc($result);
+    if ($_SESSION['users']['summer'] == 0)
+    {
+        $summer_intern = "Did you do an internship this summer?";
+        $summer_intern .= "<form><input type='radio' name='summer' value='yes' onclick='showSummerIntern(value);' />Yes";
+        $summer_intern .= "<input type='radio' name='summer' value='no' onclick='showSummerIntern(value);' />No";
+        $summer_intern_confirm = "<span style='margin-left: 38.5em;'>";
+        $summer_intern_confirm .= "<input type='submit' name='save' value='Save' />";
+        $summer_intern_confirm .= "<input type='submit' name='cancel' value='Cancel' /></span>";
+    }
 	if (is_null($_SESSION['users']['picture']) || trim($_SESSION['users']['picture']) == "")
 	{
 		$_SESSION['users']['picture'] = "images/default.png";
@@ -126,6 +172,7 @@ if ($_SESSION['users']['picture'] != "")
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script src="simple.js"></script>
 <script>
 
   var _gaq = _gaq || [];
@@ -153,12 +200,11 @@ if ($_SESSION['users']['picture'] != "")
 	<div class="container_12">
 		<div class="grid_12">
 			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
-			
-        <?
-		define('__ROOT__', dirname(__FILE__)); 
-		require_once(__ROOT__.'/generalfunctions/template.php');
-		echo navBar($_SESSION['num_mes']);
-		?>
+            <?
+                define('__ROOT__', dirname(__FILE__)); 
+                require_once(__ROOT__.'/generalfunctions/template.php');
+                echo navBar($_SESSION['num_mes']);
+            ?>
 		</div>
 	</div>
 </header>
@@ -167,6 +213,37 @@ if ($_SESSION['users']['picture'] != "")
 	<div class="wrapper">
 		<div class="grid_12">
 			<div class="text1"><?=$name?></div>
+              <form action='home.php' method='post'>
+                <div style='margin-left:22em; margin-bottom:1em; margin-top:0.5em; font-size:1.2em;'>
+                <?=$summer_intern?>
+                </div>
+                  <ul id='education' style='margin-left:10em;'>
+                    <div id='summer' style='display:none;'>
+                    <li> <label class='field'>Company Name: </label><input type='text' name='company' size=20 /> </li>
+                    <li> <label class='field'>Title: </label><input type='text' name='title' /> </li>
+                    <li> <label class='field'>City: </label><input name='city' style='width: 150px;' /> State: <input name='state' style='width: 60px;' />
+                    <li> <label class='field'>Time Period: </label>
+                    <script>
+                    document.write("<select name=\"work_month_start\">");
+                    months();
+                    document.write("<select name=\"work_year_start\">");
+                    years();
+                    document.write("<label class=\"hide_if_present\"> - </label>");
+                    document.write("<select class=\"hide_if_present\" name=\"work_month_end\">");
+                    months();
+                    document.write("<select class=\"hide_if_present\" name=\"work_year_end\">");
+                    years();
+                    selectMonth("work_month_start", "");
+                    selectMonth("work_month_end", "");
+                    </script><br>
+                    <ul>
+                    <label class='subscript'>Currently Employed: </label><input onclick='hideIfPresent()' type='checkbox' name='present' value='1' > </li>
+                    <li> <label class='field'>Achievement(s): </label><textarea name='achievement' rows='3'></textarea> </li> </ul>
+                    </div>
+                    <?=$summer_intern_confirm?>
+                </ul>
+            </form>
+            <div style='border-bottom:1px dotted #b2b2b2; margin-top:0.5em;'></div>
 		</div>
 	</div>
 </div>
