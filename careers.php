@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (!isset($_SESSION))
+{
+	session_start();
+}
 if (!isset($_SESSION['idnum']))
 {
 	header("Location: home.php");
@@ -10,6 +13,7 @@ require_once(__ROOT__.'/generalfunctions/template.php');
 require_once(__ROOT__.'/generalfunctions/career.php');
 $tbl_name="users";
 $connect = connectToDatabase();
+$error = "reached here";
 if (!$connect)
 {
 	$error = "failed to connect";	
@@ -186,7 +190,7 @@ mysql_close();
 <script src="simple.js"></script>
 </head>
 <body>
-<!--<?=$error?>-->
+<?=$error;?>
 <!-- header -->
 <header>
 	<div class="top-header">
