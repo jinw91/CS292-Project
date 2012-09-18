@@ -15,7 +15,7 @@ if (!$connect)
 	$error = "failed to connect";	
 }
 
-if ($_POST['export']=="Export to CSV")
+if (isset($_POST['export']) && $_POST['export']=="Export to CSV")
 {
 	header("Location: sample.csv");
 }
@@ -40,40 +40,43 @@ if (!$result)
 // User does not own business.
 elseif ((!isset($_GET['jid']) && !isset($_SESSION['company'])) || isset($_GET['usermode']))
 {
-	if ($_POST['search'] == "Search")
+	if (isset($_POST['search'])&& $_POST['search'] == "Search")
 	{
 		$majors = $_POST['major'];
 	}
-	else
+	else if(isset($_SESSION['education']))
 	{
 		$majors = $_SESSION['education']['major'];
 	}
-	$query = "SELECT * FROM careers WHERE ";
-	while (strchr($majors, ", ") > 0)
+	if(isset($majors))
 	{
-		$query = $query."major LIKE '%%".substr($majors, 0, strpos($majors, ", "))."%%' OR ";
-		$majors = substr(strchr($majors, ", "), 2);
-	}
-	$query = $query."major LIKE '%%".$majors."%%' ORDER BY pay DESC";
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = $query." ".mysql_error();
-	}
-	else if (mysql_num_rows($result) == 0)
-	{
-		$message = "<ul id='job_entries'><li>No jobs were found matching your major and pay.</li></ul>";
-	}
-	else
-	{
-		$message = "<ul id='job_entries'>";
-		while ($job = mysql_fetch_assoc($result))
+		$query = "SELECT * FROM careers WHERE ";
+		while (strchr($majors, ", ") > 0)
 		{
-			$message = $message."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a>
-			<div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'><button>Apply</button></a></div>"; //adds name and options.
-			$message = $message."</li>";
+			$query = $query."major LIKE '%%".substr($majors, 0, strpos($majors, ", "))."%%' OR ";
+			$majors = substr(strchr($majors, ", "), 2);
 		}
-		$message = $message."</ul>";
+		$query = $query."major LIKE '%%".$majors."%%' ORDER BY pay DESC";
+		$result = mysql_query($query);
+		if (!$result)
+		{
+			$error = $query." ".mysql_error();
+		}
+		else if (mysql_num_rows($result) == 0)
+		{
+			$message = "<ul id='job_entries'><li>No jobs were found matching your major and pay.</li></ul>";
+		}
+		else
+		{
+			$message = "<ul id='job_entries'>";
+			while ($job = mysql_fetch_assoc($result))
+			{
+				$message = $message."<li><a href='careers.php?jid=".$job['jid']."'>".$job['job_name']." at ".$job['company_name']." in ".$job['city'].", ".$job['state']."</a>
+				<div id='edit_profile'><a href='careers.php?jid=".$job['jid']."&apply=1'><button>Apply</button></a></div>"; //adds name and options.
+				$message = $message."</li>";
+			}
+			$message = $message."</ul>";
+		}
 	}
 }
 // User owns business.
@@ -202,10 +205,17 @@ mysql_close();
 		<div class="grid_12">
 			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 			
-        <?
-		define('__ROOT__', dirname(__FILE__)); 
+        <?php
+		if(!defined('__ROOT__')) define('__ROOT__', dirname(__FILE__)); 
 		require_once(__ROOT__.'/generalfunctions/template.php');
-		echo navBar($_SESSION['num_mes']);
+		if(isset($_SESSION['num_mes']))
+		{
+			echo navBar($_SESSION['num_mes']);
+		}
+		else
+		{
+			echo navBar(0);
+		}
 		?>
 		</div>
 	</div>

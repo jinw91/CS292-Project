@@ -1,6 +1,7 @@
 <?php
+if (!isset ($_COOKIE[ini_get('session.name')])) {
 session_start();
-
+}
 /**
 Generate brief information.
 **/

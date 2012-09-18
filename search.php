@@ -65,15 +65,23 @@ if (isset($_GET['jid']))
 }
 
 // If currently searching.
-if ($_POST['search'] == "Search")
+if (isset($_POST['search']) && $_POST['search'] == "Search")
 {
-	$archives = $_SESSION['search']['name'] = $_POST['name'];
-	$major = $_SESSION['search']['major'] = $_POST['major'];
-	$either = $_SESSION['search']['either'] = $_POST['either'];
-	$college = $_SESSION['search']['college'] = $_POST['college'];
-	$gpa = $_SESSION['search']['gpa'] = $_POST['gpa'];
-	$work_experience = $_SESSION['search']['work_experience'] = $_POST['work_experience'];
-	$skills = $_SESSION['search']['skills'] = $_POST['skills'];
+	if(isset($_POST['name']))
+		$archives = $_SESSION['search']['name'] = $_POST['name'];
+	if(isset($POST['major']))
+		$major = $_SESSION['search']['major'] = $_POST['major'];
+	if(isset($POST['either']))
+		$either = $_SESSION['search']['either'] = $_POST['either'];
+	if(isset($POST['college']))
+		$college = $_SESSION['search']['college'] = $_POST['college'];
+	if(isset($POST['gpa']))
+		$gpa = $_SESSION['search']['gpa'] = $_POST['gpa'];
+	if(isset($POST['work_experience']))
+		$work_experience = $_SESSION['search']['work_experience'] = $_POST['work_experience'];
+	if(isset($POST['skills']))
+		$skills = $_SESSION['search']['skills'] = $_POST['skills'];
+
 	
 	
 	/**
@@ -130,7 +138,7 @@ if ($_POST['search'] == "Search")
 	/**
 	Search by GPA
 	**/
-	if ($gpa != "")
+	if (isset($gpa) && $gpa != "")
 	{
 		$add .= " AND gpa >= '$gpa'";
 	}
@@ -138,14 +146,14 @@ if ($_POST['search'] == "Search")
 	/**
 	Search by Skills
 	**/
-	if ($skills != "")
+	if (isset($skills) && $skills != "")
 	{
 		$add .= " AND skills LIKE '%%$skills%%'";
 	}
 	
 	$query .= $add;
 	
-	if ($work_experience != "")
+	if (isset($work_experience) && $work_experience != "")
 	{
 		$query = "SELECT * FROM (".$query;
 		$query = $query.") AS x, work_data w WHERE w.idnum=x.idnum GROUP BY x.idnum HAVING SUM(DATEDIFF(company_end, company_start))/365 > $work_experience";
@@ -223,10 +231,17 @@ mysql_close();
 		<div class="grid_12">
 			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 			
-        <?
-		define('__ROOT__', dirname(__FILE__)); 
+<?php
+		if(!defined('__ROOT__')) define('__ROOT__', dirname(__FILE__)); 
 		require_once(__ROOT__.'/generalfunctions/template.php');
-		echo navBar($_SESSION['num_mes']);
+		if(isset($_SESSION['num_mes']))
+		{
+			echo navBar($_SESSION['num_mes']);
+		}
+		else
+		{
+			echo navBar(0);
+		}
 		?>
 		</div>
 	</div>
@@ -245,7 +260,12 @@ mysql_close();
                 </div>
                 <ul id="search">
                 <li><label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" value="<?=$_SESSION['search']['name']?>"/></li>
+                <input name="name" size="25" value="<?php if(isset($_SESSION['search']) && isset($_SESSION['search']['name']))
+															{ 
+																echo $_SESSION['search']['name']; 
+															}else {
+																echo '';
+															}		?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
                 <option selected="selected">All</Option>
@@ -258,10 +278,25 @@ mysql_close();
                 </select>
                 </li>
                 <li><label for="gpa" style="float: left;">Minimum GPA: </label>
-                <input name="gpa" size="25" value="<?=$_SESSION['search']['gpa']?>" /></li>
+                <input name="gpa" size="25" value="<?php if(isset($_SESSION['search']) && isset($_SESSION['search']['gpa']))
+															{ 
+																echo $_SESSION['search']['gpa']; 
+															}else {
+																echo '';
+															}		?>" /></li>
                 <li><label for="work_experience" style="float: left;">Work Experience: </label>
-                <input name="work_experience" size="10" style="width: 150px;" value="<?=$_SESSION['search']['work_experience']?>"/> Years</li>
-                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$_SESSION['search']['skills']?>"></li>
+                <input name="work_experience" size="10" style="width: 150px;" value="<?php if(isset($_SESSION['search']) && isset($_SESSION['search']['work_experience']))
+															{ 
+																echo $_SESSION['search']['work_experience']; 
+															}else {
+																echo '';
+															}		?>"/> Years</li>
+                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?php if(isset($_SESSION['search']) && isset($_SESSION['search']['skills']))
+															{ 
+																echo $_SESSION['search']['skills']; 
+															}else {
+																echo '';
+															}		?>"></li>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="hidden" name="jid" value="<?=$_SESSION['search']['jid']?>">
                 <input type="submit" name="search" value="Search"/>
