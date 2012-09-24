@@ -26,13 +26,18 @@ $major_list = retrieveAllMajors();
 $query = "";
 
 // If currently searching through friend's list
-if ($_POST['search'] == "Search")
+if (isset($_POST['search']) && $_POST['search'] == "Search")
 {
-	$archives = $_SESSION['search']['name'] = $_POST['name'];
-	$major = $_SESSION['search']['major'] = $_POST['major'];
-	$either = $_SESSION['search']['either'] = $_POST['either'];
-	$college = $_SESSION['search']['college'] = $_POST['college'];
-	$skills = $_SESSION['search']['skills'] = $_POST['skills'];
+	if(isset($_POST['name']))
+		$archives = $_SESSION['search']['name'] = $_POST['name'];
+	if(isset($POST['major']))
+		$major = $_SESSION['search']['major'] = $_POST['major'];
+	if(isset($POST['either']))
+		$either = $_SESSION['search']['either'] = $_POST['either'];
+	if(isset($POST['college']))
+		$college = $_SESSION['search']['college'] = $_POST['college'];
+	if(isset($POST['skills']))
+		$skills = $_SESSION['search']['skills'] = $_POST['skills'];
 	
 	
 	/**
@@ -89,7 +94,7 @@ if ($_POST['search'] == "Search")
 	/**
 	Search by Skills
 	**/
-	if ($skills != "")
+	if (isset($skills) && $skills != "")
 	{
 		$add .= " AND skills LIKE '%%$skills%%'";
 	}
@@ -121,12 +126,12 @@ if (!isset($_POST['search']))
     {
         $group_dropdown .= "<option value='".$groups['groups']."'>".$groups['groups']."</option>";
     }
-	$add_to_group .= "<div align='right'><select name='group' id='select_group'>";
+	$add_to_group = "<div align='right'><select name='group' id='select_group'>";
     $add_to_group .= $group_dropdown;
     $add_to_group .= "</select><input type='submit' name='submit' value='Add to Group' onsubmit='copy_group();'>";
     $add_to_group .= "<input type='hidden' name='hidden_group_name' id='hidden_group_name'></div></ul>"; //add option to pick job.
 }
-if ($_POST['submit'] == "Add to Group")
+if (isset($_POST['submit']) && $_POST['submit'] == "Add to Group")
 {
     $group = $_POST['hidden_group_name'];
     $select = $_POST['select'];
@@ -183,12 +188,18 @@ mysql_close();
         <div class="grid_12">
             <h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 
-<?
-define('__ROOT__', dirname(__FILE__)); 
-require_once(__ROOT__.'/generalfunctions/template.php');
-echo navBar($_SESSION['num_mes']);
-?>
-        </div>
+<?php
+		if(!defined('__ROOT__')) define('__ROOT__', dirname(__FILE__)); 
+		require_once(__ROOT__.'/generalfunctions/template.php');
+		if(isset($_SESSION['num_mes']))
+		{
+			echo navBar($_SESSION['num_mes']);
+		}
+		else
+		{
+			echo navBar(0);
+		}
+		?>        </div>
     </div>
 </header>
 </div>
@@ -205,7 +216,13 @@ echo navBar($_SESSION['num_mes']);
                 </div>
                 <ul id="search">
                 <li><label for="name" style="float: left;">Name: </label>
-                <input name="name" size="25" value="<?=$_SESSION['search']['name']?>"/></li>
+                <input name="name" size="25" value="<?php if(isset($_SESSION['search']) && isset($_SESSION['search']['name']))
+															{ 
+																echo $_SESSION['search']['name']; 
+															}else {
+																echo '';
+															}				
+				?>"/></li>
                 <li><label for="major" style="float: left;">Major: </label>
                 <select id="major" name="major" size="1">
                 <option selected="selected">All</Option>
@@ -217,7 +234,12 @@ echo navBar($_SESSION['num_mes']);
                 <option value='other'>Other</option>		
                 </select>
                 </li>
-                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?=$_SESSION['search']['skills']?>"></li>
+                <li><label for="skills" style="float:left;">Skill(s): </label><input name="skills" size="25" value="<?php if(isset($_SESSION['search']) && isset($_SESSION['search']['skills']))
+															{ 
+																echo $_SESSION['search']['skills']; 
+															}else {
+																echo '';
+															}		?>"></li>
                 <!--<li><label for='either' style='float: left;'>Any/All Majors</label><input type="checkbox" name='either'></li>-->
                 <input type="hidden" name="jid" value="<?=$_SESSION['search']['jid']?>">
                 <li></li>
@@ -228,16 +250,16 @@ echo navBar($_SESSION['num_mes']);
                 <a class='header_font' href='search.php?friends=true'>Search For Friends: </a>
                 </div>
                 <script>
-				selectDefault('major', '<?=$_SESSION['search']['major']?>');
-				<?=$array?>
+				selectDefault('major', '<?php echo $_SESSION['search']['major'];?>');
+				<?php echo $array;?>
 				</script>
             </div>
             <div class="grid_8">
                     <fieldset>
                     <div style="padding-top: 10px; font-size:12px;">
                     <ul id="friend_list">
-                    <?=$message?>
-    				<?=$add_to_group?>
+                    <?php echo $message;?>
+    				<?php if(isset($add_to_group)) echo $add_to_group;?>
                     </ul>
                     </div>
                     </fieldset>

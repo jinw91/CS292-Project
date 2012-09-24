@@ -6,14 +6,19 @@ if (!isset($_SESSION['idnum']))
 }
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
+<<<<<<< HEAD
 require_once(__ROOT__.'/generalfunctions/user_profile.php');
+=======
+require_once(__ROOT__.'/generalfunctions/template.php');
+require_once(__ROOT__.'/generalfunctions/profile_functions.php');
+>>>>>>> 5f837e991bf4d115f4eaab9fc5d339c8f416c72a
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
 {
 	echo "failed to connect";	
 }
-if ($_GET['submit'] == "Search" || isset($_GET['idnum']))
+if (isset($GET['submit']) && $_GET['submit'] == "Search" || isset($_GET['idnum']))
 {
 	$idnum = $_GET['idnum'];
     $query = sprintf("SELECT * FROM friends WHERE from_id=%d AND to_id=%d", $_SESSION['idnum'], $_GET['idnum']);
@@ -149,7 +154,7 @@ mysql_close();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><?=$p_name?></title>
+<title><?php echo $p_name;?></title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <link rel="stylesheet" href="css/style.css">
@@ -199,10 +204,17 @@ $(function(){
 		<div class="grid_12">
 			<h1 class="fleft"><a href="index.php"><img src="site_im/p_a_logo_new.png" alt=""></a></h1>
 			
-        <?
-		define('__ROOT__', dirname(__FILE__)); 
+        <?php
+		if(!defined('__ROOT__')) define('__ROOT__', dirname(__FILE__)); 
 		require_once(__ROOT__.'/generalfunctions/template.php');
-		echo navBar($_SESSION['num_mes']);
+		if(isset($_SESSION['num_mes']))
+		{
+			echo navBar($_SESSION['num_mes']);
+		}
+		else
+		{
+			echo navBar(0);
+		}
 		?>
 		</div>
 	</div>
@@ -303,6 +315,7 @@ $(function(){
 </section>
 <!-- footer -->
 <?php
+	
 	echo footer();
 ?>
 </body>
