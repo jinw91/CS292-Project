@@ -21,8 +21,9 @@ if (isset($_GET['usermode']))
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/home.php');
+connectToDatabase();
 if ($_POST['save'] == 'Save') {
-    if (isset($_POST0['company']))
+    if (isset($_POST['company']))
     {
         $company = $_POST['company'];
         $title = $_POST['title'];
@@ -79,8 +80,8 @@ else
     if ($_SESSION['users']['summer'] == 0)
     {
         $summer_intern = "Did you do an internship this summer?";
-        $summer_intern .= "<form><input type='radio' name='summer' value='yes' onclick='showSummerIntern(value);' />Yes";
-        $summer_intern .= "<input type='radio' name='summer' value='no' onclick='showSummerIntern(value);' />No";
+        $summer_intern .= "<form><input type='radio' name='summer' value='yes' onclick='showSummerIntern(true);' />Yes";
+        $summer_intern .= "<input type='radio' name='summer' value='no' onclick='showSummerIntern(false);' />No";
         $summer_intern_confirm = "<span style='margin-left: 38.5em;'>";
         $summer_intern_confirm .= "<input type='submit' name='save' value='Save' />";
         $summer_intern_confirm .= "<input type='submit' name='cancel' value='Cancel' /></span>";
@@ -186,6 +187,7 @@ if ($_SESSION['users']['picture'] != "")
   })();
 
 </script>
+
 </head>
 <body>
 <?=$error?>
@@ -218,7 +220,7 @@ if ($_SESSION['users']['picture'] != "")
                 <?=$summer_intern?>
                 </div>
                   <ul id='education' style='margin-left:10em;'>
-                    <div id='summer' style='display:none;'>
+                    <div id='summer' style='display:none; border-bottom:1px dotted #b2b2b2; margin-top:0.5em;'>
                     <li> <label class='field'>Company Name: </label><input type='text' name='company' size=20 /> </li>
                     <li> <label class='field'>Title: </label><input type='text' name='title' /> </li>
                     <li> <label class='field'>City: </label><input name='city' style='width: 150px;' /> State: <input name='state' style='width: 60px;' />
@@ -243,10 +245,25 @@ if ($_SESSION['users']['picture'] != "")
                     <?=$summer_intern_confirm?>
                 </ul>
             </form>
-            <div style='border-bottom:1px dotted #b2b2b2; margin-top:0.5em;'></div>
+            <div style=''></div>
 		</div>
 	</div>
 </div>
+<script>
+function showSummerIntern(value)
+{
+	if (value)
+	{
+		var tag = document.getElementById('summer');
+		tag.style.display = 'block';
+	}
+	else
+	{
+		var tag = document.getElementById('summer');
+		tag.style.display = 'none';
+	}
+}
+</script>
 <!-- content -->
 <section id="content">  
 	<div class="container_12">

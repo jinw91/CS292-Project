@@ -3,9 +3,19 @@ if (!isset($_SESSION))
 {
 	session_start();
 }
-include("../generalfunctions/database.php");
+require_once($_SESSION['__ROOT__'].'/generalfunctions/database.php');
 connectToDatabase();
 
+$query = sprintf("SELECT * FROM sid_to_bid WHERE b_id='%d'", $_SESSION['company']['b_id']);
+$result = mysql_query($query);
+if ($result && mysql_num_rows($result) > 0)
+{
+	$form = "";
+	while ($forms = mysql_fetch_assoc($result))
+	{
+		$form .= "<li><label class='field'>".$forms['form_name'].": </label><input name='cover' type='checkbox' style='width: 150px;' /></li>";
+	}
+}
 mysql_close();
 ?>
 <!DOCTYPE html>
@@ -65,9 +75,11 @@ mysql_close();
               			<ul id='education'>
                         What would you like to ask your candidate?<br>
                         <li></li>
-                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>                   		<li><label class="field">Profiles XT: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>
-                		<li><a class='lato_marginleft' href='supplemental/addnewform.php'>Add new form</a></li>
-            			<li>
+                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>                   		
+                        <li><label class="field">Profiles XT: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>
+                		<?=$form?>
+                        <li><a class='lato_marginleft' href='supplemental/addnewform.php'>Add new form</a></li>
+                        <li>
             			<span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
             			<input type='submit' name='skip' value='Skip' /></span></li>
             			</ul>

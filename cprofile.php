@@ -6,7 +6,7 @@ if (!isset($_SESSION['idnum']))
 }
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
-require_once(__ROOT__.'/generalfunctions/profile_functions.php');
+require_once(__ROOT__.'/generalfunctions/user_profile.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)

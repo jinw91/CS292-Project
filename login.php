@@ -7,6 +7,7 @@ if (isset($_SESSION['idnum']))
 }
 
 	define('__ROOT__', dirname(__FILE__)); 
+	$_SESSION['__ROOT__'] = __ROOT__;
 	require_once(__ROOT__.'/generalfunctions/database.php');
 	$tbl_name="users";
 	$connect = connectToDatabase();

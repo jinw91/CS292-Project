@@ -241,7 +241,7 @@ a.header_font:link, a.header_font:visited
 }
 #edit_profile a:hover
 {
-	background-color:#CCC;
+	/*background-color:#CCC;*/
 	color:#090;
 }
 
@@ -262,7 +262,7 @@ a.header_font:link, a.header_font:visited
 }
 #edit_info a:hover
 {
-	background-color:#CCC;
+	/*background-color:#CCC;*/
 	color:#090;
 }
 
