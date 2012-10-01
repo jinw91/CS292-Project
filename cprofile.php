@@ -21,7 +21,7 @@ if (!$connect)
 if (isset($GET['submit']) && $_GET['submit'] == "Search" || isset($_GET['idnum']))
 {
 	$idnum = $_GET['idnum'];
-    $query = sprintf("SELECT * FROM friends WHERE from_id=%d AND to_id=%d", $_SESSION['idnum'], $_GET['idnum']);
+    $query = sprintf("SELECT * FROM friends WHERE from_id=%d AND to_id=%d", $_GET['idnum'], $_SESSION['idnum']);
     $result = mysql_query($query);
     if (!$result)
     {
@@ -53,6 +53,16 @@ if (!$result)
 }
 
 $v_about = mysql_fetch_assoc($result);
+
+//Retrieve privacy settings.
+$query = sprintf("SELECT * FROM privacy WHERE idnum=%d", $idnum);
+$result = mysql_query($query);
+if (!$result)
+{
+	echo mysql_error();	
+}
+
+$v_privacy = mysql_fetch_assoc($result);
 
 //Checks if visited.
 /*
