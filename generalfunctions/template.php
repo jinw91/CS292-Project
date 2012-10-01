@@ -60,7 +60,7 @@ function navBar($mes)
 		}
 		$message .= "</a></li><li><a href='http://www.proarcs.com/careers.php'>careers</a></li>
 					 <li><a href='http://www.proarcs.com/friend.php'>friends</a></li>
-					 <li><a href='#'>&darr;</a><span class='arrow'></span></a><ul>
+					 <li><a href='#'>&darr;</a></a><ul>
 							<li><a href='http://www.proarcs.com/privacysettings.php'>Privacy Settings</a></li>
 							<li><a href='mailto: contact@proarcs.com'>Contact Us</a></li>
 							<li><a href='http://www.proarcs.com/logout.php'>Log Out</a></li>

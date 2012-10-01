@@ -109,7 +109,7 @@ else if (isset($_GET['write']))
 			/**
 			Madhur's code**/
 			$date = "<li><label class='inbox' for='time'>Date: </label><input type='text' id='pickdatetime' size='35'/></li>";
-			$time = "<li><label class='inbox' for='time'>Time: </label><input type='text' id='picktime' size='5'/></li>";
+			$time = "<li><label class='inbox' for='time'>End Time: </label><input type='text' id='picktime' size='5'/></li>";
 			//$date = "<li><label class='inbox' for='time'>Date: </label><input type='text' id='date_field' size='35'/></li>";
 			//$time = "<li><label class='inbox' for='time'>Time: </label><input type='text' id='time_field' size='5'/></li>";
 		}
@@ -138,7 +138,13 @@ else if (isset($_GET['write']))
     <script>
         CKEDITOR.replace('ckeditor');
     </script>
-	<li><span style='margin-left: 58px;'><button id='add' onClick='return false;'>Add Slot</button><button id='submit' onClick='return false;'>Submit Slots</button><input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
+	<li><span style='margin-left: 58px;'>";
+	if (isset($date))
+	{
+		
+		$message .= "<button id='add' onClick='return false;'>Add Slot</button><button id='submit' onClick='return false;'>Submit Slots</button>";
+	}
+	$message .= "<input type='submit' onclick='copyid();' name='send' value='Send'/></span></li>
 	<li><input type='hidden' name='hidden_to_id' id='hidden_to_id' /></li></ul></form>";
 	
 	/*$message = $message."</ul></div></li></ol></li>
