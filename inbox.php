@@ -315,6 +315,8 @@ mysql_close();
 <link rel="stylesheet" href="css/skeleton.css">
 <link rel="stylesheet" href="css/anytime.css">
 <link rel="stylesheet" href="css/test.css" type="text/css" media="screen" title="Test Stylesheet" charset="utf-8" />
+<link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
+<link rel="stylesheet" media="all" type="text/css" href="madhur/datepicker/dp/jquery-ui-timepicker-addon.css" />
 <script src="js/jquery-1.7.1.min.js"></script>
 <script src="js/superfish.js"></script>
 <script src="js/hoverIntent.js"></script>
@@ -328,16 +330,9 @@ mysql_close();
 <script src="js/anytime.js" type="text/javascript" charset="utf-8"></script>
 <script src="simple.js" type="text/javascript" ></script>
 <script src="ckeditor/ckeditor.js" type="text/javascript"></script>
+<script type="text/javascript" src="madhur/datepicker/dp/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="madhur/datepicker/dp/jquery-ui-sliderAccess.js"></script>
 
-
-<!--putting new content starts-->
-    <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" />
-    <link rel="stylesheet" media="all" type="text/css" href="madhur/datepicker/dp/jquery-ui-timepicker-addon.css" />
-
- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script> 
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="madhur/datepicker/dp/jquery-ui-timepicker-addon.js"></script>
-    <script type="text/javascript" src="madhur/datepicker/dp/jquery-ui-sliderAccess.js"></script>
     <script type="text/javascript" >
     $(document).ready( function() {
     var myGlobal={};
