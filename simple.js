@@ -248,6 +248,14 @@ function hideIfPresent() {
 	$(".hide_if_present").toggle();
 }
 
+function showSummerIntern(value) {
+    if (value == 'yes') {
+        $("#summer").show();
+    } else {
+        $("#summer").hide();
+    }
+}
+
 function select_all() {
     $(".candidate_checkbox").attr("checked", $("#selectall").prop("checked"));
 }
@@ -273,12 +281,12 @@ function slideDown(clickId, toggleId) {
 
 function copy_group() {
     var group_name = "";
-    if ($('#select_group').val() == "new_group") {
+    if (jQuery('#select_group').val() == "new_group") {
         group_name = prompt('Enter a new group name:');
     } else {
-        group_name = $('#select_group').val();
+        group_name = jQuery('#select_group').val();
     }
-    $('#hidden_group_name').val(group_name);
+    jQuery('#hidden_group_name').val(group_name);
 }
 /**
 Generic Profile.
