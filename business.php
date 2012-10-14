@@ -144,6 +144,7 @@ if (isset($_SESSION['company']))
 			  <li><label class="field">Description: </label><textarea name="description" rows="10"><?=$description?></textarea></li>
               <fieldset>
               <li><label class="field">Company Image: </label><input type="file" name="picture"></li>
+              <li><label class="field">Administrators for Company: </label><input type="text" name="admins"></li>
               </fieldset>
     		  <li>
             <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save"/></span></li>

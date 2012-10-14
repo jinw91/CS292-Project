@@ -16,7 +16,7 @@ Creates the navigation bar.
 function navBar($mes)
 {
     //echo $mes;
-    if ( isset($SESSION['business_mode'])&&$_SESSION['business_mode'])
+    if (isset($_SESSION['business_mode']) && $_SESSION['business_mode'])
     {
         $message = "<div id='main-menu'>
             <ul class='sf-menu fright responsive-menu'>
