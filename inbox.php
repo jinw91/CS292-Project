@@ -185,11 +185,6 @@ else if (isset($_GET['write']))
 		echo mysql_error();
 	}
 	$myjson = mysql2json($result);
-	if (!isset($myjson))
-	{
-		$error .= "myjson not set";
-	}
-	$error .= $myjson;
 	$message = $message."<script>
 	function copyid() {
 		$('#hidden_to_id').value=\$F('facebook-demo');
