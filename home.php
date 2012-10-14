@@ -23,7 +23,7 @@ require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/home.php');
 connectToDatabase();
 if ($_POST['save'] == 'Save') {
-    if (isset($_POST['company']))
+    if (isset($_POST['summer']))
     {
         $company = $_POST['company'];
         $title = $_POST['title'];
