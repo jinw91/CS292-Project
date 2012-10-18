@@ -6,28 +6,12 @@ if (!isset($_SESSION['idnum']))
 }
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
+require_once(__ROOT__.'/generalfunctions/friends_functions.php');
 $tbl_name="personnel_email";
 $connect = connectToDatabase();
 if (!$connect)
 {
 	echo "failed to connect";
-}
-
-// converts mysql query result to a json object
-function mysql2json($mysql_result) {
-	$json="[";
-	$rows = mysql_num_rows($mysql_result);
-	for ($x=0;$x<$rows;$x++) {
-		$row = mysql_fetch_array($mysql_result);
-		$json.="{'caption':'".$row[0]." ".$row[1]."','value':'".$row[2]."'";
-		if ($x==$rows-1) {
-			$json.="}";
-		} else {
-			$json.="},";
-		}
-	}
-	$json.="]";
-	return($json);
 }
 
 //sending a message
@@ -182,7 +166,7 @@ else if (isset($_GET['write']))
     }
 	$result = mysql_query($query);
 	if (!$result) {
-		echo mysql_error();
+		$error = mysql_error();
 	}
 	$myjson = mysql2json($result);
 	$message = $message."<script>

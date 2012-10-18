@@ -2,6 +2,7 @@
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
+require_once(__ROOT__.'/generalfunctions/friends_functions.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)
@@ -76,6 +77,12 @@ if (isset($_SESSION['company']))
 	$city = $_SESSION['company']['city'];
 	$state = $_SESSION['company']['state'];
 	$description = $_SESSION['company']['description'];
+    $query = sprintf("SELECT u.first_name, u.last_name, u.idnum FROM users u, friends f WHERE f.from_id=%d AND f.to_id=u.idnum", $_SESSION['idnum']);
+	$result = mysql_query($query);
+	if (!$result) {
+		$error = mysql_error();
+	}
+	$myjson = mysql2json($result);
 }
 ?>
 <!DOCTYPE html>
@@ -87,6 +94,7 @@ if (isset($_SESSION['company']))
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/test.css">
 <script src="js/jquery-1.7.1.min.js"></script>
 <script src="js/superfish.js"></script>
 <script src="js/hoverIntent.js"></script>
@@ -94,6 +102,12 @@ if (isset($_SESSION['company']))
 <script src="js/FF-cash.js"></script>
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
+<script src="js/prototype/prototype.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/prototype/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/facebooklist.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/anytime.js" type="text/javascript" charset="utf-8"></script>
+<script src="simple.js" type="text/javascript" ></script>
+<script src="ckeditor/ckeditor.js" type="text/javascript"></script>
 <script type="text/javascript" src="simple.js"></script>
 </head>
 <body>
@@ -141,19 +155,33 @@ if (isset($_SESSION['company']))
               <li><label class="field">Company Name: </label><input type="text" name="company_name" value="<?=$company_name?>" /></li>
               <li><label class="field">Industry: </label><input name="sector" type="text" value="<?=$sector?>" /></li>
     		  <li><label class="field">City: </label><input name="city" size=20 value="<?=$city?>" /> State: <input name="state" size=3 value="<?=$state?>" /></li>
-			  <li><label class="field">Description: </label><textarea name="description" rows="10"><?=$description?></textarea></li>
-              <fieldset>
+			  <li><label class="field">Description: </label><textarea name="description" id="business_ckeditor" ><?=$description?></textarea></li>
               <li><label class="field">Company Image: </label><input type="file" name="picture"></li>
-              <li><label class="field">Administrators for Company: </label><input type="text" name="admins"></li>
-              </fieldset>
+              <li><label class="field">Administrators for Company: </label>
+              <ol><li id='facebook-list' class='input-text'><input type='text' name='admins' id='facebook-demo' style='width:450px'/>
+              <div id='facebook-auto' style='margin-left:265px; width:455px;'>
+              <div class='default'>Separate names with a comma</div>
+              <ul class='feed'></ul></div></li></ol></li>
+              <li><input type='hidden' name='hidden_admin_id' id='hidden_admin_id' /></li>
     		  <li>
-            <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save"/></span></li>
+            <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save" onclick="copyid()"/></span></li>
             </ul>
     		</form>
 			</div>
 		</div>
 	</div>
 </section>
+<script>
+    CKEDITOR.replace('business_ckeditor');
+	function copyid() {
+		$('#hidden_admin_id').value=$F('facebook-demo');
+	}
+	document.observe('dom:loaded', function() {
+        tlist = new FacebookList('facebook-demo', 'facebook-auto',{ regexSearch: false });
+        var myjson = <?=$myjson?>;
+        myjson.each(function(t){tlist.autoFeed(t)});
+	});
+</script>
 <!-- footer -->
 <?php
 	define('__ROOT__', dirname(__FILE__)); 

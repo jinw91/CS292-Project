@@ -496,6 +496,7 @@ a.mes_name:link, a.mes_name:visited
 
 /** Styling for ckeditor and facebook name selector in inbox **/
 #cke_ckeditor {margin-left: 5em;}
+#cke_business_ckeditor {margin-left: 22em;}
 #facebook-auto {z-index: 2147483643;}
 
 /**
