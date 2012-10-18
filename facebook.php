@@ -28,13 +28,15 @@ if (!isset($_GET['error']))
 	$loginUrl = $facebook->getLoginUrl($params);
 	echo("<a href='".$loginUrl."'>Redirect</a>");
 }
-else
+else if (isset($_GET['code']))
 {
+	//Done already by PHP SDK
 	$redirect = "https://graph.facebook.com/oauth/access_token?
     client_id=".$config['appId']."
    &redirect_uri=YOUR_REDIRECT_URI
    &client_secret=".$config['secret']."
-   &code=CODE_GENERATED_BY_FACEBOOK";
+   &code=".$_GET['code'];
+   $facebook->api(
 }
 ?>
 

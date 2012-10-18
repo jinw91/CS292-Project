@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: custsql-ipg09.eigbox.net
--- Generation Time: Sep 15, 2012 at 04:13 PM
+-- Generation Time: Oct 14, 2012 at 06:12 PM
 -- Server version: 5.0.91
 -- PHP Version: 4.4.9
 -- 
@@ -272,6 +272,7 @@ INSERT INTO `business_structure` VALUES (4, 168, 'CEO');
 INSERT INTO `business_structure` VALUES (3, 164, 'President');
 INSERT INTO `business_structure` VALUES (2, 5, 'CEO');
 INSERT INTO `business_structure` VALUES (5, 27, '');
+INSERT INTO `business_structure` VALUES (5, 186, 'Human Resources');
 
 -- --------------------------------------------------------
 
@@ -548,7 +549,7 @@ CREATE TABLE `education_data` (
   `gpa` float NOT NULL,
   `honors` text NOT NULL,
   PRIMARY KEY  (`eid`)
-) ENGINE=MyISAM AUTO_INCREMENT=107 DEFAULT CHARSET=latin1 AUTO_INCREMENT=107 ;
+) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=latin1 AUTO_INCREMENT=109 ;
 
 -- 
 -- Dumping data for table `education_data`
@@ -660,6 +661,8 @@ INSERT INTO `education_data` VALUES (103, 184, 1, 'Sewanee: The University of th
 INSERT INTO `education_data` VALUES (104, 187, 1, 'Stanford University', 'Bachelor of Engineering', 'Management Science and Engineering', 'Computer Science', '2011-09-01', '2015-06-01', 3.9, 'National Merit Scholarship');
 INSERT INTO `education_data` VALUES (105, 189, 1, 'Wake Forest University', 'Bachelor of Science', 'Computer Science, Math', '', '2009-08-01', '2013-06-01', 3.7, 'Dean''s List, George Hankins Scholar, Graduated with Honors in CS');
 INSERT INTO `education_data` VALUES (106, 191, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Finance and Business Development', '', '2010-08-01', '2014-05-01', 3.2, 'Member of Vanderbilt Baseball Team 2011-12\r\nMember of College World Series Team 2011\r\nSEC All Academic Honor Roll 2011, 2012\r\nEagle Scout');
+INSERT INTO `education_data` VALUES (107, 192, 1, 'Stanford University', 'Associate', 'Women''s Studies', '', '2019-12-01', '1993-02-01', 4, 'Woman of the Year');
+INSERT INTO `education_data` VALUES (108, 193, 0, 'Stanford University', 'Adjunct Professor', '', '', '1990-01-01', '1990-01-01', 5, 'Professor of Year, 2012\r\nHot Dog Eating Contest 2nd Place, 2003');
 
 -- --------------------------------------------------------
 
@@ -708,7 +711,7 @@ CREATE TABLE `friends` (
   `groups` varchar(255) NOT NULL,
   PRIMARY KEY  (`r_id`),
   UNIQUE KEY `iddifferent` (`from_id`,`to_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- 
 -- Dumping data for table `friends`
@@ -725,6 +728,8 @@ INSERT INTO `friends` VALUES (9, 5, 35, '2012-01-22', '');
 INSERT INTO `friends` VALUES (10, 70, 7, '2012-01-30', '');
 INSERT INTO `friends` VALUES (11, 27, 5, '2012-07-01', '');
 INSERT INTO `friends` VALUES (12, 13, 5, '2012-07-02', '');
+INSERT INTO `friends` VALUES (13, 192, 5, '2012-09-16', '');
+INSERT INTO `friends` VALUES (14, 192, 9, '2012-09-16', '');
 
 -- --------------------------------------------------------
 
@@ -742,7 +747,7 @@ CREATE TABLE `leadership_data` (
   `present` tinyint(1) NOT NULL,
   `achievement` text NOT NULL,
   PRIMARY KEY  (`l_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=latin1 AUTO_INCREMENT=54 ;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
 
 -- 
 -- Dumping data for table `leadership_data`
@@ -796,6 +801,8 @@ INSERT INTO `leadership_data` VALUES (50, 142, 'WRVU Radio', 'Radio DJ', '2012-0
 INSERT INTO `leadership_data` VALUES (51, 142, 'Dance Marathon', 'Technology Chair', '2012-04-01', '1990-01-01', 1, 'Responsible for maintaining website as well as social media sites. \r\nManage listserves.\r\nTake photos and videos at all events.\r\nMake slideshows, videos, and other media for all events.');
 INSERT INTO `leadership_data` VALUES (52, 187, 'Business Association of Stanford Entrepreneurial Students', '', '2012-04-01', '1990-06-01', 1, '');
 INSERT INTO `leadership_data` VALUES (53, 189, 'WFU Aikido Club', 'President', '2009-08-01', '1990-01-01', 1, '');
+INSERT INTO `leadership_data` VALUES (54, 193, 'Vanderbilt Mobile Apps Team', 'Founder', '1990-01-01', '1990-01-01', 0, 'I run this shit');
+INSERT INTO `leadership_data` VALUES (55, 193, 'Sigma Beta Rho', 'treasurer', '1990-01-01', '1990-01-01', 1, 'Contributed to many innovations in the field, notably the "brown lizard" ');
 
 -- --------------------------------------------------------
 
@@ -857,7 +864,7 @@ CREATE TABLE `personnel_email` (
   `time_sent` datetime NOT NULL,
   `is_read` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`mid`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 -- 
 -- Dumping data for table `personnel_email`
@@ -891,6 +898,7 @@ INSERT INTO `personnel_email` VALUES (29, 'Phone Interview: Professional Archive
 INSERT INTO `personnel_email` VALUES (30, 'Professional Archives ', 'I just added you as my friend, but I think we should talk a little more before we actually become friends. ', 27, 5, '2012-07-01 22:28:12', 1);
 INSERT INTO `personnel_email` VALUES (31, 'Phone Interview: Epic', 'Thank you for sending in your application to Epic. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 27, 5, '2012-08-19 21:57:30', 1);
 INSERT INTO `personnel_email` VALUES (32, 'Phone Interview: Epic', 'Thank you for sending in your application to Epic. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 27, 20, '2012-08-19 21:57:30', 0);
+INSERT INTO `personnel_email` VALUES (34, '', '', 5, 0, '2012-10-01 02:13:05', 0);
 
 -- --------------------------------------------------------
 
@@ -963,29 +971,6 @@ CREATE TABLE `sid_to_bid` (
 -- Dumping data for table `sid_to_bid`
 -- 
 
-INSERT INTO `sid_to_bid` VALUES (5, 1, '', '');
-INSERT INTO `sid_to_bid` VALUES (5, 2, '', '');
-INSERT INTO `sid_to_bid` VALUES (5, 3, '', '');
-INSERT INTO `sid_to_bid` VALUES (5, 4, '', '');
-INSERT INTO `sid_to_bid` VALUES (5, 5, '', '');
-INSERT INTO `sid_to_bid` VALUES (0, 1, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 1, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 2, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 3, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 4, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 5, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 6, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 7, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 8, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 9, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 10, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 11, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 12, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 13, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 14, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 15, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 16, '', '');
-INSERT INTO `sid_to_bid` VALUES (2, 17, '', '');
 INSERT INTO `sid_to_bid` VALUES (2, 18, 'hiofhae', 'hiaohfhdif');
 INSERT INTO `sid_to_bid` VALUES (0, 2, 'aifjsif', 'adfiopasif');
 INSERT INTO `sid_to_bid` VALUES (0, 3, 'aifjsif', 'adfiopasif');
@@ -996,6 +981,7 @@ INSERT INTO `sid_to_bid` VALUES (0, 7, 'aifjsif', 'adfiopasif');
 INSERT INTO `sid_to_bid` VALUES (0, 8, 'aifjsif', 'adfiopasif');
 INSERT INTO `sid_to_bid` VALUES (0, 9, 'aifjsif', 'adfiopasif');
 INSERT INTO `sid_to_bid` VALUES (0, 10, 'aifjsif', 'adfiopasif');
+INSERT INTO `sid_to_bid` VALUES (2, 19, 'wfhio', 'hiaosfhad');
 
 -- --------------------------------------------------------
 
@@ -1010,7 +996,7 @@ CREATE TABLE `supplemental` (
   `type` int(3) NOT NULL,
   `body` text NOT NULL,
   PRIMARY KEY  (`sid`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- 
 -- Dumping data for table `supplemental`
@@ -1018,6 +1004,7 @@ CREATE TABLE `supplemental` (
 
 INSERT INTO `supplemental` VALUES (10, 4, 'wow', 3, 'a|b|c|');
 INSERT INTO `supplemental` VALUES (9, 1, 'ho', 3, '');
+INSERT INTO `supplemental` VALUES (11, 1, '', 1, '');
 
 -- --------------------------------------------------------
 
@@ -1045,19 +1032,19 @@ CREATE TABLE `users` (
   `disabled` tinyint(1) NOT NULL default '0',
   `summer` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`idnum`)
-) ENGINE=MyISAM AUTO_INCREMENT=192 DEFAULT CHARSET=latin1 AUTO_INCREMENT=192 ;
+) ENGINE=MyISAM AUTO_INCREMENT=195 DEFAULT CHARSET=latin1 AUTO_INCREMENT=195 ;
 
 -- 
 -- Dumping data for table `users`
 -- 
 
-INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'PHP, mySQL, Javascript', '2012-09-15 16:05:52', 0, 0);
+INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'PHP, mySQL, Javascript', '2012-10-14 03:38:19', 0, 1);
 INSERT INTO `users` VALUES (13, 'lmathson@sbcglobal.net', 'ac29eac4d2463413227f8b0a0a9f24bfa79cb3a6', 'Leslie', 'Mathson', NULL, '', 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 'Audio-video systems, telecom and fiber networks, RF and 2-way radio applications and practices.', '2012-09-04 15:31:07', 0, 0);
 INSERT INTO `users` VALUES (23, 'vankegel@yahoo.com', 'c8fd40db3226a3ddab62fc32c505feab426870ed', 'Van', 'Kegel', NULL, '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (20, 'collin.h.grimes@vanderbilt.edu', 'c5c524e87447bc3df969662f65d4b8c56f11623c', 'Collin', 'Grimes', '/images/20.jpg', '', 'Mechanical Engineering', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
-INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-09-13 21:51:05', 0, 0);
+INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-10-14 17:49:23', 0, 1);
 INSERT INTO `users` VALUES (9, 'seth.n.friedma@vanderbilt.edu', '5b2ff4c2d9b8f4982de0336ec842dd9f6b5e8521', 'Seth', 'Friedman', '/images/9.jpeg', '', 'Computer Science', 'Pensacola', 'FL', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 1, 0);
-INSERT INTO `users` VALUES (29, 'tszurcher@gmail.com', '76ab4f3ccab0b37a78ea395523f3206d3c41f22b', 'Taylor', 'Zurcher', NULL, '', 'Civil Engineering ', 'Nashville', 'SC', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
+INSERT INTO `users` VALUES (29, 'tszurcher@gmail.com', '76ab4f3ccab0b37a78ea395523f3206d3c41f22b', 'Taylor', 'Zurcher', NULL, '', 'Civil Engineering ', 'Nashville', 'SC', 'United States', 0, 0, 'Searching for Internship', '', '2012-10-03 12:20:48', 0, 0);
 INSERT INTO `users` VALUES (30, 'christina.c.chapman@vanderbilt.edu', '42dc244f40234f944013d72260908f4b30752ac3', 'Christina', 'Chapman', '/images/30.jpeg', '', 'Human Organizational Development and Corporate Strategy', 'Nashville', 'Tn', 'United States', 0, 0, 'Employed', 'Microsoft Excel, FishBowl Inventory', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (167, 'david.m.dipanfilo@vanderbilt.edu', 'fad8273d503eca0197bb884e566725c18e3c08c2', 'David', 'DiPanfilo', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (31, 'van.p.kegel@vanderbilt.edu', 'c8fd40db3226a3ddab62fc32c505feab426870ed', 'Van', 'Kegel', '/images/31.jpg', NULL, 'Mechanical Engineering', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
@@ -1212,6 +1199,9 @@ INSERT INTO `users` VALUES (188, 'somasundarambk@gmail.com', '3adf38f3ca212c793c
 INSERT INTO `users` VALUES (189, 'theborg3of5@gmail.com', 'acedcba8b2aa920152d9bad7da962602b8a0f4c4', 'Gavin', 'Borg', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-08-20 23:09:09', 0, 0);
 INSERT INTO `users` VALUES (191, 'willjohnson0892@sprynet.com', '89ca8df982272d8d63a11e9c9d45bb8bdac89cc0', 'Will', 'Johnson', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-09-08 18:27:29', 0, 0);
 INSERT INTO `users` VALUES (190, 'jackkuhl@vanderbilt.edu', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Jack', 'Kuhl', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
+INSERT INTO `users` VALUES (192, 'n347110@rtrtr.com', '1d1ce6feb1af4cf8c4152ea681b88adf92ad55ac', 'Andrew', 'Lum', '/images/192.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-09-16 00:59:30', 0, 0);
+INSERT INTO `users` VALUES (193, 'bigthaiboi@gmail.com', '2f027752a76ce8b5090fd2aca7e1586fb2627129', 'Tom', 'Nguyen', '/images/193.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', 'very skilled negotiator;\r\nonce shook Jimmy Carter''s hand', '2012-09-16 01:12:17', 0, 0);
+INSERT INTO `users` VALUES (194, 'nicholas.herbach@gmail.com', '8f52c02f11fdc0d09f3b995215356efa1e80911b', 'Nicholas', 'Herbach', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-09-20 22:48:38', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1322,7 +1312,7 @@ CREATE TABLE `work_data` (
   `state` varchar(255) NOT NULL,
   `achievement` mediumtext NOT NULL,
   PRIMARY KEY  (`w_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=latin1 AUTO_INCREMENT=104 ;
+) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1 AUTO_INCREMENT=110 ;
 
 -- 
 -- Dumping data for table `work_data`
@@ -1410,7 +1400,13 @@ INSERT INTO `work_data` VALUES (90, 142, 'Vanderbilt Biology Department', 'Under
 INSERT INTO `work_data` VALUES (91, 142, 'Vanderbilt Neuroscience Department', 'Undergraduate Assistant', '2010-09-01', '2011-04-01', 0, 'Nashville', 'TN', 'Learned basic lab techniques and equipment (agarose gel preparation and use, transform bacteria, purify DNA).\r\nOrganized oligonucleotide and vector databases.');
 INSERT INTO `work_data` VALUES (95, 58, 'Breezy Point Cooperative', 'Lifeguard', '2012-06-01', '2012-08-01', 0, 'Breezy Point', 'NY', '');
 INSERT INTO `work_data` VALUES (96, 188, 'Intel', 'Software Development Engineer', '2009-01-01', '2012-07-01', 0, '', '', 'Received "Bravo" Award');
+INSERT INTO `work_data` VALUES (104, 5, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
+INSERT INTO `work_data` VALUES (105, 5, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
 INSERT INTO `work_data` VALUES (99, 189, 'Shodor Education Foundation', 'Software Development Intern', '2005-01-01', '2012-02-01', 0, 'Durham', 'NC', '');
 INSERT INTO `work_data` VALUES (100, 189, 'Epic', 'Research and Development Intern', '2012-05-01', '2012-08-01', 0, 'Madison', 'WI', '');
 INSERT INTO `work_data` VALUES (103, 191, 'William Johnson Management', 'Manager and Owner', '2011-01-01', '2014-05-01', 0, 'Austin/Nashville', 'TX/TN', 'â€¢	Developed opportunity for film composer client to become finalist for the lead Composer in Lucas Filmâ€™s recent hit movie â€œRed Tailsâ€\r\nâ€¢	Identified and developed opportunities for multiple clients to appear on TV shows such as NCIS and various independent films in the Austin, Texas area\r\n');
 INSERT INTO `work_data` VALUES (101, 0, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
+INSERT INTO `work_data` VALUES (106, 192, 'ProArcs', 'Lead Developer', '2016-10-01', '2015-05-01', 0, '', '', 'Founded the company!');
+INSERT INTO `work_data` VALUES (107, 193, 'Imports/Exports', 'Field-Jockey', '1990-01-01', '1990-01-01', 0, 'Bamfcock', 'Thailand', '');
+INSERT INTO `work_data` VALUES (108, 5, 'Epic', 'Software Developer Intern', '2012-06-01', '2012-08-01', 0, 'Madison', 'WI', '');
+INSERT INTO `work_data` VALUES (109, 27, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
