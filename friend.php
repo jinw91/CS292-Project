@@ -20,6 +20,20 @@ if (!$connect)
 	$error = "failed to connect";
 }
 
+//facebook (check if logged in)
+$config = array();
+$config['appId'] = '213672885370267';
+$config['secret'] = '08997523a4f46a2113c42969fb425f13';
+//$config['cookie'] = true;
+$redirectUrl = "http://www.proarcs.com/facebook.php";
+
+$facebook = new Facebook($config);
+$user = $facebook->getUser();
+if (!$user)
+{
+	
+}
+
 //Select all schools
 $college_list = retrieveAllColleges();
 $major_list = retrieveAllMajors();
@@ -247,7 +261,8 @@ mysql_close();
                 </ul>
                 </form>
                 <div align="center" style="font-size: 16px; font-family: 'Lato', Arial, Helvetica; font-weight:bold; text-transform:uppercase;">
-                <a class='header_font' href='search.php?friends=true'>Search For Friends: </a>
+                <a class='header_font' href='search.php?friends=true'>Search For Friends: </a><br>
+<a class='header_font' href='search.php?friends=true'>Add Friends From Facebook: </a>
                 </div>
                 <script>
 				selectDefault('major', '<?php echo $_SESSION['search']['major'];?>');
