@@ -4,6 +4,7 @@ if (!isset($_SESSION))
 	session_start();
 }
 require_once($_SESSION['__ROOT__'].'/generalfunctions/database.php');
+$link = "../";
 connectToDatabase();
 
 $query = sprintf("SELECT * FROM sid_to_bid WHERE b_id='%d'", $_SESSION['company']['b_id']);
@@ -75,7 +76,8 @@ mysql_close();
               			<ul id='education'>
                         What would you like to ask your candidate?<br>
                         <li></li>
-                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>                   		
+                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>      
+                        <li><label class="field">Hard Resume: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>             		
                         <li><label class="field">Profiles XT: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>
                 		<?=$form?>
                         <li><a class='lato_marginleft' href='supplemental/addnewform.php'>Add new form</a></li>
