@@ -8,7 +8,6 @@ define('__ROOT__', dirname(__FILE__));
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/user_profile.php');
 require_once(__ROOT__.'/generalfunctions/template.php');
-//require_once(__ROOT__.'/generalfunctions/profile_functions.php');
 $tbl_name="users";
 $connect = connectToDatabase();
 if (!$connect)

@@ -76,7 +76,7 @@ mysql_close();
               			<ul id='education'>
                         What would you like to ask your candidate?<br>
                         <li></li>
-                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>      
+                		<li><label class="field">Cover Letter: </label><input name="cover" type="checkbox" style='width: 150px;' /><a href='addnewform.php?sid=1'><button>Edit</button></a></li>      
                         <li><label class="field">Hard Resume: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>             		
                         <li><label class="field">Profiles XT: </label><input name="cover" type="checkbox" style='width: 150px;' /> </li>
                 		<?=$form?>

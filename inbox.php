@@ -7,7 +7,7 @@ if (!isset($_SESSION['idnum']))
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
 require_once(__ROOT__.'/generalfunctions/friends_functions.php');
-$tbl_name="personnel_email";
+require_once(__ROOT__.'/generalfunctions/inbox.php');
 $connect = connectToDatabase();
 if (!$connect)
 {
@@ -48,38 +48,7 @@ if (isset($_POST['send']) && $_POST['send'] == "Send")
 //Reading message if mid is found.
 if (isset($_GET['mid']))
 {
-	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' AND mid='%d';", $_SESSION['idnum'], $_GET['mid']);
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		echo mysql_error();
-		$message = "Cannot open message";
-	}
-	$mes = mysql_fetch_assoc($result);
-        if (is_null($mes['picture']))
-        {
-		$mes['picture'] = "images/default.png";
-        }
-        $message = $message."<div style='height:0px;width:80px;float:left'><img margin-right:2px' src='".$mes['picture']."' width='35' height='35'/><br></div>";
-        $message = $message."<span style='float:left; margin-left:45px'><div style='font-weight: bold; color: black; font-size: 1.4em;'>";
-	if ($mes['subject'] == "") {
-		$message = $message."[untitled]";
-	} else {
-		$message = $message.$mes['subject'];
-	}
-        $message = $message."</div>";
-        $message = $message."<a id='sender_name' href='profile.php?idnum=".$mes['from_id']."' style='font-size: 1.2em; color: grey;'>".$mes['first_name']." ".$mes['last_name']."</a><hr/>"; //adds name.
-        $message = $message.$mes['body']."</span>";
-        $message = $message."<span style='clear:both; float:left; margin-left:80px; margin-top: 3em;'><form method='post' action='inbox.php?write=true&single=true'><input type='submit' value='Reply' /></form>";
-	$_SESSION['to'] = $mes['first_name']." ".$mes['last_name'];
-	$_SESSION['subject'] = "Re: ".$mes['subject'];
-	$_SESSION['body'] = "";
-	$query = sprintf("UPDATE personnel_email SET is_read=1 WHERE mid='%d';", $_GET['mid']);
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$message = $query."\n".mysql_error();
-	}
+	$message = displayMessage($_GET['mid']);
 }
 
 //writing message
@@ -119,10 +88,14 @@ else if (isset($_GET['write']))
 	<div id='facebook-auto'>
 	<div class='default'>Separate names with a comma</div>
 	<ul class='feed'>";
-	if (isset($_GET['single'])) {
+	if (isset($_GET['single'])) 
+	{
 		$message = $message."<li value='".$_SESSION['to_id']."'>".$mes_to."</li>";
-	} else if (isset($_GET['multiple'])) {
-		for ($i=0; $i<count($mes_to); $i++) {
+	} 
+	else if (isset($_GET['multiple'])) 
+	{
+		for ($i=0; $i<count($mes_to); $i++) 
+		{
 			$message = $message."<li value='".$_SESSION['to_id'][$i]."'>".$mes_to[$i]."</li>";
 		}
 	}
@@ -153,9 +126,9 @@ else if (isset($_GET['write']))
 	<li><input type='hidden' name='hidden_to_id' id='hidden_to_id' /></li></ul></form>";*/
 	if (!isset($_SESSION['business_mode']))
 	{
-		$error .= "SESSION businessmode not set";
+		//$error .= "SESSION businessmode not set";
 	}
-	$error .= $_SESSION['business_mode'];
+	//$error .= $_SESSION['business_mode'];
     if ($_SESSION['business_mode']) 
 	{
         $query = sprintf("SELECT first_name, last_name, idnum FROM users");
@@ -191,6 +164,8 @@ else
 	{
 		$limit = 0;
 	}
+	
+	
 	//Always displays requests on top of messages.
 	$query = sprintf("SELECT * FROM requests r, users u, businesses b WHERE r.from_bid=b.b_id AND to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
 	$has_messages = false;
@@ -199,6 +174,8 @@ else
 	{
 		$error = $query."".mysql_error();
 	}
+	
+	// Request message printing
 	else
 	{
 		$has_messages = true;
@@ -218,15 +195,15 @@ else
 			} 
 			else 
 			{
-				$message = $message.substr($from_name,0,11)."...</a></div>";
+				$message = $message.substr($from_name, 0, 11)."...</a></div>";
 			}
 			if ($mes['subject'] == "") 
 			{
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>[untitled]";
+				$message = $message."<a href='inbox.php?mid=".$mes['mid']."&request=true'style='font-weight: bold; color: black;'>[untitled]";
 			} 
 			else 
 			{
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
+				$message = $message."<a href='inbox.php?mid=".$mes['mid']."&request=true'style='font-weight: bold; color: black;'>".$mes['subject'];
 			}
 			if (strlen($mes['body']) <= 80) 
 			{
@@ -240,6 +217,7 @@ else
 	}
 	
 	
+	// General messages
 	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
 	$result = mysql_query($query);
 	if (!$result)

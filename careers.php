@@ -13,7 +13,6 @@ require_once(__ROOT__.'/generalfunctions/template.php');
 require_once(__ROOT__.'/generalfunctions/career.php');
 $tbl_name="users";
 $connect = connectToDatabase();
-$error = "reached here";
 if (!$connect)
 {
 	$error = "failed to connect";	
