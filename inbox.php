@@ -214,11 +214,11 @@ else
 			}
 			if ($mes['subject'] == "") 
 			{
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."&request=true'style='font-weight: bold; color: black;'>[untitled]";
+				$message = $message."<a href='inbox.php?rid=".$mes['rid']."&request=true'style='font-weight: bold; color: black;'>[untitled]";
 			} 
 			else 
 			{
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."&request=true'style='font-weight: bold; color: black;'>".$mes['subject'];
+				$message = $message."<a href='inbox.php?rid=".$mes['rid']."&request=true'style='font-weight: bold; color: black;'>".$mes['subject'];
 			}
 			if (strlen($mes['body']) <= 80) 
 			{

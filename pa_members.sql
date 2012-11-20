@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: custsql-ipg09.eigbox.net
--- Generation Time: Oct 14, 2012 at 06:12 PM
+-- Generation Time: Nov 20, 2012 at 05:07 PM
 -- Server version: 5.0.91
 -- PHP Version: 4.4.9
 -- 
@@ -291,7 +291,7 @@ CREATE TABLE `businesses` (
   `products` text NOT NULL,
   `city` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
-  `creator` int(255) NOT NULL,
+  `creator` int(255) NOT NULL default '0',
   `picture` varchar(512) NOT NULL,
   `founded` date NOT NULL,
   PRIMARY KEY  (`b_id`)
@@ -502,7 +502,7 @@ CREATE TABLE `careers` (
   `country` varchar(255) NOT NULL,
   `internship` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`jid`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- 
 -- Dumping data for table `careers`
@@ -511,7 +511,7 @@ CREATE TABLE `careers` (
 INSERT INTO `careers` VALUES (1, 'Professional Archives', 2, 'Internet Engineer', 'Computer Science, Computer Engineering', '', '', 60000, '', 'Nashville', 'TN', 'United States', 1);
 INSERT INTO `careers` VALUES (2, 'Professional Archives', 2, 'Marketing ', 'Economics, HOD', '', '', 40000, '', 'Nashville', 'TN', 'United States', 1);
 INSERT INTO `careers` VALUES (3, 'Professional Archives', 2, 'Web Design Intern', 'Computer Science, Computer Engineering', 'Web Design Intern', '', 20, 'Hourly', 'Nashville', 'TN', 'United States', 0);
-INSERT INTO `careers` VALUES (6, 'Epic', 5, 'Software Development Co-op', 'Computer Science, Software Engineering, Mathematics, or a related field (with more than one semester left)', 'Work on a project that makes an impact in healthcare over just a semester. You will receive mentoring from brilliant colleagues, and learn about the software development industry from the experts. We have an entrepreneurial mentality, so you''ll see everything that goes into software development from user requirement gathering, design, testing, documentation, customer support, and user interface design-this is more than coding.\r\n\r\nWe''ll give you a lot to do, and we''ll expect you to deliver something great.\r\n\r\nDevelopers'' work directly impacts the way one in three Americans receives healthcare - in fact, it''s likely affecting the life of someone close to you. Working at the juncture of two growing fields, medicine and computer science, you''ll help create the best software for your users'' needs. Epic is located in Madison, Wisconsin, a city regularly ranked as one of America''s best places to live.', 'Currently attending school in the US, Willing to work full-time for at least one semester, A history of academic success, Visa sponsorship is available.', 0, 'Annual/Total', 'Verona', 'WI', 'United States', 0);
+INSERT INTO `careers` VALUES (7, 'Epic', 5, 'Software Development Intern', 'Computer Science', '', '', 0, 'Annual/Total', 'Madison', 'WI', 'United States', 0);
 
 -- --------------------------------------------------------
 
@@ -549,7 +549,7 @@ CREATE TABLE `education_data` (
   `gpa` float NOT NULL,
   `honors` text NOT NULL,
   PRIMARY KEY  (`eid`)
-) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=latin1 AUTO_INCREMENT=109 ;
+) ENGINE=MyISAM AUTO_INCREMENT=111 DEFAULT CHARSET=latin1 AUTO_INCREMENT=111 ;
 
 -- 
 -- Dumping data for table `education_data`
@@ -663,6 +663,8 @@ INSERT INTO `education_data` VALUES (105, 189, 1, 'Wake Forest University', 'Bac
 INSERT INTO `education_data` VALUES (106, 191, 1, 'Vanderbilt University', 'Bachelor of Arts', 'Finance and Business Development', '', '2010-08-01', '2014-05-01', 3.2, 'Member of Vanderbilt Baseball Team 2011-12\r\nMember of College World Series Team 2011\r\nSEC All Academic Honor Roll 2011, 2012\r\nEagle Scout');
 INSERT INTO `education_data` VALUES (107, 192, 1, 'Stanford University', 'Associate', 'Women''s Studies', '', '2019-12-01', '1993-02-01', 4, 'Woman of the Year');
 INSERT INTO `education_data` VALUES (108, 193, 0, 'Stanford University', 'Adjunct Professor', '', '', '1990-01-01', '1990-01-01', 5, 'Professor of Year, 2012\r\nHot Dog Eating Contest 2nd Place, 2003');
+INSERT INTO `education_data` VALUES (109, 0, 1, 'Northwestern University', 'YTDbzZMPjIqLAMLgH', 'EKjYIupnxDlugfXGkB', 'rWeRxUIC', '0000-00-00', '0000-00-00', 0, 'It''s a pelasrue to find someone who can think so clearly');
+INSERT INTO `education_data` VALUES (110, 196, 1, 'Georgia Institute of Technology', 'Bachelor of Engineering', 'Computer Science', '', '2011-08-01', '2012-12-01', 3.75, '');
 
 -- --------------------------------------------------------
 
@@ -747,7 +749,7 @@ CREATE TABLE `leadership_data` (
   `present` tinyint(1) NOT NULL,
   `achievement` text NOT NULL,
   PRIMARY KEY  (`l_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
 
 -- 
 -- Dumping data for table `leadership_data`
@@ -803,6 +805,7 @@ INSERT INTO `leadership_data` VALUES (52, 187, 'Business Association of Stanford
 INSERT INTO `leadership_data` VALUES (53, 189, 'WFU Aikido Club', 'President', '2009-08-01', '1990-01-01', 1, '');
 INSERT INTO `leadership_data` VALUES (54, 193, 'Vanderbilt Mobile Apps Team', 'Founder', '1990-01-01', '1990-01-01', 0, 'I run this shit');
 INSERT INTO `leadership_data` VALUES (55, 193, 'Sigma Beta Rho', 'treasurer', '1990-01-01', '1990-01-01', 1, 'Contributed to many innovations in the field, notably the "brown lizard" ');
+INSERT INTO `leadership_data` VALUES (56, 0, 'sNdYAxGv', 'xqcbFAcbDLqo', '0000-00-00', '0000-00-00', 0, 'asuuh yum bainaa.minii fcboaoekd manai ehner baihgvi,ehneriin maani facebookt bi baihgvi bolchloo.ene ymar tohirgoo hiih we.search hiigeed ch yagaad ch oldohgvi baina.garch irehgvi baina yahuu');
 
 -- --------------------------------------------------------
 
@@ -898,7 +901,7 @@ INSERT INTO `personnel_email` VALUES (29, 'Phone Interview: Professional Archive
 INSERT INTO `personnel_email` VALUES (30, 'Professional Archives ', 'I just added you as my friend, but I think we should talk a little more before we actually become friends. ', 27, 5, '2012-07-01 22:28:12', 1);
 INSERT INTO `personnel_email` VALUES (31, 'Phone Interview: Epic', 'Thank you for sending in your application to Epic. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 27, 5, '2012-08-19 21:57:30', 1);
 INSERT INTO `personnel_email` VALUES (32, 'Phone Interview: Epic', 'Thank you for sending in your application to Epic. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.', 27, 20, '2012-08-19 21:57:30', 0);
-INSERT INTO `personnel_email` VALUES (34, '', '', 5, 0, '2012-10-01 02:13:05', 0);
+INSERT INTO `personnel_email` VALUES (34, '', '', 5, 0, '2012-10-01 02:13:05', 1);
 
 -- --------------------------------------------------------
 
@@ -936,7 +939,7 @@ INSERT INTO `privacy` VALUES (5, 'DE', 15, 15, 15, 15, 15, 0, 0, 0, 0, 0);
 -- 
 
 CREATE TABLE `requests` (
-  `mid` int(255) NOT NULL,
+  `rid` int(255) NOT NULL auto_increment,
   `subject` varchar(1024) NOT NULL,
   `body` varchar(4096) NOT NULL,
   `time` datetime default NULL,
@@ -945,13 +948,14 @@ CREATE TABLE `requests` (
   `time_sent` datetime NOT NULL,
   `priority` int(3) NOT NULL default '1',
   `is_read` int(1) NOT NULL default '0',
-  PRIMARY KEY  (`mid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  PRIMARY KEY  (`rid`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- 
 -- Dumping data for table `requests`
 -- 
 
+INSERT INTO `requests` VALUES (1, 'Phone Interview: Professional Archives', '<p>	Thank you for sending in your application to Professional Archives. We are pleased with what we see on your resume and would like to schedule a phone interview with you. The following times are available, please let us know what works best for you.</p>', NULL, 2, 5, '2012-11-19 17:49:08', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1032,17 +1036,17 @@ CREATE TABLE `users` (
   `disabled` tinyint(1) NOT NULL default '0',
   `summer` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`idnum`)
-) ENGINE=MyISAM AUTO_INCREMENT=195 DEFAULT CHARSET=latin1 AUTO_INCREMENT=195 ;
+) ENGINE=MyISAM AUTO_INCREMENT=198 DEFAULT CHARSET=latin1 AUTO_INCREMENT=198 ;
 
 -- 
 -- Dumping data for table `users`
 -- 
 
-INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'PHP, mySQL, Javascript', '2012-10-14 03:38:19', 0, 1);
+INSERT INTO `users` VALUES (5, 'jjin3298@yahoo.com', 'cce81b5cf49a9f7864186dc616093abc9e552cc5', 'Nanhua', 'Jin', '/images/5.jpg', '', 'Computer Science', 'Nashotah', 'WI', 'United States', 70000, 0, 'Employed', 'PHP, mySQL, Javascript', '2012-11-20 16:37:14', 0, 1);
 INSERT INTO `users` VALUES (13, 'lmathson@sbcglobal.net', 'ac29eac4d2463413227f8b0a0a9f24bfa79cb3a6', 'Leslie', 'Mathson', NULL, '', 'Electrical Engineer', 'Brookfield', 'WI', 'United States', 50000, 0, 'Searching for Internship', 'Audio-video systems, telecom and fiber networks, RF and 2-way radio applications and practices.', '2012-09-04 15:31:07', 0, 0);
 INSERT INTO `users` VALUES (23, 'vankegel@yahoo.com', 'c8fd40db3226a3ddab62fc32c505feab426870ed', 'Van', 'Kegel', NULL, '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (20, 'collin.h.grimes@vanderbilt.edu', 'c5c524e87447bc3df969662f65d4b8c56f11623c', 'Collin', 'Grimes', '/images/20.jpg', '', 'Mechanical Engineering', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
-INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-10-14 17:49:23', 0, 1);
+INSERT INTO `users` VALUES (27, 'alex_smith_2010@hotmail.com', '5c4962622ecb7d0f392719bfd89040e2b64732f5', 'Alex', 'Smith', '/images/27.jpg', '', '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-10-27 23:09:14', 0, 1);
 INSERT INTO `users` VALUES (9, 'seth.n.friedma@vanderbilt.edu', '5b2ff4c2d9b8f4982de0336ec842dd9f6b5e8521', 'Seth', 'Friedman', '/images/9.jpeg', '', 'Computer Science', 'Pensacola', 'FL', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 1, 0);
 INSERT INTO `users` VALUES (29, 'tszurcher@gmail.com', '76ab4f3ccab0b37a78ea395523f3206d3c41f22b', 'Taylor', 'Zurcher', NULL, '', 'Civil Engineering ', 'Nashville', 'SC', 'United States', 0, 0, 'Searching for Internship', '', '2012-10-03 12:20:48', 0, 0);
 INSERT INTO `users` VALUES (30, 'christina.c.chapman@vanderbilt.edu', '42dc244f40234f944013d72260908f4b30752ac3', 'Christina', 'Chapman', '/images/30.jpeg', '', 'Human Organizational Development and Corporate Strategy', 'Nashville', 'Tn', 'United States', 0, 0, 'Employed', 'Microsoft Excel, FishBowl Inventory', '2012-06-28 10:38:00', 0, 0);
@@ -1121,7 +1125,7 @@ INSERT INTO `users` VALUES (102, 'Andrew.p.samuels@vanderbilt.edu', 'ddda1786447
 INSERT INTO `users` VALUES (103, 'ian.bellah@vanderbilt.edu', '1e904fcdd98fc1e75e52442f3e079bfbf24bd2d4', 'Ian', 'Bellah', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (104, 'Vincent.casha@gmail.com', '3ca31c69f1c0c088cb45a08c315dc52f78d70cbe', 'Vincent', 'Casha', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (105, 'nathaniel.r.cameron@vanderbilt.edu', 'd0cdfe6296bb87fd9791ee3e375e3be1921557f8', 'Nathaniel', 'Cameron', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
-INSERT INTO `users` VALUES (106, 'michaelgis@comcast.net', '636e65d5e05a298c9f2b7f583ce8d64ec2447919', 'Michael', 'Gibson', NULL, NULL, '', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
+INSERT INTO `users` VALUES (106, 'michaelgis@comcast.net', '636e65d5e05a298c9f2b7f583ce8d64ec2447919', 'Michael', 'Gibson', NULL, NULL, '', 'Nashville', 'TN', 'United States', 0, 0, 'Searching for Internship', '', '2012-10-29 03:21:18', 0, 0);
 INSERT INTO `users` VALUES (107, 'ojharris@crimson.ua.edu', '5c8db2d49849ea8e80260435006b7d692640029e', 'Jordan', 'Harris', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (108, 'b7755599@nwldx.com', '601429f36a4beb7c663c299e24a6a1a5b0db9ff6', 'Jimmy', 'Luo', '/images/108.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 INSERT INTO `users` VALUES (109, 'hannah.j.kim@vanderbilt.edu', '2a999b6c12067e41cdb90787dc8a474c89fbab33', 'Hannah', 'Kim', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
@@ -1202,6 +1206,9 @@ INSERT INTO `users` VALUES (190, 'jackkuhl@vanderbilt.edu', 'cce81b5cf49a9f78641
 INSERT INTO `users` VALUES (192, 'n347110@rtrtr.com', '1d1ce6feb1af4cf8c4152ea681b88adf92ad55ac', 'Andrew', 'Lum', '/images/192.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-09-16 00:59:30', 0, 0);
 INSERT INTO `users` VALUES (193, 'bigthaiboi@gmail.com', '2f027752a76ce8b5090fd2aca7e1586fb2627129', 'Tom', 'Nguyen', '/images/193.jpg', NULL, '', '', '', '', 0, 0, 'Searching for Internship', 'very skilled negotiator;\r\nonce shook Jimmy Carter''s hand', '2012-09-16 01:12:17', 0, 0);
 INSERT INTO `users` VALUES (194, 'nicholas.herbach@gmail.com', '8f52c02f11fdc0d09f3b995215356efa1e80911b', 'Nicholas', 'Herbach', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-09-20 22:48:38', 0, 0);
+INSERT INTO `users` VALUES (195, 'glee1@caesars.com', 'a4a3d979ee950ddc7072c710fd0fa87ab79a6d17', 'Gene', 'Lee', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-10-19 13:16:17', 0, 0);
+INSERT INTO `users` VALUES (196, 'ameyazambre@gmail.com', '0fad61a0eecb7ab0e871a155baf3d01cb01e6bef', 'Ameya', 'Zambre', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-11-02 23:49:42', 0, 1);
+INSERT INTO `users` VALUES (197, 'ahcmfq@jbsbdd.com', 'e5137f062cf63be5b7e8c5be2c17a59e057f76b6', 'yyleaj', 'yyleaj', NULL, NULL, '', '', '', '', 0, 0, 'Searching for Internship', '', '2012-06-28 10:38:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1304,6 +1311,7 @@ CREATE TABLE `work_data` (
   `w_id` int(255) unsigned NOT NULL auto_increment,
   `idnum` int(255) unsigned NOT NULL,
   `company_name` varchar(255) character set utf8 NOT NULL,
+  `b_id` int(255) NOT NULL,
   `title` varchar(255) character set utf8 NOT NULL,
   `company_start` date NOT NULL,
   `company_end` date NOT NULL,
@@ -1311,102 +1319,106 @@ CREATE TABLE `work_data` (
   `city` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `achievement` mediumtext NOT NULL,
+  `start_salary` int(11) NOT NULL,
+  `end_salary` int(11) NOT NULL,
+  `supervisor` int(11) NOT NULL,
   PRIMARY KEY  (`w_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1 AUTO_INCREMENT=110 ;
+) ENGINE=MyISAM AUTO_INCREMENT=112 DEFAULT CHARSET=latin1 AUTO_INCREMENT=112 ;
 
 -- 
 -- Dumping data for table `work_data`
 -- 
 
-INSERT INTO `work_data` VALUES (8, 69, 'Jump', 'High', '1990-01-01', '2010-01-01', 0, '', '', 'None');
-INSERT INTO `work_data` VALUES (7, 5, 'Quality Manufacturing Systems Inc.', 'Software Engineer', '2011-05-01', '2011-08-01', 0, 'Nashville', 'TN', 'Direct printer communication with Kyocera, Intermec and Datamax printers.\r\nFinished multiple maintenance programs for the software installed on a new site.');
-INSERT INTO `work_data` VALUES (9, 69, 'Adidas', 'Salesman', '1997-01-01', '1998-10-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (6, 5, 'Wisconsin State Fair', 'Impark', '2010-08-01', '2010-08-01', 0, 'Milwaukee', 'WI', 'Directed 20 cars.');
-INSERT INTO `work_data` VALUES (10, 69, 'jisof', 'asdonf', '2010-09-01', '2010-10-01', 0, '', '', 'asdf');
-INSERT INTO `work_data` VALUES (11, 69, 'afojs', 'asiofj', '1990-04-01', '2010-09-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (12, 69, 'aoifh', 'qifnsio', '2000-01-01', '2000-02-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (14, 30, 'Kimberly McDonald', 'Designer and Assistant to CEO', '2010-01-01', '1990-01-01', 1, '', '', 'January of 2010 to Present');
-INSERT INTO `work_data` VALUES (38, 5, 'Sieve Networks', 'Programmer Intern', '2009-01-01', '2009-06-01', 0, 'Wauwatosa', 'WI', 'Troubleshoot network security.\r\nProgrammed software pertaining to phone security.\r\nCollected data using TShark and performed data analysis on phone calls.');
-INSERT INTO `work_data` VALUES (36, 30, 'Co-Founder of Professional Archives', 'Design', '2011-12-01', '2012-02-01', 0, 'Nashville', 'Tn', '');
-INSERT INTO `work_data` VALUES (17, 80, 'Quicken Loans', 'Intern', '2011-07-01', '2011-08-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (18, 82, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (19, 83, 'The Dockside', 'Server', '2011-05-01', '2011-08-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (20, 85, 'PlanJar', 'Co-Founder/Software Architect', '2011-02-01', '2012-01-01', 0, '', '', '400+ registered users, 3 months from line 1 to completion');
-INSERT INTO `work_data` VALUES (21, 87, 'Sodexo Sports and Leisure', 'Supervisor', '2011-01-01', '2014-12-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (22, 87, 'Sodexo Sports and Leisure', 'Supervisor', '2011-01-01', '2014-12-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (23, 87, 'Sodexo Sports and Leisure', 'Supervisor', '2011-01-01', '2014-12-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (24, 91, 'Kumon, Inc. ', 'Upper Level Math Teacher', '2008-08-01', '2011-06-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (25, 94, 'American Red Cross', 'Government Relations Intern', '2011-06-01', '2011-07-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (26, 99, 'Tennessee Democratic Party ', 'Field Canvasser', '2011-05-01', '2011-08-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (27, 99, 'Separation Systems', 'Junior Assistant to the VP of International Business Development', '2009-05-01', '2009-08-01', 0, 'Gulf Breeze', 'FL', '');
-INSERT INTO `work_data` VALUES (28, 99, 'Vanderbilt Fine Arts Department', 'Curator of the Student Gallery', '2011-12-01', '1990-01-01', 1, 'Nashville', 'TN', '');
-INSERT INTO `work_data` VALUES (29, 99, 'Vanderbilt Fine Arts Department', 'Student worker and assitant to building manager', '2011-08-01', '1990-01-01', 1, 'Nashville', 'TN', '');
-INSERT INTO `work_data` VALUES (30, 103, 'The First Tee Organization', 'Coach/Volunteer', '2003-01-01', '2011-08-01', 0, '', '', 'Ace Certification\r\nWalmart First Tee Open at Pebble Beach (2 years)\r\nFuture Leaders Forum\r\nLifeskill''s Leadership Academies');
-INSERT INTO `work_data` VALUES (31, 31, 'Revolution Prep', 'Branch Manager, Southwest Region', '2011-04-01', '2011-08-01', 0, 'Louisville', 'KY', '');
-INSERT INTO `work_data` VALUES (35, 108, 'Jimbo Sex Blog', 'Sexologist', '2019-01-01', '1990-01-01', 0, '', '', 'http://jimbosexadvice.wordpress.com/');
-INSERT INTO `work_data` VALUES (33, 106, 'Yawn Sheffield Welch Wealth Management Group LLC', 'Investment Management Intern', '2011-06-01', '2011-08-01', 0, 'Nashville', 'TN', 'Worked alongside members of the group for a few hours a day three times a week examining clientsâ€™ portfolios\r\nResearched mutual funds, the stock and bond markets, and asset allocation in order to understand multiple investing strategies and techniques\r\nAttended a business seminar and met with several members in this field to gather information about different methods of investing');
-INSERT INTO `work_data` VALUES (34, 102, 'Merrill Lynch', 'Global Wealth Management Intern', '2011-05-01', '2011-08-01', 0, 'Oak Brook', 'IL', 'Identified and monetized expiring annuities\r\n\r\nDeveloped and implemented a marketing plan to acquire new clientele within the medical field.\r\n\r\nCreated a database of prospective clients. \r\n\r\nCreated proforma''s for clients. \r\n\r\nConducted stock evaluations.\r\n');
-INSERT INTO `work_data` VALUES (37, 5, 'Goldenstone Automation Co.', 'Computer Technician', '2007-09-01', '2010-12-01', 0, 'Milwaukee', 'WI', 'Troubleshoot office computers.\r\nTechnical support for computers and printers.\r\nMaintain network security.');
-INSERT INTO `work_data` VALUES (39, 118, 'Revolution Prep', 'Director', '2011-04-01', '2012-02-01', 1, '', '', 'Invited back as Director; started a branch of SAT prep business; averaged 250 points improvement for all students.');
-INSERT INTO `work_data` VALUES (40, 118, 'Vector Marketing', 'Independent Contractor', '2009-04-01', '2009-08-01', 0, 'Cohasset', 'MA', 'Developed sales skills and drove over $10,000 in revenue.');
-INSERT INTO `work_data` VALUES (41, 122, 'Civil Engineering Consulting Services', 'Summer Intern', '2011-05-01', '2011-08-01', 0, 'Columbia', 'SC', 'Worked as an intern for a civil engineering consulting firm, a company that provides engineering services to state, county, city, and local governments as well as private sector clients.\r\nAssisted in editing/reconstructing Microstation drawings.\r\nAssisted in mapping hydrology of ten mile stretch of interstate for a future project through field work and Microsoft Excel calculations.');
-INSERT INTO `work_data` VALUES (42, 123, 'First Management Services', 'Intern', '2011-03-01', '2011-08-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (43, 71, 'Clynk', 'Waste Manager', '1990-01-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (44, 71, 'Nonesuch Oar and Paddle Club', 'Junior Manager', '2011-06-01', '2011-08-01', 0, 'Scarborough', 'ME', '');
-INSERT INTO `work_data` VALUES (45, 127, 'JP Morgan', 'Analyst', '1995-09-01', '1998-05-01', 0, 'New York City', 'NY', 'Youngest person to climb Mt. Everest.\r\nWorked as Facebook IPO\r\nAssisted the president in completing projects.');
-INSERT INTO `work_data` VALUES (46, 127, 'Google', 'Programmer', '1996-05-01', '2000-12-01', 0, 'San Jose', 'CA', 'Doubled the views to Google.\r\nHelped create Google+.');
-INSERT INTO `work_data` VALUES (47, 127, 'United States', 'President', '2001-01-01', '2006-12-01', 0, '', '', 'First President of the United States');
-INSERT INTO `work_data` VALUES (48, 135, 'YMCA', 'Lifeguard', '2011-05-01', '2011-08-01', 0, 'Nashville', 'TN', '');
-INSERT INTO `work_data` VALUES (49, 135, 'UPS', 'Driver Helper', '2009-12-01', '2010-01-01', 0, '', '', 'Delivered packages during busy holiday season');
-INSERT INTO `work_data` VALUES (50, 63, 'Kay, Griffin, Enkema, & Colbert PLLC', 'Runner ', '2008-06-01', '2011-08-01', 0, 'Nashville', 'TN', '');
-INSERT INTO `work_data` VALUES (51, 144, 'Josh Anderson Realty', 'Fall Intern', '2011-08-01', '2012-02-01', 0, 'Nashville', 'TN', 'Computer based work: list management and marketing\r\nContact: Marcie@joshandersonrealestate.com\r\n');
-INSERT INTO `work_data` VALUES (52, 144, 'Simcal Properties', 'Property Manager', '2010-05-01', '2012-02-01', 0, 'Coronado', 'CA', 'Collection of rent \r\nTenant management and apartment turnovers\r\nWorking with invoices, vendors, and financial data\r\nCan work with the QuickBooks database\r\nContact: (619) 364-4268, Carmen Chavez\r\n');
-INSERT INTO `work_data` VALUES (53, 144, 'Senator Robert Menendez', 'Winter Intern', '2010-02-01', '2010-02-01', 0, 'Washington ', 'D.C.', '');
-INSERT INTO `work_data` VALUES (54, 144, 'Advanced Realty', 'Summer Intern', '2011-05-01', '2011-08-01', 0, 'Coronado', 'CA', 'Leaned about marketing and investments\r\nPayment scheduling and extensions\r\nFiling, organizing, faxing \r\nContact: (619) 365-4321, Jim Rowe\r\n');
-INSERT INTO `work_data` VALUES (55, 144, 'Bistro d'' Asia', 'Hostess', '2009-01-01', '2011-07-01', 0, '', '', 'â€¢	Customer service and seating\r\nâ€¢	Preparation of to-go orders\r\nâ€¢	Contact: (619) 437-6678, Alaa Elsadek\r\n');
-INSERT INTO `work_data` VALUES (56, 144, 'Vanderbilt Student Recreation', 'Equipement Manager', '2011-08-01', '2011-12-01', 0, 'Nashville', 'TN', 'Working cashier\r\nRenting and selling equipment\r\nInteraction with student, teachers, and adults\r\nManaging inventory\r\nContact: (615) 343-6627, Calvin\r\n');
-INSERT INTO `work_data` VALUES (57, 145, 'Seismic Exchange Inc', 'Development Intern', '2011-05-01', '2010-07-01', 0, '', '', 'Cleaned up Delphi code\r\nCleaned up SQL code\r\nWrote VBA programs');
-INSERT INTO `work_data` VALUES (58, 146, 'Hunter Roberts Construction Group', 'Intern', '2010-06-01', '2010-08-01', 0, 'New York', 'NY', 'Managed construction of a $48 million public school in Brooklyn');
-INSERT INTO `work_data` VALUES (59, 146, 'Hunter Roberts Construction Group', 'Estimating Intern', '2011-06-01', '2011-08-01', 0, '', '', 'Estimated projects of up to $200 million to bid on.');
-INSERT INTO `work_data` VALUES (60, 149, 'Insurance Institute for Highway Safety', 'Research Assistant', '2008-06-01', '2011-08-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (61, 150, 'J. Crew', 'Sales Associate', '2011-05-01', '2011-08-01', 0, 'Short Hills', 'NJ', 'Navigated computer inventory and payment programs, communicated with customers');
-INSERT INTO `work_data` VALUES (62, 150, 'WRVU, Campus Radio Station', 'Radio Intern, DJ', '2010-09-01', '2011-05-01', 0, 'Nashville', 'TN', 'Interned on weekly radio show, programmed and reviewed CDs, earned solo show');
-INSERT INTO `work_data` VALUES (63, 150, 'Jamaican Me Crazy, Island Fun Store', 'Sales Associate', '2010-05-01', '2010-08-01', 0, 'Margate', 'NJ', 'Designed displays, restocked merchandise, communicated with customers');
-INSERT INTO `work_data` VALUES (64, 150, 'Sum It Up For Girls, Camps and Clinics', 'Coach, Counselor', '2008-05-01', '2009-11-01', 0, 'Summit', 'NJ', 'Mentored elementary-aged girls, taught basic lacrosse and team-building skills, organized participant information and registration, updated membership database');
-INSERT INTO `work_data` VALUES (65, 152, 'Arrow Electronics, Inc.', 'Marketing Intern', '2011-05-01', '2011-08-01', 0, 'Englewood', 'Colorado', 'Led social media strategy for division\r\nConducted primary and secondary research\r\nPresented recommendation to senior team\r\nAsked to re-present to global marketing team\r\nRunner up intern competition for presentation on internal social media solution');
-INSERT INTO `work_data` VALUES (66, 157, 'Capital Strategies Partners', 'Intern', '2012-06-01', '2012-07-01', 0, 'Madrid', 'Spain', '');
-INSERT INTO `work_data` VALUES (94, 58, 'Michael Stapleton Associates', 'Intelligence Analyst', '2012-05-01', '2012-07-01', 0, 'New York', 'NY', '');
-INSERT INTO `work_data` VALUES (75, 9, 'Uloop', 'Mobile Software Engineering Intern', '2012-05-01', '2012-08-01', 1, 'Chicago', 'IL', '');
-INSERT INTO `work_data` VALUES (69, 164, 'Goldenstone Automation Co.', 'President', '1990-01-01', '2019-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (70, 165, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (71, 35, 'LECO Corporation', 'Cooperative student intern in computer science', '2011-06-01', '2011-08-01', 0, 'Saint Joseph', 'MI', 'Implemented continuous build integration system using TeamCity');
-INSERT INTO `work_data` VALUES (72, 35, 'Institute for Software Integrated Systems', 'Undergraduate research assistant', '2012-02-01', '2012-05-01', 1, 'Nashville', 'TN', 'Implemented transmission between computer and Arduino microprocessor\r\nMade real-time GUI using Qt for remote-control car');
-INSERT INTO `work_data` VALUES (73, 171, 'D. Jaburek Billiards', 'Sales Associate', '2008-06-01', '2011-08-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (76, 9, 'CTS America Inc.', 'Software Engineering Intern', '2011-05-01', '2011-08-01', 0, 'Pensacola', 'FL', '');
-INSERT INTO `work_data` VALUES (77, 178, 'The Harpeth Hall School Summer Camp', 'Tennis Camp Counselor', '2010-06-01', '2010-07-01', 0, 'Nashville', 'TN', 'Taught tennis at an all girls day camp (Ages 7-12)');
-INSERT INTO `work_data` VALUES (78, 178, 'CBS', 'Intern/Assistant ', '2010-01-01', '2010-02-01', 0, 'New York City', 'NY', 'Compiled relevant articles for CBS News\r\nScribed for Various television shows\r\nBlogged on social media websites for "NCIS"\r\nPitched article ideas to CBS Watch! Magazine');
-INSERT INTO `work_data` VALUES (79, 178, 'Dr. William H. Polk, General Surgeon at Centennial Hospital', 'Intern', '2009-01-01', '2009-02-01', 0, 'Nashville', 'TN', 'Observed numerous surgeries including thoracotomy, coronary artery bypass, prostatectomy, and laparoscopic gall bladder removal\r\nWorked with patients in an office atmosphere\r\nLearned skills in stitching');
-INSERT INTO `work_data` VALUES (80, 180, 'Jefferies Group Inc. ', 'Equity Research Intern', '2011-09-01', '2012-05-01', 0, '', '', 'Assisted analysts in compiling The Script, a weekly publication covering roughly 40 health care companies\r\nAssisted analysts in creating put-call ratio analysis on excel for the health care companies they cover\r\nResearched and created excel models on assigned companies. This included creating an excel model of financial statements and developing a growth multiplier\r\n');
-INSERT INTO `work_data` VALUES (81, 180, 'Wilmette Park District', 'Summer Sailing Camp Instructor', '2011-05-01', '2011-08-01', 0, 'Wilmette', 'IL', 'Level One Certified Instructor through US Sailing \r\nWorked specifically with the more advanced students in teaching new techniques and skills\r\nProvided private lessons outside of the camp\r\nAssisted camp directors in scheduling events, creating programs, and administrative tasks\r\n');
-INSERT INTO `work_data` VALUES (82, 157, 'Chesapeake Energy Co.', 'Intern-Land', '2011-05-01', '2011-08-01', 0, 'Oklahoma City', 'Oklahoma', '');
-INSERT INTO `work_data` VALUES (83, 13, 'AT&T', 'Premises Technician', '2012-01-01', '1990-01-01', 1, 'Waukesha', 'WI', '3rd best tech in the garage.\r\nEarned 5-star the first month of work.');
-INSERT INTO `work_data` VALUES (84, 13, 'Quantum L.S.', 'Sales', '2011-03-01', '2011-07-01', 0, 'Milwaukee', 'WI', '');
-INSERT INTO `work_data` VALUES (85, 180, 'Little Traverse Sailors ', 'Summer Sailing Camp Instructor', '2007-06-01', '2010-08-01', 0, 'Harbor Springs ', 'MI', 'Level One Certified Instructor through US Sailing\r\nWorked specifically with the more advanced students in teaching new techniques and skills\r\nProvided private lessons outside of the camp\r\nAssisted camp directors in scheduling events, creating programs, and administrative tasks\r\n');
-INSERT INTO `work_data` VALUES (92, 186, 'Epic', 'Project Manager', '2007-05-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (87, 144, 'Senator Robert Menedez ', 'Student Intern', '2010-01-01', '2010-02-01', 0, 'Washington D.C.', '', 'Worked closely with the Chief of staff, filed papers and answered phones');
-INSERT INTO `work_data` VALUES (93, 58, 'Breezy Point Cooperative', 'Lifeguard', '2011-06-01', '2011-08-01', 0, 'Breezy Point', 'NY', '');
-INSERT INTO `work_data` VALUES (89, 142, 'The Wildlife Experience', 'Visitor Experience Respresentative', '2011-05-01', '1990-01-01', 1, 'Parker', 'CO', '');
-INSERT INTO `work_data` VALUES (90, 142, 'Vanderbilt Biology Department', 'Undergraduate Research Assistant', '2011-08-01', '2012-05-01', 0, 'Nashville', 'TN', 'Bred fish weekly and sorted embryos for experiments.\r\nLearned further lab techniques.');
-INSERT INTO `work_data` VALUES (91, 142, 'Vanderbilt Neuroscience Department', 'Undergraduate Assistant', '2010-09-01', '2011-04-01', 0, 'Nashville', 'TN', 'Learned basic lab techniques and equipment (agarose gel preparation and use, transform bacteria, purify DNA).\r\nOrganized oligonucleotide and vector databases.');
-INSERT INTO `work_data` VALUES (95, 58, 'Breezy Point Cooperative', 'Lifeguard', '2012-06-01', '2012-08-01', 0, 'Breezy Point', 'NY', '');
-INSERT INTO `work_data` VALUES (96, 188, 'Intel', 'Software Development Engineer', '2009-01-01', '2012-07-01', 0, '', '', 'Received "Bravo" Award');
-INSERT INTO `work_data` VALUES (104, 5, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (105, 5, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (99, 189, 'Shodor Education Foundation', 'Software Development Intern', '2005-01-01', '2012-02-01', 0, 'Durham', 'NC', '');
-INSERT INTO `work_data` VALUES (100, 189, 'Epic', 'Research and Development Intern', '2012-05-01', '2012-08-01', 0, 'Madison', 'WI', '');
-INSERT INTO `work_data` VALUES (103, 191, 'William Johnson Management', 'Manager and Owner', '2011-01-01', '2014-05-01', 0, 'Austin/Nashville', 'TX/TN', 'â€¢	Developed opportunity for film composer client to become finalist for the lead Composer in Lucas Filmâ€™s recent hit movie â€œRed Tailsâ€\r\nâ€¢	Identified and developed opportunities for multiple clients to appear on TV shows such as NCIS and various independent films in the Austin, Texas area\r\n');
-INSERT INTO `work_data` VALUES (101, 0, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
-INSERT INTO `work_data` VALUES (106, 192, 'ProArcs', 'Lead Developer', '2016-10-01', '2015-05-01', 0, '', '', 'Founded the company!');
-INSERT INTO `work_data` VALUES (107, 193, 'Imports/Exports', 'Field-Jockey', '1990-01-01', '1990-01-01', 0, 'Bamfcock', 'Thailand', '');
-INSERT INTO `work_data` VALUES (108, 5, 'Epic', 'Software Developer Intern', '2012-06-01', '2012-08-01', 0, 'Madison', 'WI', '');
-INSERT INTO `work_data` VALUES (109, 27, '', '', '1990-01-01', '1990-01-01', 0, '', '', '');
+INSERT INTO `work_data` VALUES (8, 69, 'Jump', 0, 'High', '1990-01-01', '2010-01-01', 0, '', '', 'None', 0, 0, 0);
+INSERT INTO `work_data` VALUES (7, 5, 'Quality Manufacturing Systems Inc.', 0, 'Software Engineer', '2011-05-01', '2011-08-01', 0, 'Nashville', 'TN', 'Direct printer communication with Kyocera, Intermec and Datamax printers.\r\nFinished multiple maintenance programs for the software installed on a new site.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (9, 69, 'Adidas', 0, 'Salesman', '1997-01-01', '1998-10-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (6, 5, 'Wisconsin State Fair', 0, 'Impark', '2010-08-01', '2010-08-01', 0, 'Milwaukee', 'WI', 'Directed 20 cars.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (10, 69, 'jisof', 0, 'asdonf', '2010-09-01', '2010-10-01', 0, '', '', 'asdf', 0, 0, 0);
+INSERT INTO `work_data` VALUES (11, 69, 'afojs', 0, 'asiofj', '1990-04-01', '2010-09-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (12, 69, 'aoifh', 0, 'qifnsio', '2000-01-01', '2000-02-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (14, 30, 'Kimberly McDonald', 0, 'Designer and Assistant to CEO', '2010-01-01', '1990-01-01', 1, '', '', 'January of 2010 to Present', 0, 0, 0);
+INSERT INTO `work_data` VALUES (38, 5, 'Sieve Networks', 0, 'Programmer Intern', '2009-01-01', '2009-06-01', 0, 'Wauwatosa', 'WI', 'Troubleshoot network security.\r\nProgrammed software pertaining to phone security.\r\nCollected data using TShark and performed data analysis on phone calls.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (36, 30, 'Co-Founder of Professional Archives', 0, 'Design', '2011-12-01', '2012-02-01', 0, 'Nashville', 'Tn', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (17, 80, 'Quicken Loans', 0, 'Intern', '2011-07-01', '2011-08-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (18, 82, '', 0, '', '1990-01-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (19, 83, 'The Dockside', 0, 'Server', '2011-05-01', '2011-08-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (20, 85, 'PlanJar', 0, 'Co-Founder/Software Architect', '2011-02-01', '2012-01-01', 0, '', '', '400+ registered users, 3 months from line 1 to completion', 0, 0, 0);
+INSERT INTO `work_data` VALUES (21, 87, 'Sodexo Sports and Leisure', 0, 'Supervisor', '2011-01-01', '2014-12-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (22, 87, 'Sodexo Sports and Leisure', 0, 'Supervisor', '2011-01-01', '2014-12-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (23, 87, 'Sodexo Sports and Leisure', 0, 'Supervisor', '2011-01-01', '2014-12-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (24, 91, 'Kumon, Inc. ', 0, 'Upper Level Math Teacher', '2008-08-01', '2011-06-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (25, 94, 'American Red Cross', 0, 'Government Relations Intern', '2011-06-01', '2011-07-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (26, 99, 'Tennessee Democratic Party ', 0, 'Field Canvasser', '2011-05-01', '2011-08-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (27, 99, 'Separation Systems', 0, 'Junior Assistant to the VP of International Business Development', '2009-05-01', '2009-08-01', 0, 'Gulf Breeze', 'FL', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (28, 99, 'Vanderbilt Fine Arts Department', 0, 'Curator of the Student Gallery', '2011-12-01', '1990-01-01', 1, 'Nashville', 'TN', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (29, 99, 'Vanderbilt Fine Arts Department', 0, 'Student worker and assitant to building manager', '2011-08-01', '1990-01-01', 1, 'Nashville', 'TN', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (30, 103, 'The First Tee Organization', 0, 'Coach/Volunteer', '2003-01-01', '2011-08-01', 0, '', '', 'Ace Certification\r\nWalmart First Tee Open at Pebble Beach (2 years)\r\nFuture Leaders Forum\r\nLifeskill''s Leadership Academies', 0, 0, 0);
+INSERT INTO `work_data` VALUES (31, 31, 'Revolution Prep', 0, 'Branch Manager, Southwest Region', '2011-04-01', '2011-08-01', 0, 'Louisville', 'KY', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (35, 108, 'Jimbo Sex Blog', 0, 'Sexologist', '2019-01-01', '1990-01-01', 0, '', '', 'http://jimbosexadvice.wordpress.com/', 0, 0, 0);
+INSERT INTO `work_data` VALUES (33, 106, 'Yawn Sheffield Welch Wealth Management Group LLC', 0, 'Investment Management Intern', '2011-06-01', '2011-08-01', 0, 'Nashville', 'TN', 'Worked alongside members of the group for a few hours a day three times a week examining clientsâ€™ portfolios\r\nResearched mutual funds, the stock and bond markets, and asset allocation in order to understand multiple investing strategies and techniques\r\nAttended a business seminar and met with several members in this field to gather information about different methods of investing', 0, 0, 0);
+INSERT INTO `work_data` VALUES (34, 102, 'Merrill Lynch', 0, 'Global Wealth Management Intern', '2011-05-01', '2011-08-01', 0, 'Oak Brook', 'IL', 'Identified and monetized expiring annuities\r\n\r\nDeveloped and implemented a marketing plan to acquire new clientele within the medical field.\r\n\r\nCreated a database of prospective clients. \r\n\r\nCreated proforma''s for clients. \r\n\r\nConducted stock evaluations.\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (37, 5, 'Goldenstone Automation Co.', 0, 'Computer Technician', '2007-09-01', '2010-12-01', 0, 'Milwaukee', 'WI', 'Troubleshoot office computers.\r\nTechnical support for computers and printers.\r\nMaintain network security.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (39, 118, 'Revolution Prep', 0, 'Director', '2011-04-01', '2012-02-01', 1, '', '', 'Invited back as Director; started a branch of SAT prep business; averaged 250 points improvement for all students.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (40, 118, 'Vector Marketing', 0, 'Independent Contractor', '2009-04-01', '2009-08-01', 0, 'Cohasset', 'MA', 'Developed sales skills and drove over $10,000 in revenue.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (41, 122, 'Civil Engineering Consulting Services', 0, 'Summer Intern', '2011-05-01', '2011-08-01', 0, 'Columbia', 'SC', 'Worked as an intern for a civil engineering consulting firm, a company that provides engineering services to state, county, city, and local governments as well as private sector clients.\r\nAssisted in editing/reconstructing Microstation drawings.\r\nAssisted in mapping hydrology of ten mile stretch of interstate for a future project through field work and Microsoft Excel calculations.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (42, 123, 'First Management Services', 0, 'Intern', '2011-03-01', '2011-08-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (43, 71, 'Clynk', 0, 'Waste Manager', '1990-01-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (44, 71, 'Nonesuch Oar and Paddle Club', 0, 'Junior Manager', '2011-06-01', '2011-08-01', 0, 'Scarborough', 'ME', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (45, 127, 'JP Morgan', 0, 'Analyst', '1995-09-01', '1998-05-01', 0, 'New York City', 'NY', 'Youngest person to climb Mt. Everest.\r\nWorked as Facebook IPO\r\nAssisted the president in completing projects.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (46, 127, 'Google', 0, 'Programmer', '1996-05-01', '2000-12-01', 0, 'San Jose', 'CA', 'Doubled the views to Google.\r\nHelped create Google+.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (47, 127, 'United States', 0, 'President', '2001-01-01', '2006-12-01', 0, '', '', 'First President of the United States', 0, 0, 0);
+INSERT INTO `work_data` VALUES (48, 135, 'YMCA', 0, 'Lifeguard', '2011-05-01', '2011-08-01', 0, 'Nashville', 'TN', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (49, 135, 'UPS', 0, 'Driver Helper', '2009-12-01', '2010-01-01', 0, '', '', 'Delivered packages during busy holiday season', 0, 0, 0);
+INSERT INTO `work_data` VALUES (50, 63, 'Kay, Griffin, Enkema, & Colbert PLLC', 0, 'Runner ', '2008-06-01', '2011-08-01', 0, 'Nashville', 'TN', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (51, 144, 'Josh Anderson Realty', 0, 'Fall Intern', '2011-08-01', '2012-02-01', 0, 'Nashville', 'TN', 'Computer based work: list management and marketing\r\nContact: Marcie@joshandersonrealestate.com\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (52, 144, 'Simcal Properties', 0, 'Property Manager', '2010-05-01', '2012-02-01', 0, 'Coronado', 'CA', 'Collection of rent \r\nTenant management and apartment turnovers\r\nWorking with invoices, vendors, and financial data\r\nCan work with the QuickBooks database\r\nContact: (619) 364-4268, Carmen Chavez\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (53, 144, 'Senator Robert Menendez', 0, 'Winter Intern', '2010-02-01', '2010-02-01', 0, 'Washington ', 'D.C.', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (54, 144, 'Advanced Realty', 0, 'Summer Intern', '2011-05-01', '2011-08-01', 0, 'Coronado', 'CA', 'Leaned about marketing and investments\r\nPayment scheduling and extensions\r\nFiling, organizing, faxing \r\nContact: (619) 365-4321, Jim Rowe\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (55, 144, 'Bistro d'' Asia', 0, 'Hostess', '2009-01-01', '2011-07-01', 0, '', '', 'â€¢	Customer service and seating\r\nâ€¢	Preparation of to-go orders\r\nâ€¢	Contact: (619) 437-6678, Alaa Elsadek\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (56, 144, 'Vanderbilt Student Recreation', 0, 'Equipement Manager', '2011-08-01', '2011-12-01', 0, 'Nashville', 'TN', 'Working cashier\r\nRenting and selling equipment\r\nInteraction with student, teachers, and adults\r\nManaging inventory\r\nContact: (615) 343-6627, Calvin\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (57, 145, 'Seismic Exchange Inc', 0, 'Development Intern', '2011-05-01', '2010-07-01', 0, '', '', 'Cleaned up Delphi code\r\nCleaned up SQL code\r\nWrote VBA programs', 0, 0, 0);
+INSERT INTO `work_data` VALUES (58, 146, 'Hunter Roberts Construction Group', 0, 'Intern', '2010-06-01', '2010-08-01', 0, 'New York', 'NY', 'Managed construction of a $48 million public school in Brooklyn', 0, 0, 0);
+INSERT INTO `work_data` VALUES (59, 146, 'Hunter Roberts Construction Group', 0, 'Estimating Intern', '2011-06-01', '2011-08-01', 0, '', '', 'Estimated projects of up to $200 million to bid on.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (60, 149, 'Insurance Institute for Highway Safety', 0, 'Research Assistant', '2008-06-01', '2011-08-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (61, 150, 'J. Crew', 0, 'Sales Associate', '2011-05-01', '2011-08-01', 0, 'Short Hills', 'NJ', 'Navigated computer inventory and payment programs, communicated with customers', 0, 0, 0);
+INSERT INTO `work_data` VALUES (62, 150, 'WRVU, Campus Radio Station', 0, 'Radio Intern, DJ', '2010-09-01', '2011-05-01', 0, 'Nashville', 'TN', 'Interned on weekly radio show, programmed and reviewed CDs, earned solo show', 0, 0, 0);
+INSERT INTO `work_data` VALUES (63, 150, 'Jamaican Me Crazy, Island Fun Store', 0, 'Sales Associate', '2010-05-01', '2010-08-01', 0, 'Margate', 'NJ', 'Designed displays, restocked merchandise, communicated with customers', 0, 0, 0);
+INSERT INTO `work_data` VALUES (64, 150, 'Sum It Up For Girls, Camps and Clinics', 0, 'Coach, Counselor', '2008-05-01', '2009-11-01', 0, 'Summit', 'NJ', 'Mentored elementary-aged girls, taught basic lacrosse and team-building skills, organized participant information and registration, updated membership database', 0, 0, 0);
+INSERT INTO `work_data` VALUES (65, 152, 'Arrow Electronics, Inc.', 0, 'Marketing Intern', '2011-05-01', '2011-08-01', 0, 'Englewood', 'Colorado', 'Led social media strategy for division\r\nConducted primary and secondary research\r\nPresented recommendation to senior team\r\nAsked to re-present to global marketing team\r\nRunner up intern competition for presentation on internal social media solution', 0, 0, 0);
+INSERT INTO `work_data` VALUES (66, 157, 'Capital Strategies Partners', 0, 'Intern', '2012-06-01', '2012-07-01', 0, 'Madrid', 'Spain', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (94, 58, 'Michael Stapleton Associates', 0, 'Intelligence Analyst', '2012-05-01', '2012-07-01', 0, 'New York', 'NY', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (75, 9, 'Uloop', 0, 'Mobile Software Engineering Intern', '2012-05-01', '2012-08-01', 1, 'Chicago', 'IL', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (69, 164, 'Goldenstone Automation Co.', 0, 'President', '1990-01-01', '2019-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (70, 165, '', 0, '', '1990-01-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (71, 35, 'LECO Corporation', 0, 'Cooperative student intern in computer science', '2011-06-01', '2011-08-01', 0, 'Saint Joseph', 'MI', 'Implemented continuous build integration system using TeamCity', 0, 0, 0);
+INSERT INTO `work_data` VALUES (72, 35, 'Institute for Software Integrated Systems', 0, 'Undergraduate research assistant', '2012-02-01', '2012-05-01', 1, 'Nashville', 'TN', 'Implemented transmission between computer and Arduino microprocessor\r\nMade real-time GUI using Qt for remote-control car', 0, 0, 0);
+INSERT INTO `work_data` VALUES (73, 171, 'D. Jaburek Billiards', 0, 'Sales Associate', '2008-06-01', '2011-08-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (76, 9, 'CTS America Inc.', 0, 'Software Engineering Intern', '2011-05-01', '2011-08-01', 0, 'Pensacola', 'FL', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (77, 178, 'The Harpeth Hall School Summer Camp', 0, 'Tennis Camp Counselor', '2010-06-01', '2010-07-01', 0, 'Nashville', 'TN', 'Taught tennis at an all girls day camp (Ages 7-12)', 0, 0, 0);
+INSERT INTO `work_data` VALUES (78, 178, 'CBS', 0, 'Intern/Assistant ', '2010-01-01', '2010-02-01', 0, 'New York City', 'NY', 'Compiled relevant articles for CBS News\r\nScribed for Various television shows\r\nBlogged on social media websites for "NCIS"\r\nPitched article ideas to CBS Watch! Magazine', 0, 0, 0);
+INSERT INTO `work_data` VALUES (79, 178, 'Dr. William H. Polk, General Surgeon at Centennial Hospital', 0, 'Intern', '2009-01-01', '2009-02-01', 0, 'Nashville', 'TN', 'Observed numerous surgeries including thoracotomy, coronary artery bypass, prostatectomy, and laparoscopic gall bladder removal\r\nWorked with patients in an office atmosphere\r\nLearned skills in stitching', 0, 0, 0);
+INSERT INTO `work_data` VALUES (80, 180, 'Jefferies Group Inc. ', 0, 'Equity Research Intern', '2011-09-01', '2012-05-01', 0, '', '', 'Assisted analysts in compiling The Script, a weekly publication covering roughly 40 health care companies\r\nAssisted analysts in creating put-call ratio analysis on excel for the health care companies they cover\r\nResearched and created excel models on assigned companies. This included creating an excel model of financial statements and developing a growth multiplier\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (81, 180, 'Wilmette Park District', 0, 'Summer Sailing Camp Instructor', '2011-05-01', '2011-08-01', 0, 'Wilmette', 'IL', 'Level One Certified Instructor through US Sailing \r\nWorked specifically with the more advanced students in teaching new techniques and skills\r\nProvided private lessons outside of the camp\r\nAssisted camp directors in scheduling events, creating programs, and administrative tasks\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (82, 157, 'Chesapeake Energy Co.', 0, 'Intern-Land', '2011-05-01', '2011-08-01', 0, 'Oklahoma City', 'Oklahoma', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (83, 13, 'AT&T', 0, 'Premises Technician', '2012-01-01', '1990-01-01', 1, 'Waukesha', 'WI', '3rd best tech in the garage.\r\nEarned 5-star the first month of work.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (84, 13, 'Quantum L.S.', 0, 'Sales', '2011-03-01', '2011-07-01', 0, 'Milwaukee', 'WI', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (85, 180, 'Little Traverse Sailors ', 0, 'Summer Sailing Camp Instructor', '2007-06-01', '2010-08-01', 0, 'Harbor Springs ', 'MI', 'Level One Certified Instructor through US Sailing\r\nWorked specifically with the more advanced students in teaching new techniques and skills\r\nProvided private lessons outside of the camp\r\nAssisted camp directors in scheduling events, creating programs, and administrative tasks\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (92, 186, 'Epic', 0, 'Project Manager', '2007-05-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (87, 144, 'Senator Robert Menedez ', 0, 'Student Intern', '2010-01-01', '2010-02-01', 0, 'Washington D.C.', '', 'Worked closely with the Chief of staff, filed papers and answered phones', 0, 0, 0);
+INSERT INTO `work_data` VALUES (93, 58, 'Breezy Point Cooperative', 0, 'Lifeguard', '2011-06-01', '2011-08-01', 0, 'Breezy Point', 'NY', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (89, 142, 'The Wildlife Experience', 0, 'Visitor Experience Respresentative', '2011-05-01', '1990-01-01', 1, 'Parker', 'CO', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (90, 142, 'Vanderbilt Biology Department', 0, 'Undergraduate Research Assistant', '2011-08-01', '2012-05-01', 0, 'Nashville', 'TN', 'Bred fish weekly and sorted embryos for experiments.\r\nLearned further lab techniques.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (91, 142, 'Vanderbilt Neuroscience Department', 0, 'Undergraduate Assistant', '2010-09-01', '2011-04-01', 0, 'Nashville', 'TN', 'Learned basic lab techniques and equipment (agarose gel preparation and use, transform bacteria, purify DNA).\r\nOrganized oligonucleotide and vector databases.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (95, 58, 'Breezy Point Cooperative', 0, 'Lifeguard', '2012-06-01', '2012-08-01', 0, 'Breezy Point', 'NY', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (96, 188, 'Intel', 0, 'Software Development Engineer', '2009-01-01', '2012-07-01', 0, '', '', 'Received "Bravo" Award', 0, 0, 0);
+INSERT INTO `work_data` VALUES (104, 5, '', 0, '', '1990-01-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (105, 5, '', 0, '', '1990-01-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (99, 189, 'Shodor Education Foundation', 0, 'Software Development Intern', '2005-01-01', '2012-02-01', 0, 'Durham', 'NC', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (100, 189, 'Epic', 0, 'Research and Development Intern', '2012-05-01', '2012-08-01', 0, 'Madison', 'WI', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (103, 191, 'William Johnson Management', 0, 'Manager and Owner', '2011-01-01', '2014-05-01', 0, 'Austin/Nashville', 'TX/TN', 'â€¢	Developed opportunity for film composer client to become finalist for the lead Composer in Lucas Filmâ€™s recent hit movie â€œRed Tailsâ€\r\nâ€¢	Identified and developed opportunities for multiple clients to appear on TV shows such as NCIS and various independent films in the Austin, Texas area\r\n', 0, 0, 0);
+INSERT INTO `work_data` VALUES (101, 0, '', 0, '', '1990-01-01', '1990-01-01', 0, '', '', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (106, 192, 'ProArcs', 0, 'Lead Developer', '2016-10-01', '2015-05-01', 0, '', '', 'Founded the company!', 0, 0, 0);
+INSERT INTO `work_data` VALUES (107, 193, 'Imports/Exports', 0, 'Field-Jockey', '1990-01-01', '1990-01-01', 0, 'Bamfcock', 'Thailand', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (108, 5, 'Epic', 0, 'Software Developer Intern', '2012-06-01', '2012-08-01', 0, 'Madison', 'WI', '', 0, 0, 0);
+INSERT INTO `work_data` VALUES (110, 0, 'npupsdUUgqKrcGa', 0, 'zcGWaOOFKt', '0000-00-00', '0000-00-00', 0, 'SbfaIkpKbAQ', 'DEGlByEHsNGIQsSAI', 'it was metrically and coneuptcally excellent.  A gold-glow day, that was.  How I valued your approval..As â€œTo every coin â€¦.â€, so to every situation:  the pluses and minuses.  The upsetting minus of you working at 3 or 4 am Florida-time meant that your nights, in fact, were disrupted rather than restful..On more than one such no-sleep occasion, we joked about King Davidâ€™s influence on you, adapting Psalm 57:7-9.  Like King David, your.07: [...] heart is ever steadfast..And like King David, you  .08: [â€¦] wake the dawn.09: (to) celebrate you, Lord,      among the people; and sing      your praise among the nations..But the plus of those sleep-arrested nights meant that the time differences between us seemingly dissipated, and emails could fly back and forth.  A 3 a.m. mail from you was a  welcome midmorning coffee break for me.  And how could it be anything but welcome?    this respite, full of mind teasing, brain twisting, and word tweaking, a stimulating flurry of exchanges. Combat over the difference between awe â€“ yirâ€™AH,   fulfilling G-dâ€™s laws through our observation of His wondrous works in our surroundings, and fear    PAâ€™khad â€“ keeping G-dâ€™s laws only to avoid punishment, and the implications of each  of these words in the texts.  Battles over the fine line between mercy and pity.  Tug-o-war over â€˜loving-kindnessâ€™ â€“ what does one do with such a long and awkward word?    which incidentally is quite short in the original: KHESSâ€™edd.   But which also raises the issue of synonymsâ€¦ and the fact that a synonym in English isnâ€™t necessarily so in Hebrew.  Bit by bit, you prized the treasure chest open, Alan, its trove of prizes being polished by your special touch..And there was plain old fun teasing too.  Lots of it.  Like the time you advised that youâ€™d come up with a great solution to Psalm 68:4 after extensive debate, but that you wanted to think it over for a day before releasing it.  Another brilliant clinch in the offing â€¦. The suspense was too much â€“ were there 2 or 3 or more whining requests from me: oy vey, no, no, please   send   now!  You sent it shortly afterwards, of course, flourished your trademark  â€˜hehâ€™:.04: Sing unto God and laud his name.      Prepare the way for the skyâ€™s rider.      His name is LORD. Exult before him..Though vital to your health, paradoxically you often viewed medical appointments as another setback in this race against time.  When the second half of your week hadnâ€™t been easy, following treatment, you sadly let me know it would not be possible to finish the particular psalm we were working on before the Sabbath commenced.  With your keen sensitivity to wording, even when I mentioned no names in brief messages, you learned to identify which of my children would be coming home, and wish us a restful Shabbat..Luckily, unproductive â€˜long weekendsâ€™ were not too common.  Instead, there were many other evenings when, around midnight or later as I was about to close the computer and go to sleepâ€¦ ping!  Who can resist the tantalizing ping of the inbox!  OK, skim through, acknowledge: Iâ€™ll check first thing tomorrow.  But this work was so rewarding for us both that it was impossible to ignore your draft until the next morning, especially knowing that youâ€™d probably have time to review response notes that very same day if you received them back immediately..So: coffee, close reading, corrections;  and 30 to 40 minutes later, sometimes an hour for a longer or more complex piece, back the notes went.  Always considerate of my schedules, you would add something like: Itâ€™s very late for you now.  Donâ€™t stay up for the sake of this draft.  But the beauty of the project burned within our hearts, yes, like a kind of love, and who can turn away from love?************.How many parallel experiences we discovered in our lives, Alan, from puppies to orchards and growing up near large bodies of water.  Both of us, sticklers for accuracy in our work; both of us sharing two pet peeves, â€˜proactiveâ€™, and â€˜impactâ€™ as a proactive(!) verb; both of us loving our language of preference..We worked well together because we truly admired each otherâ€™s spheres of knowledge.  Your gratitude was warmly sincere.   And your  humility in the face of the powerful poetry woven into these ancient words made working with you a delight.  You tackled the raw material, hammering at it until you spun   as described in Psalm 12:6 â€“silver, refined in earthâ€™s crucible,strained and purified seven times over..I was awed by how you approached the work, and told you what a privilege it was to observe the process closely, from the inside out, as it were.  We both felt privileged by this versified translation, the chance, as  Psalm 33 says, to -03:      Sing a new song to the Lord.           Play it with skill and verve..In psalm 9 verse 12, King David delineates how G-d[â€¦] recalls them:      he never forgets the cry of the meek..We weighed the inferences of  recall, and never forget, the first being active, a purposeful raising into the conscious mind, by stating and restating; the second being more passive, an undertone or background; we explored how these words connected with that core of Bible, the Ten Commandments.  Working intensively with you this past year-plus leaves me with so many funny or special shared moments and anecdotes; I will never forget them.  As for classes on Davidic Psalms and their link to principles of Torah, I will keep my promise to you, Alan, and dedicate them in your name, this year, next year, whenever I give such classes, thereby actively, publicly recalling â€“ for, as we discussed in Psalm 86, a name mentioned in connection with study of Bible gladdens the namesake''s soul..Throughout, your achievement was a source of encouragement to many, as we watched you determinedly gain time with the psalms. It was only recently that you wrote the following:.When we got done with 145, I had no idea so much work might still remain. It is daunting, but it has gone well, I think, and it certainly motivates me to stay alert and fight through my medical troubles. I shall be grateful to let go when the time comes. I am so tired. But not yet..And still you managed to edit so many of the psalms since that note, even completely recasting some of them.  But with every day that passed since your hospitalization, and no email winging into my inbox, my heart fractured that bit more.  You could, chronologically, have been my older brother, and what a wonderful older brother you often seemed to be throughout this laden but beautiful year of working together.  Who better to express how I feel now, than King David in  Psalm 22:14    I am spilled like water. / All my bones disjointed; / my heart is beeswax, / melting within.   This, because I mourn you as only a close Elder Sister can.***.Alan         May your  insightfulness be a long-lived tribute to your depth of thinking;.May your keen learning that so enhanced our working together, and the many other traits of character that we all respect and admire, infuse our memories with hues of love;.May these, and so much more, be a comfort to all who were close to you.And may these words which I have spoken stand as testimony in your good stead before God..Alan, dear spirit-kin, if I have unthinkingly offended you or been inconsiderate in any way, I ask your forgiveness..Letâ€™s  turn again to Psalm Eleven, the psalm that brought us together:.01: I hope in the Lord.      Would you wish of my soul      be off like a bird â€¦...May your soul, like the bird, be off      to settle beneath wings of everlasting peace and blessed rest.    ta''NOOâ€™akh    baâ€™shaâ€™LOM.   [rest peacefully]   Amen.', 0, 0, 0);
+INSERT INTO `work_data` VALUES (111, 196, 'Epic Systems', 0, 'Software Developer Intern', '2012-05-01', '2012-07-01', 0, 'Madison', 'Wisconsin (WI)', '', 0, 0, 0);
