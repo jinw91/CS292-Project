@@ -29,11 +29,24 @@ if (isset($_POST['send']) && $_POST['send'] == "Send")
 		for ($i = 0; $i < count($to_id); $i ++) 
 		{
 			$query = sprintf("INSERT INTO requests (subject, body, from_bid, to_id, time_sent) VALUES ('$subject', '$body', '%d', '%d', NOW( ))", $_SESSION['company']['b_id'], $to_id[$i]);
+			$result = mysql_query($query);
+			if (!$result)
+			{
+				$error .= mysql_error();
+			}
 		}
 	}
-	for ($i = 0; $i < count($to_id); $i ++) {
-		$query = sprintf("INSERT INTO personnel_email (subject, body, from_id, to_id, time_sent) VALUES ('$subject', '$body', '%d', '%d', NOW( ))", $_SESSION['idnum'], $to_id[$i]);
-		$result = mysql_query($query);
+	else
+	{
+		for ($i = 0; $i < count($to_id); $i ++) 
+		{
+			$query = sprintf("INSERT INTO personnel_email (subject, body, from_id, to_id, time_sent) VALUES ('$subject', '$body', '%d', '%d', NOW( ))", $_SESSION['idnum'], $to_id[$i]);
+			$result = mysql_query($query);
+			if (!$result)
+			{
+				$error .= mysql_error();
+			}
+		}
 	}
 	/*if ($result)
 	{
@@ -167,7 +180,7 @@ else
 	
 	
 	//Always displays requests on top of messages.
-	$query = sprintf("SELECT * FROM requests r, users u, businesses b WHERE r.from_bid=b.b_id AND to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
+	$query = sprintf("SELECT * FROM requests r, businesses b WHERE r.from_bid=b.b_id AND to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
 	$has_messages = false;
 	$result = mysql_query($query);
 	if (!$result)
@@ -178,10 +191,12 @@ else
 	// Request message printing
 	else
 	{
+		$error .= "Printing requests";
 		$has_messages = true;
 		$message = "<ul id='meslist'>";
 		while ($mes =  mysql_fetch_assoc($result))
 		{
+			$error .= "Has request";
 			if (is_null($mes['picture']))
 			{
 				$mes['picture'] = "images/default.png";
@@ -226,7 +241,7 @@ else
 	}
 	else if (mysql_num_rows($result) == 0 && !$has_messages)
 	{
-		$message = "<ul id='messages'><li><div align='center'>No messages</div></li>";
+		$message .= "<ul id='messages'><li><div align='center'>No messages</div></li>";
 		if (isset($_GET['limit']))
 		{
 			$message .= "<span style='float: left; position: absolute;'><a class='black' href='inbox.php?limit=".($limit-10)."'>Previous</a></span>";
