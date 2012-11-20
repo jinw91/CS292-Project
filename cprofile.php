@@ -60,8 +60,11 @@ if (!$result)
 
 $v_privacy = mysql_fetch_assoc($result);
 
+//Check if the viewer is a company.
+$v_company = ($_SESSION['idnum'] != $idnum) && isset($_SESSION['company']);
+
 //Check if friends.
-if ($_SESSION['idnum'] != $idnum || !isset($_SESSION['company']))
+if (!$v_company)
 {
     $query = sprintf("SELECT * FROM friends WHERE from_id=%d AND to_id=%d", $idnum, $_SESSION['idnum']);
     $result = mysql_query($query);
@@ -100,7 +103,7 @@ if (is_null($v_users['picture']))
 	$picture = "<div class='box-img'>";
 	$grid = "grid_11 suffix_2";
 }
-else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'picture'))
+else if ($v_company && show_for_companies($v_privacy, 'picture'))
 {
 	$picture = "<div class='grid_4'><div class='box-img'><a href='".$v_users['picture']."' data-gal='prettyPhoto[gallery]' class='lightbox-image'><img src='".$v_users['picture']."' alt=''></a></div>";
 	$grid = "grid_6 suffix_2";
@@ -132,7 +135,7 @@ if ($idnum == $_SESSION['idnum'])
 {
 	$v_education_message = ceducation_own($idnum);
 }
-else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'education'))
+else if ($v_company && show_for_companies($v_privacy, 'education'))
 {
     $v_education_message = ceducation($idnum, show_for_companies($v_privacy, 'gpa'), show_for_companies($v_privacy, 'graduation'));
 }
@@ -151,7 +154,7 @@ if ($idnum == $_SESSION['idnum'])
 {
 	$v_work_message = work_own($idnum);
 }
-else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'work_experience'))
+else if ($v_company && show_for_companies($v_privacy, 'work_experience'))
 {
 	$v_work_message = work($idnum);
 }
@@ -170,7 +173,7 @@ if ($idnum == $_SESSION['idnum'])
 {
 	$v_extracurriculars = extra_own($idnum);
 }
-else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'extracurricular'))
+else if ($v_company && show_for_companies($v_privacy, 'extracurricular'))
 {
 	$v_extracurriculars = extra($idnum);
 }
@@ -189,7 +192,7 @@ if ($idnum == $_SESSION['idnum'])
 {
 	$v_skills = skills_own($idnum);
 }
-else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'skills'))
+else if ($v_company && show_for_companies($v_privacy, 'skills'))
 {
 	$v_skills = skills($idnum);
 }
@@ -310,7 +313,7 @@ $(function(){
                         {
                             format_graduation($v_education['college_end']);
                         }
-                        else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'graduation'))
+                        else if ($v_company && show_for_companies($v_privacy, 'graduation'))
                         {
                             format_graduation($v_education['college_end']);
                         }
@@ -341,19 +344,19 @@ $(function(){
 					{
                         if ($idnum == $_SESSION['idnum'])
                         {
-                            format_graduation($v_about['status']);
+                            format_status($v_about['status']);
                         }
-                        else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'graduation'))
+                        else if ($v_company && show_for_companies($v_privacy, 'graduation'))
                         {
-                            format_graduation($v_about['status']);
+                            format_status($v_about['status']);
                         }
                         else if ($v_friends && show_for_friends($v_privacy, 'graduation'))
                         {
-                            format_graduation($v_about['status']);
+                            format_status($v_about['status']);
                         }
                         else if (0 == $v_privacy['graduation'])
                         {
-                            format_graduation($v_about['status']);
+                            format_status($v_about['status']);
                         }
 						//echo "<p>";
 						//if ($v_about['status'] != "Employed")
@@ -372,7 +375,7 @@ $(function(){
                         {
                             $new_buttons .= "<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$_GET['idnum']."'><img src='site_im/messageicon.jpg' width='40' height='40'/></a>";
                         }
-                        else if (isset($_SESSION['company']) && show_for_companies($v_privacy, 'message'))
+                        else if ($v_company && show_for_companies($v_privacy, 'message'))
                         {
                             $new_buttons .= "<a href='generalfunctions/message_template.php?messagetype=blank&single=true&to_id=".$_GET['idnum']."'><img src='site_im/messageicon.jpg' width='40' height='40'/></a>";
                         }

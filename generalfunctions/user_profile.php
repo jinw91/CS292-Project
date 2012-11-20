@@ -468,7 +468,7 @@ function show_for_friends($privacy, $info) {
 function format_status($status) {
     echo "<p>";
     if ($status != "Employed")
-        echo "Looking for ".$v_about['status'];
+        echo "Looking for ".$status;
     else
         echo $status;
     echo "</p>";
@@ -480,11 +480,17 @@ function format_graduation($graduation) {
     if (isset($temp) && $temp > '2012')
     {
         if ($tmpmonth <= 6) 
+        {
             echo "Expected Graduation: Spring ".$temp;
+        }
         else if ($tmpmonth < 8)
+        {
             echo "Expected Graduation: Summer ".$temp;
+        }
         else
+        {
             echo "Expected Graduation: Fall ".$temp;
+        }
             
         echo "<br>";
     }
