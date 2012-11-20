@@ -32,8 +32,8 @@ $message = $mes['message'];
 function choose_selected($privacy_level) {
     $selected = "<option ".($privacy_level==0?"selected=\'selected\'":"").">Public</option>";
     $selected .= "<option ".($privacy_level==1?"selected=\'selected\'":"").">Friends and Company</option>";
-    $selected .= "<option ".($privacy_level==2?"selected=\'selected\'":"").">Friends but not Company</option>";
-    $selected .= "<option ".($privacy_level==3?"selected=\'selected\'":"").">Company but not Friends</option>";
+    $selected .= "<option ".($privacy_level==2?"selected=\'selected\'":"").">Friends only</option>";
+    $selected .= "<option ".($privacy_level==3?"selected=\'selected\'":"").">Companies only</option>";
     $selected .= "<option ".($privacy_level==4?"selected=\'selected\'":"").">Myself only</option>";
     return $selected;
 }
@@ -55,11 +55,11 @@ function parse_privacy_level($text) {
     switch($text) {
         case "Public":
             return 0;
-        case "Friends and Company":
+        case "Friends and Companies":
             return 1;
-        case "Friends but not Company":
+        case "Friends only":
             return 2;
-        case "Company but not Friends":
+        case "Companies only":
             return 3;
         case "Myself only":
             return 4;
@@ -82,7 +82,7 @@ $settings .= "<li><label class='field'>GPA</label><select name='gpa'>".choose_se
 $settings .= "<li><label class='field' style='font-weight: bold;'>Work Experience</label><select name='work_experience'>".choose_selected($work_experience)."</select></li>";
 $settings .= "<li><label class='field' style='font-weight: bold;'>Extracurricular</label><select name='extracurricular'>".choose_selected($extracurricular)."</select></li>";
 $settings .= "<li><label class='field' style='font-weight: bold;'>Skills</label><select name='skills'>".choose_selected($skills)."</select></li>";
-$settings .= "<li><label class='field' style='font-weight: bold;'>Message</label><select name='message'>".choose_selected($message)."</select></li>";
+$settings .= "<li><label class='field' style='font-weight: bold;'>Receive Messages From</label><select name='message'>".choose_selected($message)."</select></li>";
 
 if (isset($_POST['save'])) {
     $notification = parse_notification($_POST['notification']);

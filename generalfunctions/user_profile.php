@@ -351,7 +351,7 @@ function skills_own($id)
 /**
 Company view
 **/
-function ceducation($id)
+function ceducation($id, $show_gpa, $show_graduation)
 {
 	$query = sprintf("SELECT * FROM education_data e, education_general g WHERE idnum=%d AND e.college=g.college", $id);
 	$result = mysql_query($query);
@@ -365,7 +365,7 @@ function ceducation($id)
 	{
 		$temp = substr($education['college_end'], 0, 4);
 		$tmpmonth = intval(substr($education['college_end'], 5, 2));
-		if ($temp != '0000' && $temp >= date("Y"))
+		if ($show_graduation && $temp != '0000' && $temp >= date("Y"))
 		{
 			if ($tmpmonth <= 6) 
 				$year =  "Expected: Spring ".$temp;
@@ -381,7 +381,8 @@ function ceducation($id)
 		$eduhtml = $eduhtml."<li><strong style='position: absolute;'>".$education['college']."</strong>"."<span style='float: right; position: relative; font-weight: bold;'>".$education['city'].", ".$education['state']."</span>"; //location not added yet.
 		$eduhtml = $eduhtml."<br /><em style='position: absolute;'>".$education['title']." in ".$education['major']."</em>";
 		$eduhtml = $eduhtml."<span style='float: right; position: relative;'>".$year."</span><br/>"; //on right.
-		if ($education['gpa'] >= 3.0)
+		//if ($education['gpa'] >= 3.0)
+		if ($show_gpa)
 		{
 			$eduhtml = $eduhtml."<ul style='list-style-type: disc; list-style-position: inside;'><li><strong>Cumulative GPA: </strong>".$education['gpa']."/4.0</li>";
 		}
@@ -449,4 +450,44 @@ function ceducation_own($id)
 	}
 	return($eduhtml);
 }
+
+function show_for_companies($privacy, $info) {
+    return
+        0 == $privacy[$info] ||
+        1 == $privacy[$info] ||
+        3 == $privacy[$info];
+}
+
+function show_for_friends($privacy, $info) {
+    return
+        0 == $privacy[$info] ||
+        1 == $privacy[$info] ||
+        2 == $privacy[$info];
+}
+
+function format_status($status) {
+    echo "<p>";
+    if ($status != "Employed")
+        echo "Looking for ".$v_about['status'];
+    else
+        echo $status;
+    echo "</p>";
+}
+
+function format_graduation($graduation) {
+    $temp = substr($graduation, 0, 4);
+    $tmpmonth = intval(substr($graduation, 5, 2));
+    if (isset($temp) && $temp > '2012')
+    {
+        if ($tmpmonth <= 6) 
+            echo "Expected Graduation: Spring ".$temp;
+        else if ($tmpmonth < 8)
+            echo "Expected Graduation: Summer ".$temp;
+        else
+            echo "Expected Graduation: Fall ".$temp;
+            
+        echo "<br>";
+    }
+}
+
 ?>
