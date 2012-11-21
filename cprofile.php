@@ -1,4 +1,6 @@
 <?php
+
+//minor change
 session_start();
 if (!isset($_SESSION['idnum']))
 {
