@@ -47,7 +47,7 @@ function work($id)
 	$html = "";
 	while ($work =  mysql_fetch_assoc($result))
 	{
-		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong>";
+		$html = $html."<li><a href='profile.php?b_id=".$work['b_id']."&company_name=".$work['company_name']."'><strong style='position: absolute;'>".$work['company_name']."</strong></a>";
 		if ($work['city']=="" || $work['state']=="")
 		{
 			$html .= "<span style='float: right; position: relative; font-weight: bold;'></span>";
@@ -106,7 +106,7 @@ function work_own($id)
 	$html = "";
 	while ($work =  mysql_fetch_assoc($result))
 	{
-		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong><span id='edit_info'><a href='work.php?w_id=".$work['w_id']."'><button>Edit</button></a></span>";
+		$html = $html."<li><a href='profile.php?b_id=".$work['b_id']."&company_name=".$work['company_name']."'><strong style='position: absolute;'>".$work['company_name']."</strong></a>";
 		if ($work['city']=="" || $work['state']=="")
 		{
 			$html .= "<span style='float: right; position: relative; font-weight: bold;'></span>";

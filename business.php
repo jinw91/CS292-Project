@@ -65,7 +65,12 @@ if ($_POST['submit'] == "Save")
 	$message = "<p id='update_message'>Business updated.</p>";
 }
 
-if (isset($_SESSION['company']))
+if (isset($_GET['company_name']))
+{
+    $company_name = $_GET['company_name'];
+}
+
+else if (isset($_SESSION['company']))
 {
 	$filename = $_SESSION['company']['picture'];
 	if (trim($filename) != "")
@@ -157,14 +162,14 @@ if (isset($_SESSION['company']))
     		  <li><label class="field">City: </label><input name="city" size=20 value="<?=$city?>" /> State: <input name="state" size=3 value="<?=$state?>" /></li>
 			  <li><label class="field">Description: </label><textarea name="description" id="business_ckeditor" ><?=$description?></textarea></li>
               <li><label class="field">Company Image: </label><input type="file" name="picture"></li>
-              <li><label class="field">Administrators for Company: </label>
+              <li<?php if(isset($_GET['company_name']))echo " style='display:none'";?>><label class="field">Administrators for Company: </label>
               <ol><li id='facebook-list' class='input-text'><input type='text' name='admins' id='facebook-demo' style='width:450px'/>
               <div id='facebook-auto' style='margin-left:265px; width:455px;'>
               <div class='default'>Separate names with a comma</div>
               <ul class='feed'></ul></div></li></ol></li>
               <li><input type='hidden' name='hidden_admin_id' id='hidden_admin_id' /></li>
     		  <li>
-            <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save" onclick="copyid()"/></span></li>
+            <span style='margin-left: 300px;'><input type="submit" name="submit" value="Save" onclick="copyid()"/><button onclick="location.href='cprofile.php'; return false;">Cancel</button></span></li>
             </ul>
     		</form>
 			</div>
