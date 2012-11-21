@@ -1,6 +1,9 @@
 <?php
+<<<<<<< HEAD
 
 //minor change
+=======
+>>>>>>> d0734ac84001be0a8bea25b880765d12309139de
 session_start();
 if (!isset($_SESSION['idnum']))
 {
@@ -337,7 +340,11 @@ $(function(){
 								//echo "Expected Graduation: Summer ".$temp;
 							//else
 								//echo "Expected Graduation: Fall ".$temp;
+<<<<<<< HEAD
 								
+=======
+
+>>>>>>> d0734ac84001be0a8bea25b880765d12309139de
 							//echo "<br>";
 						//}
 					}
@@ -427,8 +434,16 @@ $(function(){
 </section>
 <!-- footer -->
 <?php
+<<<<<<< HEAD
 	
 	echo footer();
 ?>
 </body>
 </html>
+=======
+
+	echo footer();
+?>
+</body>
+</html>
+>>>>>>> d0734ac84001be0a8bea25b880765d12309139de
