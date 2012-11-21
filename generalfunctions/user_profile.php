@@ -94,6 +94,7 @@ function work($id)
 /**
 Work Experience of own.
 **/
+/**
 function work_own($id)
 {
 	$query = sprintf("SELECT * FROM work_data WHERE idnum=%d ORDER BY company_end DESC LIMIT 4", $id);
@@ -107,6 +108,66 @@ function work_own($id)
 	while ($work =  mysql_fetch_assoc($result))
 	{
 		$html = $html."<li><a href='profile.php?b_id=".$work['b_id']."&company_name=".$work['company_name']."'><strong style='position: absolute;'>".$work['company_name']."</strong></a>";
+		if ($work['city']=="" || $work['state']=="")
+		{
+			$html .= "<span style='float: right; position: relative; font-weight: bold;'></span>";
+		}
+		else
+		{
+			$html .= "<span style='float: right; position: relative; font-weight: bold;'>".$work['city'].", ".$work['state']."</span>";
+		}
+		$html = $html."<br /><em style='position: absolute;'>".$work['title']."</em>";
+		$start = date("F Y", strtotime($work['company_start']));
+		if ($work['present'] > 0)
+		{
+			$end = "Present";
+		}
+		else
+		{
+			$end = date("F Y", strtotime($work['company_end']));
+		}
+		$html = $html."<span style='float: right; position: relative;'>".$start." - ".$end."</span>";
+		$html .= "<ul style='list-style-type: disc; list-style-position: inside;'>";
+		$html .= "<br />";
+		if (trim($work['achievement']) != "")
+		{
+			
+			$bits = explode("\n", $work['achievement']);
+			foreach($bits as $bit)
+			{
+				if (trim($bit) != "")
+				{
+			  		$html .= "<li>".$bit."</li>";
+				}
+			}
+		}
+		$html .= "</ul></li>";
+		//$html .= "</ul><span id='edit_profile'><a href='work.php?w_id=".$work['w_id']."'>Edit</a></span></li>"; //achievement
+	}
+	//$eduhtml = $eduhtml."</ul>";
+	if ($html == "")
+	{
+		$html = "<li>Work experience not available.<span id='edit_profile'><a href='work.php'>Add</a></span></li>";
+	}
+	return($html);
+}
+**/
+/**
+Work Experience of own.
+**/
+function work_own($id)
+{
+	$query = sprintf("SELECT * FROM work_data WHERE idnum=%d ORDER BY company_end DESC LIMIT 4", $id);
+	$result = mysql_query($query);
+	if (!$result)
+	{
+		$eduhtml = "<li><strong>Error retrieving work.</strong></li>";
+		return($eduhtml);
+	}
+	$html = "";
+	while ($work =  mysql_fetch_assoc($result))
+	{
+		$html = $html."<li><strong style='position: absolute;'>".$work['company_name']."</strong><span id='edit_info'><a href='work.php?w_id=".$work['w_id']."'><button>Edit</button></a></span>";
 		if ($work['city']=="" || $work['state']=="")
 		{
 			$html .= "<span style='float: right; position: relative; font-weight: bold;'></span>";
