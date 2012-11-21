@@ -220,7 +220,7 @@ $(function(){
                 <li><span style='margin-left: 300px;'>
                 <input type="hidden" name="wid" value="<?=$wid?>">
                 <input type='submit' name='send' value='<?=$option?>' />
-                <input type='submit' name='skip' value='Skip' />
+                <input type='submit' name='skip' value='Cancel' onclick="location.href='cprofile.php'; return false;" />
                 <input type='submit' name='send' value='Delete' />
                 <input type='submit' name='add' value='Add Another Job' />
                 </span></li>

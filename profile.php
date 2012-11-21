@@ -12,31 +12,40 @@ require_once(__ROOT__.'/generalfunctions/business_profile.php');
 
 if (isset($_GET['b_id']) || isset($_SESSION['company']))
 {
-	connectToDatabase();
-	if (isset($_GET['b_id']))
-	{
-		$query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_GET['b_id']);
-	}
-	else
-	{
-		$query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_SESSION['company']['b_id']);
-	}
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = mysql_error();
-	}
-	$v_users = mysql_fetch_assoc($result);
-	$p_name = $v_users['company_name'];
-	$v_bid = $v_users['b_id'];
-	$about = "<li>".$v_users['description']."</li>";
-	
-	$postings = postings($v_bid);
-	
-	$options = "<li><a id='about' href='javascript:about();'>About</a></li>
-                  <li><a id='postings' href='javascript:postings();'>Job Postings</a></li>
-				  <li><a id='looking' href='javascript:look();'>Looking For</a></li>";
-	mysql_close();
+    if (0 == $_GET['b_id'])
+    {
+        $p_name = $_GET['company_name'];
+        $options = "<p>This company does not have a profile yet. Would you like to create one for it?</p>";
+        $options .= "<p><button onclick='location.href=\"business.php?company_name=".$p_name."\"'>Yes</button><button onclick='location.href=\"cprofile.php\"'>No</button></p>";
+    }
+    else
+    {
+        connectToDatabase();
+        if (isset($_GET['b_id']))
+        {
+            $query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_GET['b_id']);
+        }
+        else
+        {
+            $query = sprintf("SELECT * FROM businesses WHERE b_id=%d LIMIT 1", $_SESSION['company']['b_id']);
+        }
+        $result = mysql_query($query);
+        if (!$result)
+        {
+            $error = mysql_error();
+        }
+        $v_users = mysql_fetch_assoc($result);
+        $p_name = $v_users['company_name'];
+        $v_bid = $v_users['b_id'];
+        $about = "<li>".$v_users['description']."</li>";
+        
+        $postings = postings($v_bid);
+        
+        $options = "<li><a id='about' href='javascript:about();'>About</a></li>
+                      <li><a id='postings' href='javascript:postings();'>Job Postings</a></li>
+                      <li><a id='looking' href='javascript:look();'>Looking For</a></li>";
+        mysql_close();
+    }
 }
 
 /**

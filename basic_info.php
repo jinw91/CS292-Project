@@ -170,7 +170,7 @@ else
             <br>
             <li>
             <span style='margin-left: 300px;'><input type='submit' name='submit' value='Save' />
-            <input type='submit' name='skip' value='Skip' /></span></li>
+            <input type='submit' name='skip' value='Cancel' onclick="location.href='cprofile.php'; return false;" /></span></li>
             </ul>
         	</form>
             <script>
