@@ -38,6 +38,6 @@ function listOfFriends($id, $default)
 		}
 		$message .= "<option".$add." value='".$row['idnum']."'>".$row['first_name']." ".$row['last_name']."</option>";
 	}
-	$return($message);
+	return($message);
 }
 ?>
