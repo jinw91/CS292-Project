@@ -2,7 +2,7 @@
 session_start();
 define('__ROOT__', dirname(__FILE__)); 
 require_once(__ROOT__.'/generalfunctions/database.php');
-$tbl_name="users";
+require_once(__ROOT__.'/generalfunctions/friends_functions.php');
 $connect = connectToDatabase();
 if (!$connect)
 {
@@ -46,6 +46,8 @@ if ($_POST['send'] == "Apply Changes" || $_POST['send'] == "Add")
 	$work_month_end = $_POST['work_month_end'];
 	$work_year_end = $_POST['work_year_end'];
 	$achievement = $_POST['achievement'];
+	$start_salary = $_POST['start_salary'];
+	$end_salary = $_POST['end_salary'];
 	$idnum = $_SESSION['idnum'];
 	$company_start = $work_year_start."-".$work_month_start."-01"; //arbitrary day.
 	$company_end = $work_year_end."-".$work_month_end."-01"; //arbitrary day.
@@ -106,6 +108,11 @@ if (isset($experience) && $experience['present'] > 0)
 {
 	$c_employed = "checked='checked'";
 }
+
+$supervisor = listOfFriends($_SESSION['idnum'], $experience['supervisor']);
+
+mysql_close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,29 +131,6 @@ if (isset($experience) && $experience['present'] > 0)
 <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/slides.min.jquery.js"></script>
 <script type="text/javascript" src="simple.js"></script>
-<script>
-$(function(){
-	$('#slides').slides({
-	effect: 'fade',
-	fadeSpeed:700,
-	preload: false,
-	play: 5000,
-	pause: 5000,
-	hoverPause: true,
-	crossfade: true,
-	bigTarget: true
-	});
-	$('.lightbox-image').prettyPhoto({theme:'facebook',autoplay_slideshow:false,social_tools:false,animation_speed:'normal'}).append('<span></span>');
-	if($.browser.msie&&parseInt($.browser.version,10)<=8){$('.lightbox-image').find('span').css({opacity:.5})};
-	$('.tooltips li a').find('strong').append('<span></span>').each(
-	 	function(){
-		var src=new Array()
-		src=$(this).find('>img').attr('src').split('.')
-		src=src[0]+'-hover.'+src[1]
-		$(this).find('>span').css({background:'url('+src+')'})
-	 });
-});
-</script>
 </head>
 <body>
 <!-- header -->
@@ -197,6 +181,7 @@ $(function(){
                 </li>
                 <li>
                 <label class="field">City: </label><input name="city" value="<?=$experience['city']?>" style="width: 150px;" /> State: <input name="state" value="<?=$experience['state']?>" style="width: 60px;" />
+                </li>
                 <li>
                     <label class='field'>Time Period: </label>
                     <script>
@@ -217,6 +202,16 @@ $(function(){
                 <li>
                 <label class='field'>Achievement(s): </label><textarea name='achievement' rows='3'><?=$experience['achievement']?></textarea>
                 </li>
+                <br>
+                <li>
+                <label class="field">Starting Salary: </label><input name="start_salary" value="<?=$experience['start_salary']?>" style="width: 110px;" /> Ending Salary: <input name="end_salary" value="<?=$experience['end_salary']?>" style="width: 110px;" />
+                </li>
+                <li>
+                <label class='field'>Supervisor Name: </label><select name='supervisor'>
+                <?=$supervisor?>
+                </select>
+                </li>
+                
                 <li><span style='margin-left: 300px;'>
                 <input type="hidden" name="wid" value="<?=$wid?>">
                 <input type='submit' name='send' value='<?=$option?>' />

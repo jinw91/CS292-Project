@@ -181,65 +181,15 @@ else
 	
 	//Always displays requests on top of messages.
 	$query = sprintf("SELECT * FROM requests r, businesses b WHERE r.from_bid=b.b_id AND to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
-	$has_messages = false;
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		$error = $query."".mysql_error();
-	}
-	
-	// Request message printing
-	else
-	{
-		$error .= "Printing requests";
-		$has_messages = true;
-		$message = "<ul id='meslist'>";
-		while ($mes =  mysql_fetch_assoc($result))
-		{
-			$error .= "Has request";
-			if (is_null($mes['picture']))
-			{
-				$mes['picture'] = "images/default.png";
-			}
-			$message = $message."<li><div style='height:40px;width:40px;float:left'><img style='margin-bottom: 0px; padding-bottom: 0px;' src='".$mes['picture']."' width='35' height='35'/><br>";
-			$from_name = $mes['first_name']." ".$mes['last_name'];
-			$message = $message."<a class='mes_name' href='profile.php?b_id=".$mes['from_bid']."'>";
-			if (strlen($from_name) <= 11) 
-			{
-				$message = $message.$from_name."</a></div>";
-			} 
-			else 
-			{
-				$message = $message.substr($from_name, 0, 11)."...</a></div>";
-			}
-			if ($mes['subject'] == "") 
-			{
-				$message = $message."<a href='inbox.php?rid=".$mes['rid']."&request=true'style='font-weight: bold; color: black;'>[untitled]";
-			} 
-			else 
-			{
-				$message = $message."<a href='inbox.php?rid=".$mes['rid']."&request=true'style='font-weight: bold; color: black;'>".$mes['subject'];
-			}
-			if (strlen($mes['body']) <= 80) 
-			{
-				$message = $message."</a><br>".$mes['body']."</li>";
-			} 
-			else 
-			{
-				$message = $message."</a><br>".substr($mes['body'],0,80)."......</li>";
-			}
-		}
-	}
-	
+	$message .= displayInboxMessages($query, true);
+	//$error .= "<pre>".$message."</pre><br>";
 	
 	// General messages
 	$query = sprintf("SELECT * FROM personnel_email p JOIN users u ON p.from_id=u.idnum WHERE to_id='%d' ORDER BY time_sent DESC LIMIT %d, 10", $_SESSION['idnum'], $_GET['limit']);
-	$result = mysql_query($query);
-	if (!$result)
-	{
-		echo mysql_error();
-	}
-	else if (mysql_num_rows($result) == 0 && !$has_messages)
+	$message .= displayInboxMessages($query);
+	
+	//$error .= "<pre>".$message."</pre>";
+	if ($message=="")
 	{
 		$message .= "<ul id='messages'><li><div align='center'>No messages</div></li>";
 		if (isset($_GET['limit']))
@@ -250,41 +200,7 @@ else
 	}
 	else
 	{
-		while ($mes =  mysql_fetch_assoc($result))
-		{
-			if (is_null($mes['picture']))
-			{
-				$mes['picture'] = "images/default.png";
-			}
-			$message = $message."<li><div style='height:40px;width:40px;float:left'><img style='margin-bottom: 0px; padding-bottom: 0px;' src='".$mes['picture']."' width='35' height='35'/><br>";
-			$from_name = $mes['first_name']." ".$mes['last_name'];
-			$message = $message."<a class='mes_name' href='profile.php?idnum=".$mes['from_id']."'>";
-			if (strlen($from_name) <= 11) {
-				$message = $message.$from_name."</a></div>";
-			} else {
-				$message = $message.substr($from_name,0,11)."...</a></div>";
-			}
-			//decides how unread messages look
-			/*if ($mes['read'] == 0)
-			{
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
-			}
-			else
-			{
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: lighter; color: black;'>".$mes['subject'];
-			}*/
-			//$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
-			if ($mes['subject'] == "") {
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>[untitled]";
-			} else {
-				$message = $message."<a href='inbox.php?mid=".$mes['mid']."'style='font-weight: bold; color: black;'>".$mes['subject'];
-			}
-			if (strlen($mes['body']) <= 80) {
-				$message = $message."</a><br>".$mes['body']."</li>";
-			} else {
-				$message = $message."</a><br>".substr($mes['body'],0,80)."......</li>";
-			}
-		}
+		
 		$message .= "<div class='paginator'>";
 		if ($limit != 0)
 		{

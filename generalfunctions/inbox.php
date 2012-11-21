@@ -95,4 +95,85 @@ function displayMessage($mid, $is_request = false)
 	
 	return($message);
 }
+
+
+// Displaying all messages
+// $query is the query to be executed.
+// $is_request is whether the message is request or inbox.
+function displayInboxMessages($query, $is_request = false)
+{
+	$result = mysql_query($query);
+	if (!$result || mysql_num_rows($result) == 0)
+	{
+		$message = "";
+		return($message);
+	}
+	
+	$message = "<ul id='meslist'>";
+	
+	while ($mes =  mysql_fetch_assoc($result))
+	{
+		//Set cases for request
+		if ($is_request)
+		{
+			$image_link = "profile.php?b_id=".$mes['from_bid'];
+			$message_link = "inbox.php?rid=".$mes['rid'];
+			$from_name = $mes['company_name'];
+		}
+		else
+		{
+			$image_link = "cprofile.php?idnum=".$mes['last_name'];
+			$message_link = "inbox.php?rid=".$mes['mid'];
+			$from_name = $mes['first_name']." ".$mes['last_name'];
+		}
+		
+		if (is_null($mes['picture']))
+		{
+			$mes['picture'] = "images/default.png";
+		}
+		
+		$message = $message."<li><div style='height:40px;width:40px;float:left'><img style='margin-bottom: 0px; padding-bottom: 0px;' src='".$mes['picture']."' width='35' height='35'/><br>"."<a class='mes_name' href='".$image_link."'>";
+		
+		//Name length
+		if (strlen($from_name) <= 11) 
+		{
+			$message = $message.$from_name."</a></div>";
+		} 
+		else 
+		{
+			$message = $message.substr($from_name, 0, 9)."..</a></div>";
+		}
+		
+		//Is read
+		if ($mes['is_read'] == 0)
+		{
+			$message .= "<a href='".$message_link."&request=true'style='font-weight: bold; color: black;'>";
+		}
+		else
+		{
+			$message .= "<a href='".$message_link."&request=true'style='font-weight: normal; color: black;'>";
+		}
+		
+		//Title of message 
+		if ($mes['subject'] == "") 
+		{
+			$message .= "[untitled]";
+		} 
+		else 
+		{
+			$message .= $mes['subject'];
+		}
+		
+		//Printing out body.
+		if (strlen($mes['body']) <= 80) 
+		{
+			$message = $message."</a><br>".$mes['body']."</li>";
+		} 
+		else 
+		{
+			$message = $message."</a><br>".substr($mes['body'],0,80)."......</li>";
+		}
+	}
+	return($message);
+}
 ?>
