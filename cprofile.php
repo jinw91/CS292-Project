@@ -325,23 +325,6 @@ $(function(){
                         {
                             format_graduation($v_education['college_end']);
                         }
-                        //$temp = substr($v_education['college_end'], 0, 4);
-                        //$tmpmonth = intval(substr($v_education['college_end'], 5, 2));
-                        //if (isset($temp) && $temp > '2012')
-                        //{
-                            //if ($tmpmonth <= 6) 
-                                //echo "Expected Graduation: Spring ".$temp;
-							//else if ($tmpmonth < 8)
-								//echo "Expected Graduation: Summer ".$temp;
-							//else
-								//echo "Expected Graduation: Fall ".$temp;
-<<<<<<< HEAD
-								
-=======
-
->>>>>>> d0734ac84001be0a8bea25b880765d12309139de
-							//echo "<br>";
-						//}
 					}
 					echo "</p>";
 					if (isset($v_about['status']))
@@ -362,16 +345,6 @@ $(function(){
                         {
                             format_status($v_about['status']);
                         }
-						//echo "<p>";
-						//if ($v_about['status'] != "Employed")
-						//{
-							//echo "Looking for ".$v_about['status'];
-						//}
-						//else
-						//{
-							//echo $v_about['status'];
-						//}
-						//echo "</p>";
 					}
                     if (isset($_GET['idnum'])) {
                         $new_buttons = $friends?"":"<a href='cprofile.php?idnum=".$_GET['idnum']."&addfriend=true'><img src='site_im/addusericon.jpg' width='40' height='40' onclick='if(confirm_add_friend(\"".$p_name."\")){}else return false;'/></a>";
@@ -429,16 +402,9 @@ $(function(){
 </section>
 <!-- footer -->
 <?php
-<<<<<<< HEAD
-	
 	echo footer();
 ?>
 </body>
 </html>
-=======
-
-	echo footer();
-?>
 </body>
 </html>
->>>>>>> d0734ac84001be0a8bea25b880765d12309139de
