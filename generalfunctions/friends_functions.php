@@ -24,11 +24,8 @@ function listOfFriends($id, $default)
 	{
 		return("Error");
 	}
-	if (mysql_num_rows($result) == 0)
-	{
-		return("<option>Other</option>");
-	}
-	$message = "";
+
+	$message = "<option>Not in Friends</option>";
 	while ($row = mysql_fetch_assoc($result))
 	{
 		$add = "";
@@ -38,6 +35,7 @@ function listOfFriends($id, $default)
 		}
 		$message .= "<option".$add." value='".$row['idnum']."'>".$row['first_name']." ".$row['last_name']."</option>";
 	}
+	
 	return($message);
 }
 ?>

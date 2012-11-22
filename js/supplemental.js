@@ -48,7 +48,7 @@ function checkBoxes()
 
 function scale()
 {
-	return("<ul><li><label class='field'>Scale</label><select name='from'><option>0</option><option>1</option></select> To <select name='to'><option>3</option><option>5</option><option>9</option><option>10</option></select></li><li><label class='field'>Minimum: </label><input name='minimum' type='text' style='width:150px;'></li><li><label class='field'>Maximum: </label><input name='maximum' type='text' style='width:150px;'></li></ul>");
+	return("<ul><li><label class='field'>Scale</label><select name='from"+question_counter+"'><option>0</option><option>1</option></select> To <select name='to"+question_counter+"'><option>3</option><option>5</option><option>9</option><option>10</option></select></li><li><label class='field'>Minimum: </label><input name='minimum"+question_counter+"' type='text' style='width:150px;'></li><li><label class='field'>Maximum: </label><input name='maximum"+question_counter+"' type='text' style='width:150px;'></li></ul>");
 }
 
 //Adds another choice for multiple choice questions.

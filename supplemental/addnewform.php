@@ -60,6 +60,14 @@ if ($_POST['submit']=="Save")
 			$c_num++;
 			$choice_num = "q".$num."c".$c_num;
 		}
+		if ($_POST[$type_num] == 6) //Scale
+		{
+			$min_num = "minimum".$num;
+			$max_num = "maximum".$num;
+			$from_num = "from".$num;
+			$to_num = "to".$num;
+			$body .=  $_POST[$from_num] . "|" . $_POST[$to_num] . "|" . $_POST[$min_num] . "|" . $_POST[$max_num] . "|";
+		}
 		
 		$query = sprintf("INSERT INTO supplemental(q_number, question, type, body) VALUES ('$num', '$question', '$type', '$body')");
 		$result = mysql_query($query);
